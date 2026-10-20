@@ -33,6 +33,7 @@ class Admin {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 		Roles_Tab::init();
+		Look_Tab::init();
 
 		$actions = array( 'save', 'export', 'import', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
 
@@ -52,6 +53,7 @@ class Admin {
 			'emails'         => __( 'Emails', 'admin-studio' ),
 			'tab_meta'       => __( 'Tab & page details', 'admin-studio' ),
 			'admin_branding' => __( 'Admin branding', 'admin-studio' ),
+			'look'           => __( 'Dashboard look', 'admin-studio' ),
 			'roles'          => __( 'Roles & permissions', 'admin-studio' ),
 			'security'       => __( 'Login protection', 'admin-studio' ),
 			'maintenance'    => __( 'Coming soon', 'admin-studio' ),
@@ -198,6 +200,7 @@ class Admin {
 			'role_saved'           => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'admin-studio' ) ),
 			'role_deleted'         => array( 'success', __( 'Role deleted and its users moved.', 'admin-studio' ) ),
 			'roles_restored'       => array( 'success', __( 'Roles restored.', 'admin-studio' ) ),
+			'look_stopped'         => array( 'success', __( 'Trial ended. Your dashboard is back to its usual template.', 'admin-studio' ) ),
 			'admin_slug_invalid'   => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'admin-studio' ) ),
 			'admin_url_active'     => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'admin-studio' ) ),
 			'admin_url_pending'    => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'admin-studio' ) ),

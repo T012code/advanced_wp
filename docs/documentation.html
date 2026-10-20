@@ -390,7 +390,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td><code>includes/class-system-page.php</code>, <code>class-dropins.php</code></td><td>Standalone pages and drop-in files</td></tr>
 		<tr><td><code>includes/class-preview.php</code>, <code>includes/customizer/</code></td><td>Customizer panel and preview routing</td></tr>
 		<tr><td><code>includes/admin/</code></td><td>Settings page, tabs and field renderers</td></tr>
-		<tr><td><code>includes/modules/&lt;module&gt;/</code></td><td>login, emails, error-pages, tab-meta, admin-branding, security, maintenance</td></tr>
+		<tr><td><code>includes/modules/&lt;module&gt;/</code></td><td>login, emails, error-pages, tab-meta, admin-branding, security, maintenance, roles, admin-look</td></tr>
 		<tr><td><code>templates/notfound.php</code></td><td>404 template</td></tr>
 		<tr><td><code>assets/css</code>, <code>assets/js</code>, <code>assets/vendor</code></td><td>Styles, scripts, QR code library</td></tr>
 	</table>
@@ -411,6 +411,10 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Files</td><td><code>wp-content/uploads/admin-studio/fonts/</code></td><td>Downloaded Google fonts</td></tr>
 		<tr><td>Option</td><td><code>adminstudio_admin_url</code>, <code>adminstudio_htaccess_backup</code>, <code>adminstudio_reapply_admin_url</code></td><td>Which dashboard address passed its test; the original .htaccess; a flag to re-test after activation</td></tr>
 		<tr><td>Files</td><td><code>.htaccess</code> block between <code># BEGIN Admin Studio</code> and <code># END Admin Studio</code></td><td>Rewrite rules for the custom dashboard address (Apache and LiteSpeed only)</td></tr>
+		<tr><td>Option</td><td><code>adminstudio_access</code>, <code>adminstudio_toolbar_nodes</code></td><td>Menu, toolbar, login redirect and dashboard access rules per role; the toolbar items last seen, so the settings page can list them</td></tr>
+		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_role_backups</code>, <code>adminstudio_audit</code></td><td>The last 20 copies of all roles; the activity log</td></tr>
+		<tr><td>Option</td><td><code>adminstudio_look</code></td><td>Site template and palette, custom colours, templates per role, personal choice switch, sidebar sections and menu item labels, icons and order</td></tr>
+		<tr><td>User meta</td><td><code>adminstudio_toolbar</code>, <code>adminstudio_look_admin</code>, <code>adminstudio_look_self</code>, <code>adminstudio_look_try</code>, <code>adminstudio_look_mode</code></td><td>Per-user toolbar override; template set by an administrator; the user's own template; a template an administrator is trying; light, dark or system mode</td></tr>
 		<tr><td>Cookie</td><td><code>adminstudio_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>
 		<tr><td>Cookie</td><td>WordPress's dashboard login cookie, at the new address's path</td><td>A copy of the cookie WordPress scopes to <code>/wp-admin</code>, so the browser sends it to the custom dashboard address</td></tr>
 	</table>
@@ -425,6 +429,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Admin branding</td><td><code>admin_bar_menu</code>, <code>admin_footer_text</code>, <code>update_footer</code>, <code>wp_dashboard_setup</code>, <code>admin_init</code> (colour scheme), <code>user_register</code></td></tr>
 		<tr><td>Login protection</td><td><code>plugins_loaded</code>, <code>wp_loaded</code>, <code>site_url</code>, <code>network_site_url</code>, <code>wp_redirect</code>, <code>authenticate</code>, <code>wp_login</code>, <code>wp_login_failed</code>, <code>set_auth_cookie</code>, <code>send_auth_cookies</code>, <code>login_form_adminstudio_2fa</code>, profile and AJAX hooks; for the dashboard address <code>admin_url</code>, <code>site_url</code>, <code>wp_redirect</code>, <code>set_auth_cookie</code>, <code>clear_auth_cookie</code> and the <code>adminstudio_ping</code> AJAX action</td></tr>
 		<tr><td>Coming soon</td><td><code>template_redirect</code>, <code>admin_bar_menu</code></td></tr>
+		<tr><td>Admin templates</td><td><code>admin_body_class</code>, <code>admin_enqueue_scripts</code>, <code>admin_menu</code> (labels), <code>custom_menu_order</code>, <code>menu_order</code>, <code>get_user_option_admin_color</code>, <code>admin_head-profile.php</code>, profile hooks, and the <code>adminstudio_look_mode</code> AJAX action</td></tr>
 	</table>
 
 	<h2>20. Constants</h2>
@@ -487,7 +492,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p class="part-title">Part 3</p>
 	<h2>25. Summary and status</h2>
 	<div class="note spec">
-		<p><strong>Status: proposed, waiting for approval.</strong> Nothing in Part 3 is built yet. It records the scope agreed in our questions so it can be approved before work starts. Once built, each section moves into Part 1 and Part 2.</p>
+		<p><strong>Status: in progress.</strong> Built and tested: roles and permissions (section 26), toolbar control (section 27) and admin templates (section 28). Still to come: dashboard widgets (section 29) and login screen text and links (section 30). Once version 1.1 is finished, these sections move into Part 1 and Part 2.</p>
 	</div>
 	<p>Version 1.1 extends Admin Studio from branding into running the dashboard: who can do what, how the dashboard looks for each person, and what they see first. It adds five areas:</p>
 	<ol>
@@ -542,7 +547,8 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h2>27. Toolbar control</h2>
 	<ul>
 		<li>Hide the top toolbar on the front end per role, with per-user overrides on the profile screen.</li>
-		<li>Hide it inside the dashboard too. When it is hidden there, the account menu, notifications and "View site" move into the sidebar footer, as in the portfolio admin panel. This option requires an admin template other than "WordPress default".</li>
+		<li>Hide it inside the dashboard too. When it is hidden there, the account details, "View site", "Sign out" and the colour mode switch are in the sidebar footer, as in the portfolio admin panel. This option only takes effect for people who see an admin template other than "WordPress default". On phones the toolbar stays, because it holds the button that opens the menu.</li>
+		<li>A user with several roles loses the toolbar only when every one of their roles hides it. Administrators always keep it.</li>
 		<li>Hide individual toolbar items instead of the whole bar: comments, "+ New", updates, search, customize, and items added by other plugins (detected automatically). Per role.</li>
 	</ul>
 
@@ -556,31 +562,54 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Minimal</td><td>White sidebar, thin even dividers, no shadows; the accent appears only on text and icons.</td></tr>
 		<tr><td>Compact</td><td>An icon-only rail that expands on hover or focus, and denser tables, for power users and small screens.</td></tr>
 	</table>
+	<figure>
+		<img src="images/look-studio.png" alt="The Studio template on the dashboard home, with section headings, outline icons, the current item as a filled pill, the greeting and the sidebar footer">
+		<figcaption>Studio with the Plum palette: section headings, outline icons, the greeting and the sidebar footer.</figcaption>
+	</figure>
+	<figure class="half">
+		<img src="images/look-midnight.png" alt="The Midnight template on the Posts screen">
+		<figcaption>Midnight with the Cobalt palette.</figcaption>
+	</figure>
+	<figure class="half">
+		<img src="images/look-studio-dark.png" alt="The Studio template in dark mode">
+		<figcaption>Studio in dark mode.</figcaption>
+	</figure>
+	<figure>
+		<img src="images/settings-look.png" alt="The Templates section of the Dashboard look tab, with template cards, Try it on me buttons and palettes">
+		<figcaption>Settings → Admin Studio → Dashboard look → Templates.</figcaption>
+	</figure>
 	<h3>Colours and dark mode</h3>
 	<ul>
 		<li>Colours follow the brand kit by default, so the dashboard matches the site out of the box.</li>
-		<li>Each template has ready palettes (for example Cobalt, Forest, Plum and Graphite) and a custom option for accent, sidebar, background and text, with a contrast warning.</li>
-		<li>Every template has a dark version. Users choose light, dark or "follow my system" from a toggle in the sidebar footer.</li>
+		<li>Ready palettes: Brand kit, Cobalt, Forest, Plum, Graphite and Sunset, plus Custom, where you set the accent, sidebar, background and text colours. Any colour left empty is worked out from the accent.</li>
+		<li>Text and icon colours are chosen for contrast automatically. If the accent is too close to the sidebar colour (for example a black brand colour on the dark Midnight sidebar), the current menu item uses a lighter shade so it still stands out.</li>
+		<li>Every template has a dark version. Users switch between light, dark and "system" (follow the device) with the button in the sidebar footer, or on their profile. The choice is saved per user.</li>
+		<li>While a template is in use, WordPress's own colour scheme is set aside for that user and its picker is hidden from their profile. Their saved scheme comes back when they return to "WordPress default".</li>
 	</ul>
 	<h3>Sidebar menu</h3>
 	<ul>
 		<li>Menu items are grouped into sections with headings. Admins can create sections and move items between them.</li>
-		<li>Rename, reorder (drag and drop, or keyboard) and choose an icon for each item from a bundled set of outline icons (Lucide, ISC licence). Plugin items keep their own icon, restyled to match.</li>
+		<li>Rename, reorder (drag and drop, or the up and down buttons from the keyboard) and choose an icon for each item from a bundled set of outline icons drawn in the style of Lucide (ISC licence). Core items get a matching icon automatically; plugin items keep their own icon unless you pick one.</li>
+		<li>Sections can be renamed, reordered, removed and added. Items in a removed section fall back to their usual section. "Reset to the standard layout" clears every change.</li>
 		<li>One menu layout for the whole site; each role only sees the items it is allowed (section 26).</li>
 		<li>Sidebar footer: avatar and email, View site, Sign out, and the light/dark toggle.</li>
 	</ul>
+	<figure>
+		<img src="images/settings-look-menu.png" alt="The Sidebar menu section: sections and menu items with labels, sections and icons">
+		<figcaption>Dashboard look → Sidebar menu.</figcaption>
+	</figure>
 	<h3>Dashboard home</h3>
-	<p>Each template also styles the dashboard home: a greeting header with the user's name and the date, and widgets laid out as a card grid.</p>
+	<p>Each template also styles the dashboard home: a greeting ("Good morning", "Good afternoon" or "Good evening" with the user's first name) and the date replace the plain "Dashboard" heading, and widgets become rounded cards.</p>
 	<h3>Who gets which template</h3>
 	<ol>
 		<li>Site default for everyone.</li>
 		<li>Per role, overriding the default.</li>
 		<li>Per user, set by an administrator.</li>
-		<li>Users can choose from the templates allowed for their role on their profile, unless an administrator has locked their role or account.</li>
+		<li>Users can choose their own template and palette on their profile, unless "Personal choice" is switched off or an administrator has locked their role or account.</li>
 	</ol>
-	<p>The most specific rule wins, in this order: user's own choice, administrator's per-user choice, role, site default.</p>
+	<p>The most specific rule wins, in this order: a template an administrator is trying on themselves, the user's own choice, the administrator's per-user choice, the role, the site default. Settings → Admin Studio → Dashboard look → Roles and users sets the template per role and lists everyone with a template of their own.</p>
 	<h3>Trying a template</h3>
-	<p>"Try it on me" applies a template and colours to your own account only, so you can look around the real dashboard. "Apply to everyone" or "Apply to roles" then rolls it out in one click.</p>
+	<p>"Try it on me" on each template card applies that template, with the palette selected on the page, to your own account only, and opens the dashboard so you can look around. A banner at the top of every screen then offers "Apply to everyone" (makes it the site default), "Apply to roles" (opens the per-role table) and "Stop trying".</p>
 
 	<h2>29. Dashboard widgets</h2>
 	<ul>

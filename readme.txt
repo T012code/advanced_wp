@@ -54,6 +54,22 @@ It starts from your theme. Colours and fonts are read from theme.json on block t
 * Hide dashboard widgets and add your own welcome panel.
 * A brand admin colour scheme built from your colours.
 
+= Dashboard look =
+
+* Admin templates for the whole dashboard: Studio, Midnight, Minimal and Compact, each with a dark mode.
+* Palettes from your brand kit or ready-made, or your own accent, sidebar, background and text colours, with contrast handled automatically.
+* Sidebar sections with headings, outline icons, renamed and reordered menu items, and a footer with your account, View site, Sign out and a light/dark switch.
+* A greeting on the dashboard home.
+* Set a template for the whole site, per role or per user, let people choose their own, or lock it. "Try it on me" lets you look around before rolling it out.
+
+= Roles and permissions =
+
+* Create, clone, rename and delete roles, and edit the capabilities of any role in plain language.
+* Give a user several roles, or grant and deny single capabilities.
+* Choose which menu items each role sees, where each role lands after logging in, and keep chosen roles out of the dashboard.
+* Hide the toolbar, or single toolbar items, per role on the site and in the dashboard.
+* Automatic role backups and an activity log with CSV download.
+
 = Login protection =
 
 * Custom login URL, with logged-out requests to wp-login.php and /wp-admin blocked.
@@ -131,6 +147,7 @@ This plugin can connect to Google Fonts, but only after a site administrator pic
 
 == Third-party libraries ==
 
+* Lucide icons, ISC licence. The dashboard look's outline icons are drawn in the style of, and partly based on, the Lucide icon set. Source: https://lucide.dev
 * QR Code Generator for JavaScript by Kazuhiko Arase, version 1.4.4, MIT licence. Used to draw the QR code when a user sets up two-factor authentication. Source: https://github.com/kazuhikoarase/qrcode-generator
 
 == Changelog ==

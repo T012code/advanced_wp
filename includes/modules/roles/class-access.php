@@ -194,7 +194,8 @@ class Access {
 	 * @return string
 	 */
 	public static function clean_label( $label ) {
-		$label = preg_replace( '#<span[^>]*class="[^"]*(count|awaiting|update-plugins|pending)[^"]*"[^>]*>.*?</span>(</span>)?#s', '', (string) $label );
+		// Count badges always come last and can nest several spans, so cut from the badge to the end.
+		$label = preg_replace( '#<span[^>]*class="[^"]*(count|awaiting|update-plugins|pending)[^"]*".*$#s', '', (string) $label );
 
 		return trim( wp_strip_all_tags( $label ) );
 	}
@@ -376,7 +377,8 @@ class Access {
 	 */
 	public static function hide_admin_toolbar() {
 		if ( self::admin_toolbar_hidden( wp_get_current_user() ) ) {
-			wp_add_inline_style( 'common', 'html.wp-toolbar{padding-top:0}#wpadminbar{display:none}' );
+			// Small screens keep it: it holds the button that opens the menu.
+			wp_add_inline_style( 'common', '@media screen and (min-width:783px){html.wp-toolbar{padding-top:0}#wpadminbar{display:none}}' );
 		}
 	}
 

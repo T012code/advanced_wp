@@ -99,6 +99,15 @@ class Tabs {
 	}
 
 	/**
+	 * Dashboard look.
+	 *
+	 * @return void
+	 */
+	private static function tab_look() {
+		Look_Tab::render();
+	}
+
+	/**
 	 * Overview: module switches.
 	 *
 	 * @return void

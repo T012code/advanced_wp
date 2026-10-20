@@ -13,6 +13,10 @@
 			return $fields.filter( ':checkbox' ).is( ':checked' ) ? '1' : '0';
 		}
 
+		if ( $fields.filter( ':radio' ).length ) {
+			return $fields.filter( ':checked' ).val();
+		}
+
 		return $fields.last().val();
 	}
 
@@ -76,6 +80,63 @@
 		if ( ! window.confirm( data.confirm ) ) {
 			event.preventDefault();
 		}
+	} );
+
+	$( document ).on( 'click', '[data-adminstudio-confirm-click]', function ( event ) {
+		if ( ! window.confirm( data.confirm ) ) {
+			event.preventDefault();
+		}
+	} );
+
+	// Template cards: mark the chosen one.
+	$( document ).on( 'change', '.adminstudio-template input[type="radio"]', function () {
+		$( '.adminstudio-template' ).removeClass( 'is-selected' );
+		$( this ).closest( '.adminstudio-template' ).addClass( 'is-selected' );
+	} );
+
+	// Sortable lists: up and down buttons, plus drag and drop.
+	$( document ).on( 'click', '[data-adminstudio-move]', function () {
+		var $row = $( this ).closest( '.adminstudio-sortable__row' );
+
+		if ( '-1' === String( $( this ).data( 'adminstudio-move' ) ) ) {
+			$row.prev( '.adminstudio-sortable__row' ).before( $row );
+		} else {
+			$row.next( '.adminstudio-sortable__row' ).after( $row );
+		}
+
+		$( this ).trigger( 'focus' );
+	} );
+
+	var dragged = null;
+
+	$( document ).on( 'dragstart', '[data-adminstudio-sortable] > .adminstudio-sortable__row', function ( event ) {
+		if ( $( event.target ).is( 'input, select, button' ) ) {
+			return;
+		}
+
+		dragged = this;
+		$( this ).addClass( 'is-dragging' );
+		event.originalEvent.dataTransfer.effectAllowed = 'move';
+		event.originalEvent.dataTransfer.setData( 'text/plain', '' );
+	} );
+
+	$( document ).on( 'dragover', '[data-adminstudio-sortable] > .adminstudio-sortable__row', function ( event ) {
+		if ( ! dragged || dragged === this || dragged.parentNode !== this.parentNode ) {
+			return;
+		}
+
+		event.preventDefault();
+
+		var box = this.getBoundingClientRect(),
+			after = event.originalEvent.clientY > box.top + box.height / 2;
+
+		this.parentNode.insertBefore( dragged, after ? this.nextSibling : this );
+	} );
+
+	$( document ).on( 'dragend drop', '[data-adminstudio-sortable] > .adminstudio-sortable__row', function ( event ) {
+		event.preventDefault();
+		$( dragged ).removeClass( 'is-dragging' );
+		dragged = null;
 	} );
 
 	// Selects that reload the page with a new choice.

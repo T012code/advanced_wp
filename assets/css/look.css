@@ -1,0 +1,1096 @@
+/**
+ * Admin Studio admin templates: Studio, Midnight, Minimal and Compact.
+ *
+ * Colours arrive as --as-* variables printed inline for light and dark mode.
+ * Every rule is scoped to body.adminstudio-look, so the WordPress default
+ * template is untouched. No side-stripe borders anywhere: separation comes
+ * from background colour, even borders and soft shadows.
+ */
+
+body.adminstudio-look {
+	--as-menu-w: 248px;
+	--as-radius: 12px;
+	--as-radius-sm: 8px;
+	--as-shadow: 0 1px 2px rgba(15, 20, 35, 0.04), 0 10px 28px -14px rgba(15, 20, 35, 0.22);
+	--as-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	background: var(--as-bg);
+	color: var(--as-text);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body.adminstudio-look.adminstudio-t-minimal {
+	--as-shadow: none;
+	--as-radius: 8px;
+	--as-radius-sm: 6px;
+}
+
+body.adminstudio-look.adminstudio-t-compact {
+	--as-menu-w: 64px;
+	--as-radius: 10px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar                                                             */
+/* ------------------------------------------------------------------ */
+
+body.adminstudio-look #adminmenuback,
+body.adminstudio-look #adminmenuwrap,
+body.adminstudio-look #adminmenu {
+	background: var(--as-sidebar);
+}
+
+@media screen and (min-width: 961px) {
+	body.adminstudio-look:not(.folded) #adminmenuback,
+	body.adminstudio-look:not(.folded) #adminmenuwrap,
+	body.adminstudio-look:not(.folded) #adminmenu {
+		width: var(--as-menu-w);
+	}
+
+	body.adminstudio-look:not(.folded) #wpcontent,
+	body.adminstudio-look:not(.folded) #wpfooter {
+		margin-left: var(--as-menu-w);
+	}
+
+	body.adminstudio-look:not(.folded) #adminmenu .wp-submenu {
+		left: var(--as-menu-w);
+	}
+
+	body.adminstudio-look #adminmenuwrap {
+		display: flex;
+		flex-direction: column;
+		min-height: calc(100vh - var(--wp-admin--admin-bar--height, 32px));
+	}
+}
+
+body.adminstudio-look #adminmenu {
+	margin: 0;
+	padding: 16px 0 8px;
+}
+
+/* WordPress's separators are replaced by section headings. */
+body.adminstudio-look #adminmenu li.wp-menu-separator {
+	display: none;
+}
+
+body.adminstudio-look #adminmenu li.adminstudio-menu-heading {
+	padding: 14px 22px 6px;
+	margin: 0;
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 1.2;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--as-sidebar-muted);
+	cursor: default;
+}
+
+body.adminstudio-look #adminmenu li.adminstudio-menu-heading:first-child {
+	padding-top: 4px;
+}
+
+body.adminstudio-look #adminmenu li.menu-top {
+	margin: 1px 12px;
+	border: 0;
+}
+
+body.adminstudio-look #adminmenu a.menu-top,
+body.adminstudio-look #adminmenu .wp-menu-arrow {
+	border-radius: var(--as-radius-sm);
+}
+
+body.adminstudio-look #adminmenu a.menu-top {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 38px;
+	padding: 0 10px;
+	color: var(--as-sidebar-text);
+	font-size: 13.5px;
+	font-weight: 500;
+	transition: background-color 120ms var(--as-ease), color 120ms var(--as-ease);
+}
+
+body.adminstudio-look #adminmenu div.wp-menu-image {
+	float: none;
+	width: 20px;
+	height: 20px;
+	flex: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-position: center;
+	background-size: 18px 18px;
+	opacity: 0.85;
+}
+
+body.adminstudio-look #adminmenu div.wp-menu-image::before {
+	padding: 0;
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+	color: var(--as-sidebar-muted);
+}
+
+body.adminstudio-look #adminmenu div.wp-menu-image svg {
+	display: block;
+	width: 18px;
+	height: 18px;
+	color: var(--as-sidebar-muted);
+}
+
+body.adminstudio-look #adminmenu div.wp-menu-image.adminstudio-icon::before {
+	content: none;
+}
+
+body.adminstudio-look #adminmenu div.wp-menu-image img {
+	padding: 0;
+	opacity: 0.8;
+}
+
+body.adminstudio-look #adminmenu div.wp-menu-name {
+	padding: 0;
+	flex: 1;
+	min-width: 0;
+	line-height: 1.3;
+}
+
+body.adminstudio-look #adminmenu li.menu-top:hover > a.menu-top,
+body.adminstudio-look #adminmenu li.opensub > a.menu-top,
+body.adminstudio-look #adminmenu a.menu-top:focus {
+	background: var(--as-sidebar-hover);
+	color: var(--as-sidebar-text);
+}
+
+body.adminstudio-look #adminmenu li.menu-top:hover div.wp-menu-image::before,
+body.adminstudio-look #adminmenu li.menu-top:hover div.wp-menu-image svg {
+	color: var(--as-sidebar-text);
+}
+
+body.adminstudio-look #adminmenu a.menu-top:focus-visible {
+	box-shadow: 0 0 0 2px var(--as-accent);
+	outline: 2px solid transparent;
+}
+
+/* Current item: a filled accent pill. */
+body.adminstudio-look #adminmenu li.current > a.menu-top,
+body.adminstudio-look #adminmenu li.wp-has-current-submenu > a.wp-has-current-submenu,
+body.adminstudio-look.folded #adminmenu li.current.menu-top {
+	background: var(--as-pill);
+	color: var(--as-on-pill);
+	box-shadow: 0 8px 18px -10px var(--as-pill);
+}
+
+body.adminstudio-look #adminmenu li.current > a.menu-top div.wp-menu-image::before,
+body.adminstudio-look #adminmenu li.current > a.menu-top div.wp-menu-image svg,
+body.adminstudio-look #adminmenu li.wp-has-current-submenu > a div.wp-menu-image::before,
+body.adminstudio-look #adminmenu li.wp-has-current-submenu > a div.wp-menu-image svg {
+	color: var(--as-on-pill);
+	opacity: 1;
+}
+
+body.adminstudio-look #adminmenu li.current a.menu-top::after,
+body.adminstudio-look #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu::after,
+body.adminstudio-look #adminmenu li.wp-has-submenu.wp-not-current-submenu.opensub:hover::after,
+body.adminstudio-look #adminmenu li.wp-has-current-submenu .wp-menu-arrow,
+body.adminstudio-look #adminmenu li.current .wp-menu-arrow,
+body.adminstudio-look #adminmenu .wp-menu-arrow div {
+	display: none;
+}
+
+/* Submenus. */
+body.adminstudio-look #adminmenu .wp-submenu {
+	background: var(--as-surface);
+	border-radius: var(--as-radius-sm);
+	box-shadow: var(--as-shadow);
+	padding: 6px;
+}
+
+body.adminstudio-look #adminmenu .wp-submenu a {
+	color: var(--as-text);
+	border-radius: 6px;
+	padding: 6px 10px;
+	font-size: 13px;
+}
+
+body.adminstudio-look #adminmenu .wp-submenu a:hover,
+body.adminstudio-look #adminmenu .wp-submenu a:focus {
+	background: var(--as-accent-soft);
+	color: var(--as-text);
+}
+
+body.adminstudio-look #adminmenu .wp-submenu-head {
+	color: var(--as-text);
+	font-weight: 600;
+}
+
+/* The open section's submenu sits inline under its item. */
+body.adminstudio-look #adminmenu .wp-has-current-submenu .wp-submenu,
+body.adminstudio-look #adminmenu .wp-has-current-submenu.opensub .wp-submenu {
+	background: transparent;
+	box-shadow: none;
+	position: relative;
+	top: auto;
+	left: auto;
+	width: auto;
+	margin: 0;
+	padding: 4px 0 6px 30px;
+	border-radius: 0;
+}
+
+body.adminstudio-look #adminmenu .wp-has-current-submenu .wp-submenu a {
+	color: var(--as-sidebar-muted);
+}
+
+body.adminstudio-look #adminmenu .wp-has-current-submenu .wp-submenu a:hover,
+body.adminstudio-look #adminmenu .wp-has-current-submenu .wp-submenu a:focus {
+	background: var(--as-sidebar-hover);
+	color: var(--as-sidebar-text);
+}
+
+body.adminstudio-look #adminmenu .wp-has-current-submenu .wp-submenu li.current a {
+	color: var(--as-sidebar-text);
+	font-weight: 600;
+}
+
+body.adminstudio-look #adminmenu .wp-has-current-submenu .wp-submenu .wp-submenu-head {
+	display: none;
+}
+
+/* Count badges as pills. */
+body.adminstudio-look #adminmenu .awaiting-mod,
+body.adminstudio-look #adminmenu .update-plugins {
+	min-width: 20px;
+	height: 20px;
+	padding: 0 6px;
+	border-radius: 999px;
+	background: var(--as-accent);
+	color: var(--as-on-accent);
+	font-size: 11px;
+	font-weight: 600;
+	line-height: 20px;
+	box-sizing: border-box;
+}
+
+body.adminstudio-look #adminmenu li.current .awaiting-mod,
+body.adminstudio-look #adminmenu li.wp-has-current-submenu .awaiting-mod,
+body.adminstudio-look #adminmenu li.wp-has-current-submenu .update-plugins {
+	background: var(--as-on-pill);
+	color: var(--as-pill);
+}
+
+body.adminstudio-look #collapse-menu {
+	margin: 4px 12px;
+	border-radius: var(--as-radius-sm);
+	color: var(--as-sidebar-muted);
+}
+
+body.adminstudio-look #collapse-button {
+	color: var(--as-sidebar-muted);
+}
+
+body.adminstudio-look #collapse-button:hover,
+body.adminstudio-look #collapse-button:focus {
+	color: var(--as-sidebar-text);
+}
+
+/* Hold the menu back until headings and icons are in place. */
+body.adminstudio-look:not(.adminstudio-ready) #adminmenu {
+	opacity: 0;
+	animation: adminstudio-reveal 1ms 1.5s forwards;
+}
+
+/* If the script never runs, show the plain menu after a moment. */
+@keyframes adminstudio-reveal {
+	to {
+		opacity: 1;
+	}
+}
+
+body.adminstudio-look.adminstudio-ready #adminmenu {
+	opacity: 1;
+	transition: opacity 120ms var(--as-ease);
+}
+
+/* ------------------------------------------------------------------ */
+/* Sidebar footer                                                      */
+/* ------------------------------------------------------------------ */
+
+.adminstudio-foot {
+	margin-top: auto;
+	padding: 12px 12px 16px;
+	display: grid;
+	gap: 4px;
+	font-size: 13px;
+	color: var(--as-sidebar-text);
+}
+
+.adminstudio-foot__user {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 8px 10px;
+	border-radius: var(--as-radius-sm);
+	color: var(--as-sidebar-text);
+	text-decoration: none;
+	background: var(--as-sidebar-hover);
+}
+
+body.adminstudio-look .adminstudio-foot a,
+body.adminstudio-look .adminstudio-foot a:hover,
+body.adminstudio-look .adminstudio-foot a:focus {
+	color: var(--as-sidebar-text);
+}
+
+.adminstudio-foot__user img {
+	width: 32px;
+	height: 32px;
+	border-radius: 999px;
+	flex: none;
+}
+
+.adminstudio-foot__user span {
+	display: grid;
+	min-width: 0;
+}
+
+.adminstudio-foot__user strong,
+.adminstudio-foot__user small {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.adminstudio-foot__user small {
+	color: var(--as-sidebar-muted);
+}
+
+.adminstudio-foot__link,
+.adminstudio-foot__mode {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	min-height: 34px;
+	padding: 0 10px;
+	border: 0;
+	border-radius: var(--as-radius-sm);
+	background: transparent;
+	color: var(--as-sidebar-text);
+	font: inherit;
+	text-decoration: none;
+	cursor: pointer;
+	width: 100%;
+	text-align: left;
+}
+
+.adminstudio-foot__link svg,
+.adminstudio-foot__mode svg {
+	color: var(--as-sidebar-muted);
+	flex: none;
+}
+
+.adminstudio-foot__link:hover,
+.adminstudio-foot__link:focus,
+.adminstudio-foot__mode:hover,
+.adminstudio-foot__user:hover {
+	background: var(--as-sidebar-hover);
+	color: var(--as-sidebar-text);
+}
+
+.adminstudio-foot__link:focus-visible,
+.adminstudio-foot__mode:focus-visible,
+.adminstudio-foot__user:focus-visible {
+	outline: 2px solid var(--as-accent);
+	outline-offset: 1px;
+	box-shadow: none;
+}
+
+body.folded .adminstudio-foot {
+	display: none;
+}
+
+@media screen and (max-width: 960px) {
+	.adminstudio-foot {
+		display: none;
+	}
+}
+
+/* ------------------------------------------------------------------ */
+/* Top bar                                                             */
+/* ------------------------------------------------------------------ */
+
+body.adminstudio-look #wpadminbar {
+	background: var(--as-bar);
+	color: var(--as-bar-text);
+}
+
+body.adminstudio-look #wpadminbar .ab-item,
+body.adminstudio-look #wpadminbar a.ab-item,
+body.adminstudio-look #wpadminbar > #wp-toolbar span.ab-label,
+body.adminstudio-look #wpadminbar > #wp-toolbar span.noticon,
+body.adminstudio-look #wpadminbar .ab-icon::before,
+body.adminstudio-look #wpadminbar .ab-item::before {
+	color: var(--as-bar-text);
+}
+
+body.adminstudio-look #wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item,
+body.adminstudio-look #wpadminbar .ab-top-menu > li.hover > .ab-item,
+body.adminstudio-look #wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+	background: var(--as-sidebar-hover);
+	color: var(--as-bar-text);
+}
+
+body.adminstudio-look #wpadminbar .menupop .ab-sub-wrapper {
+	background: var(--as-surface);
+	border-radius: var(--as-radius-sm);
+	box-shadow: var(--as-shadow);
+}
+
+body.adminstudio-look #wpadminbar .quicklinks .menupop ul li a,
+body.adminstudio-look #wpadminbar .quicklinks .menupop ul li .ab-item {
+	color: var(--as-text);
+}
+
+body.adminstudio-look #wpadminbar .quicklinks .menupop ul li a:hover,
+body.adminstudio-look #wpadminbar .quicklinks .menupop ul li a:focus {
+	color: var(--as-accent-text);
+	background: var(--as-accent-soft);
+}
+
+/* ------------------------------------------------------------------ */
+/* Content                                                             */
+/* ------------------------------------------------------------------ */
+
+body.adminstudio-look #wpcontent,
+body.adminstudio-look #wpbody-content {
+	color: var(--as-text);
+}
+
+body.adminstudio-look .wrap {
+	margin: 18px 28px 0 8px;
+}
+
+body.adminstudio-look .wrap h1,
+body.adminstudio-look .wrap h2,
+body.adminstudio-look .wrap h3,
+body.adminstudio-look h1,
+body.adminstudio-look h2,
+body.adminstudio-look h3 {
+	color: var(--as-text);
+}
+
+body.adminstudio-look .wrap h1.wp-heading-inline,
+body.adminstudio-look .wrap > h1 {
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+body.adminstudio-look p,
+body.adminstudio-look label,
+body.adminstudio-look th,
+body.adminstudio-look td,
+body.adminstudio-look .form-table th,
+body.adminstudio-look .description,
+body.adminstudio-look p.description {
+	color: inherit;
+}
+
+body.adminstudio-look .description,
+body.adminstudio-look p.description,
+body.adminstudio-look .subsubsub,
+body.adminstudio-look .displaying-num,
+body.adminstudio-look .row-actions {
+	color: var(--as-muted);
+}
+
+body.adminstudio-look a {
+	color: var(--as-accent-text);
+}
+
+body.adminstudio-look a:hover,
+body.adminstudio-look a:active {
+	color: var(--as-accent-text);
+	text-decoration-thickness: 2px;
+}
+
+body.adminstudio-look .subsubsub a .count,
+body.adminstudio-look .subsubsub a.current .count {
+	color: var(--as-muted);
+}
+
+body.adminstudio-look .subsubsub a.current {
+	color: var(--as-text);
+}
+
+/* Cards: postboxes, cards, tables, meta boxes. */
+body.adminstudio-look .postbox,
+body.adminstudio-look .card,
+body.adminstudio-look .stuffbox,
+body.adminstudio-look .welcome-panel,
+body.adminstudio-look #dashboard-widgets .postbox,
+body.adminstudio-look .health-check-accordion,
+body.adminstudio-look .community-events-form,
+body.adminstudio-look .metabox-holder .postbox {
+	background: var(--as-surface);
+	color: var(--as-text);
+	border: 1px solid var(--as-border);
+	border-radius: var(--as-radius);
+	box-shadow: var(--as-shadow);
+}
+
+body.adminstudio-look .postbox .postbox-header {
+	border: 0;
+	padding: 4px 6px 0 8px;
+}
+
+body.adminstudio-look .postbox .hndle,
+body.adminstudio-look .postbox h2.hndle {
+	font-size: 14px;
+	font-weight: 600;
+	color: var(--as-text);
+}
+
+body.adminstudio-look .postbox .handle-order-higher,
+body.adminstudio-look .postbox .handle-order-lower,
+body.adminstudio-look .postbox .handlediv {
+	color: var(--as-muted);
+}
+
+body.adminstudio-look .widefat,
+body.adminstudio-look .wp-list-table {
+	background: var(--as-surface);
+	border: 1px solid var(--as-border);
+	border-radius: var(--as-radius);
+	box-shadow: var(--as-shadow);
+	overflow: hidden;
+	border-spacing: 0;
+}
+
+body.adminstudio-look .widefat thead th,
+body.adminstudio-look .widefat thead td,
+body.adminstudio-look .widefat tfoot th,
+body.adminstudio-look .widefat tfoot td {
+	background: var(--as-surface-2);
+	color: var(--as-muted);
+	font-weight: 600;
+	font-size: 12px;
+	border: 0;
+}
+
+body.adminstudio-look .widefat td,
+body.adminstudio-look .widefat th {
+	color: var(--as-text);
+	border: 0;
+}
+
+body.adminstudio-look .striped > tbody > :nth-child(odd),
+body.adminstudio-look ul.striped > :nth-child(odd),
+body.adminstudio-look .alternate {
+	background: var(--as-surface-2);
+}
+
+body.adminstudio-look .wp-list-table tr:hover td,
+body.adminstudio-look .wp-list-table tr:hover th {
+	background: var(--as-accent-soft);
+}
+
+body.adminstudio-look .widefat .check-column {
+	border: 0;
+}
+
+/* Buttons. */
+body.adminstudio-look .wp-core-ui .button,
+body.adminstudio-look .wp-core-ui .button-secondary,
+body.adminstudio-look .button,
+body.adminstudio-look .page-title-action {
+	border-radius: var(--as-radius-sm);
+	border: 1px solid var(--as-border);
+	background: var(--as-surface);
+	color: var(--as-text);
+	min-height: 34px;
+	line-height: 32px;
+	padding: 0 14px;
+	box-shadow: none;
+	transition: background-color 120ms var(--as-ease), border-color 120ms var(--as-ease);
+}
+
+body.adminstudio-look .wp-core-ui .button:hover,
+body.adminstudio-look .wp-core-ui .button-secondary:hover,
+body.adminstudio-look .page-title-action:hover {
+	border-color: var(--as-accent);
+	background: var(--as-accent-soft);
+	color: var(--as-text);
+}
+
+body.adminstudio-look .wp-core-ui .button-primary,
+body.adminstudio-look .button-primary {
+	background: var(--as-accent);
+	border-color: var(--as-accent);
+	color: var(--as-on-accent);
+	font-weight: 600;
+}
+
+body.adminstudio-look .wp-core-ui .button-primary:hover,
+body.adminstudio-look .wp-core-ui .button-primary:focus,
+body.adminstudio-look .button-primary:hover {
+	background: var(--as-accent);
+	border-color: var(--as-accent);
+	color: var(--as-on-accent);
+	filter: brightness(0.92);
+}
+
+body.adminstudio-look .wp-core-ui .button:focus,
+body.adminstudio-look .wp-core-ui .button-primary:focus,
+body.adminstudio-look .page-title-action:focus {
+	box-shadow: 0 0 0 2px var(--as-surface), 0 0 0 4px var(--as-accent);
+	outline: 2px solid transparent;
+}
+
+body.adminstudio-look .wp-core-ui .button-link,
+body.adminstudio-look .button-link {
+	color: var(--as-accent-text);
+}
+
+body.adminstudio-look .wp-core-ui .button.button-small,
+body.adminstudio-look .button.button-small {
+	min-height: 28px;
+	line-height: 26px;
+	padding: 0 10px;
+}
+
+/* Forms. */
+body.adminstudio-look input[type="text"],
+body.adminstudio-look input[type="search"],
+body.adminstudio-look input[type="email"],
+body.adminstudio-look input[type="url"],
+body.adminstudio-look input[type="password"],
+body.adminstudio-look input[type="number"],
+body.adminstudio-look input[type="tel"],
+body.adminstudio-look input[type="date"],
+body.adminstudio-look input[type="datetime-local"],
+body.adminstudio-look select,
+body.adminstudio-look textarea {
+	background-color: var(--as-surface);
+	color: var(--as-text);
+	border: 1px solid var(--as-border);
+	border-radius: var(--as-radius-sm);
+	box-shadow: none;
+}
+
+body.adminstudio-look select {
+	padding-right: 30px;
+	background-position: right 8px top 55%;
+}
+
+body.adminstudio-look input:focus,
+body.adminstudio-look select:focus,
+body.adminstudio-look textarea:focus {
+	border-color: var(--as-accent);
+	box-shadow: 0 0 0 1px var(--as-accent);
+	outline: 2px solid transparent;
+}
+
+body.adminstudio-look input[type="checkbox"],
+body.adminstudio-look input[type="radio"] {
+	border-color: var(--as-border);
+	background: var(--as-surface);
+}
+
+body.adminstudio-look input[type="checkbox"]:checked {
+	background: var(--as-accent);
+	border-color: var(--as-accent);
+}
+
+body.adminstudio-look input[type="checkbox"]:checked::before {
+	filter: brightness(0) invert(1);
+}
+
+body.adminstudio-look input[type="radio"]:checked::before {
+	background: var(--as-accent);
+}
+
+/* Notices: an even border and a tint, never a side stripe. */
+body.adminstudio-look .notice,
+body.adminstudio-look div.updated,
+body.adminstudio-look div.error {
+	background: var(--as-surface);
+	color: var(--as-text);
+	border: 1px solid var(--as-border);
+	border-radius: var(--as-radius-sm);
+	box-shadow: none;
+}
+
+body.adminstudio-look .notice-success,
+body.adminstudio-look div.updated {
+	background: color-mix(in srgb, #00a32a 9%, var(--as-surface));
+	border-color: color-mix(in srgb, #00a32a 40%, var(--as-border));
+}
+
+body.adminstudio-look .notice-warning {
+	background: color-mix(in srgb, #dba617 12%, var(--as-surface));
+	border-color: color-mix(in srgb, #dba617 50%, var(--as-border));
+}
+
+body.adminstudio-look .notice-error,
+body.adminstudio-look div.error {
+	background: color-mix(in srgb, #d63638 9%, var(--as-surface));
+	border-color: color-mix(in srgb, #d63638 40%, var(--as-border));
+}
+
+body.adminstudio-look .notice-info {
+	background: color-mix(in srgb, var(--as-accent) 8%, var(--as-surface));
+	border-color: color-mix(in srgb, var(--as-accent) 35%, var(--as-border));
+}
+
+body.adminstudio-look .notice-dismiss::before {
+	color: var(--as-muted);
+}
+
+/* Tabs and screen options. */
+body.adminstudio-look .nav-tab-wrapper,
+body.adminstudio-look .wrap h2.nav-tab-wrapper {
+	border: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+body.adminstudio-look .nav-tab {
+	margin: 0;
+	border: 1px solid var(--as-border);
+	border-radius: 999px;
+	background: var(--as-surface);
+	color: var(--as-text);
+	font-size: 13px;
+	font-weight: 500;
+	padding: 6px 14px;
+}
+
+body.adminstudio-look .nav-tab:hover {
+	background: var(--as-accent-soft);
+	color: var(--as-text);
+}
+
+body.adminstudio-look .nav-tab-active,
+body.adminstudio-look .nav-tab-active:hover,
+body.adminstudio-look .nav-tab-active:focus {
+	background: var(--as-accent);
+	border-color: var(--as-accent);
+	color: var(--as-on-accent);
+}
+
+body.adminstudio-look #screen-meta,
+body.adminstudio-look #screen-meta-links .show-settings {
+	background: var(--as-surface);
+	color: var(--as-text);
+	border: 1px solid var(--as-border);
+	border-radius: var(--as-radius-sm);
+	box-shadow: none;
+}
+
+body.adminstudio-look #wpfooter,
+body.adminstudio-look #wpfooter p {
+	color: var(--as-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Dashboard home                                                      */
+/* ------------------------------------------------------------------ */
+
+.adminstudio-greeting {
+	margin: 8px 0 20px;
+}
+
+.adminstudio-greeting h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 28px;
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: -0.015em;
+	color: var(--as-text);
+}
+
+.adminstudio-greeting p {
+	margin: 6px 0 0;
+	color: var(--as-muted);
+	font-size: 14px;
+}
+
+body.adminstudio-look #dashboard-widgets-wrap {
+	margin: 0 -8px;
+}
+
+body.adminstudio-look #dashboard-widgets .postbox-container .meta-box-sortables {
+	padding: 0 8px;
+}
+
+body.adminstudio-look #dashboard-widgets .postbox {
+	margin-bottom: 16px;
+}
+
+body.adminstudio-look .welcome-panel {
+	background: var(--as-surface);
+}
+
+body.adminstudio-look .welcome-panel .welcome-panel-header {
+	background: var(--as-accent);
+	border-radius: var(--as-radius) var(--as-radius) 0 0;
+}
+
+body.adminstudio-look .welcome-panel .welcome-panel-header h2,
+body.adminstudio-look .welcome-panel .welcome-panel-header p,
+body.adminstudio-look .welcome-panel .welcome-panel-header a,
+body.adminstudio-look .welcome-panel .welcome-panel-close,
+body.adminstudio-look .welcome-panel .welcome-panel-close::before {
+	color: var(--as-on-accent);
+}
+
+body.adminstudio-look .welcome-panel-column-container {
+	background: var(--as-surface);
+}
+
+body.adminstudio-look .welcome-panel .welcome-panel-header-image {
+	opacity: 0.25;
+}
+
+/* ------------------------------------------------------------------ */
+/* Studio                                                              */
+/* ------------------------------------------------------------------ */
+
+body.adminstudio-t-studio #adminmenu li.current > a.menu-top,
+body.adminstudio-t-studio #adminmenu li.wp-has-current-submenu > a.wp-has-current-submenu {
+	box-shadow: 0 8px 18px -10px var(--as-pill);
+}
+
+/* ------------------------------------------------------------------ */
+/* Midnight                                                            */
+/* ------------------------------------------------------------------ */
+
+body.adminstudio-t-midnight #adminmenu li.current > a.menu-top,
+body.adminstudio-t-midnight #adminmenu li.wp-has-current-submenu > a.wp-has-current-submenu {
+	box-shadow: 0 6px 20px -8px var(--as-pill);
+}
+
+/* ------------------------------------------------------------------ */
+/* Minimal: accent only on text and icons.                             */
+/* ------------------------------------------------------------------ */
+
+body.adminstudio-t-minimal #adminmenu li.current > a.menu-top,
+body.adminstudio-t-minimal #adminmenu li.wp-has-current-submenu > a.wp-has-current-submenu {
+	background: var(--as-accent-soft);
+	color: var(--as-accent-text);
+	box-shadow: none;
+	font-weight: 600;
+}
+
+body.adminstudio-t-minimal #adminmenu li.current > a.menu-top div.wp-menu-image svg,
+body.adminstudio-t-minimal #adminmenu li.current > a.menu-top div.wp-menu-image::before,
+body.adminstudio-t-minimal #adminmenu li.wp-has-current-submenu > a div.wp-menu-image svg,
+body.adminstudio-t-minimal #adminmenu li.wp-has-current-submenu > a div.wp-menu-image::before {
+	color: var(--as-accent-text);
+}
+
+body.adminstudio-t-minimal .wp-core-ui .button-primary,
+body.adminstudio-t-minimal .button-primary {
+	box-shadow: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Compact: an icon rail that expands on hover or keyboard focus.      */
+/* ------------------------------------------------------------------ */
+
+@media screen and (min-width: 961px) {
+	body.adminstudio-t-compact #adminmenuwrap {
+		z-index: 9990;
+	}
+
+	body.adminstudio-t-compact #adminmenu li.menu-top {
+		margin: 2px 10px;
+	}
+
+	body.adminstudio-t-compact #adminmenu a.menu-top {
+		justify-content: center;
+		padding: 0;
+	}
+
+	body.adminstudio-t-compact #adminmenu div.wp-menu-name,
+	body.adminstudio-t-compact #adminmenu li.adminstudio-menu-heading,
+	body.adminstudio-t-compact #adminmenu .wp-has-current-submenu .wp-submenu,
+	body.adminstudio-t-compact #collapse-menu,
+	body.adminstudio-t-compact .adminstudio-foot__user span,
+	body.adminstudio-t-compact .adminstudio-foot__link span,
+	body.adminstudio-t-compact .adminstudio-foot__mode span {
+		display: none;
+	}
+
+	body.adminstudio-t-compact .adminstudio-foot__user,
+	body.adminstudio-t-compact .adminstudio-foot__link,
+	body.adminstudio-t-compact .adminstudio-foot__mode {
+		justify-content: center;
+		padding: 0;
+	}
+
+	body.adminstudio-t-compact .adminstudio-foot {
+		padding: 8px 10px 14px;
+	}
+
+	body.adminstudio-t-compact .adminstudio-foot__user {
+		background: transparent;
+	}
+
+	/* Expanded: labels return and the rail overlays the content. */
+	body.adminstudio-t-compact #adminmenuwrap:hover,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within,
+	body.adminstudio-t-compact #adminmenuwrap:hover #adminmenu,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within #adminmenu {
+		width: 240px;
+	}
+
+	body.adminstudio-t-compact #adminmenuwrap:hover,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within {
+		box-shadow: 12px 0 32px -16px rgba(0, 0, 0, 0.45);
+	}
+
+	body.adminstudio-t-compact #adminmenuwrap:hover a.menu-top,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within a.menu-top {
+		justify-content: flex-start;
+		padding: 0 10px;
+	}
+
+	body.adminstudio-t-compact #adminmenuwrap:hover div.wp-menu-name,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within div.wp-menu-name,
+	body.adminstudio-t-compact #adminmenuwrap:hover .adminstudio-foot span,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within .adminstudio-foot span {
+		display: grid;
+	}
+
+	body.adminstudio-t-compact #adminmenuwrap:hover li.adminstudio-menu-heading,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within li.adminstudio-menu-heading {
+		display: block;
+	}
+
+	body.adminstudio-t-compact #adminmenuwrap:hover .adminstudio-foot__link,
+	body.adminstudio-t-compact #adminmenuwrap:hover .adminstudio-foot__mode,
+	body.adminstudio-t-compact #adminmenuwrap:hover .adminstudio-foot__user,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within .adminstudio-foot__link,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within .adminstudio-foot__mode,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within .adminstudio-foot__user {
+		justify-content: flex-start;
+		padding: 0 10px;
+	}
+
+	body.adminstudio-t-compact #adminmenu .wp-submenu {
+		left: 64px;
+	}
+
+	body.adminstudio-t-compact #adminmenuwrap:hover .wp-submenu {
+		left: 240px;
+	}
+}
+
+/* Denser tables. */
+body.adminstudio-t-compact .widefat td,
+body.adminstudio-t-compact .widefat th {
+	padding: 6px 10px;
+	font-size: 13px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Dark mode details                                                   */
+/* ------------------------------------------------------------------ */
+
+body.adminstudio-dark #wpbody,
+body.adminstudio-dark #wpbody-content {
+	color: var(--as-text);
+}
+
+body.adminstudio-dark .form-table,
+body.adminstudio-dark .form-table td,
+body.adminstudio-dark .form-table th,
+body.adminstudio-dark .form-wrap label {
+	color: var(--as-text);
+}
+
+body.adminstudio-dark .wp-editor-container,
+body.adminstudio-dark .quicktags-toolbar,
+body.adminstudio-dark .wp-switch-editor {
+	background: var(--as-surface-2);
+	border-color: var(--as-border);
+	color: var(--as-text);
+}
+
+body.adminstudio-dark #dashboard_right_now li a::before,
+body.adminstudio-dark #dashboard_right_now li span::before,
+body.adminstudio-dark .welcome-panel-content,
+body.adminstudio-dark .postbox .inside,
+body.adminstudio-dark .postbox .inside p {
+	color: var(--as-text);
+}
+
+body.adminstudio-dark .tablenav .tablenav-pages a,
+body.adminstudio-dark .tablenav-pages-navspan {
+	background: var(--as-surface);
+	border-color: var(--as-border);
+	color: var(--as-text);
+}
+
+body.adminstudio-dark code,
+body.adminstudio-dark kbd {
+	background: var(--as-surface-2);
+	color: var(--as-text);
+}
+
+@media (prefers-color-scheme: dark) {
+	body.adminstudio-mode-system #wpbody,
+	body.adminstudio-mode-system #wpbody-content,
+	body.adminstudio-mode-system .form-table,
+	body.adminstudio-mode-system .form-table td,
+	body.adminstudio-mode-system .form-table th,
+	body.adminstudio-mode-system .postbox .inside,
+	body.adminstudio-mode-system .postbox .inside p {
+		color: var(--as-text);
+	}
+
+	body.adminstudio-mode-system .wp-editor-container,
+	body.adminstudio-mode-system .quicktags-toolbar,
+	body.adminstudio-mode-system code {
+		background: var(--as-surface-2);
+		border-color: var(--as-border);
+		color: var(--as-text);
+	}
+}
+
+/* ------------------------------------------------------------------ */
+/* Trial banner                                                        */
+/* ------------------------------------------------------------------ */
+
+.adminstudio-try {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+	padding: 8px 12px;
+}
+
+.adminstudio-try p {
+	margin: 0;
+}
+
+.adminstudio-try__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.adminstudio-try__actions form {
+	margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body.adminstudio-look *,
+	.adminstudio-foot * {
+		transition-duration: 1ms !important;
+	}
+}
