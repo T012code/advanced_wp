@@ -303,6 +303,11 @@ body.adminstudio-look #adminmenu .update-plugins {
 	font-weight: 600;
 	line-height: 20px;
 	box-sizing: border-box;
+	display: inline-block;
+	width: auto;
+	margin: 0 0 0 6px;
+	vertical-align: 1px;
+	text-align: center;
 }
 
 body.adminstudio-look #adminmenu li.current .awaiting-mod,
@@ -1022,8 +1027,12 @@ body.adminstudio-t-minimal .button-primary {
 		padding: 0 10px;
 	}
 
+	/* Names are plain text again, so count badges sit inline beside them. */
 	body.adminstudio-t-compact #adminmenuwrap:hover div.wp-menu-name,
-	body.adminstudio-t-compact #adminmenuwrap:focus-within div.wp-menu-name,
+	body.adminstudio-t-compact #adminmenuwrap:focus-within div.wp-menu-name {
+		display: block;
+	}
+
 	body.adminstudio-t-compact #adminmenuwrap:hover .adminstudio-foot span,
 	body.adminstudio-t-compact #adminmenuwrap:focus-within .adminstudio-foot span {
 		display: grid;
