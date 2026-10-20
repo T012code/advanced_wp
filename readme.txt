@@ -69,7 +69,8 @@ It starts from your theme. Colours and fonts are read from theme.json on block t
 
 * Create, clone, rename and delete roles, and edit the capabilities of any role in plain language.
 * Give a user several roles, or grant and deny single capabilities.
-* Choose which menu items each role sees, where each role lands after logging in, and keep chosen roles out of the dashboard.
+* Choose which menu items each role sees, and keep chosen roles out of the dashboard.
+* Send each role, or one person, to a chosen place after logging in: the dashboard, their profile, the home page, an admin screen, any page on the site or another address.
 * Hide the toolbar, or single toolbar items, per role on the site and in the dashboard.
 * Automatic role backups and an activity log with CSV download.
 

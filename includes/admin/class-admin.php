@@ -119,6 +119,11 @@ class Admin {
 	public static function enqueue( $hook ) {
 		if ( in_array( $hook, array( 'profile.php', 'user-edit.php', 'users.php' ), true ) ) {
 			wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), ADMINSTUDIO_VERSION );
+
+			// Shows the page or address box for the login destination picker.
+			if ( 'users.php' !== $hook ) {
+				wp_enqueue_script( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/js/admin.js', array( 'jquery' ), ADMINSTUDIO_VERSION, true );
+			}
 			return;
 		}
 

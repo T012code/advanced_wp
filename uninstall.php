@@ -28,7 +28,7 @@ delete_option( 'adminstudio_signins' );
 delete_option( 'adminstudio_admin_url' );
 delete_option( 'adminstudio_htaccess_backup' );
 
-foreach ( array( 'adminstudio_2fa_method', 'adminstudio_2fa_secret', 'adminstudio_2fa_pending', 'adminstudio_2fa_backup', 'adminstudio_2fa_last_slice', 'adminstudio_2fa_login', 'adminstudio_2fa_email_code', 'adminstudio_2fa_required_since', 'adminstudio_toolbar', 'adminstudio_look_admin', 'adminstudio_look_self', 'adminstudio_look_try', 'adminstudio_look_mode', 'adminstudio_blocked' ) as $adminstudio_meta_key ) {
+foreach ( array( 'adminstudio_2fa_method', 'adminstudio_2fa_secret', 'adminstudio_2fa_pending', 'adminstudio_2fa_backup', 'adminstudio_2fa_last_slice', 'adminstudio_2fa_login', 'adminstudio_2fa_email_code', 'adminstudio_2fa_required_since', 'adminstudio_toolbar', 'adminstudio_look_admin', 'adminstudio_look_self', 'adminstudio_look_try', 'adminstudio_look_mode', 'adminstudio_blocked', 'adminstudio_login_redirect' ) as $adminstudio_meta_key ) {
 	delete_metadata( 'user', 0, $adminstudio_meta_key, '', true );
 }
 

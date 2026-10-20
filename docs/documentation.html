@@ -458,6 +458,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Option</td><td><code>adminstudio_access</code>, <code>adminstudio_toolbar_nodes</code></td><td>Menu, toolbar, login redirect and dashboard access rules per role; the toolbar items last seen, so the settings page can list them</td></tr>
 		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_role_backups</code>, <code>adminstudio_audit</code></td><td>The last 20 copies of all roles; the activity log</td></tr>
 		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_signins</code></td><td>Sign-in history, last 1,000 events: time, event, account, username tried, IP address, browser, and the administrator who acted</td></tr>
+		<tr><td>User meta</td><td><code>adminstudio_login_redirect</code></td><td>A person's own login destination, as a short token such as <code>profile</code>, <code>page:12</code> or <code>url:https://…</code></td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_blocked</code>; <code>last_seen</code> added to WordPress's own <code>session_tokens</code></td><td>When and by whom an account was blocked; when each session was last active</td></tr>
 		<tr><td>Option</td><td><code>adminstudio_look</code></td><td>Site template and palette, custom colours, templates per role, personal choice switch, sidebar sections and menu item labels, icons and order</td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_toolbar</code>, <code>adminstudio_look_admin</code>, <code>adminstudio_look_self</code>, <code>adminstudio_look_try</code>, <code>adminstudio_look_mode</code></td><td>Per-user toolbar override; template set by an administrator; the user's own template; a template an administrator is trying; light, dark or system mode</td></tr>
@@ -577,7 +578,11 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</ul>
 	<h3>Login redirect and dashboard access</h3>
 	<ul>
-		<li>Send each role to a chosen page after logging in (for example Customers to My Account, Editors to Posts).</li>
+		<li><strong>Per role</strong> (Roles &amp; permissions → Login and access): choose where each role goes after logging in, Administrator included. Destinations: the dashboard home, their profile, the site home page, Posts, Add a new post, Pages, Media, Comments, Users, any published page on the site (picked from a list), or any other address.</li>
+		<li><strong>Per person</strong> (the user's profile → After logging in): the same choices for one account, set by an administrator. It wins over the role's destination. The Login and access section lists everyone with a destination of their own.</li>
+		<li>Order: the person's own destination, then their role's (for someone with several roles, the first role that has one), then the home page for kept-out roles, then WordPress's default.</li>
+		<li>Someone who logs in from a link to a particular screen still goes to that screen, unless "Always use these destinations" is ticked.</li>
+		<li>If a chosen page is later unpublished or deleted, the next rule in the order applies instead.</li>
 		<li>Keep chosen roles out of the dashboard entirely and send them to the front end. AJAX and REST requests keep working.</li>
 	</ul>
 	<h3>Safety</h3>

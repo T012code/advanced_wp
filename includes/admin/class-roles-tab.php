@@ -11,6 +11,7 @@ use AdminStudio\Settings;
 use AdminStudio\Modules\Roles\Access;
 use AdminStudio\Modules\Roles\Audit;
 use AdminStudio\Modules\Roles\Capabilities;
+use AdminStudio\Modules\Roles\Redirects;
 use AdminStudio\Modules\Roles\Role_Manager;
 
 defined( 'ABSPATH' ) || exit;
@@ -368,25 +369,50 @@ class Roles_Tab {
 	 * @return void
 	 */
 	private static function section_access() {
-		$roles = self::restrictable_roles();
-		$rules = Access::rules();
+		$restrictable = self::restrictable_roles();
+		$rules        = Access::rules();
 
-		echo '<p class="adminstudio-intro">' . esc_html__( 'Choose where each role goes after logging in, and keep roles that never need the dashboard out of it. Logins that ask for a specific page still go there.', 'admin-studio' ) . '</p>';
+		echo '<p class="adminstudio-intro">' . esc_html__( 'Choose where each role goes after logging in, and keep roles that never need the dashboard out of it. To send one person somewhere else, open their profile under Users; their own choice wins over their role\'s.', 'admin-studio' ) . '</p>';
 
 		self::form( 'access_save', array( 'group' => 'access' ) );
 		echo '<input type="hidden" name="present" value="1">';
 		echo '<table class="widefat striped adminstudio-matrix"><thead><tr><th>' . esc_html__( 'Role', 'admin-studio' ) . '</th><th>' . esc_html__( 'After logging in, go to', 'admin-studio' ) . '</th><th>' . esc_html__( 'Keep out of the dashboard', 'admin-studio' ) . '</th></tr></thead><tbody>';
-		foreach ( $roles as $slug => $name ) {
-			$url = isset( $rules['redirect'][ $slug ] ) ? $rules['redirect'][ $slug ] : '';
-			echo '<tr><th scope="row">' . esc_html( $name ) . '</th>';
-			printf( '<td><input type="url" class="regular-text" name="redirect[%1$s]" value="%2$s" placeholder="%3$s" aria-label="%4$s"></td>', esc_attr( $slug ), esc_attr( $url ), esc_attr__( 'Dashboard (default)', 'admin-studio' ), esc_attr( $name . ': ' . __( 'After logging in, go to', 'admin-studio' ) ) );
-			printf( '<td><input type="checkbox" name="block[]" value="%1$s" %2$s aria-label="%3$s"></td>', esc_attr( $slug ), checked( in_array( $slug, $rules['block'], true ), true, false ), esc_attr( $name . ': ' . __( 'Keep out of the dashboard', 'admin-studio' ) ) );
-			echo '</tr>';
+		foreach ( Role_Manager::roles() as $slug => $role ) {
+			$name = $role['name'];
+			echo '<tr><th scope="row">' . esc_html( $name ) . '</th><td>';
+			Redirects::field( 'redirect[' . $slug . ']', isset( $rules['redirect'][ $slug ] ) ? $rules['redirect'][ $slug ] : '', $name . ': ' . __( 'After logging in, go to', 'admin-studio' ) );
+			echo '</td><td>';
+			if ( isset( $restrictable[ $slug ] ) ) {
+				printf( '<input type="checkbox" name="block[]" value="%1$s" %2$s aria-label="%3$s">', esc_attr( $slug ), checked( in_array( $slug, $rules['block'], true ), true, false ), esc_attr( $name . ': ' . __( 'Keep out of the dashboard', 'admin-studio' ) ) );
+			} else {
+				echo '<span aria-hidden="true">&mdash;</span>';
+			}
+			echo '</td></tr>';
 		}
 		echo '</tbody></table>';
-		echo '<p class="description">' . esc_html__( 'Kept-out roles are sent to the home page if they open the dashboard. Background requests that plugins rely on keep working. Roles that can manage settings are never kept out.', 'admin-studio' ) . '</p>';
+		echo '<p><label><input type="checkbox" name="redirect_all" value="1"' . checked( ! empty( $rules['redirect_all'] ), true, false ) . '> ' . esc_html__( 'Always use these destinations, even when someone was on their way to a specific page', 'admin-studio' ) . '</label></p>';
+		echo '<p class="description">' . esc_html__( 'Without this, someone who logs in from a link to a particular screen still goes to that screen. Kept-out roles are sent to the home page if they open the dashboard; background requests that plugins rely on keep working. Roles that can manage settings are never kept out.', 'admin-studio' ) . '</p>';
 		submit_button( __( 'Save login and access', 'admin-studio' ) );
 		echo '</form>';
+
+		$people = Redirects::users();
+
+		echo '<h2 class="title">' . esc_html__( 'People with their own destination', 'admin-studio' ) . '</h2>';
+		if ( ! $people ) {
+			echo '<p>' . esc_html__( 'Nobody yet. Open someone\'s profile under Users and use "After logging in" to send them somewhere of their own.', 'admin-studio' ) . '</p>';
+			return;
+		}
+
+		echo '<ul class="adminstudio-list">';
+		foreach ( $people as $row ) {
+			printf(
+				'<li><a href="%s">%s</a>: %s</li>',
+				esc_url( get_edit_user_link( $row[0]->ID ) . '#adminstudio-login-redirect' ),
+				esc_html( $row[0]->display_name ),
+				esc_html( Redirects::describe( $row[1] ) )
+			);
+		}
+		echo '</ul>';
 	}
 
 	/**
@@ -593,6 +619,7 @@ class Roles_Tab {
 
 		if ( 'access' === $group ) {
 			Access::save( 'redirect', isset( $_POST['redirect'] ) ? wp_unslash( $_POST['redirect'] ) : array() );
+			Access::save( 'redirect_all', ! empty( $_POST['redirect_all'] ) );
 			Access::save( 'block', isset( $_POST['block'] ) ? wp_unslash( $_POST['block'] ) : array() );
 
 			Audit::log( 'access', __( 'Login redirects and dashboard access updated.', 'admin-studio' ) );

@@ -27,7 +27,7 @@
 		} );
 	}
 
-	$( document ).on( 'change', '.adminstudio-wrap :input', updateRows );
+	$( document ).on( 'change', '.adminstudio-wrap :input, .adminstudio-destination select', updateRows );
 	updateRows();
 
 	// Media picker for image URL fields.

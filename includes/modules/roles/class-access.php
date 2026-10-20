@@ -57,6 +57,7 @@ class Access {
 			array(
 				'menu'          => array(),
 				'redirect'      => array(),
+				'redirect_all'  => false,
 				'block'         => array(),
 				'toolbar_front' => array(),
 				'toolbar_admin' => array(),
@@ -90,12 +91,16 @@ class Access {
 
 			case 'redirect':
 				$clean = array();
-				foreach ( (array) $value as $role => $url ) {
-					$url = esc_url_raw( trim( (string) $url ) );
-					if ( in_array( $role, $roles, true ) && '' !== $url ) {
-						$clean[ $role ] = $url;
+				foreach ( (array) $value as $role => $choice ) {
+					$token = Redirects::clean( $choice );
+					if ( in_array( $role, $roles, true ) && '' !== $token ) {
+						$clean[ $role ] = $token;
 					}
 				}
+				break;
+
+			case 'redirect_all':
+				$clean = ! empty( $value );
 				break;
 
 			default:
@@ -116,6 +121,8 @@ class Access {
 		foreach ( array( 'menu', 'redirect', 'block', 'toolbar_front', 'toolbar_admin', 'toolbar_items' ) as $group ) {
 			self::save( $group, isset( $rules[ $group ] ) ? $rules[ $group ] : array() );
 		}
+
+		self::save( 'redirect_all', ! empty( $rules['redirect_all'] ) );
 	}
 
 	/**
@@ -297,8 +304,9 @@ class Access {
 	}
 
 	/**
-	 * Sends each role to its chosen page after logging in, unless a specific
-	 * page was requested.
+	 * Sends people to their chosen page after logging in: their own
+	 * destination first, then their role's. A login that asked for a specific
+	 * page still goes there, unless the site says to always redirect.
 	 *
 	 * @param string             $redirect  Destination.
 	 * @param string             $requested Requested destination.
@@ -306,23 +314,31 @@ class Access {
 	 * @return string
 	 */
 	public static function login_redirect( $redirect, $requested, $user ) {
-		if ( ! $user instanceof \WP_User || self::exempt( $user ) ) {
+		if ( ! $user instanceof \WP_User ) {
 			return $redirect;
 		}
 
+		$rules   = self::rules();
 		$default = '' === $requested || untrailingslashit( $requested ) === untrailingslashit( admin_url() );
 
-		if ( ! $default ) {
+		if ( ! $default && empty( $rules['redirect_all'] ) ) {
 			return $redirect;
 		}
 
-		if ( self::all_roles_in( $user, self::rules()['block'] ) ) {
+		$own = Redirects::url( (string) get_user_meta( $user->ID, Redirects::META, true ) );
+
+		if ( '' !== $own ) {
+			return $own;
+		}
+
+		if ( ! self::exempt( $user ) && self::all_roles_in( $user, $rules['block'] ) ) {
 			$redirect = home_url( '/' );
 		}
 
 		foreach ( (array) $user->roles as $role ) {
-			if ( ! empty( self::rules()['redirect'][ $role ] ) ) {
-				return self::rules()['redirect'][ $role ];
+			$url = ! empty( $rules['redirect'][ $role ] ) ? Redirects::url( $rules['redirect'][ $role ] ) : '';
+			if ( '' !== $url ) {
+				return $url;
 			}
 		}
 

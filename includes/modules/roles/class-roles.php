@@ -25,6 +25,7 @@ class Roles {
 
 		if ( is_admin() ) {
 			User_Permissions::init();
+			Redirects::init();
 		}
 	}
 }
