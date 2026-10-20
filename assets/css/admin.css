@@ -26,7 +26,133 @@
 }
 
 .adminstudio-wrap h2.title {
-	margin-top: 32px;
+	margin: 32px 0 4px;
+	font-size: 15px;
+}
+
+.adminstudio-wrap .adminstudio-tab > h2.title:first-child,
+.adminstudio-wrap .adminstudio-tab > form > h2.title:first-of-type,
+.adminstudio-wrap .adminstudio-subnav + h2.title,
+.adminstudio-wrap .adminstudio-subnav + form > h2.title:first-of-type {
+	margin-top: 20px;
+}
+
+.adminstudio-wrap h2.title + .adminstudio-intro {
+	margin: 0 0 10px;
+}
+
+/* Each settings section is a card: heading and description above, fields inside. */
+.adminstudio-wrap .adminstudio-tab .form-table {
+	border-collapse: separate;
+	border-spacing: 0;
+	margin: 10px 0 8px;
+	border: 1px solid var(--as-border, #dcdcde);
+	border-radius: 8px;
+	background: var(--as-surface, #fff);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.adminstudio-wrap .adminstudio-tab .form-table th {
+	width: 220px;
+	padding: 18px 12px 18px 24px;
+}
+
+.adminstudio-wrap .adminstudio-tab .form-table td {
+	padding: 14px 24px 14px 12px;
+}
+
+.adminstudio-wrap .adminstudio-tab .form-table tr:first-child > * {
+	padding-top: 22px;
+}
+
+.adminstudio-wrap .adminstudio-tab .form-table tr:last-child > * {
+	padding-bottom: 22px;
+}
+
+.adminstudio-wrap .adminstudio-tab .submit {
+	margin-top: 8px;
+}
+
+/* A panel with text on the left and an action on the right. */
+.adminstudio-panel {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px 24px;
+	margin: 20px 0 8px;
+	padding: 18px 24px;
+	border: 1px solid var(--as-border, #dcdcde);
+	border-radius: 8px;
+	background: var(--as-surface, #fff);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.adminstudio-panel h2 {
+	margin: 0 0 4px;
+	font-size: 15px;
+}
+
+.adminstudio-panel p {
+	margin: 0;
+	max-width: 640px;
+	color: var(--as-muted, #50575e);
+}
+
+/* Overview: one small card per feature. */
+.adminstudio-wrap .adminstudio-tab .form-table.adminstudio-modules {
+	border: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.adminstudio-modules tbody {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	gap: 12px;
+}
+
+.adminstudio-wrap .adminstudio-tab .adminstudio-modules tr {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	padding: 16px 18px;
+	border: 1px solid var(--as-border, #dcdcde);
+	border-radius: 8px;
+	background: var(--as-surface, #fff);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.adminstudio-wrap .adminstudio-tab .form-table.adminstudio-modules tr > th,
+.adminstudio-wrap .adminstudio-tab .form-table.adminstudio-modules tr > td {
+	display: block;
+	width: auto;
+	padding: 0;
+}
+
+.adminstudio-modules th {
+	font-size: 14px;
+}
+
+.adminstudio-modules td .description {
+	margin-top: 6px;
+}
+
+.adminstudio-wrap .adminstudio-modules .description .button {
+	display: table;
+	margin: 10px 0 0;
+}
+
+@media screen and (max-width: 782px) {
+	.adminstudio-wrap .adminstudio-tab .form-table th,
+	.adminstudio-wrap .adminstudio-tab .form-table td {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.adminstudio-wrap .adminstudio-tab .form-table td {
+		padding-top: 4px;
+	}
 }
 
 .adminstudio-wrap .form-table .description .button {
@@ -854,4 +980,67 @@ body.adminstudio-look .adminstudio-badge {
 
 .adminstudio-destination [hidden] {
 	display: none;
+}
+
+/* The email editor is already a card, so its fields stay flat inside it. */
+.adminstudio-wrap .adminstudio-tab .adminstudio-emails__editor .form-table {
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+	margin: 0;
+}
+
+.adminstudio-wrap .adminstudio-tab .adminstudio-emails__editor .form-table th {
+	padding-left: 0;
+}
+
+.adminstudio-wrap .adminstudio-tab .adminstudio-emails__editor .form-table td {
+	padding-right: 0;
+}
+
+/* Tools: side-by-side action cards. */
+.adminstudio-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 12px;
+	margin: 20px 0 8px;
+}
+
+.adminstudio-card {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 18px 20px;
+	border: 1px solid var(--as-border, #dcdcde);
+	border-radius: 8px;
+	background: var(--as-surface, #fff);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.adminstudio-card h2 {
+	margin: 0;
+	font-size: 15px;
+}
+
+.adminstudio-card > p {
+	margin: 0;
+	color: var(--as-muted, #50575e);
+}
+
+.adminstudio-card form {
+	margin-top: auto;
+}
+
+.adminstudio-card form p {
+	margin: 8px 0;
+}
+
+.adminstudio-card input[type="file"] {
+	max-width: 100%;
+}
+
+.adminstudio-wrap .adminstudio-status {
+	border-radius: 8px;
+	overflow: hidden;
 }

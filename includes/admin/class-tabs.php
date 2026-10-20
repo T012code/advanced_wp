@@ -134,15 +134,14 @@ class Tabs {
 			'sessions'       => array( __( 'Sessions', 'admin-studio' ), __( 'See who is signed in and on which device, limit sessions per user, sign people out, block accounts and keep a sign-in history.', 'admin-studio' ), '' ),
 		);
 
-		self::section(
-			__( 'Brand kit', 'admin-studio' ),
-			__( 'Logo, colours and fonts are read from your theme. Adjust them once in the Customizer and every area below follows.', 'admin-studio' ) . ' ' . self::customize_link( 'adminstudio_brand', __( 'Edit brand kit', 'admin-studio' ) )
-		);
+		echo '<div class="adminstudio-panel"><div><h2>' . esc_html__( 'Brand kit', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Logo, colours and fonts are read from your theme. Adjust them once in the Customizer and every area follows.', 'admin-studio' ) . '</p></div>';
+		echo wp_kses_post( self::customize_link( 'adminstudio_brand', __( 'Edit brand kit', 'admin-studio' ) ) );
+		echo '</div>';
 
 		self::form_start( 'overview' );
 		self::section( __( 'Features', 'admin-studio' ), __( 'Switch off anything you do not need. Switched-off features load no code.', 'admin-studio' ) );
 
-		echo '<table class="form-table" role="presentation">';
+		echo '<table class="form-table adminstudio-modules" role="presentation">';
 		foreach ( $modules as $key => $module ) {
 			$desc = $module[1];
 			if ( $module[2] && Settings::module_on( $key ) ) {
@@ -150,6 +149,10 @@ class Tabs {
 			}
 			Fields::checkbox( 'modules.' . $key, $module[0], __( 'On', 'admin-studio' ), $desc );
 		}
+		echo '</table>';
+
+		self::section( __( 'Site status and data', 'admin-studio' ) );
+		echo '<table class="form-table" role="presentation">';
 
 		Fields::row_start( __( 'Login protection', 'admin-studio' ) );
 		echo esc_html( Settings::module_on( 'security' ) ? __( 'On', 'admin-studio' ) : __( 'Off', 'admin-studio' ) ) . ' &middot; <a href="' . esc_url( Admin::url( 'security' ) ) . '">' . esc_html__( 'Configure', 'admin-studio' ) . '</a>';
@@ -661,20 +664,23 @@ class Tabs {
 	private static function tab_tools() {
 		$post = esc_url( admin_url( 'admin-post.php' ) );
 
-		self::section( __( 'Export', 'admin-studio' ), __( 'Download every Admin Studio setting as a JSON file to copy them to another site.', 'admin-studio' ) );
+		echo '<div class="adminstudio-cards">';
+
+		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Export', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Download every Admin Studio setting as a JSON file to copy them to another site.', 'admin-studio' ) . '</p>';
 		echo '<form method="post" action="' . esc_url( $post ) . '"><input type="hidden" name="action" value="adminstudio_export">';
 		wp_nonce_field( 'adminstudio_export' );
-		submit_button( __( 'Download settings', 'admin-studio' ), 'secondary' );
-		echo '</form>';
+		submit_button( __( 'Download settings', 'admin-studio' ), 'secondary', 'submit', false );
+		echo '</form></section>';
 
-		self::section( __( 'Import', 'admin-studio' ), __( 'Replace the current settings with an exported file. Image addresses still point to the original site.', 'admin-studio' ) );
+		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Import', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Replace the current settings with an exported file. Image addresses still point to the original site.', 'admin-studio' ) . '</p>';
 		echo '<form method="post" enctype="multipart/form-data" action="' . esc_url( $post ) . '" data-adminstudio-confirm><input type="hidden" name="action" value="adminstudio_import">';
 		wp_nonce_field( 'adminstudio_import' );
 		echo '<label for="adminstudio-file" class="screen-reader-text">' . esc_html__( 'Settings file', 'admin-studio' ) . '</label><input type="file" id="adminstudio-file" name="adminstudio_file" accept=".json,application/json" required>';
-		submit_button( __( 'Import settings', 'admin-studio' ), 'secondary' );
-		echo '</form>';
+		echo '<p>';
+		submit_button( __( 'Import settings', 'admin-studio' ), 'secondary', 'submit', false );
+		echo '</p></form></section>';
 
-		self::section( __( 'Reset', 'admin-studio' ) );
+		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Reset', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Put one section, or everything, back to its defaults.', 'admin-studio' ) . '</p>';
 		echo '<form method="post" action="' . esc_url( $post ) . '" data-adminstudio-confirm><input type="hidden" name="action" value="adminstudio_reset">';
 		wp_nonce_field( 'adminstudio_reset' );
 		$sections = array(
@@ -694,8 +700,10 @@ class Tabs {
 		}
 		echo '</select></p>';
 		echo '<p><label><input type="checkbox" name="adminstudio_confirm" value="1" required> ' . esc_html__( 'I understand this restores the defaults for the chosen section', 'admin-studio' ) . '</label></p>';
-		submit_button( __( 'Reset', 'admin-studio' ), 'delete' );
-		echo '</form>';
+		submit_button( __( 'Reset', 'admin-studio' ), 'delete', 'submit', false );
+		echo '</form></section>';
+
+		echo '</div>';
 
 		self::section( __( 'Status', 'admin-studio' ) );
 		echo '<table class="widefat striped adminstudio-status"><tbody>';

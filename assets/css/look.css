@@ -166,6 +166,40 @@ body.adminstudio-look #adminmenu li.menu-top:hover div.wp-menu-image svg {
 	color: var(--as-sidebar-text);
 }
 
+/* WordPress gives hovered and focused menu links an inset left stripe and
+   square corners, and paints the hovered row dark. Templates use rounded
+   tints instead, with a full focus ring for keyboard users. */
+body.adminstudio-look #adminmenu a:hover,
+body.adminstudio-look #adminmenu a:focus,
+body.adminstudio-look.folded #adminmenu .wp-submenu-head:hover,
+body.adminstudio-look #collapse-button:hover,
+body.adminstudio-look #collapse-button:focus {
+	box-shadow: none;
+}
+
+body.adminstudio-look #adminmenu a.menu-top:hover,
+body.adminstudio-look #adminmenu a.menu-top:focus {
+	border-radius: var(--as-radius-sm);
+}
+
+body.adminstudio-look #adminmenu .wp-submenu a:hover,
+body.adminstudio-look #adminmenu .wp-submenu a:focus {
+	border-radius: 6px;
+}
+
+body.adminstudio-look #adminmenu li.menu-top,
+body.adminstudio-look #adminmenu li.menu-top:hover,
+body.adminstudio-look #adminmenu li.opensub,
+body.adminstudio-look #adminmenu li.wp-has-current-submenu {
+	background: transparent;
+}
+
+body.adminstudio-look #adminmenu .wp-submenu a:focus-visible,
+body.adminstudio-look #collapse-button:focus-visible {
+	box-shadow: 0 0 0 2px var(--as-accent);
+	outline: 2px solid transparent;
+}
+
 body.adminstudio-look #adminmenu a.menu-top:focus-visible {
 	box-shadow: 0 0 0 2px var(--as-accent);
 	outline: 2px solid transparent;
@@ -177,7 +211,7 @@ body.adminstudio-look #adminmenu li.wp-has-current-submenu > a.wp-has-current-su
 body.adminstudio-look.folded #adminmenu li.current.menu-top {
 	background: var(--as-pill);
 	color: var(--as-on-pill);
-	box-shadow: 0 8px 18px -10px var(--as-pill);
+	box-shadow: none;
 }
 
 body.adminstudio-look #adminmenu li.current > a.menu-top div.wp-menu-image::before,
@@ -881,9 +915,16 @@ body.adminstudio-look .welcome-panel .welcome-panel-header-image {
 /* Studio                                                              */
 /* ------------------------------------------------------------------ */
 
-body.adminstudio-t-studio #adminmenu li.current > a.menu-top,
-body.adminstudio-t-studio #adminmenu li.wp-has-current-submenu > a.wp-has-current-submenu {
-	box-shadow: 0 8px 18px -10px var(--as-pill);
+body.adminstudio-t-studio:not(.adminstudio-dark) #adminmenu li.current > a.menu-top,
+body.adminstudio-t-studio:not(.adminstudio-dark) #adminmenu li.wp-has-current-submenu > a.wp-has-current-submenu {
+	box-shadow: 0 6px 14px -10px var(--as-pill);
+}
+
+@media (prefers-color-scheme: dark) {
+	body.adminstudio-t-studio.adminstudio-mode-system #adminmenu li.current > a.menu-top,
+	body.adminstudio-t-studio.adminstudio-mode-system #adminmenu li.wp-has-current-submenu > a.wp-has-current-submenu {
+		box-shadow: none;
+	}
 }
 
 /* ------------------------------------------------------------------ */
@@ -892,7 +933,7 @@ body.adminstudio-t-studio #adminmenu li.wp-has-current-submenu > a.wp-has-curren
 
 body.adminstudio-t-midnight #adminmenu li.current > a.menu-top,
 body.adminstudio-t-midnight #adminmenu li.wp-has-current-submenu > a.wp-has-current-submenu {
-	box-shadow: 0 6px 20px -8px var(--as-pill);
+	box-shadow: none;
 }
 
 /* ------------------------------------------------------------------ */
