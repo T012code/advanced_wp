@@ -146,7 +146,7 @@ class Dropins {
 	private static function build( $file ) {
 		list( , $page, $status, $retry ) = self::files()[ $file ];
 
-		$html = Error_Pages::render( $page );
+		$html = Error_Pages::render( $page, array(), true );
 
 		$json_guard = '';
 
@@ -180,6 +180,32 @@ class Dropins {
 			. $retry_header
 			. "}\n\n"
 			// var_export() writes the page as a single-quoted PHP string literal.
-			. 'echo ' . var_export( $html, true ) . ";\n"; // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export -- Builds PHP source for the drop-in file, not debug output.
+			. '$adminstudio_page = ' . var_export( $html, true ) . ";\n" // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_var_export -- Builds PHP source for the drop-in file, not debug output.
+			. self::note_code( $html )
+			. 'echo $adminstudio_page;' . "\n";
+	}
+
+	/**
+	 * Drop-in code that shows the administrators' note only to signed-in
+	 * administrators, and removes it for everyone else.
+	 *
+	 * @param string $html Page HTML.
+	 * @return string
+	 */
+	private static function note_code( $html ) {
+		if ( false === strpos( $html, Error_Pages::NOTE_MARKER ) ) {
+			return '';
+		}
+
+		$slot = '<p class="adminstudio-page__note">' . Error_Pages::NOTE_MARKER . '</p>';
+		$note = esc_html( Error_Pages::admin_note_text() );
+
+		// phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_var_export -- Builds PHP source for the drop-in file, not debug output.
+		return "if ( function_exists( 'is_user_logged_in' ) && function_exists( 'current_user_can' ) && is_user_logged_in() && current_user_can( 'manage_options' ) ) {\n"
+			. "\t" . '$adminstudio_page = str_replace( ' . var_export( Error_Pages::NOTE_MARKER, true ) . ', ' . var_export( $note, true ) . ', $adminstudio_page );' . "\n"
+			. "} else {\n"
+			. "\t" . '$adminstudio_page = str_replace( ' . var_export( $slot, true ) . ", '', " . '$adminstudio_page );' . "\n"
+			. "}\n";
+		// phpcs:enable
 	}
 }

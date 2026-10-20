@@ -162,7 +162,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</ol>
 
 	<h2>3. Where each setting lives</h2>
-	<p>Anything visual that can be previewed lives in the Customizer. Everything else lives on the settings page, where each group of settings sits in its own card and the Overview tab shows every feature as a card with its switch.</p>
+	<p>Anything visual that can be previewed lives in the Customizer. Everything else lives on the settings page, where each group of settings sits in its own card and the Overview tab shows every feature as a card with its switch. Every setting is always visible: switching a feature off does not hide its details, so you can read and fill them in before switching it on. Only a choice in a list (such as "Other address") reveals the box it needs.</p>
 	<table>
 		<tr><th>Customizer (Appearance → Customize → Admin Studio)</th><th>Settings page (Settings → Admin Studio)</th></tr>
 		<tr><td>Brand kit</td><td>Overview: switch features on or off; uninstall option</td></tr>
@@ -179,13 +179,16 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 
 	<h2>4. Brand kit</h2>
 	<p>The brand kit holds the values every area uses: logo, logo width, eight colours (primary, secondary, text, background, surface, border, success, error), a heading font, a body font, corner radius and button style (filled, outline or pill).</p>
-	<h3>How values are chosen</h3>
-	<ol>
-		<li>A value you set in the brand kit always wins.</li>
-		<li>Otherwise the theme's value is used. On block themes this is the theme.json palette, the button colour and the heading and body fonts. On classic themes it is common theme settings such as the primary or accent colour and the background colour.</li>
-		<li>If the theme has no value, a neutral built-in palette is used.</li>
-	</ol>
-	<p>Each colour control shows the colour detected from the theme. Clear a colour to follow the theme again. Surface and border colours are derived from the background and text when not set, so dark themes get dark cards automatically.</p>
+	<h3>Where the colours come from</h3>
+	<p>The Brand kit card on the Overview tab (and "Brand colours from" in the Customizer) offers four sources. Each option shows the colours it would give.</p>
+	<table>
+		<tr><th>Source</th><th>What it uses</th></tr>
+		<tr><td>Theme</td><td>The active theme's colours. On block themes this is the theme.json palette and button colour; on classic themes it is common theme settings such as the primary or accent colour and the background colour.</td></tr>
+		<tr><td>Logo</td><td>The main colours in your logo: the most used colourful shades, skipping near-white and near-black. SVG logos are read for the colours they name; PNG, JPEG, GIF and WebP logos need the GD image library, which most hosts have. The result is kept until the logo changes.</td></tr>
+		<tr><td>Front end</td><td>The colours visitors actually see on your home page, read in your browser when you click "Read colours from my site": the button colour, the link colour, the text colour and the page background. This works with page builders such as Elementor. Read it again after redesigning the site. If a security setting stops the home page opening inside the dashboard, the card says so.</td></tr>
+		<tr><td>Custom colours</td><td>The colours you pick in the Customizer's Brand kit section. The colour pickers there only apply with this option.</td></tr>
+	</table>
+	<p>Anything a source does not provide (for example, a logo usually has no text colour) comes from the theme, then from a neutral built-in palette. Surface and border colours are derived from the background and text when not set, so dark themes get dark cards automatically. Sites set up before this choice existed keep their custom colours. Logo, fonts, corner radius and button style are set in the Customizer whichever source you choose.</p>
 	<h3>Fonts</h3>
 	<p>Choose "Same as theme", a system font, or one of 16 Google fonts. A Google font is downloaded to your site once, when you publish, and then served from your uploads folder. Visitors never load it from Google.</p>
 
@@ -248,7 +251,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h2>7. Error and system pages</h2>
 	<table>
 		<tr><th>Page</th><th>When WordPress shows it</th><th>How Admin Studio handles it</th></tr>
-		<tr><td>Critical error</td><td>A plugin or theme causes a fatal PHP error.</td><td>Writes <code>wp-content/php-error.php</code>. Returns status 500. API and AJAX requests get a JSON error instead.</td></tr>
+		<tr><td>Critical error</td><td>A plugin or theme causes a fatal PHP error.</td><td>Writes <code>wp-content/php-error.php</code>. Returns status 500. API and AJAX requests get a JSON error instead. Signed-in administrators also see a "Message for administrators" (editable, empty to hide) explaining that WordPress emails a recovery link to the admin email address; visitors never see it. If the file cannot be written, the same page is shown through WordPress's own error handler, so "There has been a critical error on this website" never appears.</td></tr>
 		<tr><td>Database connection error</td><td>WordPress cannot reach its database.</td><td>Writes <code>wp-content/db-error.php</code> with a static copy of the design, because the database is unavailable. Status 500 with Retry-After.</td></tr>
 		<tr><td>Update maintenance</td><td>For a few seconds while updates install.</td><td>Writes <code>wp-content/maintenance.php</code>. Status 503 with Retry-After.</td></tr>
 		<tr><td>No permission</td><td>Someone opens a screen their account cannot use: "Sorry, you are not allowed to access this page" and the many similar messages.</td><td>Shows your own title, message and button (status 403). The button goes to the dashboard for people who can use it and to the home page for everyone else, or to a link you choose. Leave the message empty to keep WordPress's wording inside your design.</td></tr>
@@ -460,6 +463,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_signins</code></td><td>Sign-in history, last 1,000 events: time, event, account, username tried, IP address, browser, and the administrator who acted</td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_login_redirect</code></td><td>A person's own login destination, as a short token such as <code>profile</code>, <code>page:12</code> or <code>url:https://…</code></td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_blocked</code>; <code>last_seen</code> added to WordPress's own <code>session_tokens</code></td><td>When and by whom an account was blocked; when each session was last active</td></tr>
+		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_brand_palette</code></td><td>Colours read from the logo (with the logo address they came from) and from the front end (with the time they were read)</td></tr>
 		<tr><td>Option</td><td><code>adminstudio_look</code></td><td>Site template and palette, custom colours, templates per role, personal choice switch, sidebar sections and menu item labels, icons and order</td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_toolbar</code>, <code>adminstudio_look_admin</code>, <code>adminstudio_look_self</code>, <code>adminstudio_look_try</code>, <code>adminstudio_look_mode</code></td><td>Per-user toolbar override; template set by an administrator; the user's own template; a template an administrator is trying; light, dark or system mode</td></tr>
 		<tr><td>Cookie</td><td><code>adminstudio_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>

@@ -2,8 +2,9 @@
 /**
  * The brand kit: logo, colours and fonts shared by every area.
  *
- * Values come from the plugin settings first, then the active theme, then a
- * neutral fallback palette.
+ * Colours come from one source the site owner picks: the active theme, the
+ * logo, the colours visitors see on the front end, or custom colours. Anything
+ * a source does not provide falls back to the theme, then a neutral palette.
  *
  * @package AdminStudio
  */
@@ -18,6 +19,13 @@ defined( 'ABSPATH' ) || exit;
 class Brand_Kit {
 
 	const COLORS = array( 'primary', 'secondary', 'text', 'background', 'surface', 'border', 'success', 'error' );
+
+	const SOURCES = array( 'theme', 'logo', 'frontend', 'custom' );
+
+	/**
+	 * Colours read from the logo and the front end.
+	 */
+	const PALETTES = 'adminstudio_brand_palette';
 
 	/**
 	 * Cached theme detection.
@@ -195,6 +203,110 @@ class Brand_Kit {
 	}
 
 	/**
+	 * Where brand colours come from. Sites set up before the choice existed
+	 * keep their custom colours.
+	 *
+	 * @return string theme, logo, frontend or custom.
+	 */
+	public static function source() {
+		$raw    = Settings::raw();
+		$source = isset( $raw['brand']['source'] ) ? $raw['brand']['source'] : null;
+
+		if ( in_array( $source, self::SOURCES, true ) ) {
+			return $source;
+		}
+
+		foreach ( array( 'primary', 'secondary', 'text', 'background', 'surface', 'border' ) as $key ) {
+			if ( '' !== (string) Settings::get( 'brand.' . $key ) ) {
+				return 'custom';
+			}
+		}
+
+		return 'theme';
+	}
+
+	/**
+	 * Colours a source provides. Keys it does not provide are absent.
+	 *
+	 * @param string $source Source key.
+	 * @return array
+	 */
+	public static function palette_for( $source ) {
+		switch ( $source ) {
+			case 'logo':
+				return self::logo_palette();
+
+			case 'frontend':
+				$stored = get_option( self::PALETTES, array() );
+				return isset( $stored['frontend']['colors'] ) ? (array) $stored['frontend']['colors'] : array();
+
+			case 'custom':
+				$out = array();
+				foreach ( self::COLORS as $key ) {
+					$value = (string) Settings::get( 'brand.' . $key );
+					if ( '' !== $value ) {
+						$out[ $key ] = $value;
+					}
+				}
+				return $out;
+
+			default:
+				return array_filter( array_intersect_key( self::detected(), array_flip( self::COLORS ) ) );
+		}
+	}
+
+	/**
+	 * Colours picked out of the logo, cached until the logo changes.
+	 *
+	 * @return array
+	 */
+	public static function logo_palette() {
+		$logo   = self::logo_url();
+		$stored = get_option( self::PALETTES, array() );
+		$stored = is_array( $stored ) ? $stored : array();
+
+		if ( isset( $stored['logo']['url'] ) && $stored['logo']['url'] === $logo ) {
+			return (array) $stored['logo']['colors'];
+		}
+
+		$colors         = Logo_Colors::extract( $logo );
+		$stored['logo'] = array(
+			'url'    => $logo,
+			'colors' => $colors,
+		);
+		update_option( self::PALETTES, $stored, false );
+
+		return $colors;
+	}
+
+	/**
+	 * Saves the colours read from the front end.
+	 *
+	 * @param array $colors Colour name => hex.
+	 * @return array The cleaned colours.
+	 */
+	public static function save_frontend_palette( array $colors ) {
+		$clean = array();
+
+		foreach ( array( 'primary', 'secondary', 'text', 'background', 'surface' ) as $key ) {
+			$hex = isset( $colors[ $key ] ) ? Color::to_hex( (string) $colors[ $key ] ) : '';
+			if ( '' !== $hex ) {
+				$clean[ $key ] = $hex;
+			}
+		}
+
+		$stored             = get_option( self::PALETTES, array() );
+		$stored             = is_array( $stored ) ? $stored : array();
+		$stored['frontend'] = array(
+			'time'   => time(),
+			'colors' => $clean,
+		);
+		update_option( self::PALETTES, $stored, false );
+
+		return $clean;
+	}
+
+	/**
 	 * Resolved brand values.
 	 *
 	 * @param array $overrides Per-area overrides. Empty values are ignored.
@@ -203,23 +315,27 @@ class Brand_Kit {
 	public static function get( array $overrides = array() ) {
 		$detected = self::detected();
 		$fallback = self::fallback();
+		$source   = self::palette_for( self::source() );
+		$from     = static function ( $key ) use ( $source ) {
+			return isset( $source[ $key ] ) ? $source[ $key ] : '';
+		};
 		$values   = array();
 
 		foreach ( array( 'primary', 'secondary', 'text', 'background' ) as $key ) {
-			$values[ $key ] = self::first( Settings::get( 'brand.' . $key ), $detected[ $key ], $fallback[ $key ] );
+			$values[ $key ] = self::first( $from( $key ), $detected[ $key ], $fallback[ $key ] );
 		}
 
 		// Derived colours follow the main ones so dark themes get dark surfaces.
 		$light = Color::is_light( $values['background'] );
 
 		$values['surface'] = self::first(
-			Settings::get( 'brand.surface' ),
+			$from( 'surface' ),
 			$detected['surface'],
 			$light ? '#ffffff' : Color::mix( $values['background'], '#ffffff', 0.08 )
 		);
-		$values['border']  = self::first( Settings::get( 'brand.border' ), $detected['border'], Color::mix( $values['surface'], $values['text'], 0.18 ) );
-		$values['success'] = self::first( Settings::get( 'brand.success' ), $fallback['success'] );
-		$values['error']   = self::first( Settings::get( 'brand.error' ), $fallback['error'] );
+		$values['border']  = self::first( $from( 'border' ), $detected['border'], Color::mix( $values['surface'], $values['text'], 0.18 ) );
+		$values['success'] = self::first( $from( 'success' ), $fallback['success'] );
+		$values['error']   = self::first( $from( 'error' ), $fallback['error'] );
 
 		foreach ( $overrides as $key => $value ) {
 			if ( '' !== $value && null !== $value ) {

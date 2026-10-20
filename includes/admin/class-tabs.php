@@ -117,6 +117,77 @@ class Tabs {
 	}
 
 	/**
+	 * Colour swatches.
+	 *
+	 * @param array $colors Name => hex.
+	 * @return void
+	 */
+	private static function swatches( array $colors ) {
+		foreach ( array( 'primary', 'secondary', 'text', 'background' ) as $key ) {
+			if ( ! empty( $colors[ $key ] ) ) {
+				printf(
+					'<span class="adminstudio-swatch__chip" data-color="%1$s" title="%2$s %1$s"></span>',
+					esc_attr( $colors[ $key ] ),
+					esc_attr( $key )
+				);
+			}
+		}
+	}
+
+	/**
+	 * Brand kit card: where the colours come from.
+	 *
+	 * @return void
+	 */
+	private static function brand_kit() {
+		$current = Brand_Kit::source();
+		$logo    = Brand_Kit::logo_url();
+		$stored  = get_option( Brand_Kit::PALETTES, array() );
+		$read_at = isset( $stored['frontend']['time'] ) ? (int) $stored['frontend']['time'] : 0;
+
+		$options = array(
+			'theme'    => array( __( 'Theme', 'admin-studio' ), __( 'The colours set in your active theme.', 'admin-studio' ) ),
+			'logo'     => array( __( 'Logo', 'admin-studio' ), '' !== $logo ? __( 'The main colours in your logo.', 'admin-studio' ) : __( 'Add a logo in the Customizer, your theme or Settings → General first.', 'admin-studio' ) ),
+			'frontend' => array(
+				__( 'Front end', 'admin-studio' ),
+				$read_at
+					/* translators: %s: how long ago, such as "5 minutes". */
+					? sprintf( __( 'The colours visitors see on your home page, including page builders. Read %s ago.', 'admin-studio' ), human_time_diff( $read_at ) )
+					: __( 'The colours visitors see on your home page, including page builders. Not read yet.', 'admin-studio' ),
+			),
+			'custom'   => array( __( 'Custom colours', 'admin-studio' ), __( 'Colours you choose yourself in the Customizer.', 'admin-studio' ) ),
+		);
+
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="adminstudio-panel adminstudio-brand">';
+		echo '<input type="hidden" name="action" value="adminstudio_save"><input type="hidden" name="tab" value="brand">';
+		wp_nonce_field( 'adminstudio_save_brand' );
+
+		echo '<div class="adminstudio-brand__head"><div><h2>' . esc_html__( 'Brand kit', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Choose where your brand colours come from. The login page, emails, system pages and dashboard templates all use them. Logo, fonts and corners are set in the Customizer.', 'admin-studio' ) . '</p></div>';
+		echo wp_kses_post( self::customize_link( 'adminstudio_brand', __( 'Edit logo and fonts', 'admin-studio' ) ) );
+		echo '</div>';
+
+		echo '<fieldset class="adminstudio-brand__options"><legend class="screen-reader-text">' . esc_html__( 'Brand colours from', 'admin-studio' ) . '</legend>';
+		foreach ( $options as $key => $option ) {
+			$colors = 'logo' === $key && '' === $logo ? array() : Brand_Kit::palette_for( $key );
+
+			echo '<label class="adminstudio-brand__option' . ( $current === $key ? ' is-selected' : '' ) . '" data-adminstudio-source="' . esc_attr( $key ) . '">';
+			echo '<input type="radio" name="' . esc_attr( Fields::name( 'brand.source' ) ) . '" value="' . esc_attr( $key ) . '"' . checked( $current, $key, false ) . ( 'logo' === $key && '' === $logo ? ' disabled' : '' ) . '>';
+			echo '<span class="adminstudio-brand__text"><strong>' . esc_html( $option[0] ) . '</strong><small data-adminstudio-source-note>' . esc_html( $option[1] ) . '</small></span>';
+			echo '<span class="adminstudio-brand__swatches" data-adminstudio-swatches>';
+			self::swatches( $colors );
+			echo '</span>';
+			echo '</label>';
+		}
+		echo '</fieldset>';
+
+		echo '<div class="adminstudio-brand__actions">';
+		submit_button( __( 'Save brand colours', 'admin-studio' ), 'primary', 'submit', false );
+		echo '<button type="button" class="button" data-adminstudio-capture>' . esc_html__( 'Read colours from my site', 'admin-studio' ) . '</button>';
+		echo '<span class="adminstudio-brand__status" role="status" aria-live="polite"></span>';
+		echo '</div></form>';
+	}
+
+	/**
 	 * Overview: module switches.
 	 *
 	 * @return void
@@ -134,9 +205,7 @@ class Tabs {
 			'sessions'       => array( __( 'Sessions', 'admin-studio' ), __( 'See who is signed in and on which device, limit sessions per user, sign people out, block accounts and keep a sign-in history.', 'admin-studio' ), '' ),
 		);
 
-		echo '<div class="adminstudio-panel"><div><h2>' . esc_html__( 'Brand kit', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Logo, colours and fonts are read from your theme. Adjust them once in the Customizer and every area follows.', 'admin-studio' ) . '</p></div>';
-		echo wp_kses_post( self::customize_link( 'adminstudio_brand', __( 'Edit brand kit', 'admin-studio' ) ) );
-		echo '</div>';
+		self::brand_kit();
 
 		self::form_start( 'overview' );
 		self::section( __( 'Features', 'admin-studio' ), __( 'Switch off anything you do not need. Switched-off features load no code.', 'admin-studio' ) );

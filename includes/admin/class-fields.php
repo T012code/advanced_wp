@@ -82,6 +82,15 @@ class Fields {
 	 * @return array
 	 */
 	public static function show_if( $key, $value = '1' ) {
+		$field = Settings::field( $key );
+
+		// Nothing hides behind an on/off switch: those details always show,
+		// so people can read them before deciding. Only choices in a list
+		// (such as "Other address") reveal the extra field they need.
+		if ( $field && 'bool' === $field['type'] ) {
+			return array();
+		}
+
 		return array(
 			'data-adminstudio-show-if'    => self::name( $key ),
 			'data-adminstudio-show-value' => $value,

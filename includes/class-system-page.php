@@ -175,6 +175,7 @@ class System_Page {
 				)
 			),
 			'button' => array_merge( $common, array( 'type' => true ) ),
+			'p'      => $common,
 			'ul'     => $common,
 			'li'     => $common,
 			'strong' => $common,

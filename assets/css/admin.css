@@ -1044,3 +1044,102 @@ body.adminstudio-look .adminstudio-badge {
 	border-radius: 8px;
 	overflow: hidden;
 }
+
+/* Brand kit card on the Overview tab. */
+.adminstudio-brand {
+	display: block;
+}
+
+.adminstudio-brand__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px 24px;
+	margin-bottom: 14px;
+}
+
+.adminstudio-brand__options {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.adminstudio-brand__option {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 6px 10px;
+	align-items: start;
+	padding: 12px 14px;
+	border: 1px solid var(--as-border, #dcdcde);
+	border-radius: 8px;
+	cursor: pointer;
+}
+
+.adminstudio-brand__option.is-selected {
+	border-color: var(--as-accent, #2271b1);
+	box-shadow: 0 0 0 1px var(--as-accent, #2271b1);
+}
+
+.adminstudio-brand__option:has(input:focus-visible) {
+	outline: 2px solid var(--as-accent, #2271b1);
+	outline-offset: 2px;
+}
+
+.adminstudio-brand__option input {
+	margin-top: 2px;
+}
+
+.adminstudio-brand__option:has(input:disabled) {
+	cursor: default;
+	opacity: 0.7;
+}
+
+.adminstudio-brand__text {
+	display: grid;
+	gap: 2px;
+}
+
+.adminstudio-brand__text small {
+	color: var(--as-muted, #646970);
+	line-height: 1.4;
+}
+
+.adminstudio-brand__swatches {
+	grid-column: 2;
+	display: flex;
+	gap: 4px;
+	min-height: 18px;
+}
+
+.adminstudio-brand__swatches .adminstudio-swatch__chip {
+	width: 18px;
+	height: 18px;
+	border-radius: 999px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.adminstudio-brand__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 12px;
+	margin-top: 14px;
+}
+
+.adminstudio-brand__status {
+	color: var(--as-muted, #646970);
+}
+
+.adminstudio-capture-frame {
+	position: fixed;
+	left: -10000px;
+	top: 0;
+	width: 1280px;
+	height: 900px;
+	border: 0;
+	visibility: hidden;
+}

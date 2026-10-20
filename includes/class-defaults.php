@@ -47,6 +47,7 @@ class Defaults {
 			'error_pages.critical_title'      => __( 'Something went wrong', 'admin-studio' ),
 			'error_pages.critical_message'    => __( 'This page ran into a problem and could not load. The site team has been notified. Please try again in a few minutes.', 'admin-studio' ),
 			'error_pages.critical_button'     => __( 'Back to the home page', 'admin-studio' ),
+			'error_pages.critical_admin_note' => __( 'Only administrators see this: a plugin or theme stopped this page from loading. WordPress emails a recovery link to {admin_email}; open it to sign in safely and turn off whatever failed. The details are in the error log.', 'admin-studio' ),
 			'error_pages.db_title'            => __( 'We will be right back', 'admin-studio' ),
 			'error_pages.db_message'          => __( 'The site cannot reach its database at the moment. This is usually temporary. Please refresh the page in a minute or two.', 'admin-studio' ),
 			'error_pages.maintenance_title'   => __( 'Updating, back shortly', 'admin-studio' ),

@@ -25,6 +25,7 @@ delete_option( 'adminstudio_role_backups' );
 delete_option( 'adminstudio_audit' );
 delete_option( 'adminstudio_look' );
 delete_option( 'adminstudio_signins' );
+delete_option( 'adminstudio_brand_palette' );
 delete_option( 'adminstudio_admin_url' );
 delete_option( 'adminstudio_htaccess_backup' );
 

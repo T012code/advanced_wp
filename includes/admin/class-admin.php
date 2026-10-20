@@ -7,6 +7,8 @@
 
 namespace AdminStudio\Admin;
 
+use AdminStudio\Brand_Kit;
+use AdminStudio\Plugin;
 use AdminStudio\Settings;
 use AdminStudio\Modules\Emails\Emails;
 use AdminStudio\Modules\Emails\Renderer;
@@ -32,6 +34,8 @@ class Admin {
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
+		add_action( 'admin_init', array( __CLASS__, 'store_brand_source' ) );
+		add_action( 'wp_ajax_adminstudio_brand_capture', array( __CLASS__, 'ajax_brand_capture' ) );
 		Roles_Tab::init();
 		Look_Tab::init();
 		Sessions_Tab::init();
@@ -141,6 +145,15 @@ class Admin {
 				'chooseImage' => __( 'Choose image', 'admin-studio' ),
 				'useImage'    => __( 'Use this image', 'admin-studio' ),
 				'confirm'     => __( 'Are you sure? This cannot be undone.', 'admin-studio' ),
+				'capture'     => array(
+					'url'     => home_url( '/' ),
+					'ajax'    => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'adminstudio_brand_capture' ),
+					'reading' => __( 'Reading your site…', 'admin-studio' ),
+					'done'    => __( 'Colours read from your home page. Save to use them.', 'admin-studio' ),
+					'note'    => __( 'The colours visitors see on your home page, including page builders. Read just now.', 'admin-studio' ),
+					'failed'  => __( 'Your home page could not be read here, possibly because a security setting stops it opening inside the dashboard. Pick another option.', 'admin-studio' ),
+				),
 			)
 		);
 	}
@@ -182,6 +195,47 @@ class Admin {
 			</p>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Sites set up before the brand colour choice existed keep the colours they
+	 * had, so the Customizer and settings page show the right option.
+	 *
+	 * @return void
+	 */
+	public static function store_brand_source() {
+		$raw = Settings::raw();
+
+		if ( ! isset( $raw['brand']['source'] ) && current_user_can( 'manage_options' ) ) {
+			Settings::update( array( 'brand.source' => Brand_Kit::source() ) );
+		}
+	}
+
+	/**
+	 * Saves the colours read from the home page in the browser.
+	 *
+	 * @return void
+	 */
+	public static function ajax_brand_capture() {
+		check_ajax_referer( 'adminstudio_brand_capture', 'nonce' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Every value is cleaned to a hex colour by save_frontend_palette().
+		$colors = isset( $_POST['colors'] ) && is_array( $_POST['colors'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['colors'] ) ) : array();
+		$colors = Brand_Kit::save_frontend_palette( $colors );
+
+		if ( ! $colors ) {
+			wp_send_json_error();
+		}
+
+		if ( 'frontend' === Brand_Kit::source() ) {
+			Plugin::apply_saved_settings();
+		}
+
+		wp_send_json_success( array( 'colors' => $colors ) );
 	}
 
 	/**
@@ -276,6 +330,7 @@ class Admin {
 			'overview'       => array( 'modules.login', 'modules.emails', 'modules.error_pages', 'modules.tab_meta', 'modules.admin_branding', 'modules.roles', 'modules.admin_look', 'modules.widgets', 'modules.sessions', 'general.' ),
 			'emails'         => array( 'emails.templates.' . $template . '.' ),
 			'tab_meta'       => array( 'tab_meta.' ),
+			'brand'          => array( 'brand.source' ),
 			'sessions'       => array( 'sessions.' ),
 			'admin_branding' => array( 'admin_branding.' ),
 			'security'       => array( 'security.' ),

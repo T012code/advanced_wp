@@ -56,12 +56,49 @@ class Error_Pages {
 	}
 
 	/**
+	 * Placeholder in the critical error drop-in for the administrators' note.
+	 */
+	const NOTE_MARKER = 'ADMINSTUDIO_ADMIN_NOTE';
+
+	/**
+	 * The administrators' note on the critical error page, with tags filled in.
+	 *
+	 * @return string Plain text, or '' when there is none.
+	 */
+	public static function admin_note_text() {
+		$text = trim( (string) Settings::get( 'error_pages.critical_admin_note' ) );
+
+		return str_replace( array( '{admin_email}', '{site_name}' ), array( get_option( 'admin_email' ), get_bloginfo( 'name' ) ), $text );
+	}
+
+	/**
+	 * Markup for the administrators' note.
+	 *
+	 * @param bool $for_dropin Leave a placeholder for the drop-in to fill when it runs.
+	 * @return string
+	 */
+	private static function admin_note( $for_dropin ) {
+		$text = self::admin_note_text();
+
+		if ( '' === $text ) {
+			return '';
+		}
+
+		if ( $for_dropin ) {
+			return '<p class="adminstudio-page__note">' . self::NOTE_MARKER . '</p>';
+		}
+
+		return current_user_can( 'manage_options' ) ? '<p class="adminstudio-page__note">' . esc_html( $text ) . '</p>' : '';
+	}
+
+	/**
 	 * Page arguments for a system page.
 	 *
-	 * @param string $page critical, db, maintenance, wp_die or notfound.
+	 * @param string $page       critical, db, maintenance, wp_die, denied, expired or notfound.
+	 * @param bool   $for_dropin Whether the page is being saved as a drop-in file.
 	 * @return array
 	 */
-	public static function args( $page ) {
+	public static function args( $page, $for_dropin = false ) {
 		$p    = 'error_pages.';
 		$site = get_bloginfo( 'name' );
 		$base = array(
@@ -125,6 +162,7 @@ class Error_Pages {
 					'heading' => Settings::get( $p . 'critical_title' ),
 					'message' => Settings::get( $p . 'critical_message' ),
 					'buttons' => array_filter( array( self::button( Settings::get( $p . 'critical_button' ), '' !== $url ? $url : home_url( '/' ) ) ) ),
+					'extra'   => self::admin_note( $for_dropin ),
 				);
 		}
 
@@ -167,10 +205,15 @@ class Error_Pages {
 	 *
 	 * @param string $message  Plain message.
 	 * @param int    $response HTTP status.
-	 * @return string denied, expired or wp_die.
+	 * @return string critical, denied, expired or wp_die.
 	 */
 	public static function kind( $message, $response ) {
 		$message = trim( wp_strip_all_tags( $message ) );
+
+		// WordPress's own critical error screen, shown when the drop-in file is missing.
+		if ( 0 === strpos( $message, Login_Text::core( 'There has been a critical error on this website.' ) ) ) {
+			return 'critical';
+		}
 
 		// WordPress adds a "Please try again" link after this message.
 		if ( 0 === strpos( $message, Login_Text::core( 'The link you followed has expired.' ) ) ) {
@@ -226,12 +269,13 @@ class Error_Pages {
 	/**
 	 * Renders a system page to a string.
 	 *
-	 * @param string $page  Page key.
-	 * @param array  $extra Arguments that override the defaults.
+	 * @param string $page       Page key.
+	 * @param array  $extra      Arguments that override the defaults.
+	 * @param bool   $for_dropin Leave placeholders for a drop-in file.
 	 * @return string
 	 */
-	public static function render( $page, array $extra = array() ) {
-		return System_Page::render( array_merge( self::args( $page ), $extra ), self::brand() );
+	public static function render( $page, array $extra = array(), $for_dropin = false ) {
+		return System_Page::render( array_merge( self::args( $page, $for_dropin ), $extra ), self::brand() );
 	}
 
 	/**
@@ -316,6 +360,15 @@ class Error_Pages {
 		}
 
 		$kind = self::kind( (string) $message, (int) $args['response'] );
+
+		if ( 'critical' === $kind && Settings::get( 'error_pages.critical' ) ) {
+			self::send_headers( 500 );
+			self::output( 'critical' );
+			if ( $args['exit'] ) {
+				die();
+			}
+			return;
+		}
 
 		if ( 'denied' === $kind && Settings::get( 'error_pages.denied' ) ) {
 			self::send_headers( $args['response'] );

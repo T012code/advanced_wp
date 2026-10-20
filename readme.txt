@@ -14,7 +14,7 @@ Rebrand the login page, system emails, error pages, browser tab details and admi
 
 WordPress shows a lot of screens and emails in its own default style: the login page, password reset emails, the "critical error" page, the "briefly unavailable" screen, the admin footer credit. Admin Studio lets you restyle all of them to match your brand, from one place.
 
-It starts from your theme. Colours and fonts are read from theme.json on block themes and from the Customizer on classic themes, the logo comes from your theme logo, and the favicon is your site icon. Change any of them once in the brand kit and every screen follows, or override a value for one area only.
+It starts from your site. Brand colours come from your choice of source: your theme, your logo, the colours visitors see on your front end (page builders included), or custom colours. Fonts are read from your theme, the logo comes from your theme logo, and the favicon is your site icon. Change any of them once in the brand kit and every screen follows, or override a value for one area only.
 
 = Login page =
 

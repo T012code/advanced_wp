@@ -239,7 +239,12 @@ class Customizer {
 	private static function sections() {
 		$inherit  = __( 'Leave empty to use the brand kit.', 'admin-studio' );
 		$detected = Brand_Kit::detected();
-		$theme    = static function ( $key ) use ( $detected ) {
+		$custom   = 'custom' === Brand_Kit::source();
+		$theme    = static function ( $key ) use ( $detected, $custom ) {
+			if ( ! $custom ) {
+				return __( 'Used when "Brand colours from" is set to Custom colours.', 'admin-studio' );
+			}
+
 			return '' !== $detected[ $key ]
 				/* translators: %s: colour value detected from the theme. */
 				? sprintf( __( 'Following theme: %s. Pick a colour to override, or clear it to follow the theme again.', 'admin-studio' ), $detected[ $key ] )
@@ -294,6 +299,20 @@ class Customizer {
 				'controls'    => array(
 					'brand.logo'         => self::c( __( 'Logo', 'admin-studio' ), __( 'Defaults to your theme logo, then your site icon.', 'admin-studio' ) ),
 					'brand.logo_width'   => self::c( __( 'Logo width (px)', 'admin-studio' ) ),
+					'brand.source'       => self::select(
+						__( 'Brand colours from', 'admin-studio' ),
+						array(
+							'theme'    => __( 'Theme', 'admin-studio' ),
+							'logo'     => __( 'Logo', 'admin-studio' ),
+							'frontend' => __( 'Front end (what visitors see)', 'admin-studio' ),
+							'custom'   => __( 'Custom colours (below)', 'admin-studio' ),
+						),
+						sprintf(
+							/* translators: %s: settings page URL. */
+							__( 'To read the front end colours again, use the Brand kit card on the <a href="%s">settings page</a>. Fonts, logo and corners are set here whichever you pick.', 'admin-studio' ),
+							esc_url( admin_url( 'options-general.php?page=admin-studio' ) )
+						)
+					),
 					'brand.primary'      => self::c( __( 'Primary colour', 'admin-studio' ), $theme( 'primary' ) ),
 					'brand.secondary'    => self::c( __( 'Secondary colour', 'admin-studio' ), $theme( 'secondary' ) ),
 					'brand.text'         => self::c( __( 'Text colour', 'admin-studio' ), $theme( 'text' ) ),
@@ -520,6 +539,7 @@ class Customizer {
 					'error_pages.critical_message'    => self::c( __( 'Message', 'admin-studio' ) ),
 					'error_pages.critical_button'     => self::c( __( 'Button text', 'admin-studio' ), __( 'Leave empty to hide the button.', 'admin-studio' ) ),
 					'error_pages.critical_button_url' => self::c( __( 'Button link', 'admin-studio' ), __( 'Defaults to your home page.', 'admin-studio' ), array( 'control' => 'url' ) ),
+					'error_pages.critical_admin_note' => self::c( __( 'Message for administrators', 'admin-studio' ), __( 'Shown under the message only to signed-in administrators, so they know how to recover. Visitors never see it. Use {admin_email} for the site\'s admin email. Leave empty to show nothing extra.', 'admin-studio' ), array( 'control' => 'textarea' ) ),
 				),
 			),
 			'adminstudio_errors_db'          => array(

@@ -220,3 +220,15 @@ body.adminstudio-page {
 	.adminstudio-page__button { transition-duration: 1ms; }
 	.adminstudio-page__button:active { transform: none; }
 }
+
+/* Shown on the critical error page to signed-in administrators only. */
+.adminstudio-page__note {
+	margin: 20px 0 0;
+	padding: 12px 14px;
+	border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+	border-radius: 8px;
+	background: color-mix(in srgb, currentColor 6%, transparent);
+	font-size: 14px;
+	line-height: 1.5;
+	text-align: left;
+}
