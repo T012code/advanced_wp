@@ -1,0 +1,2209 @@
+# Copyright (C) 2026 Láyò
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Advanced WP 1.0.0\n"
+"Report-Msgid-Bugs-To: https://www.layothedeveloper.com\n"
+"Last-Translator: Láyò\n"
+"Language-Team: Láyò\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-20T13:49:48+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: advanced-wp\n"
+
+#. Plugin Name of the plugin
+#: advanced-wp.php
+#: includes/admin/class-admin.php:98
+#: includes/admin/class-admin.php:99
+#: includes/admin/class-admin.php:149
+#: includes/customizer/class-customizer.php:67
+msgid "Advanced WP"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: advanced-wp.php
+msgid "https://www.layothedeveloper.com"
+msgstr ""
+
+#. Description of the plugin
+#: advanced-wp.php
+msgid "Rebrand the login page, system emails, error pages, browser tab details and admin dashboard, using your theme's colours by default."
+msgstr ""
+
+#. Author of the plugin
+#: advanced-wp.php
+msgid "Láyò"
+msgstr ""
+
+#: includes/admin/class-admin.php:49
+msgid "Overview"
+msgstr ""
+
+#: includes/admin/class-admin.php:50
+#: includes/admin/class-tabs.php:99
+#: includes/admin/class-tabs.php:551
+msgid "Emails"
+msgstr ""
+
+#: includes/admin/class-admin.php:51
+msgid "Tab & page details"
+msgstr ""
+
+#: includes/admin/class-admin.php:52
+#: includes/admin/class-tabs.php:102
+#: includes/admin/class-tabs.php:554
+msgid "Admin branding"
+msgstr ""
+
+#: includes/admin/class-admin.php:53
+#: includes/admin/class-tabs.php:122
+#: includes/admin/class-tabs.php:555
+msgid "Login protection"
+msgstr ""
+
+#: includes/admin/class-admin.php:54
+#: includes/admin/class-tabs.php:556
+msgid "Coming soon"
+msgstr ""
+
+#: includes/admin/class-admin.php:55
+msgid "Tools"
+msgstr ""
+
+#: includes/admin/class-admin.php:129
+#: includes/admin/class-fields.php:196
+msgid "Choose image"
+msgstr ""
+
+#: includes/admin/class-admin.php:130
+msgid "Use this image"
+msgstr ""
+
+#: includes/admin/class-admin.php:131
+msgid "Are you sure? This cannot be undone."
+msgstr ""
+
+#: includes/admin/class-admin.php:151
+msgid "Advanced WP sections"
+msgstr ""
+
+#. translators: %s: author name linked to their website.
+#: includes/admin/class-admin.php:163
+#, php-format
+msgid "Advanced WP by %s"
+msgstr ""
+
+#: includes/admin/class-admin.php:182
+msgid "Settings saved."
+msgstr ""
+
+#: includes/admin/class-admin.php:183
+msgid "Settings imported."
+msgstr ""
+
+#: includes/admin/class-admin.php:184
+msgid "That file is not a valid Advanced WP export."
+msgstr ""
+
+#: includes/admin/class-admin.php:185
+msgid "Settings reset to their defaults."
+msgstr ""
+
+#: includes/admin/class-admin.php:186
+msgid "Tick the confirmation box to reset settings."
+msgstr ""
+
+#: includes/admin/class-admin.php:187
+msgid "Test email sent. Check your inbox (and spam folder)."
+msgstr ""
+
+#: includes/admin/class-admin.php:188
+msgid "The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this."
+msgstr ""
+
+#: includes/admin/class-admin.php:189
+msgid "That login address cannot be used. Choose another one; the custom login URL has been left off."
+msgstr ""
+
+#: includes/admin/class-admin.php:190
+msgid "Lockout lifted."
+msgstr ""
+
+#: includes/admin/class-admin.php:191
+msgid "Lockout log cleared."
+msgstr ""
+
+#: includes/admin/class-admin.php:205
+msgid "Your login page has moved. Bookmark the new address:"
+msgstr ""
+
+#: includes/admin/class-admin.php:219
+msgid "Sorry, you are not allowed to do that."
+msgstr ""
+
+#: includes/admin/class-admin.php:543
+msgid "Active"
+msgstr ""
+
+#: includes/admin/class-admin.php:544
+msgid "Another plugin or your host already uses this file. Advanced WP leaves it alone."
+msgstr ""
+
+#: includes/admin/class-admin.php:545
+#: includes/admin/class-tabs.php:123
+#: includes/admin/class-tabs.php:127
+#: includes/admin/class-tabs.php:180
+msgid "Off"
+msgstr ""
+
+#: includes/admin/class-admin.php:546
+msgid "Cannot write to wp-content. Ask your host to make it writable, or turn this page off."
+msgstr ""
+
+#: includes/admin/class-admin.php:547
+msgid "Not written yet. Save any setting to create it."
+msgstr ""
+
+#: includes/admin/class-tabs.php:98
+#: includes/admin/class-tabs.php:550
+msgid "Login page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:98
+msgid "Layouts, colours, logo and text for every screen on wp-login.php."
+msgstr ""
+
+#: includes/admin/class-tabs.php:99
+msgid "Branded HTML layout and editable wording for 15 core WordPress emails."
+msgstr ""
+
+#: includes/admin/class-tabs.php:100
+#: includes/admin/class-tabs.php:552
+msgid "Error and system pages"
+msgstr ""
+
+#: includes/admin/class-tabs.php:100
+msgid "Critical error, database error, update maintenance, permission screens and an optional 404."
+msgstr ""
+
+#: includes/admin/class-tabs.php:101
+#: includes/admin/class-tabs.php:553
+msgid "Tab and page details"
+msgstr ""
+
+#: includes/admin/class-tabs.php:101
+msgid "Browser tab titles, favicon, address bar colour and hiding WordPress traces."
+msgstr ""
+
+#: includes/admin/class-tabs.php:102
+msgid "Admin bar logo, footer credit, dashboard widgets and a brand colour scheme."
+msgstr ""
+
+#: includes/admin/class-tabs.php:106
+#: includes/admin/class-tabs.php:549
+#: includes/customizer/class-customizer.php:277
+msgid "Brand kit"
+msgstr ""
+
+#: includes/admin/class-tabs.php:107
+msgid "Logo, colours and fonts are read from your theme. Adjust them once in the Customizer and every area below follows."
+msgstr ""
+
+#: includes/admin/class-tabs.php:107
+msgid "Edit brand kit"
+msgstr ""
+
+#: includes/admin/class-tabs.php:111
+msgid "Features"
+msgstr ""
+
+#: includes/admin/class-tabs.php:111
+msgid "Switch off anything you do not need. Switched-off features load no code."
+msgstr ""
+
+#: includes/admin/class-tabs.php:117
+msgid "Design"
+msgstr ""
+
+#: includes/admin/class-tabs.php:119
+#: includes/admin/class-tabs.php:123
+#: includes/admin/class-tabs.php:127
+#: includes/admin/class-tabs.php:192
+#: includes/admin/class-tabs.php:390
+#: includes/admin/class-tabs.php:417
+#: includes/admin/class-tabs.php:442
+#: includes/admin/class-tabs.php:498
+msgid "On"
+msgstr ""
+
+#: includes/admin/class-tabs.php:123
+#: includes/admin/class-tabs.php:127
+msgid "Configure"
+msgstr ""
+
+#: includes/admin/class-tabs.php:126
+msgid "Coming soon mode"
+msgstr ""
+
+#: includes/admin/class-tabs.php:130
+msgid "Uninstall"
+msgstr ""
+
+#: includes/admin/class-tabs.php:130
+msgid "Remove all Advanced WP data when the plugin is deleted"
+msgstr ""
+
+#: includes/admin/class-tabs.php:130
+msgid "Leave this off if you might reinstall later."
+msgstr ""
+
+#: includes/admin/class-tabs.php:150
+msgid "The Emails feature is switched off on the Overview tab, so these templates are not in use."
+msgstr ""
+
+#. translators: %s: Customizer link.
+#: includes/admin/class-tabs.php:156
+#, php-format
+msgid "Edit the wording of each email here. Colours, logo and fonts are set in the Customizer. %s"
+msgstr ""
+
+#: includes/admin/class-tabs.php:157
+msgid "Design emails"
+msgstr ""
+
+#: includes/admin/class-tabs.php:163
+msgid "Email templates"
+msgstr ""
+
+#: includes/admin/class-tabs.php:165
+msgid "To users"
+msgstr ""
+
+#: includes/admin/class-tabs.php:166
+msgid "To admins"
+msgstr ""
+
+#: includes/admin/class-tabs.php:192
+msgid "Use this template"
+msgstr ""
+
+#: includes/admin/class-tabs.php:192
+msgid "When off, WordPress sends its default plain-text email."
+msgstr ""
+
+#: includes/admin/class-tabs.php:193
+msgid "Subject"
+msgstr ""
+
+#: includes/admin/class-tabs.php:194
+msgid "Heading"
+msgstr ""
+
+#: includes/admin/class-tabs.php:196
+msgid "Body"
+msgstr ""
+
+#: includes/admin/class-tabs.php:208
+msgid "Switch between Visual and Code (HTML) with the tabs above the editor."
+msgstr ""
+
+#: includes/admin/class-tabs.php:211
+#: includes/admin/class-tabs.php:346
+#: includes/customizer/class-customizer.php:499
+#: includes/customizer/class-customizer.php:533
+msgid "Button text"
+msgstr ""
+
+#: includes/admin/class-tabs.php:211
+#: includes/customizer/class-customizer.php:499
+msgid "Leave empty to hide the button."
+msgstr ""
+
+#: includes/admin/class-tabs.php:214
+msgid "Available tags"
+msgstr ""
+
+#: includes/admin/class-tabs.php:220
+msgid "Click a tag to insert it into the body."
+msgstr ""
+
+#: includes/admin/class-tabs.php:224
+msgid "Save template"
+msgstr ""
+
+#: includes/admin/class-tabs.php:228
+msgid "Preview saved version"
+msgstr ""
+
+#: includes/admin/class-tabs.php:237
+msgid "Send a test to"
+msgstr ""
+
+#: includes/admin/class-tabs.php:239
+msgid "Send test email"
+msgstr ""
+
+#: includes/admin/class-tabs.php:245
+msgid "Restore default text"
+msgstr ""
+
+#: includes/admin/class-tabs.php:259
+msgid "Browser tab titles"
+msgstr ""
+
+#: includes/admin/class-tabs.php:259
+msgid "Use {page} for the screen name and {site_name} for your site title."
+msgstr ""
+
+#: includes/admin/class-tabs.php:261
+msgid "Admin screens"
+msgstr ""
+
+#: includes/admin/class-tabs.php:261
+msgid "WordPress default: \"Dashboard ‹ Site — WordPress\"."
+msgstr ""
+
+#: includes/admin/class-tabs.php:262
+msgid "Login screens"
+msgstr ""
+
+#: includes/admin/class-tabs.php:262
+msgid "WordPress default: \"Log In ‹ Site — WordPress\"."
+msgstr ""
+
+#: includes/admin/class-tabs.php:265
+msgid "Icons and colours"
+msgstr ""
+
+#: includes/admin/class-tabs.php:269
+msgid "Favicon"
+msgstr ""
+
+#: includes/admin/class-tabs.php:270
+msgid "Show the site icon on login, admin and system pages"
+msgstr ""
+
+#. translators: %s: link to Settings > General.
+#: includes/admin/class-tabs.php:273
+#, php-format
+msgid "Set the site icon in <a href=\"%s\">Settings &rarr; General</a>. Without one, the brand logo is used."
+msgstr ""
+
+#: includes/admin/class-tabs.php:277
+msgid "Address bar colour"
+msgstr ""
+
+#: includes/admin/class-tabs.php:277
+msgid "Tint the mobile browser address bar with the brand primary colour"
+msgstr ""
+
+#: includes/admin/class-tabs.php:280
+msgid "WordPress traces"
+msgstr ""
+
+#: includes/admin/class-tabs.php:280
+msgid "Removes small giveaways in your page source. This is tidying, not a security feature."
+msgstr ""
+
+#: includes/admin/class-tabs.php:282
+msgid "Generator tag"
+msgstr ""
+
+#: includes/admin/class-tabs.php:282
+msgid "Remove the WordPress version meta tag and feed generator"
+msgstr ""
+
+#: includes/admin/class-tabs.php:283
+msgid "Asset versions"
+msgstr ""
+
+#: includes/admin/class-tabs.php:283
+msgid "Remove the WordPress version from core CSS and JavaScript URLs"
+msgstr ""
+
+#: includes/admin/class-tabs.php:284
+msgid "Legacy links"
+msgstr ""
+
+#: includes/admin/class-tabs.php:284
+msgid "Remove the RSD and Windows Live Writer links"
+msgstr ""
+
+#: includes/admin/class-tabs.php:285
+msgid "Login logo link"
+msgstr ""
+
+#: includes/admin/class-tabs.php:285
+msgid "Point the login logo to your site instead of wordpress.org"
+msgstr ""
+
+#: includes/admin/class-tabs.php:285
+msgid "Applies when the Login page feature is off; that feature has its own setting."
+msgstr ""
+
+#: includes/admin/class-tabs.php:298
+msgid "WordPress default"
+msgstr ""
+
+#: includes/admin/class-tabs.php:299
+msgid "Custom text"
+msgstr ""
+
+#: includes/admin/class-tabs.php:300
+msgid "Remove"
+msgstr ""
+
+#: includes/admin/class-tabs.php:305
+msgid "Admin bar"
+msgstr ""
+
+#: includes/admin/class-tabs.php:309
+msgid "WordPress logo"
+msgstr ""
+
+#: includes/admin/class-tabs.php:311
+msgid "Keep the WordPress logo"
+msgstr ""
+
+#: includes/admin/class-tabs.php:312
+msgid "Replace with my logo"
+msgstr ""
+
+#: includes/admin/class-tabs.php:313
+msgid "Remove it"
+msgstr ""
+
+#: includes/admin/class-tabs.php:316
+msgid "Logo image"
+msgstr ""
+
+#: includes/admin/class-tabs.php:316
+msgid "Shown 20px tall. Defaults to your site icon."
+msgstr ""
+
+#: includes/admin/class-tabs.php:317
+#: includes/customizer/class-customizer.php:366
+msgid "Logo link"
+msgstr ""
+
+#: includes/admin/class-tabs.php:317
+#: includes/customizer/class-customizer.php:366
+#: includes/customizer/class-customizer.php:500
+msgid "Defaults to your home page."
+msgstr ""
+
+#: includes/admin/class-tabs.php:318
+msgid "Greeting"
+msgstr ""
+
+#: includes/admin/class-tabs.php:318
+msgid "Show just the name instead of \"Howdy, Name\""
+msgstr ""
+
+#: includes/admin/class-tabs.php:321
+msgid "Footer credit"
+msgstr ""
+
+#: includes/admin/class-tabs.php:323
+msgid "\"Thank you for creating with WordPress\""
+msgstr ""
+
+#: includes/admin/class-tabs.php:324
+msgid "Left footer text"
+msgstr ""
+
+#: includes/admin/class-tabs.php:324
+msgid "Basic HTML and {site_name}, {site_url} and {year} are allowed."
+msgstr ""
+
+#: includes/admin/class-tabs.php:325
+msgid "WordPress version"
+msgstr ""
+
+#: includes/admin/class-tabs.php:326
+msgid "Right footer text"
+msgstr ""
+
+#: includes/admin/class-tabs.php:329
+msgid "Dashboard"
+msgstr ""
+
+#: includes/admin/class-tabs.php:333
+msgid "Hide widgets"
+msgstr ""
+
+#: includes/admin/class-tabs.php:335
+#: includes/admin/class-tabs.php:343
+msgid "Welcome panel"
+msgstr ""
+
+#: includes/admin/class-tabs.php:336
+msgid "Activity"
+msgstr ""
+
+#: includes/admin/class-tabs.php:337
+msgid "At a Glance"
+msgstr ""
+
+#: includes/admin/class-tabs.php:338
+msgid "Quick Draft"
+msgstr ""
+
+#: includes/admin/class-tabs.php:339
+msgid "WordPress Events and News"
+msgstr ""
+
+#: includes/admin/class-tabs.php:340
+msgid "Site Health Status"
+msgstr ""
+
+#: includes/admin/class-tabs.php:343
+msgid "Add my own welcome panel to the dashboard"
+msgstr ""
+
+#: includes/admin/class-tabs.php:344
+msgid "Panel title"
+msgstr ""
+
+#: includes/admin/class-tabs.php:345
+msgid "Panel content"
+msgstr ""
+
+#: includes/admin/class-tabs.php:345
+#: includes/customizer/class-customizer.php:415
+msgid "Basic HTML is allowed."
+msgstr ""
+
+#: includes/admin/class-tabs.php:347
+#: includes/customizer/class-customizer.php:500
+msgid "Button link"
+msgstr ""
+
+#: includes/admin/class-tabs.php:348
+msgid "Help tab"
+msgstr ""
+
+#: includes/admin/class-tabs.php:348
+msgid "Remove the Help tab from admin screens"
+msgstr ""
+
+#: includes/admin/class-tabs.php:349
+msgid "Screen Options"
+msgstr ""
+
+#: includes/admin/class-tabs.php:349
+msgid "Remove the Screen Options tab from admin screens"
+msgstr ""
+
+#: includes/admin/class-tabs.php:352
+msgid "Colour scheme"
+msgstr ""
+
+#: includes/admin/class-tabs.php:356
+msgid "Brand scheme"
+msgstr ""
+
+#: includes/admin/class-tabs.php:357
+msgid "Add a colour scheme built from the brand kit"
+msgstr ""
+
+#. translators: %s: profile URL.
+#: includes/admin/class-tabs.php:360
+#, php-format
+msgid "Each user picks it under Admin Color Scheme on <a href=\"%s\">their profile</a>."
+msgstr ""
+
+#: includes/admin/class-tabs.php:364
+msgid "New users"
+msgstr ""
+
+#: includes/admin/class-tabs.php:364
+msgid "Give new users the brand scheme by default"
+msgstr ""
+
+#: includes/admin/class-tabs.php:381
+#: includes/admin/class-tabs.php:390
+msgid "Custom login URL"
+msgstr ""
+
+#: includes/admin/class-tabs.php:382
+msgid "Moves the login page so bots stop hammering wp-login.php. If you ever get locked out, add <code>define( 'ADVWP_DISABLE_LOGIN_URL', true );</code> to wp-config.php."
+msgstr ""
+
+#: includes/admin/class-tabs.php:386
+msgid "Your login page is at:"
+msgstr ""
+
+#: includes/admin/class-tabs.php:393
+msgid "Login address"
+msgstr ""
+
+#: includes/admin/class-tabs.php:394
+msgid "Letters, numbers and dashes. Not \"login\", \"admin\" or \"dashboard\"."
+msgstr ""
+
+#: includes/admin/class-tabs.php:403
+msgid "When someone opens wp-login.php or /wp-admin"
+msgstr ""
+
+#: includes/admin/class-tabs.php:405
+msgid "Show a \"page not found\" page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:406
+msgid "Send them to the home page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:407
+msgid "Send them to another address"
+msgstr ""
+
+#: includes/admin/class-tabs.php:412
+msgid "Other address"
+msgstr ""
+
+#: includes/admin/class-tabs.php:415
+msgid "Limit login attempts"
+msgstr ""
+
+#: includes/admin/class-tabs.php:417
+msgid "Limit attempts"
+msgstr ""
+
+#: includes/admin/class-tabs.php:418
+msgid "Failed attempts allowed"
+msgstr ""
+
+#: includes/admin/class-tabs.php:419
+msgid "Within (minutes)"
+msgstr ""
+
+#: includes/admin/class-tabs.php:420
+msgid "Lockout length (minutes)"
+msgstr ""
+
+#: includes/admin/class-tabs.php:421
+msgid "Never lock out these IPs"
+msgstr ""
+
+#: includes/admin/class-tabs.php:421
+msgid "One per line. IPv4 ranges such as 192.168.1.0/24 work too."
+msgstr ""
+
+#: includes/admin/class-tabs.php:424
+msgid "Proxy headers"
+msgstr ""
+
+#: includes/admin/class-tabs.php:425
+msgid "My site is behind Cloudflare or another proxy"
+msgstr ""
+
+#. translators: %s: visitor IP address.
+#: includes/admin/class-tabs.php:427
+#, php-format
+msgid "Only turn this on if every request passes through a proxy, or visitors could fake their IP. Your IP as seen now: %s"
+msgstr ""
+
+#: includes/admin/class-tabs.php:432
+msgid "Honeypot"
+msgstr ""
+
+#: includes/admin/class-tabs.php:434
+msgid "Honeypot field"
+msgstr ""
+
+#: includes/admin/class-tabs.php:434
+msgid "Add a hidden field to the login, registration and lost password forms"
+msgstr ""
+
+#: includes/admin/class-tabs.php:434
+msgid "People never see it. Bots that fill in every field get rejected."
+msgstr ""
+
+#: includes/admin/class-tabs.php:438
+#: includes/modules/security/class-two-factor.php:243
+#: includes/modules/security/class-two-factor.php:286
+#: includes/modules/security/class-two-factor.php:307
+#: includes/modules/security/class-two-factor.php:510
+msgid "Two-factor authentication"
+msgstr ""
+
+#: includes/admin/class-tabs.php:439
+msgid "Users turn it on from their profile with an authenticator app or email codes, and get one-time backup codes. If you get locked out, add <code>define( 'ADVWP_DISABLE_2FA', true );</code> to wp-config.php."
+msgstr ""
+
+#: includes/admin/class-tabs.php:442
+msgid "Two-factor"
+msgstr ""
+
+#: includes/admin/class-tabs.php:443
+msgid "Email codes"
+msgstr ""
+
+#: includes/admin/class-tabs.php:443
+msgid "Allow codes by email, as a method and as a fallback"
+msgstr ""
+
+#: includes/admin/class-tabs.php:443
+msgid "Email is less secure than an app but easier for most people."
+msgstr ""
+
+#: includes/admin/class-tabs.php:444
+msgid "Require for these roles"
+msgstr ""
+
+#: includes/admin/class-tabs.php:444
+msgid "Users with these roles must set it up before the grace period ends."
+msgstr ""
+
+#: includes/admin/class-tabs.php:445
+msgid "Grace period (days)"
+msgstr ""
+
+#: includes/admin/class-tabs.php:445
+msgid "0 means they must set it up straight away."
+msgstr ""
+
+#: includes/admin/class-tabs.php:456
+msgid "Recent lockouts"
+msgstr ""
+
+#: includes/admin/class-tabs.php:457
+msgid "When"
+msgstr ""
+
+#: includes/admin/class-tabs.php:457
+msgid "IP address"
+msgstr ""
+
+#: includes/admin/class-tabs.php:457
+msgid "Username tried"
+msgstr ""
+
+#: includes/admin/class-tabs.php:457
+#: includes/admin/class-tabs.php:568
+#: includes/modules/security/class-two-factor.php:513
+msgid "Status"
+msgstr ""
+
+#: includes/admin/class-tabs.php:467
+msgid "Unlock"
+msgstr ""
+
+#: includes/admin/class-tabs.php:470
+msgid "Expired"
+msgstr ""
+
+#: includes/admin/class-tabs.php:479
+msgid "Clear log"
+msgstr ""
+
+#: includes/admin/class-tabs.php:493
+msgid "Coming soon and maintenance mode"
+msgstr ""
+
+#: includes/admin/class-tabs.php:494
+msgid "Visitors see a holding page while you work. Design it in the Customizer."
+msgstr ""
+
+#: includes/admin/class-tabs.php:494
+msgid "Design the page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:498
+msgid "Mode"
+msgstr ""
+
+#: includes/admin/class-tabs.php:498
+msgid "Administrators always see the real site."
+msgstr ""
+
+#: includes/admin/class-tabs.php:501
+msgid "Type"
+msgstr ""
+
+#: includes/admin/class-tabs.php:503
+msgid "Coming soon (for a site that has not launched)"
+msgstr ""
+
+#: includes/admin/class-tabs.php:504
+msgid "Maintenance (tells search engines to come back later)"
+msgstr ""
+
+#: includes/admin/class-tabs.php:507
+msgid "Who can see the real site"
+msgstr ""
+
+#: includes/admin/class-tabs.php:507
+msgid "Logged-in users with these roles."
+msgstr ""
+
+#: includes/admin/class-tabs.php:508
+msgid "Always open pages"
+msgstr ""
+
+#: includes/admin/class-tabs.php:508
+msgid "One path per line, such as /contact or /privacy-policy."
+msgstr ""
+
+#: includes/admin/class-tabs.php:510
+msgid "Bypass link"
+msgstr ""
+
+#: includes/admin/class-tabs.php:515
+msgid "Remove this link"
+msgstr ""
+
+#: includes/admin/class-tabs.php:517
+msgid "Create a new link (the old one stops working)"
+msgstr ""
+
+#: includes/admin/class-tabs.php:517
+msgid "Create a link"
+msgstr ""
+
+#: includes/admin/class-tabs.php:518
+msgid "Anyone who opens this link sees the real site for a week. Useful for clients."
+msgstr ""
+
+#: includes/admin/class-tabs.php:532
+msgid "Export"
+msgstr ""
+
+#: includes/admin/class-tabs.php:532
+msgid "Download every Advanced WP setting as a JSON file to copy them to another site."
+msgstr ""
+
+#: includes/admin/class-tabs.php:535
+msgid "Download settings"
+msgstr ""
+
+#: includes/admin/class-tabs.php:538
+msgid "Import"
+msgstr ""
+
+#: includes/admin/class-tabs.php:538
+msgid "Replace the current settings with an exported file. Image addresses still point to the original site."
+msgstr ""
+
+#: includes/admin/class-tabs.php:541
+msgid "Settings file"
+msgstr ""
+
+#: includes/admin/class-tabs.php:542
+msgid "Import settings"
+msgstr ""
+
+#: includes/admin/class-tabs.php:545
+#: includes/admin/class-tabs.php:565
+msgid "Reset"
+msgstr ""
+
+#: includes/admin/class-tabs.php:557
+msgid "Everything"
+msgstr ""
+
+#: includes/admin/class-tabs.php:559
+msgid "Section"
+msgstr ""
+
+#: includes/admin/class-tabs.php:564
+msgid "I understand this restores the defaults for the chosen section"
+msgstr ""
+
+#: includes/admin/class-tabs.php:573
+msgid "Critical error page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:574
+msgid "Database error page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:575
+msgid "Update maintenance page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:590
+msgid "wp-content writable"
+msgstr ""
+
+#: includes/admin/class-tabs.php:591
+msgid "Yes"
+msgstr ""
+
+#: includes/admin/class-tabs.php:591
+msgid "No"
+msgstr ""
+
+#: includes/admin/class-tabs.php:595
+msgid "Colours detected from the theme"
+msgstr ""
+
+#: includes/admin/class-tabs.php:608
+msgid "None. The built-in palette is used until you pick colours in the brand kit."
+msgstr ""
+
+#: includes/admin/class-tabs.php:613
+msgid "Overlapping plugins"
+msgstr ""
+
+#. translators: 1: plugin name, 2: Advanced WP feature name.
+#: includes/admin/class-tabs.php:618
+#, php-format
+msgid "%1$s does similar things to the %2$s feature. Use one or the other to avoid surprises."
+msgstr ""
+
+#: includes/admin/class-tabs.php:622
+msgid "None found."
+msgstr ""
+
+#: includes/class-defaults.php:47
+msgid "Something went wrong"
+msgstr ""
+
+#: includes/class-defaults.php:48
+msgid "This page ran into a problem and could not load. The site team has been notified. Please try again in a few minutes."
+msgstr ""
+
+#: includes/class-defaults.php:49
+#: includes/class-defaults.php:58
+msgid "Back to the home page"
+msgstr ""
+
+#: includes/class-defaults.php:50
+msgid "We will be right back"
+msgstr ""
+
+#: includes/class-defaults.php:51
+msgid "The site cannot reach its database at the moment. This is usually temporary. Please refresh the page in a minute or two."
+msgstr ""
+
+#: includes/class-defaults.php:52
+msgid "Updating, back shortly"
+msgstr ""
+
+#: includes/class-defaults.php:53
+msgid "The site is installing updates. This normally takes less than a minute."
+msgstr ""
+
+#: includes/class-defaults.php:54
+msgid "Something needs your attention"
+msgstr ""
+
+#: includes/class-defaults.php:55
+msgid "Go back"
+msgstr ""
+
+#: includes/class-defaults.php:56
+msgid "Page not found"
+msgstr ""
+
+#: includes/class-defaults.php:57
+msgid "The page you were looking for has moved or no longer exists. Try a search, or head back to the home page."
+msgstr ""
+
+#: includes/class-defaults.php:59
+msgid "Something new is on the way"
+msgstr ""
+
+#: includes/class-defaults.php:60
+msgid "We are putting the finishing touches on the site. Check back soon."
+msgstr ""
+
+#: includes/class-defaults.php:61
+msgid "Managed by {site_name}"
+msgstr ""
+
+#: includes/class-defaults.php:62
+#: includes/class-defaults.php:76
+msgid "Welcome to {site_name}"
+msgstr ""
+
+#: includes/class-defaults.php:63
+msgid "Use the menu on the left to manage your content. If you get stuck, contact your site administrator."
+msgstr ""
+
+#: includes/class-defaults.php:64
+msgid "© {year} {site_name}. You are receiving this email because of activity on {site_url}."
+msgstr ""
+
+#: includes/class-defaults.php:77
+msgid "Your account is ready"
+msgstr ""
+
+#: includes/class-defaults.php:78
+msgid "<p>Hi {display_name},</p><p>An account has been created for you on {site_name}. Your username is <strong>{user_name}</strong>.</p><p>Use the button below to choose your password and sign in.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:79
+msgid "Set your password"
+msgstr ""
+
+#: includes/class-defaults.php:82
+msgid "[{site_name}] Reset your password"
+msgstr ""
+
+#: includes/class-defaults.php:83
+msgid "Reset your password"
+msgstr ""
+
+#: includes/class-defaults.php:84
+msgid "<p>Hi {display_name},</p><p>Someone asked to reset the password for the account <strong>{user_name}</strong> on {site_name}.</p><p>If this was you, use the button below to choose a new password. If not, you can ignore this email and nothing will change.</p><p>This request came from IP address {ip_address}.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:85
+msgid "Reset password"
+msgstr ""
+
+#: includes/class-defaults.php:88
+msgid "[{site_name}] Your password was changed"
+msgstr ""
+
+#: includes/class-defaults.php:89
+#: includes/modules/emails/class-templates.php:76
+msgid "Password changed"
+msgstr ""
+
+#: includes/class-defaults.php:90
+msgid "<p>Hi {display_name},</p><p>The password for your account on {site_name} was just changed.</p><p>If you did not make this change, contact the site administrator straight away at {admin_email}.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:91
+msgid "Log in"
+msgstr ""
+
+#: includes/class-defaults.php:94
+msgid "[{site_name}] Confirm your new email address"
+msgstr ""
+
+#: includes/class-defaults.php:95
+msgid "Confirm your new email address"
+msgstr ""
+
+#: includes/class-defaults.php:96
+msgid "<p>Hi {display_name},</p><p>You asked to change the email address on your {site_name} account to <strong>{new_email}</strong>.</p><p>Use the button below to confirm. If you did not ask for this, ignore this email.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:97
+#: includes/class-defaults.php:145
+msgid "Confirm new address"
+msgstr ""
+
+#: includes/class-defaults.php:100
+msgid "[{site_name}] Your email address was changed"
+msgstr ""
+
+#: includes/class-defaults.php:101
+msgid "Email address changed"
+msgstr ""
+
+#: includes/class-defaults.php:102
+msgid "<p>Hi {display_name},</p><p>The email address on your {site_name} account was changed from {old_email} to {new_email}.</p><p>If you did not make this change, contact the site administrator straight away at {admin_email}.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:106
+msgid "[{site_name}] Your personal data export"
+msgstr ""
+
+#: includes/class-defaults.php:107
+msgid "Your data is ready"
+msgstr ""
+
+#: includes/class-defaults.php:108
+msgid "<p>Your request for an export of your personal data on {site_name} has been completed.</p><p>The download link stays active until {expiry_date}.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:109
+msgid "Download your data"
+msgstr ""
+
+#: includes/class-defaults.php:112
+msgid "[{site_name}] Your personal data has been erased"
+msgstr ""
+
+#: includes/class-defaults.php:113
+msgid "Erasure complete"
+msgstr ""
+
+#: includes/class-defaults.php:114
+msgid "<p>Your request to erase your personal data on {site_name} has been completed.</p><p>You can read more about how we handle data in our privacy policy: {privacy_policy_url}</p>"
+msgstr ""
+
+#: includes/class-defaults.php:118
+msgid "[{site_name}] New user registration"
+msgstr ""
+
+#: includes/class-defaults.php:119
+#: includes/modules/emails/class-templates.php:106
+msgid "New user registered"
+msgstr ""
+
+#: includes/class-defaults.php:120
+msgid "<p>A new user has registered on {site_name}.</p><p>Username: <strong>{user_name}</strong><br>Email: {user_email}</p>"
+msgstr ""
+
+#: includes/class-defaults.php:121
+msgid "View user"
+msgstr ""
+
+#: includes/class-defaults.php:124
+msgid "[{site_name}] Password changed for {user_name}"
+msgstr ""
+
+#: includes/class-defaults.php:125
+msgid "A user changed their password"
+msgstr ""
+
+#: includes/class-defaults.php:126
+msgid "<p>The user <strong>{user_name}</strong> ({user_email}) changed their password on {site_name}.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:130
+msgid "[{site_name}] New comment on \"{post_title}\""
+msgstr ""
+
+#: includes/class-defaults.php:131
+#: includes/modules/emails/class-templates.php:118
+msgid "New comment"
+msgstr ""
+
+#: includes/class-defaults.php:132
+msgid "<p><strong>{comment_author}</strong> left a comment on <a href=\"{post_link}\">{post_title}</a>:</p><blockquote>{comment_content}</blockquote>"
+msgstr ""
+
+#: includes/class-defaults.php:133
+msgid "View comment"
+msgstr ""
+
+#: includes/class-defaults.php:136
+msgid "[{site_name}] Please moderate: \"{post_title}\""
+msgstr ""
+
+#: includes/class-defaults.php:137
+msgid "A comment is waiting for approval"
+msgstr ""
+
+#: includes/class-defaults.php:138
+msgid "<p><strong>{comment_author}</strong> ({comment_author_email}) left a comment on <a href=\"{post_link}\">{post_title}</a>:</p><blockquote>{comment_content}</blockquote><p>There are {pending_count} comments waiting for approval.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:139
+msgid "Moderate comment"
+msgstr ""
+
+#: includes/class-defaults.php:142
+msgid "[{site_name}] Confirm the new admin email address"
+msgstr ""
+
+#: includes/class-defaults.php:143
+msgid "Confirm the new admin email"
+msgstr ""
+
+#: includes/class-defaults.php:144
+msgid "<p>Someone with administrator access asked to change the admin email address of {site_name} to <strong>{new_email}</strong>.</p><p>Use the button below to confirm. If you did not ask for this, ignore this email.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:148
+msgid "[{site_name}] Admin email address changed"
+msgstr ""
+
+#: includes/class-defaults.php:149
+msgid "Admin email changed"
+msgstr ""
+
+#: includes/class-defaults.php:150
+msgid "<p>The admin email address of {site_name} was changed from {old_email} to {new_email}.</p><p>If you did not make this change, sign in and check your site settings.</p>"
+msgstr ""
+
+#: includes/class-defaults.php:155
+msgid "Update report"
+msgstr ""
+
+#: includes/class-defaults.php:156
+msgid "<p>WordPress ran automatic updates on {site_name}. Here are the details:</p>{update_details}"
+msgstr ""
+
+#: includes/class-defaults.php:157
+msgid "Open updates"
+msgstr ""
+
+#: includes/class-defaults.php:160
+msgid "[{site_name}] Your site is having a technical problem"
+msgstr ""
+
+#: includes/class-defaults.php:161
+msgid "Your site ran into a problem"
+msgstr ""
+
+#: includes/class-defaults.php:162
+msgid "<p>A plugin or theme caused an error on {site_name}. Visitors may see an error page until it is fixed.</p><p>Recovery mode lets you sign in safely and switch off the cause. Use the button below to start.</p><h3>Technical details</h3>{technical_details}"
+msgstr ""
+
+#: includes/class-defaults.php:163
+msgid "Enter recovery mode"
+msgstr ""
+
+#: includes/class-fonts.php:65
+msgid "Same as theme"
+msgstr ""
+
+#: includes/class-fonts.php:66
+msgid "System sans-serif"
+msgstr ""
+
+#: includes/class-fonts.php:67
+msgid "System serif"
+msgstr ""
+
+#: includes/class-plugin.php:109
+msgid "Settings"
+msgstr ""
+
+#: includes/class-plugin.php:110
+msgid "Customize"
+msgstr ""
+
+#. translators: %s: settings page URL.
+#: includes/customizer/class-customizer.php:70
+#, php-format
+msgid "Design your login page, emails and system pages. Email wording, security and admin branding live on the <a href=\"%s\">settings page</a>."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:238
+msgid "Leave empty to use the brand kit."
+msgstr ""
+
+#. translators: %s: colour value detected from the theme.
+#: includes/customizer/class-customizer.php:243
+#, php-format
+msgid "Following theme: %s. Pick a colour to override, or clear it to follow the theme again."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:244
+msgid "Not set by the theme. Using the built-in default until you pick one."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:250
+msgid "Brand default"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:268
+msgid "Critical error"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:269
+msgid "Database connection error"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:270
+msgid "Update maintenance"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:271
+msgid "Permission and notice screens"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:272
+msgid "Page not found (404)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:278
+msgid "Set these once. The login page, emails and system pages all use them unless you override a value in that area."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:280
+#: includes/customizer/class-customizer.php:364
+#: includes/customizer/class-customizer.php:442
+msgid "Logo"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:280
+msgid "Defaults to your theme logo, then your site icon."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:281
+#: includes/customizer/class-customizer.php:365
+#: includes/customizer/class-customizer.php:443
+msgid "Logo width (px)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:282
+msgid "Primary colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:283
+msgid "Secondary colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:284
+#: includes/customizer/class-customizer.php:405
+#: includes/customizer/class-customizer.php:448
+#: includes/customizer/class-customizer.php:487
+#: includes/customizer/class-customizer.php:552
+msgid "Text colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:285
+#: includes/customizer/class-customizer.php:341
+#: includes/customizer/class-customizer.php:485
+#: includes/customizer/class-customizer.php:549
+msgid "Background colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:286
+msgid "Surface colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:286
+msgid "Cards, forms and email bodies."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:287
+msgid "Border colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:288
+msgid "Success colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:289
+msgid "Error colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:290
+msgid "Heading font"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:290
+msgid "Google fonts are downloaded to your site when you publish, so visitors never load them from Google."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:291
+msgid "Body font"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:293
+#: includes/customizer/class-customizer.php:473
+msgid "Corner radius (px)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:303
+msgid "Button style"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:305
+#: includes/customizer/class-customizer.php:401
+msgid "Filled"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:306
+msgid "Outline"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:307
+msgid "Pill"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:313
+msgid "Login: layout and background"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:316
+msgid "Layout"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:318
+msgid "Centered card"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:319
+msgid "Split screen"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:320
+msgid "Full background"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:321
+msgid "Minimal (WordPress default, restyled)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:325
+msgid "Split screen: image side"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:327
+msgid "Left"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:328
+msgid "Right"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:331
+msgid "Split screen: image"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:333
+msgid "Background type"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:335
+msgid "Colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:336
+msgid "Gradient"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:337
+msgid "Image"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:338
+msgid "Video"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:342
+msgid "Gradient start"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:343
+msgid "Gradient end"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:345
+msgid "Gradient angle (degrees)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:354
+#: includes/customizer/class-customizer.php:550
+msgid "Background image"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:355
+msgid "Background video (MP4)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:355
+msgid "Muted and looped. The background colour shows while it loads."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:356
+msgid "Overlay colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:357
+msgid "Overlay opacity"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:361
+msgid "Login: logo"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:363
+msgid "Hide the logo"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:367
+msgid "Logo text for screen readers"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:367
+msgid "Defaults to your site title."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:371
+msgid "Login: form and button"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:374
+msgid "Form width (px)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:384
+msgid "Form padding (px)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:393
+msgid "Form corner radius (px)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:394
+msgid "Form background"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:395
+msgid "Show a shadow under the form"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:397
+msgid "Field style"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:399
+msgid "Boxed"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:400
+msgid "Underline"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:404
+msgid "Hide field labels and use placeholders"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:406
+msgid "Link colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:407
+#: includes/customizer/class-customizer.php:449
+#: includes/customizer/class-customizer.php:488
+msgid "Button colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:408
+#: includes/customizer/class-customizer.php:450
+msgid "Button text colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:408
+msgid "Leave empty to pick black or white automatically."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:409
+msgid "Button corner radius (px)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:413
+msgid "Login: text and links"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:415
+msgid "Message above the form"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:416
+#: includes/customizer/class-customizer.php:474
+msgid "Footer text"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:417
+msgid "Hide \"Lost your password?\""
+msgstr ""
+
+#: includes/customizer/class-customizer.php:418
+msgid "Hide \"Go to site\""
+msgstr ""
+
+#: includes/customizer/class-customizer.php:419
+msgid "Hide the language switcher"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:420
+msgid "Hide the privacy policy link"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:424
+msgid "Login: custom CSS"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:426
+msgid "Custom CSS"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:426
+msgid "Applied to every login, registration and password screen."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:430
+msgid "Emails: design"
+msgstr ""
+
+#. translators: %s: settings page URL.
+#: includes/customizer/class-customizer.php:433
+#, php-format
+msgid "Edit the wording of each email on the <a href=\"%s\">settings page</a>."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:438
+msgid "Preview email"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:441
+msgid "Show the logo in the header"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:444
+msgid "Header background"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:444
+msgid "Leave empty to use the content background."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:445
+msgid "Header text colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:446
+msgid "Outer background"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:447
+msgid "Content background"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:452
+msgid "Font"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:454
+msgid "Brand body font (falls back to a safe font in most mail apps)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:455
+msgid "System font"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:464
+msgid "Content width (px)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:474
+msgid "Tags: {site_name}, {site_url}, {year}."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:478
+msgid "System pages: design"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:479
+msgid "Shared by the critical error, database error, update maintenance, permission and 404 pages."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:482
+msgid "Preview page"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:486
+msgid "Card colour"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:489
+#: includes/customizer/class-customizer.php:548
+msgid "Show the logo"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:490
+msgid "Illustration"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:490
+msgid "Optional image shown above the title."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:494
+msgid "System pages: critical error"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:496
+msgid "Replace the critical error page"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:496
+msgid "Shown when a plugin or theme causes a fatal PHP error."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:497
+#: includes/customizer/class-customizer.php:507
+#: includes/customizer/class-customizer.php:515
+#: includes/customizer/class-customizer.php:531
+msgid "Title"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:498
+#: includes/customizer/class-customizer.php:508
+#: includes/customizer/class-customizer.php:516
+#: includes/customizer/class-customizer.php:532
+#: includes/customizer/class-customizer.php:546
+msgid "Message"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:504
+msgid "System pages: database error"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:506
+msgid "Replace the database connection error page"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:506
+msgid "Saved as a static file, because the database is unavailable when this page shows."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:512
+msgid "System pages: update maintenance"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:514
+msgid "Replace the \"Briefly unavailable\" screen"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:514
+msgid "Shown for a few seconds while WordPress installs updates."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:520
+msgid "System pages: permission and notice screens"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:522
+msgid "Restyle WordPress notice screens"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:522
+msgid "For example \"Sorry, you are not allowed to access this page.\" The original message is kept."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:523
+msgid "Fallback title"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:523
+msgid "Used when WordPress does not give the screen a title."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:524
+msgid "Back button text"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:528
+msgid "System pages: page not found (404)"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:530
+msgid "Replace the theme 404 page"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:530
+msgid "Off by default, so your theme keeps its own 404 page."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:534
+msgid "Show a search box"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:538
+msgid "Coming soon page"
+msgstr ""
+
+#. translators: %s: settings page URL.
+#: includes/customizer/class-customizer.php:541
+#, php-format
+msgid "Turn the mode on and choose who can see the site on the <a href=\"%s\">settings page</a>."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:545
+msgid "Headline"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:547
+msgid "Countdown to"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:547
+msgid "Leave empty to hide the countdown. Uses your site time zone."
+msgstr ""
+
+#: includes/customizer/class-customizer.php:551
+msgid "Image darkening"
+msgstr ""
+
+#: includes/customizer/class-customizer.php:552
+msgid "Leave empty to pick a readable colour automatically."
+msgstr ""
+
+#. translators: %s: contrast ratio such as 3.2.
+#: includes/customizer/class-customizer.php:605
+#, php-format
+msgid "Low contrast (%s:1). Text may be hard to read. Aim for at least 4.5:1."
+msgstr ""
+
+#: includes/modules/admin-branding/class-admin-branding.php:204
+msgid "Brand (Advanced WP)"
+msgstr ""
+
+#: includes/modules/emails/class-renderer.php:199
+msgid "If the button does not work, copy this link into your browser:"
+msgstr ""
+
+#: includes/modules/emails/class-renderer.php:364
+msgid "Hello world!"
+msgstr ""
+
+#: includes/modules/emails/class-renderer.php:368
+msgid "Thanks for writing this. The second section answered exactly what I was looking for."
+msgstr ""
+
+#. translators: %s: site title.
+#: includes/modules/emails/class-renderer.php:373
+#, php-format
+msgid "[%s] Some plugins were automatically updated"
+msgstr ""
+
+#: includes/modules/emails/class-renderer.php:374
+msgid "These plugins are now up to date: Example Plugin (from version 1.2 to 1.3)."
+msgstr ""
+
+#: includes/modules/emails/class-renderer.php:377
+msgid "An error of type E_ERROR was caused in line 12 of the file example-plugin.php."
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:64
+msgid "New account / welcome"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:70
+msgid "Password reset request"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:82
+msgid "Email address change confirmation"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:88
+msgid "Email address changed notice"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:94
+msgid "Personal data export ready"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:100
+msgid "Personal data erased"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:112
+msgid "User changed their password"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:124
+msgid "Comment awaiting moderation"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:130
+msgid "Site admin email change confirmation"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:136
+msgid "Site admin email changed notice"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:142
+msgid "Automatic update results"
+msgstr ""
+
+#: includes/modules/emails/class-templates.php:148
+msgid "Recovery mode (site error)"
+msgstr ""
+
+#: includes/modules/error-pages/class-error-pages.php:89
+msgid "Sorry, you are not allowed to access this page."
+msgstr ""
+
+#: includes/modules/error-pages/class-error-pages.php:139
+msgid "Search this site"
+msgstr ""
+
+#: includes/modules/error-pages/class-error-pages.php:140
+msgid "Search"
+msgstr ""
+
+#: includes/modules/login/class-login.php:381
+#: includes/modules/login/class-login.php:408
+msgid "Log In"
+msgstr ""
+
+#: includes/modules/login/class-login.php:394
+msgid "Username or Email Address"
+msgstr ""
+
+#: includes/modules/login/class-login.php:398
+msgid "Password"
+msgstr ""
+
+#: includes/modules/login/class-login.php:401
+msgid "Show password"
+msgstr ""
+
+#: includes/modules/login/class-login.php:406
+msgid "Remember Me"
+msgstr ""
+
+#: includes/modules/login/class-login.php:412
+msgid "Lost your password?"
+msgstr ""
+
+#. translators: %s: site title.
+#: includes/modules/login/class-login.php:418
+#, php-format
+msgid "&larr; Go to %s"
+msgstr ""
+
+#: includes/modules/maintenance/class-maintenance.php:188
+msgid "Days"
+msgstr ""
+
+#: includes/modules/maintenance/class-maintenance.php:189
+msgid "Hours"
+msgstr ""
+
+#: includes/modules/maintenance/class-maintenance.php:190
+msgid "Minutes"
+msgstr ""
+
+#: includes/modules/maintenance/class-maintenance.php:191
+msgid "Seconds"
+msgstr ""
+
+#: includes/modules/maintenance/class-maintenance.php:194
+msgid "Time until launch"
+msgstr ""
+
+#: includes/modules/maintenance/class-maintenance.php:222
+msgid "Maintenance mode on"
+msgstr ""
+
+#: includes/modules/maintenance/class-maintenance.php:222
+msgid "Coming soon mode on"
+msgstr ""
+
+#. translators: %s: time left, such as "12 mins".
+#: includes/modules/security/class-attempts.php:141
+#, php-format
+msgid "<strong>Error:</strong> Too many failed login attempts. Please try again in %s."
+msgstr ""
+
+#. translators: %d: number of attempts left.
+#: includes/modules/security/class-attempts.php:206
+#, php-format
+msgid "%d attempt left before a temporary lockout."
+msgid_plural "%d attempts left before a temporary lockout."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/modules/security/class-honeypot.php:43
+msgid "Leave this field empty"
+msgstr ""
+
+#: includes/modules/security/class-honeypot.php:64
+#: includes/modules/security/class-honeypot.php:75
+msgid "<strong>Error:</strong> Your request could not be processed."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:122
+msgid "Two-factor authentication is on for this account. Use an application password for XML-RPC."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:242
+msgid "This sign-in link has expired. Please log in again."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:244
+#: includes/modules/security/class-two-factor.php:287
+msgid "Back to log in"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:255
+msgid "The form expired. Please enter your code again."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:258
+msgid "We sent a code to your email address."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:268
+msgid "You have logged in successfully."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:285
+msgid "Too many incorrect codes. Please log in again."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:293
+msgid "<strong>Error:</strong> That code is not valid. Please try again."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:299
+msgid "Enter the 6-digit code from your authenticator app."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:300
+msgid "Enter the 6-digit code we sent to your email address."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:319
+msgid "Authentication code"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:322
+msgid "Lost access to your device? Enter one of your backup codes instead."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:324
+msgid "Verify"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:333
+msgid "Send a new code"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:333
+msgid "Email me a code instead"
+msgstr ""
+
+#. translators: %s: site title.
+#: includes/modules/security/class-two-factor.php:425
+#, php-format
+msgid "Use this code to finish signing in to %s:"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:430
+msgid "The code expires in 10 minutes. If you did not try to sign in, change your password straight away."
+msgstr ""
+
+#. translators: %s: site title.
+#: includes/modules/security/class-two-factor.php:435
+#, php-format
+msgid "[%s] Your sign-in code"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:436
+msgid "Your sign-in code"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:485
+msgid "That code is not valid. Check your app and try again."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:486
+msgid "We sent a code to your email address. Enter it below."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:487
+msgid "Something went wrong. Please reload the page and try again."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:488
+msgid "Turn off two-factor authentication for your account?"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:489
+msgid "Copied"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:490
+msgid "Two-factor authentication is on. Save your backup codes now."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:491
+msgid "Two-factor authentication is off."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:518
+msgid "On, using an authenticator app."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:520
+msgid "On, using codes sent by email."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:522
+msgid "Off."
+msgstr ""
+
+#. translators: %d: number of unused backup codes.
+#: includes/modules/security/class-two-factor.php:528
+#, php-format
+msgid "%d backup code left."
+msgid_plural "%d backup codes left."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/modules/security/class-two-factor.php:532
+msgid "Your role requires two-factor authentication."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:541
+msgid "Generate new backup codes"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:543
+msgid "Turn off two-factor"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:546
+msgid "Set up an authenticator app"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:548
+msgid "Use email codes instead"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:554
+msgid "Scan this QR code with your authenticator app, such as Google Authenticator, Microsoft Authenticator, 1Password or Authy."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:557
+msgid "Cannot scan it? Enter this key in the app instead:"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:563
+msgid "Enter the 6-digit code to confirm"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:565
+msgid "Verify and turn on"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:569
+msgid "Backup codes"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:570
+msgid "Each code works once. Keep them somewhere safe, such as a password manager. They will not be shown again."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:572
+msgid "Copy codes"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:580
+msgid "Reset two-factor for this user"
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:583
+msgid "Use this if they lost their device and backup codes. They can sign in with only a password until they set it up again."
+msgstr ""
+
+#: includes/modules/security/class-two-factor.php:823
+msgid "Your role requires two-factor authentication. Set it up below to keep using the dashboard."
+msgstr ""
+
+#. translators: %d: number of days.
+#: includes/modules/security/class-two-factor.php:826
+#, php-format
+msgid "Your role requires two-factor authentication. Please set it up within %d day."
+msgid_plural "Your role requires two-factor authentication. Please set it up within %d days."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/modules/security/class-two-factor.php:834
+msgid "Set up two-factor"
+msgstr ""
