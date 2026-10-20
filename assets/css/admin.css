@@ -109,43 +109,80 @@
 	align-items: center;
 }
 
-/* Sub-navigation inside a tab. */
+/* Sub-navigation inside a tab. With the WordPress default look it matches
+   core's own sub-navigation (as on the Posts screen: All | Published). */
 .adminstudio-subnav ul {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 6px;
+	align-items: center;
 	margin: 16px 0 8px;
+	font-size: 13px;
+	color: #646970;
 }
 
 .adminstudio-subnav li {
 	margin: 0;
 }
 
+.adminstudio-subnav li + li::before {
+	content: "|";
+	padding: 0 6px;
+	color: #a7aaad;
+}
+
 .adminstudio-subnav a {
 	display: inline-block;
-	padding: 6px 14px;
-	border: 1px solid #dcdcde;
-	border-radius: 999px;
-	background: #fff;
-	color: #1d2327;
+	padding: 2px 0;
+	line-height: 2;
 	text-decoration: none;
 }
 
-.adminstudio-subnav a:hover {
-	border-color: var(--as-accent, #2271b1);
-	color: var(--as-accent-text, #135e96);
-}
-
 .adminstudio-subnav a.is-current {
-	background: var(--as-accent, #2271b1);
-	border-color: var(--as-accent, #2271b1);
-	color: var(--as-on-accent, #fff);
+	color: #000;
+	font-weight: 600;
 }
 
 .adminstudio-subnav a:focus-visible {
-	outline: 2px solid var(--as-accent, #2271b1);
-	outline-offset: 2px;
+	outline: 2px solid #2271b1;
+	outline-offset: 1px;
+	border-radius: 2px;
 	box-shadow: none;
+}
+
+/* With an admin template, which uses pill tabs throughout, they become pills. */
+body.adminstudio-look .adminstudio-subnav ul {
+	gap: 6px;
+}
+
+body.adminstudio-look .adminstudio-subnav li + li::before {
+	content: none;
+}
+
+body.adminstudio-look .adminstudio-subnav a {
+	padding: 6px 14px;
+	line-height: 1.4;
+	border: 1px solid var(--as-border);
+	border-radius: 999px;
+	background: var(--as-surface);
+	color: var(--as-text);
+}
+
+body.adminstudio-look .adminstudio-subnav a:hover {
+	border-color: var(--as-accent);
+	color: var(--as-accent-text);
+}
+
+body.adminstudio-look .adminstudio-subnav a.is-current {
+	background: var(--as-accent);
+	border-color: var(--as-accent);
+	color: var(--as-on-accent);
+	font-weight: 400;
+}
+
+body.adminstudio-look .adminstudio-subnav a:focus-visible {
+	outline-color: var(--as-accent);
+	outline-offset: 2px;
+	border-radius: 999px;
 }
 
 /* Roles. */
