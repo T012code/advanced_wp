@@ -746,37 +746,60 @@ body.adminstudio-look .notice-dismiss::before {
 	color: var(--as-muted);
 }
 
-/* Tabs and screen options. */
+/* Tabs: one segmented bar, so a row of tabs reads as a single control
+   rather than a cluster of separate pills. Only the current tab is filled. */
 body.adminstudio-look .nav-tab-wrapper,
 body.adminstudio-look .wrap h2.nav-tab-wrapper {
-	border: 0;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 6px;
+	gap: 2px;
+	width: fit-content;
+	max-width: 100%;
+	box-sizing: border-box;
+	margin: 12px 0 0;
+	padding: 4px;
+	border: 1px solid var(--as-border);
+	border-radius: var(--as-radius-sm);
+	background: var(--as-surface);
 }
 
 body.adminstudio-look .nav-tab {
 	margin: 0;
-	border: 1px solid var(--as-border);
-	border-radius: 999px;
-	background: var(--as-surface);
-	color: var(--as-text);
+	border: 0;
+	border-radius: 6px;
+	background: transparent;
+	color: var(--as-muted);
 	font-size: 13px;
 	font-weight: 500;
-	padding: 6px 14px;
+	line-height: 1.4;
+	padding: 6px 10px;
 }
 
-body.adminstudio-look .nav-tab:hover {
-	background: var(--as-accent-soft);
+body.adminstudio-look .nav-tab:hover,
+body.adminstudio-look .nav-tab:focus {
+	background: var(--as-surface-2);
 	color: var(--as-text);
+}
+
+body.adminstudio-look .nav-tab:focus-visible {
+	outline: 2px solid var(--as-accent);
+	outline-offset: 0;
+	box-shadow: none;
 }
 
 body.adminstudio-look .nav-tab-active,
 body.adminstudio-look .nav-tab-active:hover,
 body.adminstudio-look .nav-tab-active:focus {
 	background: var(--as-accent);
-	border-color: var(--as-accent);
 	color: var(--as-on-accent);
+}
+
+body.adminstudio-t-minimal .nav-tab-active,
+body.adminstudio-t-minimal .nav-tab-active:hover,
+body.adminstudio-t-minimal .nav-tab-active:focus {
+	background: var(--as-accent-soft);
+	color: var(--as-accent-text);
+	font-weight: 600;
 }
 
 body.adminstudio-look #screen-meta,
