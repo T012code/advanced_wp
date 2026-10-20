@@ -90,6 +90,15 @@ class Tabs {
 	}
 
 	/**
+	 * Roles and permissions.
+	 *
+	 * @return void
+	 */
+	private static function tab_roles() {
+		Roles_Tab::render();
+	}
+
+	/**
 	 * Overview: module switches.
 	 *
 	 * @return void
@@ -100,7 +109,10 @@ class Tabs {
 			'emails'         => array( __( 'Emails', 'admin-studio' ), __( 'Branded HTML layout and editable wording for 15 core WordPress emails.', 'admin-studio' ), 'adminstudio_emails' ),
 			'error_pages'    => array( __( 'Error and system pages', 'admin-studio' ), __( 'Critical error, database error, update maintenance, permission screens and an optional 404.', 'admin-studio' ), 'adminstudio_errors_design' ),
 			'tab_meta'       => array( __( 'Tab and page details', 'admin-studio' ), __( 'Browser tab titles, favicon, address bar colour and hiding WordPress traces.', 'admin-studio' ), '' ),
-			'admin_branding' => array( __( 'Admin branding', 'admin-studio' ), __( 'Admin bar logo, footer credit, dashboard widgets and a brand colour scheme.', 'admin-studio' ), '' ),
+			'admin_branding' => array( __( 'Admin branding', 'admin-studio' ), __( 'Admin bar logo, footer credit and a brand colour scheme.', 'admin-studio' ), '' ),
+			'roles'          => array( __( 'Roles and permissions', 'admin-studio' ), __( 'Role editor, per-user permissions, menu access, login redirects, dashboard access and toolbar control.', 'admin-studio' ), '' ),
+			'admin_look'     => array( __( 'Dashboard look', 'admin-studio' ), __( 'Admin templates with icons, colours, dark mode and a menu editor.', 'admin-studio' ), '' ),
+			'widgets'        => array( __( 'Dashboard widgets', 'admin-studio' ), __( 'Show or hide widgets per role, custom widgets and a default layout.', 'admin-studio' ), '' ),
 		);
 
 		self::section(

@@ -81,6 +81,9 @@ class Settings {
 			'modules.admin_branding'            => $on,
 			'modules.security'                  => $off,
 			'modules.maintenance'               => $off,
+			'modules.roles'                     => $on,
+			'modules.admin_look'                => $on,
+			'modules.widgets'                   => $on,
 			'general.remove_data'               => $off,
 
 			// Brand kit.

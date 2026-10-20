@@ -32,6 +32,7 @@ class Admin {
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
+		Roles_Tab::init();
 
 		$actions = array( 'save', 'export', 'import', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
 
@@ -51,6 +52,7 @@ class Admin {
 			'emails'         => __( 'Emails', 'admin-studio' ),
 			'tab_meta'       => __( 'Tab & page details', 'admin-studio' ),
 			'admin_branding' => __( 'Admin branding', 'admin-studio' ),
+			'roles'          => __( 'Roles & permissions', 'admin-studio' ),
 			'security'       => __( 'Login protection', 'admin-studio' ),
 			'maintenance'    => __( 'Coming soon', 'admin-studio' ),
 			'tools'          => __( 'Tools', 'admin-studio' ),
@@ -193,6 +195,9 @@ class Admin {
 			'slug_invalid'         => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'admin-studio' ) ),
 			'unlocked'             => array( 'success', __( 'Lockout lifted.', 'admin-studio' ) ),
 			'log_cleared'          => array( 'success', __( 'Lockout log cleared.', 'admin-studio' ) ),
+			'role_saved'           => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'admin-studio' ) ),
+			'role_deleted'         => array( 'success', __( 'Role deleted and its users moved.', 'admin-studio' ) ),
+			'roles_restored'       => array( 'success', __( 'Roles restored.', 'admin-studio' ) ),
 			'admin_slug_invalid'   => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'admin-studio' ) ),
 			'admin_url_active'     => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'admin-studio' ) ),
 			'admin_url_pending'    => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'admin-studio' ) ),
@@ -252,7 +257,7 @@ class Admin {
 	 */
 	private static function tab_keys( $tab, $template = '' ) {
 		$prefixes = array(
-			'overview'       => array( 'modules.login', 'modules.emails', 'modules.error_pages', 'modules.tab_meta', 'modules.admin_branding', 'general.' ),
+			'overview'       => array( 'modules.login', 'modules.emails', 'modules.error_pages', 'modules.tab_meta', 'modules.admin_branding', 'modules.roles', 'modules.admin_look', 'modules.widgets', 'general.' ),
 			'emails'         => array( 'emails.templates.' . $template . '.' ),
 			'tab_meta'       => array( 'tab_meta.' ),
 			'admin_branding' => array( 'admin_branding.' ),

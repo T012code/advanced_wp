@@ -109,6 +109,155 @@
 	align-items: center;
 }
 
+/* Sub-navigation inside a tab. */
+.adminstudio-subnav ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin: 16px 0 8px;
+}
+
+.adminstudio-subnav li {
+	margin: 0;
+}
+
+.adminstudio-subnav a {
+	display: inline-block;
+	padding: 6px 14px;
+	border: 1px solid #dcdcde;
+	border-radius: 999px;
+	background: #fff;
+	color: #1d2327;
+	text-decoration: none;
+}
+
+.adminstudio-subnav a:hover {
+	border-color: #2271b1;
+	color: #135e96;
+}
+
+.adminstudio-subnav a.is-current {
+	background: #2271b1;
+	border-color: #2271b1;
+	color: #fff;
+}
+
+.adminstudio-subnav a:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+	box-shadow: none;
+}
+
+/* Roles. */
+.adminstudio-roles {
+	max-width: 900px;
+}
+
+.adminstudio-row-actions {
+	text-align: right;
+}
+
+.adminstudio-caps-toolbar {
+	margin: 16px 0;
+}
+
+.adminstudio-cap-groups {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+	gap: 16px;
+	max-width: 1100px;
+}
+
+.adminstudio-cap-group {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	padding: 12px 16px 16px;
+	margin: 0;
+}
+
+.adminstudio-cap-group legend {
+	padding: 0 6px;
+	font-weight: 600;
+	font-size: 14px;
+}
+
+.adminstudio-cap-all {
+	margin: 0 0 8px;
+	text-align: right;
+}
+
+.adminstudio-cap {
+	display: flex;
+	gap: 8px;
+	align-items: flex-start;
+	padding: 4px 0;
+}
+
+.adminstudio-cap input {
+	margin-top: 2px;
+}
+
+.adminstudio-cap span {
+	display: grid;
+}
+
+.adminstudio-cap code {
+	background: none;
+	padding: 0;
+	font-size: 12px;
+}
+
+.adminstudio-cap small {
+	color: #646970;
+}
+
+.adminstudio-cap[hidden],
+.adminstudio-cap-group[hidden] {
+	display: none;
+}
+
+.adminstudio-caps-select {
+	min-width: 320px;
+}
+
+.adminstudio-menu-tree {
+	max-width: 520px;
+	margin: 16px 0;
+	padding: 8px 0;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+}
+
+.adminstudio-menu-tree__item {
+	margin: 0;
+	padding: 6px 16px;
+}
+
+.adminstudio-menu-tree__item.is-sub {
+	padding-left: 44px;
+	color: #50575e;
+}
+
+.adminstudio-menu-tree__item:not(.is-sub) {
+	font-weight: 600;
+}
+
+.adminstudio-table-scroll {
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.adminstudio-matrix th,
+.adminstudio-matrix td {
+	vertical-align: middle;
+}
+
+.adminstudio-matrix thead th {
+	font-size: 12px;
+}
+
 /* Emails tab. */
 .adminstudio-emails {
 	display: grid;

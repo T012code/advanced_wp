@@ -48,6 +48,9 @@ class Plugin {
 			'admin_branding' => Modules\Admin_Branding\Admin_Branding::class,
 			'security'       => Modules\Security\Security::class,
 			'maintenance'    => Modules\Maintenance\Maintenance::class,
+			'roles'          => Modules\Roles\Roles::class,
+			'admin_look'     => Modules\Admin_Look\Admin_Look::class,
+			'widgets'        => Modules\Widgets\Widgets::class,
 		);
 	}
 

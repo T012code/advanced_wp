@@ -78,6 +78,37 @@
 		}
 	} );
 
+	// Selects that reload the page with a new choice.
+	$( document ).on( 'change', 'select[data-adminstudio-autosubmit]', function () {
+		this.form.submit();
+	} );
+
+	// Capability search: hides capabilities and groups that do not match.
+	$( document ).on( 'input', '[data-adminstudio-cap-search]', function () {
+		var term = this.value.toLowerCase().trim();
+
+		$( '[data-adminstudio-cap-group]' ).each( function () {
+			var $group = $( this ),
+				visible = 0;
+
+			$group.find( '.adminstudio-cap' ).each( function () {
+				var match = ! term || this.textContent.toLowerCase().indexOf( term ) !== -1;
+				$( this ).prop( 'hidden', ! match );
+				visible += match ? 1 : 0;
+			} );
+
+			$group.prop( 'hidden', 0 === visible );
+		} );
+	} );
+
+	// Select or clear every capability in a group.
+	$( document ).on( 'click', '[data-adminstudio-cap-toggle]', function () {
+		var $boxes = $( this ).closest( '[data-adminstudio-cap-group]' ).find( 'input[type="checkbox"]:visible' ),
+			allOn = $boxes.length === $boxes.filter( ':checked' ).length;
+
+		$boxes.prop( 'checked', ! allOn );
+	} );
+
 	// Colour swatches on the status table.
 	$( '.adminstudio-swatch__chip[data-color]' ).each( function () {
 		this.style.backgroundColor = this.getAttribute( 'data-color' );
