@@ -12,6 +12,7 @@ use AdminStudio\Fonts;
 use AdminStudio\Preview;
 use AdminStudio\Settings;
 use AdminStudio\Modules\Emails\Templates;
+use AdminStudio\Modules\Login\Login_Text;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -42,13 +43,14 @@ class Customizer {
 			'adminstudio_login_logo'         => Preview::url( 'login' ),
 			'adminstudio_login_form'         => Preview::url( 'login' ),
 			'adminstudio_login_text'         => Preview::url( 'login' ),
+			'adminstudio_login_words'        => Preview::url( 'login' ),
 			'adminstudio_login_css'          => Preview::url( 'login' ),
 			'adminstudio_emails'             => Preview::url( 'email', array( 'adminstudio_template' => 'welcome' ) ),
 			'adminstudio_errors_design'      => Preview::url( 'page', array( 'adminstudio_page' => 'critical' ) ),
 			'adminstudio_errors_critical'    => Preview::url( 'page', array( 'adminstudio_page' => 'critical' ) ),
 			'adminstudio_errors_db'          => Preview::url( 'page', array( 'adminstudio_page' => 'db' ) ),
 			'adminstudio_errors_maintenance' => Preview::url( 'page', array( 'adminstudio_page' => 'maintenance' ) ),
-			'adminstudio_errors_wp_die'      => Preview::url( 'page', array( 'adminstudio_page' => 'wp_die' ) ),
+			'adminstudio_errors_wp_die'      => Preview::url( 'page', array( 'adminstudio_page' => 'denied' ) ),
 			'adminstudio_errors_notfound'    => Preview::url( 'page', array( 'adminstudio_page' => 'notfound' ) ),
 			'adminstudio_maintenance'        => Preview::url( 'maintenance' ),
 		);
@@ -268,9 +270,22 @@ class Customizer {
 			Preview::url( 'page', array( 'adminstudio_page' => 'critical' ) )    => __( 'Critical error', 'admin-studio' ),
 			Preview::url( 'page', array( 'adminstudio_page' => 'db' ) )          => __( 'Database connection error', 'admin-studio' ),
 			Preview::url( 'page', array( 'adminstudio_page' => 'maintenance' ) ) => __( 'Update maintenance', 'admin-studio' ),
-			Preview::url( 'page', array( 'adminstudio_page' => 'wp_die' ) )      => __( 'Permission and notice screens', 'admin-studio' ),
+			Preview::url( 'page', array( 'adminstudio_page' => 'denied' ) )      => __( 'No permission', 'admin-studio' ),
+			Preview::url( 'page', array( 'adminstudio_page' => 'expired' ) )     => __( 'Expired link', 'admin-studio' ),
+			Preview::url( 'page', array( 'adminstudio_page' => 'wp_die' ) )      => __( 'Other notice screens', 'admin-studio' ),
 			Preview::url( 'page', array( 'adminstudio_page' => 'notfound' ) )    => __( 'Page not found (404)', 'admin-studio' ),
 		);
+
+		$words = array();
+		foreach ( Login_Text::labels() as $key => $label ) {
+			$original                       = Login_Text::original( $key );
+			$words[ 'login_words.' . $key ] = self::c(
+				$label,
+				/* translators: %s: WordPress's own wording. */
+				sprintf( __( 'WordPress says: "%s"', 'admin-studio' ), $original ),
+				array( 'input_attrs' => array( 'placeholder' => $original ) )
+			);
+		}
 
 		return array(
 			'adminstudio_brand'              => array(
@@ -418,7 +433,14 @@ class Customizer {
 					'login.hide_back_to_site'      => self::c( __( 'Hide "Go to site"', 'admin-studio' ) ),
 					'login.hide_language_switcher' => self::c( __( 'Hide the language switcher', 'admin-studio' ) ),
 					'login.hide_privacy_link'      => self::c( __( 'Hide the privacy policy link', 'admin-studio' ) ),
+					'login.back_link_text'         => self::c( __( '"Go to site" link text', 'admin-studio' ), __( 'For example "Back to {site_name}". Leave empty for WordPress\'s "← Go to" text.', 'admin-studio' ) ),
+					'login.error_message'          => self::c( __( 'Message for a failed log in', 'admin-studio' ), __( 'One message for a wrong username, email or password, for example "Those details did not match. Try again." It also stops the screen revealing which usernames exist. Leave empty for WordPress\'s messages.', 'admin-studio' ) ),
 				),
+			),
+			'adminstudio_login_words'        => array(
+				'title'       => __( 'Login: wording', 'admin-studio' ),
+				'description' => __( 'Replace any text on the log in, lost password, reset password and registration screens. Leave a box empty to keep WordPress\'s wording. You can use {site_name}; in the two messages with a link, use {login_url} for the login address.', 'admin-studio' ),
+				'controls'    => $words,
 			),
 			'adminstudio_login_css'          => array(
 				'title'    => __( 'Login: custom CSS', 'admin-studio' ),
@@ -517,11 +539,18 @@ class Customizer {
 				),
 			),
 			'adminstudio_errors_wp_die'      => array(
-				'title'    => __( 'System pages: permission and notice screens', 'admin-studio' ),
+				'title'    => __( 'System pages: no permission and notices', 'admin-studio' ),
 				'controls' => array(
-					'error_pages.wp_die'        => self::c( __( 'Restyle WordPress notice screens', 'admin-studio' ), __( 'For example "Sorry, you are not allowed to access this page." The original message is kept.', 'admin-studio' ) ),
-					'error_pages.wp_die_title'  => self::c( __( 'Fallback title', 'admin-studio' ), __( 'Used when WordPress does not give the screen a title.', 'admin-studio' ) ),
-					'error_pages.wp_die_button' => self::c( __( 'Back button text', 'admin-studio' ) ),
+					'error_pages.wp_die'            => self::c( __( 'Restyle WordPress notice screens', 'admin-studio' ), __( 'Every screen WordPress shows with a short message and a back link gets your design.', 'admin-studio' ) ),
+					'error_pages.denied'            => self::c( __( 'Use my own "no permission" page', 'admin-studio' ), __( 'Replaces "Sorry, you are not allowed to access this page." and similar messages with the text below.', 'admin-studio' ) ),
+					'error_pages.denied_title'      => self::c( __( 'No permission: title', 'admin-studio' ) ),
+					'error_pages.denied_message'    => self::c( __( 'No permission: message', 'admin-studio' ), __( 'Leave empty to show WordPress\'s own message.', 'admin-studio' ) ),
+					'error_pages.denied_button'     => self::c( __( 'No permission: button text', 'admin-studio' ), __( 'Leave empty to hide the button.', 'admin-studio' ) ),
+					'error_pages.denied_button_url' => self::c( __( 'No permission: button link', 'admin-studio' ), __( 'Defaults to the dashboard for people who can use it, otherwise the home page.', 'admin-studio' ), array( 'control' => 'url' ) ),
+					'error_pages.expired_title'     => self::c( __( 'Expired link: title', 'admin-studio' ), __( 'Shown instead of "The link you followed has expired."', 'admin-studio' ) ),
+					'error_pages.expired_message'   => self::c( __( 'Expired link: message', 'admin-studio' ) ),
+					'error_pages.wp_die_title'      => self::c( __( 'Other screens: fallback title', 'admin-studio' ), __( 'Used when WordPress does not give the screen a title.', 'admin-studio' ) ),
+					'error_pages.wp_die_button'     => self::c( __( 'Other screens: back button text', 'admin-studio' ) ),
 				),
 			),
 			'adminstudio_errors_notfound'    => array(

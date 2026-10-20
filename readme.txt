@@ -21,7 +21,9 @@ It starts from your theme. Colours and fonts are read from theme.json on block t
 * Four layouts: centered card, split screen with an image, full background, and a restyled WordPress default.
 * Background colour, gradient, image or video, with an overlay.
 * Logo, form, field style, button and link colours, message above the form, footer text.
-* Hide "Lost your password?", "Go to site", the language switcher or the privacy link.
+* Hide "Lost your password?", "Go to site", the language switcher or the privacy link, or rename the "Go to site" link.
+* Replace any wording on the log in, lost password, reset password and registration screens, including labels, buttons, links and messages.
+* One message of your own for every failed log in, so the screen does not reveal which usernames exist.
 * Custom CSS.
 * Live preview in the Customizer. Applies to log in, register, lost password, reset password and the "session expired" login.
 
@@ -37,15 +39,16 @@ It starts from your theme. Colours and fonts are read from theme.json on block t
 * Critical error page ("There has been a critical error on this website").
 * Database connection error page, saved as a static file so it works while the database is down.
 * Update maintenance screen ("Briefly unavailable for scheduled maintenance").
-* WordPress notice screens such as "Sorry, you are not allowed to access this page".
+* Your own "no permission" page in place of "Sorry, you are not allowed to access this page", and your own expired link page.
+* Other WordPress notice screens in your design.
 * An optional branded 404 page.
 
 = Tab and page details =
 
-* Browser tab title format for the admin and login screens.
-* Site icon on login, admin and system pages.
+* Browser tab title format for the admin, login, error and notice screens, plus the separator, 404 and search titles on your site.
+* Upload your own favicon, show it on login, admin and system pages, and stop /favicon.ico showing the WordPress logo.
 * Mobile address bar colour.
-* Remove the generator tag, core asset versions and legacy header links.
+* Remove the generator tag, core asset versions, legacy, REST API and embed links, and the emoji script; turn off XML-RPC; stop visitors looking up usernames.
 
 = Admin branding =
 

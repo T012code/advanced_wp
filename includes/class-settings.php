@@ -205,6 +205,14 @@ class Settings {
 			'login.hide_back_to_site'           => $off,
 			'login.hide_language_switcher'      => $off,
 			'login.hide_privacy_link'           => $off,
+			'login.back_link_text'              => array(
+				'type'    => 'text',
+				'default' => '',
+			),
+			'login.error_message'               => array(
+				'type'    => 'text',
+				'default' => '',
+			),
 			'login.custom_css'                  => array(
 				'type'    => 'css',
 				'default' => '',
@@ -261,6 +269,13 @@ class Settings {
 			'error_pages.notfound_message'      => $html,
 			'error_pages.notfound_button'       => $text,
 			'error_pages.notfound_search'       => $on,
+			'error_pages.denied'                => $on,
+			'error_pages.denied_title'          => $text,
+			'error_pages.denied_message'        => $html,
+			'error_pages.denied_button'         => $text,
+			'error_pages.denied_button_url'     => $url,
+			'error_pages.expired_title'         => $text,
+			'error_pages.expired_message'       => $html,
 
 			// Tab and page details.
 			'tab_meta.admin_title'              => array(
@@ -271,12 +286,35 @@ class Settings {
 				'type'    => 'text',
 				'default' => '{page} ‹ {site_name}',
 			),
+			'tab_meta.system_title'             => array(
+				'type'    => 'text',
+				'default' => '{page} | {site_name}',
+			),
+			'tab_meta.front_separator'          => array(
+				'type'    => 'text',
+				'default' => '',
+			),
+			'tab_meta.front_404_title'          => array(
+				'type'    => 'text',
+				'default' => '',
+			),
+			'tab_meta.front_search_title'       => array(
+				'type'    => 'text',
+				'default' => '',
+			),
+			'tab_meta.hide_home_tagline'        => $off,
 			'tab_meta.favicon'                  => $on,
+			'tab_meta.favicon_image'            => $url,
+			'tab_meta.favicon_ico'              => $on,
 			'tab_meta.theme_color'              => $off,
 			'tab_meta.hide_generator'           => $off,
 			'tab_meta.hide_versions'            => $off,
 			'tab_meta.hide_rsd_wlw'             => $off,
 			'tab_meta.hide_login_wp_link'       => $on,
+			'tab_meta.hide_rest_links'          => $off,
+			'tab_meta.hide_emoji'               => $off,
+			'tab_meta.disable_xmlrpc'           => $off,
+			'tab_meta.block_user_lookup'        => $off,
 
 			// Admin branding.
 			'admin_branding.adminbar_logo'      => array(
@@ -418,6 +456,13 @@ class Settings {
 			$fields[ $prefix . 'heading' ] = $text;
 			$fields[ $prefix . 'body' ]    = $html;
 			$fields[ $prefix . 'button' ]  = $text;
+		}
+
+		foreach ( Modules\Login\Login_Text::catalogue() as $key => $entry ) {
+			$fields[ 'login_words.' . $key ] = array(
+				'type'    => $entry[1],
+				'default' => '',
+			);
 		}
 
 		self::$fields = $fields;

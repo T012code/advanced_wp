@@ -15,6 +15,7 @@ use AdminStudio\Brand_Kit;
 use AdminStudio\Preview;
 use AdminStudio\Settings;
 use AdminStudio\System_Page;
+use AdminStudio\Modules\Login\Login_Text;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -83,6 +84,22 @@ class Error_Pages {
 				);
 				break;
 
+			case 'denied':
+				$args = array(
+					'heading' => Settings::get( $p . 'denied_title' ),
+					'message' => Settings::get( $p . 'denied_message' ),
+					'buttons' => array_filter( array( self::button( Settings::get( $p . 'denied_button' ), self::denied_url() ) ) ),
+				);
+				break;
+
+			case 'expired':
+				$args = array(
+					'heading' => Settings::get( $p . 'expired_title' ),
+					'message' => Settings::get( $p . 'expired_message' ),
+					'buttons' => array( array( Settings::get( $p . 'wp_die_button' ), home_url( '/' ) ) ),
+				);
+				break;
+
 			case 'wp_die':
 				$args = array(
 					'heading' => Settings::get( $p . 'wp_die_title' ),
@@ -111,9 +128,74 @@ class Error_Pages {
 				);
 		}
 
-		$args['title'] = $args['heading'] . ' | ' . $site;
+		$args['title'] = self::tab_title( $args['heading'] );
 
 		return array_merge( $base, $args );
+	}
+
+	/**
+	 * Browser tab title for a system page, from the pattern on the Tab and
+	 * page details tab.
+	 *
+	 * @param string $heading Page heading.
+	 * @return string
+	 */
+	public static function tab_title( $heading ) {
+		$pattern = (string) Settings::get( 'tab_meta.system_title' );
+		$pattern = '' !== trim( $pattern ) ? $pattern : '{page} | {site_name}';
+
+		return trim( str_replace( array( '{page}', '{site_name}' ), array( wp_strip_all_tags( $heading ), get_bloginfo( 'name' ) ), $pattern ) );
+	}
+
+	/**
+	 * Where the "no permission" button goes.
+	 *
+	 * @return string
+	 */
+	private static function denied_url() {
+		$url = (string) Settings::get( 'error_pages.denied_button_url' );
+
+		if ( '' !== $url ) {
+			return $url;
+		}
+
+		return is_user_logged_in() && current_user_can( 'read' ) ? admin_url() : home_url( '/' );
+	}
+
+	/**
+	 * Which kind of notice screen a wp_die() call is.
+	 *
+	 * @param string $message  Plain message.
+	 * @param int    $response HTTP status.
+	 * @return string denied, expired or wp_die.
+	 */
+	public static function kind( $message, $response ) {
+		$message = trim( wp_strip_all_tags( $message ) );
+
+		// WordPress adds a "Please try again" link after this message.
+		if ( 0 === strpos( $message, Login_Text::core( 'The link you followed has expired.' ) ) ) {
+			return 'expired';
+		}
+
+		if ( 403 === (int) $response ) {
+			// WordPress words dozens of these screens "Sorry, you are not allowed to ...",
+			// so the start of its most common one identifies the rest in any language.
+			$common = Login_Text::core( 'Sorry, you are not allowed to access this page.' );
+			$starts = array(
+				$common,
+				Login_Text::core( 'You need a higher level of permission.' ),
+				'Sorry, you are not allowed to',
+				(string) strtok( $common, ',' ),
+			);
+
+			foreach ( $starts as $start ) {
+				if ( strlen( $start ) > 4 && 0 === strpos( $message, $start ) ) {
+					return 'denied';
+				}
+			}
+		}
+
+		return 'wp_die';
 	}
 
 	/**
@@ -233,6 +315,28 @@ class Error_Pages {
 				: ( $errors ? $errors[0] : '' );
 		}
 
+		$kind = self::kind( (string) $message, (int) $args['response'] );
+
+		if ( 'denied' === $kind && Settings::get( 'error_pages.denied' ) ) {
+			self::send_headers( $args['response'] );
+			$custom = trim( (string) Settings::get( 'error_pages.denied_message' ) );
+			self::output( 'denied', '' !== $custom ? array() : array( 'message' => (string) $message ) );
+			if ( $args['exit'] ) {
+				die();
+			}
+			return;
+		}
+
+		if ( 'expired' === $kind ) {
+			$referer = wp_get_referer();
+			self::send_headers( $args['response'] );
+			self::output( 'expired', array( 'buttons' => array( array( Settings::get( 'error_pages.wp_die_button' ), $referer ? $referer : home_url( '/' ) ) ) ) );
+			if ( $args['exit'] ) {
+				die();
+			}
+			return;
+		}
+
 		$title = is_string( $title ) && '' !== $title ? $title : Settings::get( 'error_pages.wp_die_title' );
 
 		$buttons = array();
@@ -244,16 +348,12 @@ class Error_Pages {
 		$referer   = wp_get_referer();
 		$buttons[] = array( Settings::get( 'error_pages.wp_die_button' ), $referer ? $referer : home_url( '/' ) );
 
-		if ( ! headers_sent() ) {
-			status_header( $args['response'] );
-			nocache_headers();
-			header( 'Content-Type: text/html; charset=utf-8' );
-		}
+		self::send_headers( $args['response'] );
 
 		self::output(
 			'wp_die',
 			array(
-				'title'   => wp_strip_all_tags( $title ) . ' | ' . get_bloginfo( 'name' ),
+				'title'   => self::tab_title( $title ),
 				'heading' => wp_strip_all_tags( $title ),
 				'message' => (string) $message,
 				'buttons' => $buttons,
@@ -262,6 +362,20 @@ class Error_Pages {
 
 		if ( $args['exit'] ) {
 			die();
+		}
+	}
+
+	/**
+	 * Status and cache headers for a notice screen.
+	 *
+	 * @param int $response HTTP status.
+	 * @return void
+	 */
+	private static function send_headers( $response ) {
+		if ( ! headers_sent() ) {
+			status_header( (int) $response );
+			nocache_headers();
+			header( 'Content-Type: text/html; charset=utf-8' );
 		}
 	}
 

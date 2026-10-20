@@ -278,32 +278,51 @@ class Tabs {
 	private static function tab_tab_meta() {
 		self::form_start( 'tab_meta' );
 
-		self::section( __( 'Browser tab titles', 'admin-studio' ), __( 'Use {page} for the screen name and {site_name} for your site title.', 'admin-studio' ) );
+		self::section( __( 'Browser tab titles', 'admin-studio' ), __( 'Use {page} for the screen name and {site_name} for your site title. Leave a box empty to keep WordPress\'s wording.', 'admin-studio' ) );
 		echo '<table class="form-table" role="presentation">';
 		Fields::text( 'tab_meta.admin_title', __( 'Admin screens', 'admin-studio' ), __( 'WordPress default: "Dashboard ‹ Site — WordPress".', 'admin-studio' ) );
-		Fields::text( 'tab_meta.login_title', __( 'Login screens', 'admin-studio' ), __( 'WordPress default: "Log In ‹ Site — WordPress".', 'admin-studio' ) );
+		Fields::text(
+			'tab_meta.login_title',
+			__( 'Login screens', 'admin-studio' ),
+			sprintf(
+				/* translators: %s: link to the Customizer section. */
+				__( 'WordPress default: "Log In ‹ Site — WordPress". To rename the screens themselves ("Log In", "Lost Password" and so on), use <a href="%s">Login: wording</a> in the Customizer.', 'admin-studio' ),
+				esc_url( admin_url( 'customize.php?autofocus[section]=adminstudio_login_words' ) )
+			)
+		);
+		Fields::text( 'tab_meta.system_title', __( 'Error and notice pages', 'admin-studio' ), __( 'The critical error, database error, maintenance, no permission, expired link and 404 pages. {page} is the page title.', 'admin-studio' ) );
+		Fields::text( 'tab_meta.front_separator', __( 'Site page separator', 'admin-studio' ), __( 'The character between the page name and the site name on your site\'s pages, for example | or ·. Usually a dash.', 'admin-studio' ), array( 'class' => 'small-text' ) );
+		Fields::text( 'tab_meta.front_404_title', __( 'Site 404 page', 'admin-studio' ), __( 'WordPress default: "Page not found". Works with any theme that lets WordPress set the title.', 'admin-studio' ) );
+		Fields::text( 'tab_meta.front_search_title', __( 'Site search results', 'admin-studio' ), __( 'Use {query} for the search words. WordPress default: "Search Results for “{query}”".', 'admin-studio' ) );
+		Fields::checkbox( 'tab_meta.hide_home_tagline', __( 'Home page', 'admin-studio' ), __( 'Show only the site name on the home page tab, without the tagline', 'admin-studio' ) );
 		echo '</table>';
 
 		self::section( __( 'Icons and colours', 'admin-studio' ) );
 		echo '<table class="form-table" role="presentation">';
-		Fields::checkbox(
-			'tab_meta.favicon',
+		Fields::url(
+			'tab_meta.favicon_image',
 			__( 'Favicon', 'admin-studio' ),
-			__( 'Show the site icon on login, admin and system pages', 'admin-studio' ),
 			sprintf(
 				/* translators: %s: link to Settings > General. */
-				__( 'Set the site icon in <a href="%s">Settings &rarr; General</a>. Without one, the brand logo is used.', 'admin-studio' ),
+				__( 'A square image, at least 512 × 512 pixels. Leave empty to use the site icon from <a href="%s">Settings &rarr; General</a>.', 'admin-studio' ),
 				esc_url( admin_url( 'options-general.php' ) )
-			)
+			),
+			true
 		);
+		Fields::checkbox( 'tab_meta.favicon', __( 'Icon everywhere', 'admin-studio' ), __( 'Show the icon on login, admin and system pages, and use the brand logo when there is no icon', 'admin-studio' ) );
+		Fields::checkbox( 'tab_meta.favicon_ico', __( '/favicon.ico', 'admin-studio' ), __( 'Answer browser requests for /favicon.ico with your icon instead of the WordPress logo', 'admin-studio' ), __( 'Has no effect if a favicon.ico file is already in your site\'s main folder.', 'admin-studio' ) );
 		Fields::checkbox( 'tab_meta.theme_color', __( 'Address bar colour', 'admin-studio' ), __( 'Tint the mobile browser address bar with the brand primary colour', 'admin-studio' ) );
 		echo '</table>';
 
-		self::section( __( 'WordPress traces', 'admin-studio' ), __( 'Removes small giveaways in your page source. This is tidying, not a security feature.', 'admin-studio' ) );
+		self::section( __( 'WordPress traces', 'admin-studio' ), __( 'Removes giveaways in your page source and public addresses. This is tidying, not a full security feature.', 'admin-studio' ) );
 		echo '<table class="form-table" role="presentation">';
 		Fields::checkbox( 'tab_meta.hide_generator', __( 'Generator tag', 'admin-studio' ), __( 'Remove the WordPress version meta tag and feed generator', 'admin-studio' ) );
 		Fields::checkbox( 'tab_meta.hide_versions', __( 'Asset versions', 'admin-studio' ), __( 'Remove the WordPress version from core CSS and JavaScript URLs', 'admin-studio' ) );
 		Fields::checkbox( 'tab_meta.hide_rsd_wlw', __( 'Legacy links', 'admin-studio' ), __( 'Remove the RSD and Windows Live Writer links', 'admin-studio' ) );
+		Fields::checkbox( 'tab_meta.hide_rest_links', __( 'API and embed links', 'admin-studio' ), __( 'Remove the REST API, oEmbed and shortlink tags and headers from your pages', 'admin-studio' ), __( 'The REST API itself keeps working.', 'admin-studio' ) );
+		Fields::checkbox( 'tab_meta.hide_emoji', __( 'Emoji script', 'admin-studio' ), __( 'Remove WordPress\'s emoji script and styles', 'admin-studio' ), __( 'Browsers show emoji on their own.', 'admin-studio' ) );
+		Fields::checkbox( 'tab_meta.disable_xmlrpc', __( 'XML-RPC and pingbacks', 'admin-studio' ), __( 'Turn off XML-RPC, pingbacks and the X-Pingback header', 'admin-studio' ), __( 'Leave this off if you use Jetpack or post from the WordPress mobile app.', 'admin-studio' ) );
+		Fields::checkbox( 'tab_meta.block_user_lookup', __( 'Username lookups', 'admin-studio' ), __( 'Stop visitors finding usernames through ?author= addresses, the REST API user list and the author sitemap', 'admin-studio' ), __( 'Logged-in users are not affected.', 'admin-studio' ) );
 		Fields::checkbox( 'tab_meta.hide_login_wp_link', __( 'Login logo link', 'admin-studio' ), __( 'Point the login logo to your site instead of wordpress.org', 'admin-studio' ), __( 'Applies when the Login page feature is off; that feature has its own setting.', 'admin-studio' ) );
 		echo '</table>';
 

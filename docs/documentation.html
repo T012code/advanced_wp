@@ -208,7 +208,9 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li><strong>Background:</strong> colour, gradient (two colours and an angle), image or video, with an overlay colour and strength. Videos are muted, looped and paused for visitors who prefer reduced motion.</li>
 		<li><strong>Logo:</strong> image (defaults to the brand logo), width, link (defaults to your home page instead of wordpress.org), text for screen readers, or hide it. With no logo image, the site title is shown as text.</li>
 		<li><strong>Form and button:</strong> width, padding, corner radius, background, shadow, field style (boxed, underline or filled), hidden labels with placeholders, text and link colours, button colour, button text colour (picked automatically for contrast when empty) and button corner radius.</li>
-		<li><strong>Text and links:</strong> a message above the form, footer text, and options to hide "Lost your password?", "Go to site", the language switcher and the privacy policy link.</li>
+		<li><strong>Text and links</strong> (Customizer → Admin Studio → Login: text and links): a message above the form, footer text, your own text for the "← Go to site" link (for example "Back to {site_name}"), and options to hide "Lost your password?", "Go to site", the language switcher and the privacy policy link.</li>
+		<li><strong>One message for failed log ins:</strong> replace WordPress's "unknown username" and "incorrect password" messages with one message of your own. This also stops the screen revealing which usernames exist.</li>
+		<li><strong>Wording</strong> (Customizer → Admin Studio → Login: wording): replace any of 23 pieces of WordPress's text on the log in, lost password, reset password and registration screens: field labels, "Remember Me", the button text, every link, the screen names (which also become the browser tab title), the instructions and the confirmation messages. Each box shows WordPress's own wording in your site language; leave it empty to keep it. <code>{site_name}</code> works everywhere, and <code>{login_url}</code> in the two messages that link to the login page.</li>
 		<li><strong>Custom CSS</strong> for anything else.</li>
 	</ul>
 	<p>The Customizer warns when the text and background colours you pick have a contrast ratio below 4.5:1.</p>
@@ -249,7 +251,9 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Critical error</td><td>A plugin or theme causes a fatal PHP error.</td><td>Writes <code>wp-content/php-error.php</code>. Returns status 500. API and AJAX requests get a JSON error instead.</td></tr>
 		<tr><td>Database connection error</td><td>WordPress cannot reach its database.</td><td>Writes <code>wp-content/db-error.php</code> with a static copy of the design, because the database is unavailable. Status 500 with Retry-After.</td></tr>
 		<tr><td>Update maintenance</td><td>For a few seconds while updates install.</td><td>Writes <code>wp-content/maintenance.php</code>. Status 503 with Retry-After.</td></tr>
-		<tr><td>Notice screens</td><td>Messages such as "Sorry, you are not allowed to access this page".</td><td>Replaces WordPress's notice screen live. The original message is kept.</td></tr>
+		<tr><td>No permission</td><td>Someone opens a screen their account cannot use: "Sorry, you are not allowed to access this page" and the many similar messages.</td><td>Shows your own title, message and button (status 403). The button goes to the dashboard for people who can use it and to the home page for everyone else, or to a link you choose. Leave the message empty to keep WordPress's wording inside your design.</td></tr>
+		<tr><td>Expired link</td><td>"The link you followed has expired", after a form or link has been open too long.</td><td>Shows your own title and message, with a button back to the previous page.</td></tr>
+		<tr><td>Other notice screens</td><td>Any other short message WordPress shows on its own screen.</td><td>Replaces WordPress's notice screen live. The original message is kept.</td></tr>
 		<tr><td>Page not found (404)</td><td>A missing page. Off by default so your theme keeps its own.</td><td>Replaces the theme's 404 template, with an optional search box.</td></tr>
 	</table>
 	<p>All pages share a design (background, card, text and button colours, logo, optional illustration) set in the Customizer, and each has its own title and message.</p>
@@ -262,12 +266,30 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</div>
 
 	<h2>8. Tab and page details</h2>
+	<h3>Browser tab titles</h3>
 	<ul>
-		<li><strong>Browser tab titles</strong> for admin and login screens, using <code>{page}</code> and <code>{site_name}</code>. The default drops WordPress's "— WordPress" ending.</li>
-		<li><strong>Favicon</strong> on login, admin and system pages. Uses the site icon from Settings → General, or the brand logo if there is none.</li>
-		<li><strong>Address bar colour</strong> on mobile browsers, from the brand primary colour.</li>
-		<li><strong>WordPress traces:</strong> remove the generator tag, the WordPress version on core asset URLs, the RSD and Windows Live Writer links, and point the login logo at your site.</li>
+		<li><strong>Admin, login, and error and notice pages:</strong> each has a pattern using <code>{page}</code> and <code>{site_name}</code>. The defaults drop WordPress's "— WordPress" ending.</li>
+		<li><strong>Your site's pages:</strong> the separator between page name and site name, the 404 page title, the search results title (with <code>{query}</code>), and an option to show only the site name on the home page. These work with any theme that lets WordPress set the title, which includes all block themes and most classic themes.</li>
+		<li>The names of the login screens themselves ("Log In", "Lost Password" and so on) are set under Login: wording (section 5).</li>
 	</ul>
+	<h3>Icons and colours</h3>
+	<ul>
+		<li><strong>Favicon:</strong> upload your own icon, or leave it empty to use the site icon from Settings → General. Your icon replaces the site icon everywhere WordPress prints it.</li>
+		<li><strong>Icon everywhere:</strong> show it on login, admin and system pages too, and fall back to the brand logo when there is no icon.</li>
+		<li><strong>/favicon.ico:</strong> browsers ask every site for this address. Without a site icon, WordPress answers with its own logo; Admin Studio answers with your icon instead (or nothing, if you have no icon or logo). A real favicon.ico file in your site's main folder always wins.</li>
+		<li><strong>Address bar colour</strong> on mobile browsers, from the brand primary colour.</li>
+	</ul>
+	<h3>WordPress traces</h3>
+	<p>Each is a separate switch, all off by default:</p>
+	<ul>
+		<li>Generator tag and feed generator; the WordPress version on core CSS and JavaScript addresses; the RSD and Windows Live Writer links.</li>
+		<li>REST API, oEmbed and shortlink tags and headers. The REST API itself keeps working.</li>
+		<li>WordPress's emoji script and styles.</li>
+		<li>XML-RPC, pingbacks and the X-Pingback header. Requests to <code>xmlrpc.php</code> get status 403. Leave this off if you use Jetpack or the WordPress mobile app.</li>
+		<li>Username lookups: visitors who are not logged in get a 404 for <code>?author=</code> addresses, cannot list users through the REST API, and author pages are left out of the sitemap.</li>
+		<li>Point the login logo at your site when the Login page feature is off.</li>
+	</ul>
+	<p>Some traces cannot be removed by a plugin, for example WordPress's <code>readme.html</code> and <code>license.txt</code> files, which you can delete from your server, and the folder names in image addresses.</p>
 
 	<h2>9. Admin branding</h2>
 	<ul>
@@ -426,7 +448,8 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Login page</td><td><code>login_enqueue_scripts</code>, <code>login_head</code>, <code>login_headerurl</code>, <code>login_headertext</code>, <code>login_body_class</code>, <code>login_message</code>, <code>login_footer</code>, <code>lost_password_html_link</code>, <code>login_site_html_link</code>, <code>login_display_language_dropdown</code>, <code>the_privacy_policy_link</code></td></tr>
 		<tr><td>Emails</td><td><code>wp_new_user_notification_email</code>, <code>_admin</code>, <code>retrieve_password_notification_email</code>, <code>password_change_email</code>, <code>email_change_email</code>, <code>new_user_email_content</code>, <code>new_admin_email_content</code>, <code>site_admin_email_change_email</code>, <code>wp_password_change_notification_email</code>, <code>comment_notification_text</code>, <code>comment_moderation_text</code>, <code>wp_privacy_personal_data_email_content</code>, <code>user_erasure_fulfillment_email_content</code>, <code>recovery_mode_email</code>, <code>auto_core_update_email</code>, <code>auto_plugin_theme_update_email</code>, then <code>wp_mail</code> and <code>phpmailer_init</code></td></tr>
 		<tr><td>Error pages</td><td><code>wp_die_handler</code>, <code>template_include</code></td></tr>
-		<tr><td>Tab and page details</td><td><code>admin_title</code>, <code>login_title</code>, <code>admin_head</code>, <code>wp_head</code>, <code>style_loader_src</code>, <code>script_loader_src</code></td></tr>
+		<tr><td>Login wording</td><td><code>login_init</code>, then <code>gettext</code> (WordPress's own strings, on login screens only), <code>login_site_html_link</code>, <code>wp_login_errors</code></td></tr>
+		<tr><td>Tab and page details</td><td><code>admin_title</code>, <code>login_title</code>, <code>document_title_separator</code>, <code>document_title_parts</code>, <code>get_site_icon_url</code>, <code>do_faviconico</code>, <code>admin_head</code>, <code>wp_head</code>, <code>style_loader_src</code>, <code>script_loader_src</code>, <code>xmlrpc_enabled</code>, <code>xmlrpc_methods</code>, <code>wp_headers</code>, <code>rest_endpoints</code>, <code>wp_sitemaps_add_provider</code></td></tr>
 		<tr><td>Admin branding</td><td><code>admin_bar_menu</code>, <code>admin_footer_text</code>, <code>update_footer</code>, <code>wp_dashboard_setup</code>, <code>admin_init</code> (colour scheme), <code>user_register</code></td></tr>
 		<tr><td>Login protection</td><td><code>plugins_loaded</code>, <code>wp_loaded</code>, <code>site_url</code>, <code>network_site_url</code>, <code>wp_redirect</code>, <code>authenticate</code>, <code>wp_login</code>, <code>wp_login_failed</code>, <code>set_auth_cookie</code>, <code>send_auth_cookies</code>, <code>login_form_adminstudio_2fa</code>, profile and AJAX hooks; for the dashboard address <code>admin_url</code>, <code>site_url</code>, <code>wp_redirect</code>, <code>set_auth_cookie</code>, <code>clear_auth_cookie</code> and the <code>adminstudio_ping</code> AJAX action</td></tr>
 		<tr><td>Coming soon</td><td><code>template_redirect</code>, <code>admin_bar_menu</code></td></tr>
@@ -493,7 +516,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p class="part-title">Part 3</p>
 	<h2>25. Summary and status</h2>
 	<div class="note spec">
-		<p><strong>Status: in progress.</strong> Built and tested: roles and permissions (section 26), toolbar control (section 27) and admin templates (section 28). Still to come: dashboard widgets (section 29) and login screen text and links (section 30). Once version 1.1 is finished, these sections move into Part 1 and Part 2.</p>
+		<p><strong>Status: in progress.</strong> Built and tested: roles and permissions (section 26), toolbar control (section 27) and admin templates (section 28). The editable wording from section 30 is built and documented in section 5. Still to come: dashboard widgets (section 29), and the link layouts, link positions and Customizer screen picker from section 30. Once version 1.1 is finished, these sections move into Part 1 and Part 2.</p>
 	</div>
 	<p>Version 1.1 extends Admin Studio from branding into running the dashboard: who can do what, how the dashboard looks for each person, and what they see first. It adds five areas:</p>
 	<ol>

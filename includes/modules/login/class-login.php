@@ -36,6 +36,8 @@ class Login {
 		add_filter( 'login_message', array( __CLASS__, 'message' ) );
 		add_action( 'login_footer', array( __CLASS__, 'footer' ) );
 
+		Login_Text::init();
+
 		if ( Settings::get( 'login.hide_lost_password' ) ) {
 			add_filter( 'lost_password_html_link', '__return_empty_string' );
 		}
@@ -142,6 +144,11 @@ class Login {
 			if ( '' !== $side ) {
 				$css .= 'body.login.adminstudio-layout-split::before{background-image:' . self::overlay_layer() . 'url("' . esc_url_raw( $side ) . '");}';
 			}
+		}
+
+		// WordPress keeps the empty wrapper when its link is removed.
+		if ( Settings::get( 'login.hide_back_to_site' ) ) {
+			$css .= '#backtoblog{display:none}';
 		}
 
 		$css .= Settings::get( 'login.custom_css' );
@@ -378,7 +385,7 @@ class Login {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php esc_html_e( 'Log In', 'admin-studio' ); ?></title>
+	<title><?php echo esc_html( Login_Text::display( 'login_title' ) ); ?></title>
 		<?php
 		// Passing handles prints only these and skips the wp_print_styles action.
 		wp_print_styles( array( 'login', 'adminstudio-login' ) );
@@ -391,11 +398,11 @@ class Login {
 		<?php echo wp_kses_post( $message ); ?>
 		<form name="loginform" id="loginform" action="#" method="post">
 			<p>
-				<label for="user_login"><?php esc_html_e( 'Username or Email Address', 'admin-studio' ); ?></label>
+				<label for="user_login"><?php echo esc_html( Login_Text::display( 'username_label' ) ); ?></label>
 				<input type="text" name="log" id="user_login" class="input" value="" size="20" autocapitalize="off" autocomplete="username">
 			</p>
 			<div class="user-pass-wrap">
-				<label for="user_pass"><?php esc_html_e( 'Password', 'admin-studio' ); ?></label>
+				<label for="user_pass"><?php echo esc_html( Login_Text::display( 'password_label' ) ); ?></label>
 				<div class="wp-pwd">
 					<input type="password" name="pwd" id="user_pass" class="input password-input" value="" size="20" autocomplete="current-password">
 					<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" aria-label="<?php esc_attr_e( 'Show password', 'admin-studio' ); ?>">
@@ -403,20 +410,17 @@ class Login {
 					</button>
 				</div>
 			</div>
-			<p class="forgetmenot"><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <label for="rememberme"><?php esc_html_e( 'Remember Me', 'admin-studio' ); ?></label></p>
+			<p class="forgetmenot"><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <label for="rememberme"><?php echo esc_html( Login_Text::display( 'remember' ) ); ?></label></p>
 			<p class="submit">
-				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Log In', 'admin-studio' ); ?>">
+				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php echo esc_attr( Login_Text::display( 'login_title' ) ); ?>">
 			</p>
 		</form>
 		<?php if ( ! Settings::get( 'login.hide_lost_password' ) ) : ?>
-			<p id="nav"><a href="#"><?php esc_html_e( 'Lost your password?', 'admin-studio' ); ?></a></p>
+			<p id="nav"><a href="#"><?php echo esc_html( Login_Text::display( 'lost_link' ) ); ?></a></p>
 		<?php endif; ?>
 		<?php if ( ! Settings::get( 'login.hide_back_to_site' ) ) : ?>
 			<p id="backtoblog"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">
-				<?php
-				/* translators: %s: site title. */
-				printf( esc_html__( '&larr; Go to %s', 'admin-studio' ), esc_html( get_bloginfo( 'name' ) ) );
-				?>
+				<?php echo wp_kses( Login_Text::back_text(), array() ); ?>
 			</a></p>
 		<?php endif; ?>
 	</div>
