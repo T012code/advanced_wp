@@ -714,3 +714,132 @@ body.adminstudio-look .adminstudio-badge {
 .adminstudio-list li {
 	margin-bottom: 4px;
 }
+
+/* Sessions. */
+.adminstudio-filter {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin: 12px 0;
+}
+
+.adminstudio-count {
+	color: var(--as-muted, #646970);
+}
+
+.adminstudio-session-group {
+	max-width: 1100px;
+	margin: 0 0 20px;
+}
+
+.adminstudio-session-group__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+	margin-bottom: 8px;
+}
+
+.adminstudio-session-group .adminstudio-actions form,
+.adminstudio-history-actions form,
+.adminstudio-row-actions form {
+	margin: 0;
+}
+
+.adminstudio-history-actions {
+	margin: 0 0 10px;
+}
+
+.adminstudio-person,
+.adminstudio-device {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	vertical-align: middle;
+}
+
+.adminstudio-person img {
+	border-radius: 999px;
+}
+
+.adminstudio-person > span,
+.adminstudio-device > span:last-child {
+	display: grid;
+	line-height: 1.35;
+}
+
+.adminstudio-person small,
+.adminstudio-device small,
+.adminstudio-event + small {
+	color: var(--as-muted, #646970);
+	font-size: 12px;
+}
+
+.adminstudio-event + small {
+	display: block;
+}
+
+.adminstudio-device__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border: 1px solid var(--as-border, #dcdcde);
+	border-radius: 8px;
+	background: var(--as-surface-2, #f6f7f7);
+	color: var(--as-muted, #50575e);
+	flex: none;
+}
+
+.adminstudio-sessions td {
+	vertical-align: middle;
+}
+
+.adminstudio-sessions code {
+	background: transparent;
+	padding: 0;
+}
+
+.adminstudio-event--failed,
+.adminstudio-event--refused_limit,
+.adminstudio-event--refused_blocked,
+.adminstudio-event--blocked {
+	color: #b32d2e;
+	font-weight: 600;
+}
+
+.adminstudio-pagination {
+	margin: 12px 0;
+}
+
+.adminstudio-pagination .page-numbers {
+	display: inline-block;
+	min-width: 28px;
+	padding: 4px 6px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.adminstudio-pagination .page-numbers.current {
+	font-weight: 600;
+}
+
+@media screen and (max-width: 782px) {
+	.adminstudio-sessions thead {
+		display: none;
+	}
+
+	.adminstudio-sessions tr {
+		display: grid;
+		gap: 4px;
+		padding: 8px 0;
+	}
+
+	.adminstudio-sessions td {
+		display: block;
+		padding: 2px 10px;
+	}
+}

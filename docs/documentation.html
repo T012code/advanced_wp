@@ -169,7 +169,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Login page: layout, background, logo, form, button, text, custom CSS</td><td>Emails: subject, heading, body and button of each email; preview; test send</td></tr>
 		<tr><td>Emails: design (colours, logo, font, width)</td><td>Tab and page details</td></tr>
 		<tr><td>System pages: design and wording of each page</td><td>Admin branding</td></tr>
-		<tr><td>Coming soon page design</td><td>Login protection; Coming soon access rules; Tools</td></tr>
+		<tr><td>Coming soon page design</td><td>Login protection; Sessions; Coming soon access rules; Tools</td></tr>
 	</table>
 	<figure>
 		<img src="images/settings-overview.png" alt="The Overview tab of the settings page">
@@ -349,6 +349,26 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</figure>
 	<p>Administrators can require two-factor for chosen roles, with a grace period in days. Users in those roles see a reminder, and once the grace period ends they are sent to their profile until they set it up. Administrators can reset another user's two-factor from that user's profile.</p>
 
+	<h3>Sessions and devices</h3>
+	<p>Settings → Admin Studio → <strong>Sessions</strong> shows who is signed in and where. Each browser or app someone signs in on is one session; Admin Studio reads WordPress's own sessions, so ending one signs that device out on its next page load.</p>
+	<ul>
+		<li><strong>Signed in now:</strong> everyone with an active session, grouped by person, with the device (browser, system and whether it is a computer, phone, tablet or the WordPress app), IP address, when they signed in, when they were last active (updated every five minutes) and when the session expires. Your own current session is marked "This device".</li>
+		<li><strong>Sign out</strong> one device, <strong>Sign out everywhere</strong> for a person (for yourself: "Sign out my other devices"), or <strong>Block</strong> the account.</li>
+		<li><strong>Blocked accounts</strong> are signed out everywhere and cannot sign in, reset their password or use application passwords until unblocked. Their content is untouched. Block by username or email, or from the Users screen. You cannot block yourself.</li>
+		<li><strong>Session limit:</strong> the most sessions one person may have at once. When someone goes over, either their oldest session is signed out or the new sign-in is refused. Apply it to everyone or to chosen roles; administrators are exempt unless you untick that. The limit also applies after a two-factor code.</li>
+		<li><strong>Sign-in history:</strong> sign-ins, sign-outs, failed attempts, sign-ins refused for a blocked account or the session limit, and every sign-out or block by an administrator (with who did it). Filter by event or account, download as CSV, or clear it. The last 1,000 events are kept. Recording visitors' sign-ins and failed attempts can be switched off; administrator actions are always recorded.</li>
+		<li><strong>Users screen:</strong> a Sessions column shows how many devices each person is signed in on (or "Blocked"), and each row has Sign out everywhere and Block or Unblock links.</li>
+	</ul>
+	<p>A sign-in refused because the account is blocked or the session limit is full does not count towards the failed-attempt lockout, because the password was right.</p>
+	<figure>
+		<img src="images/sessions-active.png" alt="The Signed in now section, listing each person with their devices, IP address, sign-in time, last activity and expiry">
+		<figcaption>Sessions → Signed in now.</figcaption>
+	</figure>
+	<figure>
+		<img src="images/sessions-history.png" alt="The sign-in history, with events, accounts, devices and IP addresses">
+		<figcaption>Sessions → Sign-in history.</figcaption>
+	</figure>
+
 	<h2>11. Coming soon and maintenance mode</h2>
 	<p>Turn the mode on under Settings → Admin Studio → Coming soon, and design the page in the Customizer (headline, message, countdown, logo, background colour or image, and text colour).</p>
 	<ul>
@@ -386,6 +406,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h2>14. Privacy and external services</h2>
 	<p>Admin Studio makes no external requests and tracks nothing, with one exception: when an administrator chooses a Google font and publishes, the server downloads that font once from fonts.googleapis.com and fonts.gstatic.com. The request contains only the font name and the server's IP address. The files are then served from the site's own uploads folder. Google's <a href="https://developers.google.com/fonts/terms">terms</a> and <a href="https://policies.google.com/privacy">privacy policy</a> apply to that request.</p>
 	<p>Two-factor secrets, backup code hashes and lockout records are stored in your own database. Lockout records hold the IP address and the username that was tried.</p>
+	<p>The sign-in history and the session list hold IP addresses and browser details, which count as personal data in many countries. Mention them in your privacy policy, or switch off recording sign-ins under Sessions → Limits and history. WordPress itself already stores the IP address and browser of every session.</p>
 </section>
 
 <!-- ============================================================ -->
@@ -413,7 +434,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td><code>includes/class-system-page.php</code>, <code>class-dropins.php</code></td><td>Standalone pages and drop-in files</td></tr>
 		<tr><td><code>includes/class-preview.php</code>, <code>includes/customizer/</code></td><td>Customizer panel and preview routing</td></tr>
 		<tr><td><code>includes/admin/</code></td><td>Settings page, tabs and field renderers</td></tr>
-		<tr><td><code>includes/modules/&lt;module&gt;/</code></td><td>login, emails, error-pages, tab-meta, admin-branding, security, maintenance, roles, admin-look</td></tr>
+		<tr><td><code>includes/modules/&lt;module&gt;/</code></td><td>login, emails, error-pages, tab-meta, admin-branding, security, maintenance, roles, admin-look, sessions</td></tr>
 		<tr><td><code>templates/notfound.php</code></td><td>404 template</td></tr>
 		<tr><td><code>assets/css</code>, <code>assets/js</code>, <code>assets/vendor</code></td><td>Styles, scripts, QR code library</td></tr>
 	</table>
@@ -436,6 +457,8 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Files</td><td><code>.htaccess</code> block between <code># BEGIN Admin Studio</code> and <code># END Admin Studio</code></td><td>Rewrite rules for the custom dashboard address (Apache and LiteSpeed only)</td></tr>
 		<tr><td>Option</td><td><code>adminstudio_access</code>, <code>adminstudio_toolbar_nodes</code></td><td>Menu, toolbar, login redirect and dashboard access rules per role; the toolbar items last seen, so the settings page can list them</td></tr>
 		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_role_backups</code>, <code>adminstudio_audit</code></td><td>The last 20 copies of all roles; the activity log</td></tr>
+		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_signins</code></td><td>Sign-in history, last 1,000 events: time, event, account, username tried, IP address, browser, and the administrator who acted</td></tr>
+		<tr><td>User meta</td><td><code>adminstudio_blocked</code>; <code>last_seen</code> added to WordPress's own <code>session_tokens</code></td><td>When and by whom an account was blocked; when each session was last active</td></tr>
 		<tr><td>Option</td><td><code>adminstudio_look</code></td><td>Site template and palette, custom colours, templates per role, personal choice switch, sidebar sections and menu item labels, icons and order</td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_toolbar</code>, <code>adminstudio_look_admin</code>, <code>adminstudio_look_self</code>, <code>adminstudio_look_try</code>, <code>adminstudio_look_mode</code></td><td>Per-user toolbar override; template set by an administrator; the user's own template; a template an administrator is trying; light, dark or system mode</td></tr>
 		<tr><td>Cookie</td><td><code>adminstudio_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>
@@ -448,6 +471,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Login page</td><td><code>login_enqueue_scripts</code>, <code>login_head</code>, <code>login_headerurl</code>, <code>login_headertext</code>, <code>login_body_class</code>, <code>login_message</code>, <code>login_footer</code>, <code>lost_password_html_link</code>, <code>login_site_html_link</code>, <code>login_display_language_dropdown</code>, <code>the_privacy_policy_link</code></td></tr>
 		<tr><td>Emails</td><td><code>wp_new_user_notification_email</code>, <code>_admin</code>, <code>retrieve_password_notification_email</code>, <code>password_change_email</code>, <code>email_change_email</code>, <code>new_user_email_content</code>, <code>new_admin_email_content</code>, <code>site_admin_email_change_email</code>, <code>wp_password_change_notification_email</code>, <code>comment_notification_text</code>, <code>comment_moderation_text</code>, <code>wp_privacy_personal_data_email_content</code>, <code>user_erasure_fulfillment_email_content</code>, <code>recovery_mode_email</code>, <code>auto_core_update_email</code>, <code>auto_plugin_theme_update_email</code>, then <code>wp_mail</code> and <code>phpmailer_init</code></td></tr>
 		<tr><td>Error pages</td><td><code>wp_die_handler</code>, <code>template_include</code></td></tr>
+		<tr><td>Sessions</td><td><code>attach_session_information</code> (limit and history at session creation), <code>authenticate</code> (priority 90: blocked accounts and refused sign-ins), <code>init</code> (last active), <code>wp_logout</code>, <code>wp_login_failed</code>, <code>allow_password_reset</code>, <code>wp_is_application_passwords_available_for_user</code>, <code>manage_users_columns</code>, <code>user_row_actions</code></td></tr>
 		<tr><td>Login wording</td><td><code>login_init</code>, then <code>gettext</code> (WordPress's own strings, on login screens only), <code>login_site_html_link</code>, <code>wp_login_errors</code></td></tr>
 		<tr><td>Tab and page details</td><td><code>admin_title</code>, <code>login_title</code>, <code>document_title_separator</code>, <code>document_title_parts</code>, <code>get_site_icon_url</code>, <code>do_faviconico</code>, <code>admin_head</code>, <code>wp_head</code>, <code>style_loader_src</code>, <code>script_loader_src</code>, <code>xmlrpc_enabled</code>, <code>xmlrpc_methods</code>, <code>wp_headers</code>, <code>rest_endpoints</code>, <code>wp_sitemaps_add_provider</code></td></tr>
 		<tr><td>Admin branding</td><td><code>admin_bar_menu</code>, <code>admin_footer_text</code>, <code>update_footer</code>, <code>wp_dashboard_setup</code>, <code>admin_init</code> (colour scheme), <code>user_register</code></td></tr>

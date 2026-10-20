@@ -81,6 +81,13 @@ It starts from your theme. Colours and fonts are read from theme.json on block t
 * Honeypot field against bots.
 * Two-factor authentication with authenticator apps, email codes and backup codes. Require it for chosen roles.
 
+= Sessions =
+
+* See who is signed in, on which devices (browser, system, phone or computer), from which IP address, and when they were last active.
+* Sign out one device, sign someone out everywhere, or block an account.
+* Limit how many sessions one person can have: sign out the oldest or refuse the new sign-in, for everyone or chosen roles.
+* A sign-in history with failed attempts and administrator actions, filters and CSV download.
+
 = Coming soon and maintenance mode =
 
 * A branded holding page with an optional countdown.
@@ -139,6 +146,10 @@ When the database is down or WordPress hits a fatal error, plugins cannot run. W
 = Does it contact outside services? =
 
 Only when you choose a Google font in the brand kit. See External services below. No other external requests are made, and nothing is tracked.
+
+= Does Admin Studio store personal data? =
+
+The Sessions feature keeps a sign-in history with IP addresses and browser details, and the login protection keeps a lockout log. Both stay in your own database. Recording sign-ins can be switched off under Settings → Admin Studio → Sessions, and suggested wording is added to WordPress's privacy policy guide (Settings → Privacy).
 
 == External services ==
 

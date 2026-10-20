@@ -26,7 +26,7 @@ class Attempts {
 	 */
 	public static function init() {
 		add_filter( 'authenticate', array( __CLASS__, 'check' ), 99 );
-		add_action( 'wp_login_failed', array( __CLASS__, 'failed' ), 10, 1 );
+		add_action( 'wp_login_failed', array( __CLASS__, 'failed' ), 10, 2 );
 		add_action( 'wp_login', array( __CLASS__, 'succeeded' ) );
 		add_filter( 'login_errors', array( __CLASS__, 'remaining' ) );
 		add_filter( 'shake_error_codes', array( __CLASS__, 'shake' ) );
@@ -145,12 +145,27 @@ class Attempts {
 	}
 
 	/**
+	 * Set when the last refusal was not a wrong password, so no
+	 * "attempts left" warning is shown.
+	 *
+	 * @var bool
+	 */
+	private static $not_counted = false;
+
+	/**
 	 * Counts a failure and locks the IP when the limit is reached.
 	 *
-	 * @param string $username Username tried.
+	 * @param string    $username Username tried.
+	 * @param \WP_Error $error    Why the sign-in failed.
 	 * @return void
 	 */
-	public static function failed( $username ) {
+	public static function failed( $username, $error = null ) {
+		// A blocked account or a full session limit is not a guessed password.
+		if ( is_wp_error( $error ) && array_intersect( $error->get_error_codes(), array( 'adminstudio_blocked', 'adminstudio_session_limit' ) ) ) {
+			self::$not_counted = true;
+			return;
+		}
+
 		$ip = self::ip();
 
 		if ( self::allowed( $ip ) || self::locked_until( $ip ) ) {
@@ -194,7 +209,7 @@ class Attempts {
 		$ip   = self::ip();
 		$data = get_transient( self::key( 'count', $ip ) );
 
-		if ( ! is_array( $data ) || self::locked_until( $ip ) || self::allowed( $ip ) ) {
+		if ( self::$not_counted || ! is_array( $data ) || self::locked_until( $ip ) || self::allowed( $ip ) ) {
 			return $errors;
 		}
 

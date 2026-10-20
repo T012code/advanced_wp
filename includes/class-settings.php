@@ -84,6 +84,7 @@ class Settings {
 			'modules.roles'                     => $on,
 			'modules.admin_look'                => $on,
 			'modules.widgets'                   => $on,
+			'modules.sessions'                  => $on,
 			'general.remove_data'               => $off,
 
 			// Brand kit.
@@ -276,6 +277,26 @@ class Settings {
 			'error_pages.denied_button_url'     => $url,
 			'error_pages.expired_title'         => $text,
 			'error_pages.expired_message'       => $html,
+
+			// Sessions.
+			'sessions.limit'                    => array(
+				'type'    => 'int',
+				'default' => 0,
+				'min'     => 0,
+				'max'     => 50,
+			),
+			'sessions.limit_mode'               => array(
+				'type'    => 'select',
+				'default' => 'oldest',
+				'choices' => array( 'oldest', 'block' ),
+			),
+			'sessions.limit_roles'              => array(
+				'type'    => 'roles',
+				'default' => array(),
+			),
+			'sessions.exempt_admins'            => $on,
+			'sessions.history'                  => $on,
+			'sessions.history_failed'           => $on,
 
 			// Tab and page details.
 			'tab_meta.admin_title'              => array(

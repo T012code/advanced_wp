@@ -51,6 +51,7 @@ class Plugin {
 			'roles'          => Modules\Roles\Roles::class,
 			'admin_look'     => Modules\Admin_Look\Admin_Look::class,
 			'widgets'        => Modules\Widgets\Widgets::class,
+			'sessions'       => Modules\Sessions\Sessions::class,
 		);
 	}
 

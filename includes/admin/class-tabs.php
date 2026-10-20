@@ -108,6 +108,15 @@ class Tabs {
 	}
 
 	/**
+	 * Sessions.
+	 *
+	 * @return void
+	 */
+	private static function tab_sessions() {
+		Sessions_Tab::render();
+	}
+
+	/**
 	 * Overview: module switches.
 	 *
 	 * @return void
@@ -122,6 +131,7 @@ class Tabs {
 			'roles'          => array( __( 'Roles and permissions', 'admin-studio' ), __( 'Role editor, per-user permissions, menu access, login redirects, dashboard access and toolbar control.', 'admin-studio' ), '' ),
 			'admin_look'     => array( __( 'Dashboard look', 'admin-studio' ), __( 'Admin templates with icons, colours, dark mode and a menu editor.', 'admin-studio' ), '' ),
 			'widgets'        => array( __( 'Dashboard widgets', 'admin-studio' ), __( 'Show or hide widgets per role, custom widgets and a default layout.', 'admin-studio' ), '' ),
+			'sessions'       => array( __( 'Sessions', 'admin-studio' ), __( 'See who is signed in and on which device, limit sessions per user, sign people out, block accounts and keep a sign-in history.', 'admin-studio' ), '' ),
 		);
 
 		self::section(
