@@ -1,20 +1,20 @@
 /**
- * Advanced WP login page styles.
+ * Admin Studio login page styles.
  *
  * Colours, sizes and fonts arrive as custom properties printed inline on
- * body.login.advwp. Layout variants switch on body classes.
+ * body.login.adminstudio. Layout variants switch on body classes.
  */
 
-body.login.advwp {
-	--advwp-ease: cubic-bezier(0.22, 1, 0.36, 1);
-	background: var(--advwp-page-bg);
-	color: var(--advwp-text);
-	font-family: var(--advwp-font-body);
+body.login.adminstudio {
+	--adminstudio-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	background: var(--adminstudio-page-bg);
+	color: var(--adminstudio-text);
+	font-family: var(--adminstudio-font-body);
 	overflow-x: clip;
 }
 
 /* Shared centring for every layout except minimal. */
-body.login.advwp:not(.advwp-layout-minimal) {
+body.login.adminstudio:not(.adminstudio-layout-minimal) {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -24,82 +24,82 @@ body.login.advwp:not(.advwp-layout-minimal) {
 	box-sizing: border-box;
 }
 
-body.login.advwp:not(.advwp-layout-minimal) #login {
+body.login.adminstudio:not(.adminstudio-layout-minimal) #login {
 	width: 100%;
-	max-width: var(--advwp-form-width);
+	max-width: var(--adminstudio-form-width);
 	padding: 0;
 	margin: 0;
 	position: relative;
 	z-index: 1;
 }
 
-body.login.advwp-layout-minimal #login {
-	width: var(--advwp-form-width);
+body.login.adminstudio-layout-minimal #login {
+	width: var(--adminstudio-form-width);
 	max-width: calc(100% - 32px);
 }
 
 /* Logo. */
-body.login.advwp h1.wp-login-logo a {
-	background-image: var(--advwp-logo-url);
+body.login.adminstudio h1.wp-login-logo a {
+	background-image: var(--adminstudio-logo-url);
 	background-size: contain;
 	background-position: center;
-	width: var(--advwp-logo-width);
+	width: var(--adminstudio-logo-width);
 	max-width: 100%;
-	height: var(--advwp-logo-h);
+	height: var(--adminstudio-logo-h);
 	margin: 0 auto 24px;
 }
 
-body.login.advwp.advwp-textlogo h1.wp-login-logo a {
+body.login.adminstudio.adminstudio-textlogo h1.wp-login-logo a {
 	background: none;
 	text-indent: 0;
 	width: auto;
 	height: auto;
 	overflow: visible;
-	font-family: var(--advwp-font-heading);
+	font-family: var(--adminstudio-font-heading);
 	font-size: 26px;
 	font-weight: 600;
 	line-height: 1.25;
-	color: var(--advwp-page-text);
+	color: var(--adminstudio-page-text);
 	text-decoration: none;
 }
 
-body.login.advwp.advwp-nologo h1.wp-login-logo {
+body.login.adminstudio.adminstudio-nologo h1.wp-login-logo {
 	display: none;
 }
 
 /* Form card. */
-body.login.advwp form {
-	background: var(--advwp-surface);
-	color: var(--advwp-text);
-	border: 1px solid var(--advwp-border);
-	border-radius: var(--advwp-form-radius);
-	padding: var(--advwp-form-padding);
+body.login.adminstudio form {
+	background: var(--adminstudio-surface);
+	color: var(--adminstudio-text);
+	border: 1px solid var(--adminstudio-border);
+	border-radius: var(--adminstudio-form-radius);
+	padding: var(--adminstudio-form-padding);
 	margin-top: 0;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 16px 40px -12px rgba(0, 0, 0, 0.2);
 	overflow: visible;
 }
 
-body.login.advwp.advwp-noshadow form {
+body.login.adminstudio.adminstudio-noshadow form {
 	box-shadow: none;
 }
 
-body.login.advwp.advwp-layout-fullbg form {
-	background: color-mix(in srgb, var(--advwp-surface) 90%, transparent);
+body.login.adminstudio.adminstudio-layout-fullbg form {
+	background: color-mix(in srgb, var(--adminstudio-surface) 90%, transparent);
 	-webkit-backdrop-filter: blur(12px);
 	backdrop-filter: blur(12px);
 }
 
-body.login.advwp label {
-	color: var(--advwp-text);
+body.login.adminstudio label {
+	color: var(--adminstudio-text);
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 1.5;
 }
 
-body.login.advwp.advwp-nolabels form > p > label[for="user_login"],
-body.login.advwp.advwp-nolabels form > p > label[for="user_email"],
-body.login.advwp.advwp-nolabels form > p > label[for="pass1"],
-body.login.advwp.advwp-nolabels .user-pass-wrap > label {
+body.login.adminstudio.adminstudio-nolabels form > p > label[for="user_login"],
+body.login.adminstudio.adminstudio-nolabels form > p > label[for="user_email"],
+body.login.adminstudio.adminstudio-nolabels form > p > label[for="pass1"],
+body.login.adminstudio.adminstudio-nolabels .user-pass-wrap > label {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -110,72 +110,72 @@ body.login.advwp.advwp-nolabels .user-pass-wrap > label {
 }
 
 /* Fields. */
-body.login.advwp input[type="text"],
-body.login.advwp input[type="email"],
-body.login.advwp input[type="password"],
-body.login.advwp input[type="number"] {
+body.login.adminstudio input[type="text"],
+body.login.adminstudio input[type="email"],
+body.login.adminstudio input[type="password"],
+body.login.adminstudio input[type="number"] {
 	font-family: inherit;
 	font-size: 16px;
 	line-height: 1.5;
 	min-height: 44px;
 	padding: 8px 12px;
 	margin: 6px 0 16px;
-	color: var(--advwp-text);
-	background: var(--advwp-surface);
-	border: 1px solid var(--advwp-border);
-	border-radius: calc(var(--advwp-radius) * 0.75);
+	color: var(--adminstudio-text);
+	background: var(--adminstudio-surface);
+	border: 1px solid var(--adminstudio-border);
+	border-radius: calc(var(--adminstudio-radius) * 0.75);
 	box-shadow: none;
-	transition: border-color 150ms var(--advwp-ease), box-shadow 150ms var(--advwp-ease);
+	transition: border-color 150ms var(--adminstudio-ease), box-shadow 150ms var(--adminstudio-ease);
 }
 
-body.login.advwp.advwp-fields-underline input[type="text"],
-body.login.advwp.advwp-fields-underline input[type="email"],
-body.login.advwp.advwp-fields-underline input[type="password"] {
+body.login.adminstudio.adminstudio-fields-underline input[type="text"],
+body.login.adminstudio.adminstudio-fields-underline input[type="email"],
+body.login.adminstudio.adminstudio-fields-underline input[type="password"] {
 	border-width: 0 0 2px;
 	border-radius: 0;
 	background: transparent;
 	padding-left: 0;
 }
 
-body.login.advwp.advwp-fields-filled input[type="text"],
-body.login.advwp.advwp-fields-filled input[type="email"],
-body.login.advwp.advwp-fields-filled input[type="password"] {
-	background: var(--advwp-field-fill);
+body.login.adminstudio.adminstudio-fields-filled input[type="text"],
+body.login.adminstudio.adminstudio-fields-filled input[type="email"],
+body.login.adminstudio.adminstudio-fields-filled input[type="password"] {
+	background: var(--adminstudio-field-fill);
 	border-color: transparent;
 }
 
-body.login.advwp input[type="text"]:focus,
-body.login.advwp input[type="email"]:focus,
-body.login.advwp input[type="password"]:focus {
-	border-color: var(--advwp-primary);
-	box-shadow: 0 0 0 1px var(--advwp-primary);
+body.login.adminstudio input[type="text"]:focus,
+body.login.adminstudio input[type="email"]:focus,
+body.login.adminstudio input[type="password"]:focus {
+	border-color: var(--adminstudio-primary);
+	box-shadow: 0 0 0 1px var(--adminstudio-primary);
 	outline: 2px solid transparent;
 }
 
-body.login.advwp input[type="checkbox"] {
-	border-color: var(--advwp-border);
+body.login.adminstudio input[type="checkbox"] {
+	border-color: var(--adminstudio-border);
 	border-radius: 4px;
 }
 
-body.login.advwp input[type="checkbox"]:checked::before {
+body.login.adminstudio input[type="checkbox"]:checked::before {
 	filter: none;
 }
 
-body.login.advwp input[type="checkbox"]:focus {
-	border-color: var(--advwp-primary);
-	box-shadow: 0 0 0 1px var(--advwp-primary);
+body.login.adminstudio input[type="checkbox"]:focus {
+	border-color: var(--adminstudio-primary);
+	box-shadow: 0 0 0 1px var(--adminstudio-primary);
 }
 
-body.login.advwp .wp-pwd {
+body.login.adminstudio .wp-pwd {
 	position: relative;
 }
 
-body.login.advwp .wp-pwd input {
+body.login.adminstudio .wp-pwd input {
 	margin-bottom: 16px;
 }
 
-body.login.advwp .button.wp-hide-pw {
-	color: var(--advwp-muted);
+body.login.adminstudio .button.wp-hide-pw {
+	color: var(--adminstudio-muted);
 	top: 6px;
 	height: 44px;
 	min-height: 44px;
@@ -184,23 +184,23 @@ body.login.advwp .button.wp-hide-pw {
 	box-shadow: none;
 }
 
-body.login.advwp .button.wp-hide-pw:hover,
-body.login.advwp .button.wp-hide-pw:focus {
-	color: var(--advwp-primary);
+body.login.adminstudio .button.wp-hide-pw:hover,
+body.login.adminstudio .button.wp-hide-pw:focus {
+	color: var(--adminstudio-primary);
 	background: transparent;
 }
 
-body.login.advwp .button.wp-hide-pw:focus-visible {
-	box-shadow: 0 0 0 2px var(--advwp-primary);
+body.login.adminstudio .button.wp-hide-pw:focus-visible {
+	box-shadow: 0 0 0 2px var(--adminstudio-primary);
 	outline: 2px solid transparent;
 }
 
 /* Primary button. */
-body.login.advwp .button-primary {
-	background: var(--advwp-btn-bg);
-	border: 2px solid var(--advwp-btn-bg);
-	color: var(--advwp-btn-text);
-	border-radius: var(--advwp-btn-radius);
+body.login.adminstudio .button-primary {
+	background: var(--adminstudio-btn-bg);
+	border: 2px solid var(--adminstudio-btn-bg);
+	color: var(--adminstudio-btn-text);
+	border-radius: var(--adminstudio-btn-radius);
 	min-height: 44px;
 	padding: 0 24px;
 	font-family: inherit;
@@ -209,197 +209,197 @@ body.login.advwp .button-primary {
 	line-height: 1;
 	text-shadow: none;
 	box-shadow: none;
-	transition: filter 150ms var(--advwp-ease), transform 150ms var(--advwp-ease);
+	transition: filter 150ms var(--adminstudio-ease), transform 150ms var(--adminstudio-ease);
 }
 
-body.login.advwp .button-primary:hover {
-	background: var(--advwp-btn-bg);
-	border-color: var(--advwp-btn-bg);
-	color: var(--advwp-btn-text);
+body.login.adminstudio .button-primary:hover {
+	background: var(--adminstudio-btn-bg);
+	border-color: var(--adminstudio-btn-bg);
+	color: var(--adminstudio-btn-text);
 	filter: brightness(0.92);
 }
 
-body.login.advwp .button-primary:active {
+body.login.adminstudio .button-primary:active {
 	transform: scale(0.98);
 }
 
-body.login.advwp .button-primary:focus,
-body.login.advwp .button-primary:focus-visible {
-	background: var(--advwp-btn-bg);
-	color: var(--advwp-btn-text);
-	box-shadow: 0 0 0 2px var(--advwp-surface), 0 0 0 4px var(--advwp-btn-bg);
+body.login.adminstudio .button-primary:focus,
+body.login.adminstudio .button-primary:focus-visible {
+	background: var(--adminstudio-btn-bg);
+	color: var(--adminstudio-btn-text);
+	box-shadow: 0 0 0 2px var(--adminstudio-surface), 0 0 0 4px var(--adminstudio-btn-bg);
 	outline: 2px solid transparent;
 }
 
-body.login.advwp .button-primary:disabled,
-body.login.advwp .button-primary[disabled] {
-	background: var(--advwp-btn-bg) !important;
-	color: var(--advwp-btn-text) !important;
-	border-color: var(--advwp-btn-bg) !important;
+body.login.adminstudio .button-primary:disabled,
+body.login.adminstudio .button-primary[disabled] {
+	background: var(--adminstudio-btn-bg) !important;
+	color: var(--adminstudio-btn-text) !important;
+	border-color: var(--adminstudio-btn-bg) !important;
 	opacity: 0.55;
 	cursor: not-allowed;
 }
 
-body.login.advwp.advwp-btn-outline .button-primary,
-body.login.advwp.advwp-btn-outline .button-primary:hover,
-body.login.advwp.advwp-btn-outline .button-primary:focus {
+body.login.adminstudio.adminstudio-btn-outline .button-primary,
+body.login.adminstudio.adminstudio-btn-outline .button-primary:hover,
+body.login.adminstudio.adminstudio-btn-outline .button-primary:focus {
 	background: transparent;
-	color: var(--advwp-btn-bg);
+	color: var(--adminstudio-btn-bg);
 }
 
-body.login.advwp.advwp-btn-outline .button-primary:hover {
-	background: var(--advwp-btn-bg);
-	color: var(--advwp-btn-text);
+body.login.adminstudio.adminstudio-btn-outline .button-primary:hover {
+	background: var(--adminstudio-btn-bg);
+	color: var(--adminstudio-btn-text);
 	filter: none;
 }
 
-body.login.advwp:not(.advwp-layout-minimal) .submit {
+body.login.adminstudio:not(.adminstudio-layout-minimal) .submit {
 	clear: both;
 }
 
-body.login.advwp:not(.advwp-layout-minimal) .submit .button-primary {
+body.login.adminstudio:not(.adminstudio-layout-minimal) .submit .button-primary {
 	float: none;
 	width: 100%;
 	margin-top: 8px;
 }
 
-body.login.advwp:not(.advwp-layout-minimal) .forgetmenot {
+body.login.adminstudio:not(.adminstudio-layout-minimal) .forgetmenot {
 	float: none;
 	margin-bottom: 8px;
 }
 
-body.login.advwp .reset-pass-submit .button {
+body.login.adminstudio .reset-pass-submit .button {
 	float: none;
 }
 
 /* Messages and errors. */
 /* Messages use an even border and a light tint, never a thick side stripe. */
-body.login.advwp .message,
-body.login.advwp .notice,
-body.login.advwp .success,
-body.login.advwp #login_error {
-	background: color-mix(in srgb, var(--advwp-primary) 6%, var(--advwp-surface));
-	color: var(--advwp-text);
-	border: 1px solid color-mix(in srgb, var(--advwp-primary) 30%, var(--advwp-border));
-	border-radius: calc(var(--advwp-radius) * 0.75);
+body.login.adminstudio .message,
+body.login.adminstudio .notice,
+body.login.adminstudio .success,
+body.login.adminstudio #login_error {
+	background: color-mix(in srgb, var(--adminstudio-primary) 6%, var(--adminstudio-surface));
+	color: var(--adminstudio-text);
+	border: 1px solid color-mix(in srgb, var(--adminstudio-primary) 30%, var(--adminstudio-border));
+	border-radius: calc(var(--adminstudio-radius) * 0.75);
 	box-shadow: none;
 	margin: 0 0 16px;
 	padding: 12px 14px;
 }
 
-body.login.advwp #login_error,
-body.login.advwp .notice-error {
-	background: color-mix(in srgb, var(--advwp-error) 7%, var(--advwp-surface));
-	border-color: color-mix(in srgb, var(--advwp-error) 45%, var(--advwp-border));
+body.login.adminstudio #login_error,
+body.login.adminstudio .notice-error {
+	background: color-mix(in srgb, var(--adminstudio-error) 7%, var(--adminstudio-surface));
+	border-color: color-mix(in srgb, var(--adminstudio-error) 45%, var(--adminstudio-border));
 }
 
-body.login.advwp .success,
-body.login.advwp .notice-success {
-	background: color-mix(in srgb, var(--advwp-success) 7%, var(--advwp-surface));
-	border-color: color-mix(in srgb, var(--advwp-success) 45%, var(--advwp-border));
+body.login.adminstudio .success,
+body.login.adminstudio .notice-success {
+	background: color-mix(in srgb, var(--adminstudio-success) 7%, var(--adminstudio-surface));
+	border-color: color-mix(in srgb, var(--adminstudio-success) 45%, var(--adminstudio-border));
 }
 
-body.login.advwp .advwp-message {
-	color: var(--advwp-page-text);
+body.login.adminstudio .adminstudio-message {
+	color: var(--adminstudio-page-text);
 	text-align: center;
 	margin: 0 0 20px;
 	font-size: 15px;
 	line-height: 1.6;
 }
 
-body.login.advwp .advwp-message p {
+body.login.adminstudio .adminstudio-message p {
 	margin: 0 0 8px;
 }
 
 /* Links under the form. */
-body.login.advwp #nav,
-body.login.advwp #backtoblog {
+body.login.adminstudio #nav,
+body.login.adminstudio #backtoblog {
 	margin: 16px 0 0;
 	padding: 0;
 	text-align: center;
 	font-size: 14px;
-	color: var(--advwp-page-text);
+	color: var(--adminstudio-page-text);
 }
 
-body.login.advwp #nav a,
-body.login.advwp #backtoblog a,
-body.login.advwp .privacy-policy-link,
-body.login.advwp .advwp-footer a {
-	color: var(--advwp-page-text);
+body.login.adminstudio #nav a,
+body.login.adminstudio #backtoblog a,
+body.login.adminstudio .privacy-policy-link,
+body.login.adminstudio .adminstudio-footer a {
+	color: var(--adminstudio-page-text);
 	text-decoration: underline;
 	text-underline-offset: 3px;
-	transition: opacity 150ms var(--advwp-ease);
+	transition: opacity 150ms var(--adminstudio-ease);
 }
 
-body.login.advwp #nav a:hover,
-body.login.advwp #backtoblog a:hover,
-body.login.advwp .privacy-policy-link:hover {
-	color: var(--advwp-page-text);
+body.login.adminstudio #nav a:hover,
+body.login.adminstudio #backtoblog a:hover,
+body.login.adminstudio .privacy-policy-link:hover {
+	color: var(--adminstudio-page-text);
 	opacity: 0.75;
 }
 
-body.login.advwp #nav .button-link {
-	color: var(--advwp-page-text);
+body.login.adminstudio #nav .button-link {
+	color: var(--adminstudio-page-text);
 	font-size: 14px;
 	text-decoration: underline;
 	text-underline-offset: 3px;
 }
 
-body.login.advwp form a {
-	color: var(--advwp-link);
+body.login.adminstudio form a {
+	color: var(--adminstudio-link);
 }
 
-body.login.advwp a:focus-visible {
+body.login.adminstudio a:focus-visible {
 	color: inherit;
 	box-shadow: 0 0 0 2px currentColor;
 	border-radius: 2px;
 	outline: 2px solid transparent;
 }
 
-body.login.advwp .privacy-policy-page-link,
-body.login.advwp .language-switcher,
-body.login.advwp .advwp-footer {
+body.login.adminstudio .privacy-policy-page-link,
+body.login.adminstudio .language-switcher,
+body.login.adminstudio .adminstudio-footer {
 	position: relative;
 	z-index: 1;
 	margin: 24px auto 0;
 	text-align: center;
-	color: var(--advwp-page-text);
+	color: var(--adminstudio-page-text);
 	font-size: 13px;
 }
 
-body.login.advwp .language-switcher label .dashicons {
-	color: var(--advwp-page-text);
+body.login.adminstudio .language-switcher label .dashicons {
+	color: var(--adminstudio-page-text);
 }
 
 /* Split screen: the image fills one half, the form centres in the other. */
-body.login.advwp.advwp-layout-split {
+body.login.adminstudio.adminstudio-layout-split {
 	padding-left: calc(50% + 16px);
 	padding-right: 16px;
 }
 
-body.login.advwp.advwp-layout-split.advwp-split-right {
+body.login.adminstudio.adminstudio-layout-split.adminstudio-split-right {
 	padding-left: 16px;
 	padding-right: calc(50% + 16px);
 }
 
-body.login.advwp.advwp-layout-split::before {
+body.login.adminstudio.adminstudio-layout-split::before {
 	content: "";
 	position: fixed;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	width: 50%;
-	background-color: var(--advwp-primary);
+	background-color: var(--adminstudio-primary);
 	background-size: cover;
 	background-position: center;
 }
 
-body.login.advwp.advwp-layout-split.advwp-split-right::before {
+body.login.adminstudio.adminstudio-layout-split.adminstudio-split-right::before {
 	left: auto;
 	right: 0;
 }
 
-body.login.advwp.advwp-layout-split form {
+body.login.adminstudio.adminstudio-layout-split form {
 	background: transparent;
 	border: 0;
 	box-shadow: none;
@@ -408,17 +408,17 @@ body.login.advwp.advwp-layout-split form {
 	backdrop-filter: none;
 }
 
-body.login.advwp.advwp-layout-split .advwp-bg-video {
+body.login.adminstudio.adminstudio-layout-split .adminstudio-bg-video {
 	width: 50%;
 }
 
-body.login.advwp.advwp-layout-split.advwp-split-right .advwp-bg-video {
+body.login.adminstudio.adminstudio-layout-split.adminstudio-split-right .adminstudio-bg-video {
 	left: auto;
 	right: 0;
 }
 
 /* Background video. */
-body.login.advwp .advwp-bg-video {
+body.login.adminstudio .adminstudio-bg-video {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -430,33 +430,33 @@ body.login.advwp .advwp-bg-video {
 }
 
 /* The interim login inside the admin keeps a simple card. */
-body.login.advwp.interim-login {
+body.login.adminstudio.interim-login {
 	padding: 24px 16px;
 }
 
-body.login.advwp.interim-login::before,
-body.login.advwp.interim-login .advwp-bg-video {
+body.login.adminstudio.interim-login::before,
+body.login.adminstudio.interim-login .adminstudio-bg-video {
 	display: none;
 }
 
 @media (max-width: 782px) {
-	body.login.advwp.advwp-layout-split,
-	body.login.advwp.advwp-layout-split.advwp-split-right {
+	body.login.adminstudio.adminstudio-layout-split,
+	body.login.adminstudio.adminstudio-layout-split.adminstudio-split-right {
 		padding: 32px 16px;
 	}
 
-	body.login.advwp.advwp-layout-split::before,
-	body.login.advwp.advwp-layout-split .advwp-bg-video {
+	body.login.adminstudio.adminstudio-layout-split::before,
+	body.login.adminstudio.adminstudio-layout-split .adminstudio-bg-video {
 		display: none;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	body.login.advwp * {
+	body.login.adminstudio * {
 		transition-duration: 1ms !important;
 	}
 
-	body.login.advwp .button-primary:active {
+	body.login.adminstudio .button-primary:active {
 		transform: none;
 	}
 }

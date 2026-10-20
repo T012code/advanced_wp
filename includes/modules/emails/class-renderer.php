@@ -2,15 +2,16 @@
 /**
  * Builds branded HTML emails from templates and tags.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Emails;
+namespace AdminStudio\Modules\Emails;
 
-use AdvancedWP\Brand_Kit;
-use AdvancedWP\Color;
-use AdvancedWP\Fonts;
-use AdvancedWP\Settings;
+use AdminStudio\Brand_Kit;
+use AdminStudio\Color;
+use AdminStudio\Fonts;
+use AdminStudio\Preview;
+use AdminStudio\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -169,7 +170,7 @@ class Renderer {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="x-apple-disable-message-reformatting">
 <title><?php echo esc_html( $title ); ?></title>
-<!-- advwp-email -->
+<!-- adminstudio-email -->
 </head>
 <body style="margin:0;padding:0;background:<?php echo esc_attr( $s['body_bg'] ); ?>;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:<?php echo esc_attr( $s['body_bg'] ); ?>;">
@@ -188,7 +189,7 @@ class Renderer {
 			<?php if ( '' !== $heading ) : ?>
 				<h1 style="margin:0 0 16px;font-family:<?php echo esc_attr( $s['font'] ); ?>;font-size:24px;line-height:1.3;font-weight:700;color:<?php echo esc_attr( $s['text'] ); ?>;"><?php echo esc_html( $heading ); ?></h1>
 			<?php endif; ?>
-			<?php echo $body; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Template body is sanitized on save; tag values are escaped in replace(). ?>
+			<?php echo wp_kses_post( $body ); ?>
 			<?php if ( '' !== $button ) : ?>
 				<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0 8px;">
 					<tr><td style="border-radius:<?php echo esc_attr( $s['button_radius'] ); ?>;background:<?php echo esc_attr( $s['button_bg'] ); ?>;">
@@ -196,7 +197,7 @@ class Renderer {
 					</td></tr>
 				</table>
 				<p style="margin:16px 0 0;font-size:13px;line-height:1.5;color:<?php echo esc_attr( $s['muted'] ); ?>;word-break:break-all;">
-					<?php esc_html_e( 'If the button does not work, copy this link into your browser:', 'advanced-wp' ); ?><br>
+					<?php esc_html_e( 'If the button does not work, copy this link into your browser:', 'admin-studio' ); ?><br>
 					<a href="<?php echo esc_url( $button_url ); ?>" style="color:<?php echo esc_attr( $s['link'] ); ?>;"><?php echo esc_html( $button_url ); ?></a>
 				</p>
 			<?php endif; ?>
@@ -361,20 +362,20 @@ class Renderer {
 				'expiry_date'          => date_i18n( get_option( 'date_format' ), strtotime( '+3 days' ) ),
 				'privacy_policy_url'   => get_privacy_policy_url() ? get_privacy_policy_url() : $home,
 				'user_edit_link'       => admin_url( 'users.php' ),
-				'post_title'           => __( 'Hello world!', 'advanced-wp' ),
+				'post_title'           => __( 'Hello world!', 'admin-studio' ),
 				'post_link'            => $home,
 				'comment_author'       => 'Ada Lovelace',
 				'comment_author_email' => 'ada@example.com',
-				'comment_content'      => esc_html__( 'Thanks for writing this. The second section answered exactly what I was looking for.', 'advanced-wp' ),
+				'comment_content'      => esc_html__( 'Thanks for writing this. The second section answered exactly what I was looking for.', 'admin-studio' ),
 				'comment_link'         => admin_url( 'edit-comments.php' ),
 				'moderate_link'        => admin_url( 'edit-comments.php?comment_status=moderated' ),
 				'pending_count'        => '3',
 				/* translators: %s: site title. */
-				'update_subject'       => sprintf( __( '[%s] Some plugins were automatically updated', 'advanced-wp' ), get_bloginfo( 'name' ) ),
-				'update_details'       => '<p>' . esc_html__( 'These plugins are now up to date: Example Plugin (from version 1.2 to 1.3).', 'advanced-wp' ) . '</p>',
+				'update_subject'       => sprintf( __( '[%s] Some plugins were automatically updated', 'admin-studio' ), get_bloginfo( 'name' ) ),
+				'update_details'       => '<p>' . esc_html__( 'These plugins are now up to date: Example Plugin (from version 1.2 to 1.3).', 'admin-studio' ) . '</p>',
 				'updates_link'         => admin_url( 'update-core.php' ),
 				'recovery_link'        => wp_login_url() . '?action=enter_recovery_mode',
-				'technical_details'    => '<pre>' . esc_html__( 'An error of type E_ERROR was caused in line 12 of the file example-plugin.php.', 'advanced-wp' ) . '</pre>',
+				'technical_details'    => '<pre>' . esc_html__( 'An error of type E_ERROR was caused in line 12 of the file example-plugin.php.', 'admin-studio' ) . '</pre>',
 			)
 		);
 	}
@@ -393,5 +394,47 @@ class Renderer {
 		$email = self::render( $key, self::sample_context() );
 
 		return $email['html'];
+	}
+
+	/**
+	 * Prints a template preview in the browser.
+	 *
+	 * @param string $key    Template key.
+	 * @param bool   $bridge Whether to add the Customizer preview bridge.
+	 * @return void
+	 */
+	public static function print_preview( $key, $bridge = false ) {
+		$html = preg_replace( '#^\s*<!DOCTYPE[^>]*>#i', '', self::preview( $key ) );
+		$html = preg_replace( '#</body>\s*</html>\s*$#i', '', $html );
+
+		echo '<!DOCTYPE html>';
+		echo wp_kses( $html, self::document_tags() );
+
+		if ( $bridge ) {
+			Preview::bridge();
+		}
+
+		echo '</body></html>';
+	}
+
+	/**
+	 * Tags allowed in a full email document: post content plus the document wrapper.
+	 *
+	 * @return array
+	 */
+	private static function document_tags() {
+		$tags = wp_kses_allowed_html( 'post' );
+
+		$tags['html']  = array( 'lang' => true );
+		$tags['head']  = array();
+		$tags['meta']  = array(
+			'charset' => true,
+			'name'    => true,
+			'content' => true,
+		);
+		$tags['title'] = array();
+		$tags['body']  = array( 'style' => true );
+
+		return $tags;
 	}
 }

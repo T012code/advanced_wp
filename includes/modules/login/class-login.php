@@ -5,15 +5,15 @@
  * Restyles every screen on wp-login.php: log in, register, lost password,
  * reset password and the interim "session expired" login.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Login;
+namespace AdminStudio\Modules\Login;
 
-use AdvancedWP\Brand_Kit;
-use AdvancedWP\Color;
-use AdvancedWP\Preview;
-use AdvancedWP\Settings;
+use AdminStudio\Brand_Kit;
+use AdminStudio\Color;
+use AdminStudio\Preview;
+use AdminStudio\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -77,9 +77,9 @@ class Login {
 	 * @return void
 	 */
 	public static function enqueue() {
-		wp_enqueue_style( 'advwp-login', ADVWP_URL . 'assets/css/login.css', array( 'login' ), ADVWP_VERSION );
-		wp_add_inline_style( 'advwp-login', self::css() );
-		wp_enqueue_script( 'advwp-login', ADVWP_URL . 'assets/js/login.js', array(), ADVWP_VERSION, true );
+		wp_enqueue_style( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/css/login.css', array( 'login' ), ADMINSTUDIO_VERSION );
+		wp_add_inline_style( 'adminstudio-login', self::css() );
+		wp_enqueue_script( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/js/login.js', array(), ADMINSTUDIO_VERSION, true );
 	}
 
 	/**
@@ -118,29 +118,29 @@ class Login {
 		$vars = Brand_Kit::css_vars( $b ) . implode(
 			'',
 			array(
-				'--advwp-page-bg:' . $page_bg . ';',
-				'--advwp-page-text:' . $page_text . ';',
-				'--advwp-link:' . $link . ';',
-				'--advwp-btn-bg:' . $btn_bg . ';',
-				'--advwp-btn-text:' . $btn_txt . ';',
-				'--advwp-btn-radius:' . $radius( 'login.button_radius', 'pill' === $b['button_style'] ? '999px' : $b['radius'] . 'px' ) . ';',
-				'--advwp-form-width:' . (int) Settings::get( 'login.form_width' ) . 'px;',
-				'--advwp-form-padding:' . (int) Settings::get( 'login.form_padding' ) . 'px;',
-				'--advwp-form-radius:' . $radius( 'login.form_radius', $b['radius'] . 'px' ) . ';',
-				'--advwp-field-fill:' . Color::mix( $b['surface'], $b['text'], 0.06 ) . ';',
-				'--advwp-logo-h:' . $logo_height . 'px;',
-				$logo ? '--advwp-logo-url:url("' . esc_url_raw( $logo ) . '");' : '',
+				'--adminstudio-page-bg:' . $page_bg . ';',
+				'--adminstudio-page-text:' . $page_text . ';',
+				'--adminstudio-link:' . $link . ';',
+				'--adminstudio-btn-bg:' . $btn_bg . ';',
+				'--adminstudio-btn-text:' . $btn_txt . ';',
+				'--adminstudio-btn-radius:' . $radius( 'login.button_radius', 'pill' === $b['button_style'] ? '999px' : $b['radius'] . 'px' ) . ';',
+				'--adminstudio-form-width:' . (int) Settings::get( 'login.form_width' ) . 'px;',
+				'--adminstudio-form-padding:' . (int) Settings::get( 'login.form_padding' ) . 'px;',
+				'--adminstudio-form-radius:' . $radius( 'login.form_radius', $b['radius'] . 'px' ) . ';',
+				'--adminstudio-field-fill:' . Color::mix( $b['surface'], $b['text'], 0.06 ) . ';',
+				'--adminstudio-logo-h:' . $logo_height . 'px;',
+				$logo ? '--adminstudio-logo-url:url("' . esc_url_raw( $logo ) . '");' : '',
 			)
 		);
 
 		$css  = Brand_Kit::font_faces( $b );
-		$css .= 'body.login.advwp{' . $vars . '}';
+		$css .= 'body.login.adminstudio{' . $vars . '}';
 
 		if ( 'split' === $layout ) {
 			$side = Settings::get( 'login.side_image' );
 			$side = '' !== $side ? $side : Settings::get( 'login.bg_image' );
 			if ( '' !== $side ) {
-				$css .= 'body.login.advwp-layout-split::before{background-image:' . self::overlay_layer() . 'url("' . esc_url_raw( $side ) . '");}';
+				$css .= 'body.login.adminstudio-layout-split::before{background-image:' . self::overlay_layer() . 'url("' . esc_url_raw( $side ) . '");}';
 			}
 		}
 
@@ -279,31 +279,31 @@ class Login {
 	}
 
 	/**
-	 * Advanced WP body classes.
+	 * Admin Studio body classes.
 	 *
 	 * @return string[]
 	 */
 	public static function classes() {
 		$classes = array(
-			'advwp',
-			'advwp-layout-' . Settings::get( 'login.layout' ),
-			'advwp-split-' . Settings::get( 'login.split_side' ),
-			'advwp-fields-' . Settings::get( 'login.field_style' ),
-			'advwp-btn-' . Settings::get( 'brand.button_style' ),
+			'adminstudio',
+			'adminstudio-layout-' . Settings::get( 'login.layout' ),
+			'adminstudio-split-' . Settings::get( 'login.split_side' ),
+			'adminstudio-fields-' . Settings::get( 'login.field_style' ),
+			'adminstudio-btn-' . Settings::get( 'brand.button_style' ),
 		);
 
 		if ( Settings::get( 'login.hide_labels' ) ) {
-			$classes[] = 'advwp-nolabels';
+			$classes[] = 'adminstudio-nolabels';
 		}
 
 		if ( Settings::get( 'login.hide_logo' ) ) {
-			$classes[] = 'advwp-nologo';
+			$classes[] = 'adminstudio-nologo';
 		} elseif ( '' === self::brand()['logo'] ) {
-			$classes[] = 'advwp-textlogo';
+			$classes[] = 'adminstudio-textlogo';
 		}
 
 		if ( ! Settings::get( 'login.form_shadow' ) ) {
-			$classes[] = 'advwp-noshadow';
+			$classes[] = 'adminstudio-noshadow';
 		}
 
 		return $classes;
@@ -322,7 +322,7 @@ class Login {
 			return $message;
 		}
 
-		return '<div class="advwp-message">' . wp_kses_post( wpautop( $custom ) ) . '</div>' . $message;
+		return '<div class="adminstudio-message">' . wp_kses_post( wpautop( $custom ) ) . '</div>' . $message;
 	}
 
 	/**
@@ -334,14 +334,14 @@ class Login {
 		$footer = Settings::get( 'login.footer_text' );
 
 		if ( '' !== trim( $footer ) ) {
-			echo '<div class="advwp-footer">' . wp_kses_post( $footer ) . '</div>';
+			echo '<div class="adminstudio-footer">' . wp_kses_post( $footer ) . '</div>';
 		}
 
 		$video = Settings::get( 'login.bg_video' );
 
 		if ( 'video' === Settings::get( 'login.bg_type' ) && '' !== $video ) {
 			printf(
-				'<video class="advwp-bg-video" src="%s" autoplay muted loop playsinline aria-hidden="true"></video>',
+				'<video class="adminstudio-bg-video" src="%s" autoplay muted loop playsinline aria-hidden="true"></video>',
 				esc_url( $video )
 			);
 		}
@@ -378,51 +378,51 @@ class Login {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php esc_html_e( 'Log In', 'advanced-wp' ); ?></title>
+	<title><?php esc_html_e( 'Log In', 'admin-studio' ); ?></title>
 		<?php
 		// Passing handles prints only these and skips the wp_print_styles action.
-		wp_print_styles( array( 'login', 'advwp-login' ) );
+		wp_print_styles( array( 'login', 'adminstudio-login' ) );
 		self::head();
 		?>
 </head>
 <body class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>">
 	<div id="login">
-		<h1 role="presentation" class="wp-login-logo"><a href="<?php echo esc_url( self::header_url() ); ?>"><?php echo self::header_text(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in header_text(). ?></a></h1>
-		<?php echo $message; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in message(). ?>
+		<h1 role="presentation" class="wp-login-logo"><a href="<?php echo esc_url( self::header_url() ); ?>"><?php echo esc_html( self::header_text() ); ?></a></h1>
+		<?php echo wp_kses_post( $message ); ?>
 		<form name="loginform" id="loginform" action="#" method="post">
 			<p>
-				<label for="user_login"><?php esc_html_e( 'Username or Email Address', 'advanced-wp' ); ?></label>
+				<label for="user_login"><?php esc_html_e( 'Username or Email Address', 'admin-studio' ); ?></label>
 				<input type="text" name="log" id="user_login" class="input" value="" size="20" autocapitalize="off" autocomplete="username">
 			</p>
 			<div class="user-pass-wrap">
-				<label for="user_pass"><?php esc_html_e( 'Password', 'advanced-wp' ); ?></label>
+				<label for="user_pass"><?php esc_html_e( 'Password', 'admin-studio' ); ?></label>
 				<div class="wp-pwd">
 					<input type="password" name="pwd" id="user_pass" class="input password-input" value="" size="20" autocomplete="current-password">
-					<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" aria-label="<?php esc_attr_e( 'Show password', 'advanced-wp' ); ?>">
+					<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" aria-label="<?php esc_attr_e( 'Show password', 'admin-studio' ); ?>">
 						<span class="dashicons dashicons-visibility" aria-hidden="true"></span>
 					</button>
 				</div>
 			</div>
-			<p class="forgetmenot"><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <label for="rememberme"><?php esc_html_e( 'Remember Me', 'advanced-wp' ); ?></label></p>
+			<p class="forgetmenot"><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <label for="rememberme"><?php esc_html_e( 'Remember Me', 'admin-studio' ); ?></label></p>
 			<p class="submit">
-				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Log In', 'advanced-wp' ); ?>">
+				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Log In', 'admin-studio' ); ?>">
 			</p>
 		</form>
 		<?php if ( ! Settings::get( 'login.hide_lost_password' ) ) : ?>
-			<p id="nav"><a href="#"><?php esc_html_e( 'Lost your password?', 'advanced-wp' ); ?></a></p>
+			<p id="nav"><a href="#"><?php esc_html_e( 'Lost your password?', 'admin-studio' ); ?></a></p>
 		<?php endif; ?>
 		<?php if ( ! Settings::get( 'login.hide_back_to_site' ) ) : ?>
 			<p id="backtoblog"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<?php
 				/* translators: %s: site title. */
-				printf( esc_html__( '&larr; Go to %s', 'advanced-wp' ), esc_html( get_bloginfo( 'name' ) ) );
+				printf( esc_html__( '&larr; Go to %s', 'admin-studio' ), esc_html( get_bloginfo( 'name' ) ) );
 				?>
 			</a></p>
 		<?php endif; ?>
 	</div>
 		<?php
 		self::footer();
-		wp_print_scripts( array( 'advwp-login' ) );
+		wp_print_scripts( array( 'adminstudio-login' ) );
 		Preview::bridge();
 		?>
 </body>

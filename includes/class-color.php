@@ -2,10 +2,10 @@
 /**
  * Small colour helpers: parsing, mixing and contrast.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP;
+namespace AdminStudio;
 
 defined( 'ABSPATH' ) || exit;
 

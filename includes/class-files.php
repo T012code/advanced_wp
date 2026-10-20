@@ -2,10 +2,10 @@
 /**
  * Thin wrapper around WP_Filesystem for the few files the plugin writes.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP;
+namespace AdminStudio;
 
 defined( 'ABSPATH' ) || exit;
 

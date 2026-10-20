@@ -2,10 +2,10 @@
 /**
  * A select box that switches the Customizer preview between pages.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Customizer;
+namespace AdminStudio\Customizer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,7 +19,7 @@ class Preview_Picker_Control extends \WP_Customize_Control {
 	 *
 	 * @var string
 	 */
-	public $type = 'advwp_picker';
+	public $type = 'adminstudio_picker';
 
 	/**
 	 * Renders the select box.
@@ -27,10 +27,10 @@ class Preview_Picker_Control extends \WP_Customize_Control {
 	 * @return void
 	 */
 	protected function render_content() {
-		$id = 'advwp-picker-' . $this->id;
+		$id = 'adminstudio-picker-' . $this->id;
 		?>
 		<label for="<?php echo esc_attr( $id ); ?>" class="customize-control-title"><?php echo esc_html( $this->label ); ?></label>
-		<select id="<?php echo esc_attr( $id ); ?>" data-advwp-picker>
+		<select id="<?php echo esc_attr( $id ); ?>" data-adminstudio-picker>
 			<?php foreach ( $this->choices as $url => $label ) : ?>
 				<option value="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></option>
 			<?php endforeach; ?>

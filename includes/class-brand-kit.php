@@ -5,10 +5,10 @@
  * Values come from the plugin settings first, then the active theme, then a
  * neutral fallback palette.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP;
+namespace AdminStudio;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -297,7 +297,7 @@ class Brand_Kit {
 		$css = '';
 
 		foreach ( $vars as $name => $value ) {
-			$css .= '--advwp-' . $name . ':' . self::css_value( $value ) . ';';
+			$css .= '--adminstudio-' . $name . ':' . self::css_value( $value ) . ';';
 		}
 
 		return $css;

@@ -1,98 +1,98 @@
-/* Advanced WP system pages: error, maintenance and coming soon screens. */
+/* Admin Studio system pages: error, maintenance and coming soon screens. */
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body { overflow-x: clip; }
 
-body.advwp-page {
+body.adminstudio-page {
 	margin: 0;
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 32px 16px;
-	background: var(--advwp-page-bg);
-	color: var(--advwp-page-text);
-	font-family: var(--advwp-font-body);
+	background: var(--adminstudio-page-bg);
+	color: var(--adminstudio-page-text);
+	font-family: var(--adminstudio-font-body);
 	font-size: 16px;
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
 }
 
-.advwp-page__inner {
+.adminstudio-page__inner {
 	width: 100%;
 	max-width: 560px;
 	text-align: center;
 }
 
-.advwp-page__logo {
+.adminstudio-page__logo {
 	display: block;
-	width: var(--advwp-logo-width);
+	width: var(--adminstudio-logo-width);
 	max-width: 100%;
 	height: auto;
 	margin: 0 auto 32px;
 }
 
-.advwp-page__sitename {
+.adminstudio-page__sitename {
 	margin: 0 0 32px;
-	font-family: var(--advwp-font-heading);
+	font-family: var(--adminstudio-font-heading);
 	font-size: 20px;
 	font-weight: 600;
 }
 
-.advwp-page__card {
-	background: var(--advwp-surface);
-	color: var(--advwp-text);
-	border: 1px solid var(--advwp-border);
-	border-radius: var(--advwp-radius);
+.adminstudio-page__card {
+	background: var(--adminstudio-surface);
+	color: var(--adminstudio-text);
+	border: 1px solid var(--adminstudio-border);
+	border-radius: var(--adminstudio-radius);
 	padding: 40px 32px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 16px 40px -16px rgba(0, 0, 0, 0.18);
 }
 
-.advwp-page--hero .advwp-page__card {
+.adminstudio-page--hero .adminstudio-page__card {
 	background: transparent;
 	border: 0;
 	box-shadow: none;
-	color: var(--advwp-page-text);
+	color: var(--adminstudio-page-text);
 	padding: 0;
 }
 
-.advwp-page__image {
+.adminstudio-page__image {
 	display: block;
 	max-width: 160px;
 	max-height: 160px;
 	margin: 0 auto 24px;
 }
 
-.advwp-page__heading {
+.adminstudio-page__heading {
 	margin: 0 0 12px;
-	font-family: var(--advwp-font-heading);
+	font-family: var(--adminstudio-font-heading);
 	font-size: clamp(24px, 5vw, 32px);
 	font-weight: 700;
 	line-height: 1.2;
 	letter-spacing: -0.01em;
 }
 
-.advwp-page--hero .advwp-page__heading {
+.adminstudio-page--hero .adminstudio-page__heading {
 	font-size: clamp(32px, 7vw, 48px);
 }
 
-.advwp-page__message {
+.adminstudio-page__message {
 	color: inherit;
 	opacity: 0.85;
 }
 
-.advwp-page__message p { margin: 0 0 12px; }
+.adminstudio-page__message p { margin: 0 0 12px; }
 
-.advwp-page__message a { color: var(--advwp-primary); }
+.adminstudio-page__message a { color: var(--adminstudio-primary); }
 
-.advwp-page--hero .advwp-page__message a { color: inherit; }
+.adminstudio-page--hero .adminstudio-page__message a { color: inherit; }
 
-.advwp-page__message ul {
+.adminstudio-page__message ul {
 	text-align: left;
 	padding-left: 20px;
 }
 
-.advwp-page__actions {
+.adminstudio-page__actions {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 12px;
@@ -100,77 +100,77 @@ body.advwp-page {
 	margin: 28px 0 0;
 }
 
-.advwp-page__button {
+.adminstudio-page__button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	min-height: 44px;
 	padding: 0 24px;
-	border: 2px solid var(--advwp-primary);
-	border-radius: var(--advwp-button-radius);
-	background: var(--advwp-primary);
-	color: var(--advwp-on-primary);
+	border: 2px solid var(--adminstudio-primary);
+	border-radius: var(--adminstudio-button-radius);
+	background: var(--adminstudio-primary);
+	color: var(--adminstudio-on-primary);
 	font-weight: 600;
 	text-decoration: none;
 	transition: filter 150ms cubic-bezier(0.22, 1, 0.36, 1), transform 150ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.advwp-page__button:hover { filter: brightness(0.92); }
+.adminstudio-page__button:hover { filter: brightness(0.92); }
 
-.advwp-page__button:active { transform: scale(0.98); }
+.adminstudio-page__button:active { transform: scale(0.98); }
 
-.advwp-page__button:focus-visible {
+.adminstudio-page__button:focus-visible {
 	outline: 2px solid transparent;
-	box-shadow: 0 0 0 2px var(--advwp-surface), 0 0 0 4px var(--advwp-primary);
+	box-shadow: 0 0 0 2px var(--adminstudio-surface), 0 0 0 4px var(--adminstudio-primary);
 }
 
-.advwp-page__button--secondary {
+.adminstudio-page__button--secondary {
 	background: transparent;
-	color: var(--advwp-primary);
+	color: var(--adminstudio-primary);
 }
 
-.advwp-page__search {
+.adminstudio-page__search {
 	display: flex;
 	gap: 8px;
 	margin: 24px 0 0;
 }
 
-.advwp-page__search input {
+.adminstudio-page__search input {
 	flex: 1;
 	min-width: 0;
 	min-height: 44px;
 	padding: 8px 12px;
-	border: 1px solid var(--advwp-border);
-	border-radius: calc(var(--advwp-radius) * 0.75);
-	background: var(--advwp-surface);
-	color: var(--advwp-text);
+	border: 1px solid var(--adminstudio-border);
+	border-radius: calc(var(--adminstudio-radius) * 0.75);
+	background: var(--adminstudio-surface);
+	color: var(--adminstudio-text);
 	font: inherit;
 }
 
-.advwp-page__search input:focus {
+.adminstudio-page__search input:focus {
 	outline: 2px solid transparent;
-	border-color: var(--advwp-primary);
-	box-shadow: 0 0 0 1px var(--advwp-primary);
+	border-color: var(--adminstudio-primary);
+	box-shadow: 0 0 0 1px var(--adminstudio-primary);
 }
 
-.advwp-page__search button {
+.adminstudio-page__search button {
 	min-height: 44px;
 	padding: 0 20px;
 	border: 0;
-	border-radius: calc(var(--advwp-radius) * 0.75);
-	background: var(--advwp-primary);
-	color: var(--advwp-on-primary);
+	border-radius: calc(var(--adminstudio-radius) * 0.75);
+	background: var(--adminstudio-primary);
+	color: var(--adminstudio-on-primary);
 	font: inherit;
 	font-weight: 600;
 	cursor: pointer;
 }
 
-.advwp-page__search button:focus-visible {
+.adminstudio-page__search button:focus-visible {
 	outline: 2px solid transparent;
-	box-shadow: 0 0 0 2px var(--advwp-surface), 0 0 0 4px var(--advwp-primary);
+	box-shadow: 0 0 0 2px var(--adminstudio-surface), 0 0 0 4px var(--adminstudio-primary);
 }
 
-.advwp-countdown {
+.adminstudio-countdown {
 	display: flex;
 	justify-content: center;
 	gap: 12px;
@@ -179,22 +179,22 @@ body.advwp-page {
 	list-style: none;
 }
 
-.advwp-countdown li {
+.adminstudio-countdown li {
 	min-width: 72px;
 	padding: 12px 8px;
 	border: 1px solid currentColor;
-	border-radius: var(--advwp-radius);
+	border-radius: var(--adminstudio-radius);
 }
 
-.advwp-countdown strong {
+.adminstudio-countdown strong {
 	display: block;
-	font-family: var(--advwp-font-heading);
+	font-family: var(--adminstudio-font-heading);
 	font-size: 28px;
 	line-height: 1.1;
 	font-variant-numeric: tabular-nums;
 }
 
-.advwp-countdown span {
+.adminstudio-countdown span {
 	font-size: 12px;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
@@ -212,11 +212,11 @@ body.advwp-page {
 }
 
 @media (max-width: 480px) {
-	.advwp-page__card { padding: 32px 20px; }
-	.advwp-countdown li { min-width: 60px; }
+	.adminstudio-page__card { padding: 32px 20px; }
+	.adminstudio-countdown li { min-width: 60px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.advwp-page__button { transition-duration: 1ms; }
-	.advwp-page__button:active { transform: none; }
+	.adminstudio-page__button { transition-duration: 1ms; }
+	.adminstudio-page__button:active { transform: none; }
 }

@@ -5,16 +5,16 @@
  * Visitors see a branded holding page. Chosen roles, allow-listed paths and
  * anyone with the bypass link see the real site.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Maintenance;
+namespace AdminStudio\Modules\Maintenance;
 
-use AdvancedWP\Brand_Kit;
-use AdvancedWP\Color;
-use AdvancedWP\Preview;
-use AdvancedWP\Settings;
-use AdvancedWP\System_Page;
+use AdminStudio\Brand_Kit;
+use AdminStudio\Color;
+use AdminStudio\Preview;
+use AdminStudio\Settings;
+use AdminStudio\System_Page;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Maintenance {
 
-	const COOKIE = 'advwp_bypass';
+	const COOKIE = 'adminstudio_bypass';
 
 	/**
 	 * Hooks.
@@ -65,7 +65,7 @@ class Maintenance {
 		$key = Settings::get( 'maintenance.bypass_key' );
 
 		if ( '' !== $key ) {
-			$hash = wp_hash( 'advwp-bypass-' . $key );
+			$hash = wp_hash( 'adminstudio-bypass-' . $key );
 
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- The key itself is the secret.
 			if ( isset( $_GET[ self::COOKIE ] ) && hash_equals( $key, sanitize_title( wp_unslash( $_GET[ self::COOKIE ] ) ) ) ) {
@@ -139,9 +139,7 @@ class Maintenance {
 
 		list( $countdown, $script ) = self::countdown();
 
-		$foot = $script . ( Preview::is_preview() ? Preview::bridge_html() : '' );
-
-		$html = System_Page::render(
+		System_Page::output(
 			array(
 				'title'     => get_bloginfo( 'name' ),
 				'heading'   => Settings::get( 'maintenance.headline' ),
@@ -151,13 +149,12 @@ class Maintenance {
 				'overlay'   => $overlay,
 				'variant'   => 'hero',
 				'extra'     => $countdown,
-				'foot'      => $foot,
+				'script'    => $script,
+				'preview'   => Preview::is_preview(),
 				'noindex'   => self::is_maintenance() ? false : true,
 			),
 			$brand
 		);
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during rendering.
 	}
 
 	/**
@@ -185,13 +182,13 @@ class Maintenance {
 		}
 
 		$units = array(
-			'd' => array( (int) floor( $left / DAY_IN_SECONDS ), __( 'Days', 'advanced-wp' ) ),
-			'h' => array( (int) floor( ( $left % DAY_IN_SECONDS ) / HOUR_IN_SECONDS ), __( 'Hours', 'advanced-wp' ) ),
-			'm' => array( (int) floor( ( $left % HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS ), __( 'Minutes', 'advanced-wp' ) ),
-			's' => array( $left % MINUTE_IN_SECONDS, __( 'Seconds', 'advanced-wp' ) ),
+			'd' => array( (int) floor( $left / DAY_IN_SECONDS ), __( 'Days', 'admin-studio' ) ),
+			'h' => array( (int) floor( ( $left % DAY_IN_SECONDS ) / HOUR_IN_SECONDS ), __( 'Hours', 'admin-studio' ) ),
+			'm' => array( (int) floor( ( $left % HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS ), __( 'Minutes', 'admin-studio' ) ),
+			's' => array( $left % MINUTE_IN_SECONDS, __( 'Seconds', 'admin-studio' ) ),
 		);
 
-		$html = '<ul class="advwp-countdown" data-target="' . esc_attr( $target ) . '" aria-label="' . esc_attr__( 'Time until launch', 'advanced-wp' ) . '">';
+		$html = '<ul class="adminstudio-countdown" data-target="' . esc_attr( $target ) . '" aria-label="' . esc_attr__( 'Time until launch', 'admin-studio' ) . '">';
 
 		foreach ( $units as $unit => $data ) {
 			$html .= '<li><strong data-unit="' . esc_attr( $unit ) . '">' . esc_html( str_pad( (string) $data[0], 2, '0', STR_PAD_LEFT ) ) . '</strong><span>' . esc_html( $data[1] ) . '</span></li>';
@@ -199,7 +196,7 @@ class Maintenance {
 
 		$html .= '</ul>';
 
-		$script = '<script>(function(){var el=document.querySelector(".advwp-countdown");if(!el){return;}var t=parseInt(el.getAttribute("data-target"),10)*1000;function p(n){return(n<10?"0":"")+n;}function tick(){var s=Math.max(0,Math.floor((t-Date.now())/1000));var v={d:Math.floor(s/86400),h:Math.floor(s%86400/3600),m:Math.floor(s%3600/60),s:s%60};Object.keys(v).forEach(function(k){var n=el.querySelector("[data-unit="+k+"]");if(n){n.textContent=p(v[k]);}});if(s>0){setTimeout(tick,1000);}}tick();})();</script>';
+		$script = '(function(){var el=document.querySelector(".adminstudio-countdown");if(!el){return;}var t=parseInt(el.getAttribute("data-target"),10)*1000;function p(n){return(n<10?"0":"")+n;}function tick(){var s=Math.max(0,Math.floor((t-Date.now())/1000));var v={d:Math.floor(s/86400),h:Math.floor(s%86400/3600),m:Math.floor(s%3600/60),s:s%60};Object.keys(v).forEach(function(k){var n=el.querySelector("[data-unit="+k+"]");if(n){n.textContent=p(v[k]);}});if(s>0){setTimeout(tick,1000);}}tick();})();';
 
 		return array( $html, $script );
 	}
@@ -217,10 +214,10 @@ class Maintenance {
 
 		$bar->add_node(
 			array(
-				'id'     => 'advwp-maintenance',
+				'id'     => 'adminstudio-maintenance',
 				'parent' => 'top-secondary',
-				'title'  => self::is_maintenance() ? esc_html__( 'Maintenance mode on', 'advanced-wp' ) : esc_html__( 'Coming soon mode on', 'advanced-wp' ),
-				'href'   => admin_url( 'options-general.php?page=advanced-wp&tab=maintenance' ),
+				'title'  => self::is_maintenance() ? esc_html__( 'Maintenance mode on', 'admin-studio' ) : esc_html__( 'Coming soon mode on', 'admin-studio' ),
+				'href'   => admin_url( 'options-general.php?page=admin-studio&tab=maintenance' ),
 			)
 		);
 	}
@@ -240,7 +237,7 @@ class Maintenance {
 		wp_add_inline_style(
 			'admin-bar',
 			sprintf(
-				'#wpadminbar #wp-admin-bar-advwp-maintenance > .ab-item{background:%1$s;color:%2$s}',
+				'#wpadminbar #wp-admin-bar-adminstudio-maintenance > .ab-item{background:%1$s;color:%2$s}',
 				Brand_Kit::css_value( $bg ),
 				Brand_Kit::css_value( Color::readable_on( $bg ) )
 			)

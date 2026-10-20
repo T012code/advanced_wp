@@ -6,15 +6,15 @@
  * as drop-in files (see Dropins). Notice screens from wp_die() and the 404 page
  * are handled live through filters.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Error_Pages;
+namespace AdminStudio\Modules\Error_Pages;
 
-use AdvancedWP\Brand_Kit;
-use AdvancedWP\Preview;
-use AdvancedWP\Settings;
-use AdvancedWP\System_Page;
+use AdminStudio\Brand_Kit;
+use AdminStudio\Preview;
+use AdminStudio\Settings;
+use AdminStudio\System_Page;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -86,7 +86,7 @@ class Error_Pages {
 			case 'wp_die':
 				$args = array(
 					'heading' => Settings::get( $p . 'wp_die_title' ),
-					'message' => __( 'Sorry, you are not allowed to access this page.', 'advanced-wp' ),
+					'message' => __( 'Sorry, you are not allowed to access this page.', 'admin-studio' ),
 					'buttons' => array( array( Settings::get( $p . 'wp_die_button' ), home_url( '/' ) ) ),
 				);
 				break;
@@ -134,10 +134,10 @@ class Error_Pages {
 	 */
 	private static function search_form() {
 		return sprintf(
-			'<form class="advwp-page__search" role="search" method="get" action="%1$s"><label class="screen-reader-text" for="advwp-s">%2$s</label><input type="search" id="advwp-s" name="s" placeholder="%2$s"><button type="submit">%3$s</button></form>',
+			'<form class="adminstudio-page__search" role="search" method="get" action="%1$s"><label class="screen-reader-text" for="adminstudio-s">%2$s</label><input type="search" id="adminstudio-s" name="s" placeholder="%2$s"><button type="submit">%3$s</button></form>',
 			esc_url( home_url( '/' ) ),
-			esc_attr__( 'Search this site', 'advanced-wp' ),
-			esc_html__( 'Search', 'advanced-wp' )
+			esc_attr__( 'Search this site', 'admin-studio' ),
+			esc_html__( 'Search', 'admin-studio' )
 		);
 	}
 
@@ -153,13 +153,24 @@ class Error_Pages {
 	}
 
 	/**
+	 * Prints a system page.
+	 *
+	 * @param string $page  Page key.
+	 * @param array  $extra Arguments that override the defaults.
+	 * @return void
+	 */
+	public static function output( $page, array $extra = array() ) {
+		System_Page::output( array_merge( self::args( $page ), $extra ), self::brand() );
+	}
+
+	/**
 	 * Prints a page inside the Customizer preview.
 	 *
 	 * @param string $page Page key.
 	 * @return void
 	 */
 	public static function render_preview( $page ) {
-		echo self::render( $page, array( 'foot' => Preview::bridge_html() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during rendering.
+		self::output( $page, array( 'preview' => true ) );
 	}
 
 	/**
@@ -239,20 +250,15 @@ class Error_Pages {
 			header( 'Content-Type: text/html; charset=utf-8' );
 		}
 
-		$html = System_Page::render(
-			array_merge(
-				self::args( 'wp_die' ),
-				array(
-					'title'   => wp_strip_all_tags( $title ) . ' | ' . get_bloginfo( 'name' ),
-					'heading' => wp_strip_all_tags( $title ),
-					'message' => (string) $message,
-					'buttons' => $buttons,
-				)
-			),
-			self::brand()
+		self::output(
+			'wp_die',
+			array(
+				'title'   => wp_strip_all_tags( $title ) . ' | ' . get_bloginfo( 'name' ),
+				'heading' => wp_strip_all_tags( $title ),
+				'message' => (string) $message,
+				'buttons' => $buttons,
+			)
 		);
-
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during rendering.
 
 		if ( $args['exit'] ) {
 			die();
@@ -266,6 +272,6 @@ class Error_Pages {
 	 * @return string
 	 */
 	public static function notfound_template( $template ) {
-		return is_404() ? ADVWP_DIR . 'templates/notfound.php' : $template;
+		return is_404() ? ADMINSTUDIO_DIR . 'templates/notfound.php' : $template;
 	}
 }

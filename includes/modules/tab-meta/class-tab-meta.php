@@ -2,13 +2,13 @@
 /**
  * Browser tab titles, favicon, theme colour and WordPress traces.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Tab_Meta;
+namespace AdminStudio\Modules\Tab_Meta;
 
-use AdvancedWP\Brand_Kit;
-use AdvancedWP\Settings;
+use AdminStudio\Brand_Kit;
+use AdminStudio\Settings;
 
 defined( 'ABSPATH' ) || exit;
 

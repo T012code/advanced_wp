@@ -1,5 +1,5 @@
 /**
- * Advanced WP Customizer controls: preview routing and contrast warnings.
+ * Admin Studio Customizer controls: preview routing and contrast warnings.
  */
 ( function ( api, $, data ) {
 	'use strict';
@@ -64,7 +64,7 @@
 		}
 
 		var ratio = contrast( fg, bg ),
-			code = 'advwp_contrast';
+			code = 'adminstudio_contrast';
 
 		control.notifications.remove( code );
 
@@ -90,7 +90,7 @@
 			} );
 		} );
 
-		$( document ).on( 'change', '[data-advwp-picker]', function () {
+		$( document ).on( 'change', '[data-adminstudio-picker]', function () {
 			api.previewer.previewUrl.set( this.value );
 		} );
 
@@ -111,4 +111,4 @@
 			} );
 		} );
 	} );
-} )( window.wp && window.wp.customize, window.jQuery, window.advwpCustomizer );
+} )( window.wp && window.wp.customize, window.jQuery, window.adminstudioCustomizer );

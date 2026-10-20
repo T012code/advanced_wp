@@ -2,12 +2,12 @@
 /**
  * Limits failed login attempts per IP address.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Security;
+namespace AdminStudio\Modules\Security;
 
-use AdvancedWP\Settings;
+use AdminStudio\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Attempts {
 
-	const LOG_OPTION = 'advwp_lockouts';
+	const LOG_OPTION = 'adminstudio_lockouts';
 	const LOG_SIZE   = 100;
 
 	/**
@@ -105,7 +105,7 @@ class Attempts {
 	 * @return string
 	 */
 	private static function key( $type, $ip ) {
-		return 'advwp_' . $type . '_' . md5( $ip );
+		return 'adminstudio_' . $type . '_' . md5( $ip );
 	}
 
 	/**
@@ -135,10 +135,10 @@ class Attempts {
 		}
 
 		return new \WP_Error(
-			'advwp_locked',
+			'adminstudio_locked',
 			sprintf(
 				/* translators: %s: time left, such as "12 mins". */
-				__( '<strong>Error:</strong> Too many failed login attempts. Please try again in %s.', 'advanced-wp' ),
+				__( '<strong>Error:</strong> Too many failed login attempts. Please try again in %s.', 'admin-studio' ),
 				human_time_diff( time(), $until )
 			)
 		);
@@ -203,7 +203,7 @@ class Attempts {
 		return $errors . '<br>' . esc_html(
 			sprintf(
 				/* translators: %d: number of attempts left. */
-				_n( '%d attempt left before a temporary lockout.', '%d attempts left before a temporary lockout.', $left, 'advanced-wp' ),
+				_n( '%d attempt left before a temporary lockout.', '%d attempts left before a temporary lockout.', $left, 'admin-studio' ),
 				$left
 			)
 		);
@@ -216,7 +216,7 @@ class Attempts {
 	 * @return string[]
 	 */
 	public static function shake( $codes ) {
-		$codes[] = 'advwp_locked';
+		$codes[] = 'adminstudio_locked';
 
 		return $codes;
 	}

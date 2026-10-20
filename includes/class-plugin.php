@@ -2,10 +2,10 @@
 /**
  * Plugin bootstrap and module registry.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP;
+namespace AdminStudio;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -71,7 +71,7 @@ class Plugin {
 
 		add_action( 'add_option_' . Settings::OPTION, array( $this, 'settings_saved' ) );
 		add_action( 'update_option_' . Settings::OPTION, array( $this, 'settings_saved' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( ADVWP_FILE ), array( $this, 'action_links' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( ADMINSTUDIO_FILE ), array( $this, 'action_links' ) );
 		add_action( 'login_enqueue_scripts', array( $this, 'login_notice_borders' ) );
 	}
 
@@ -117,8 +117,8 @@ class Plugin {
 	 */
 	public function action_links( $links ) {
 		$extra = array(
-			'<a href="' . esc_url( admin_url( 'options-general.php?page=advanced-wp' ) ) . '">' . esc_html__( 'Settings', 'advanced-wp' ) . '</a>',
-			'<a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=advwp' ) ) . '">' . esc_html__( 'Customize', 'advanced-wp' ) . '</a>',
+			'<a href="' . esc_url( admin_url( 'options-general.php?page=admin-studio' ) ) . '">' . esc_html__( 'Settings', 'admin-studio' ) . '</a>',
+			'<a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=adminstudio' ) ) . '">' . esc_html__( 'Customize', 'admin-studio' ) . '</a>',
 		);
 
 		return array_merge( $extra, $links );
@@ -130,7 +130,7 @@ class Plugin {
 	 * @return void
 	 */
 	public static function activate() {
-		update_option( 'advwp_version', ADVWP_VERSION, false );
+		update_option( 'adminstudio_version', ADMINSTUDIO_VERSION, false );
 		Dropins::sync();
 	}
 

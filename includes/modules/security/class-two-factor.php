@@ -4,16 +4,16 @@
  *
  * After the password check succeeds, no login cookie is sent. The user is sent
  * to a second screen on wp-login.php and only gets the cookie after entering a
- * valid code. Add `define( 'ADVWP_DISABLE_2FA', true );` to wp-config.php to
+ * valid code. Add `define( 'ADMINSTUDIO_DISABLE_2FA', true );` to wp-config.php to
  * switch this off if you get locked out.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Security;
+namespace AdminStudio\Modules\Security;
 
-use AdvancedWP\Settings;
-use AdvancedWP\Modules\Emails\Renderer;
+use AdminStudio\Settings;
+use AdminStudio\Modules\Emails\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -22,14 +22,14 @@ defined( 'ABSPATH' ) || exit;
  */
 class Two_Factor {
 
-	const META_METHOD = 'advwp_2fa_method';
-	const META_SECRET = 'advwp_2fa_secret';
-	const META_PEND   = 'advwp_2fa_pending';
-	const META_BACKUP = 'advwp_2fa_backup';
-	const META_SLICE  = 'advwp_2fa_last_slice';
-	const META_LOGIN  = 'advwp_2fa_login';
-	const META_EMAIL  = 'advwp_2fa_email_code';
-	const META_SINCE  = 'advwp_2fa_required_since';
+	const META_METHOD = 'adminstudio_2fa_method';
+	const META_SECRET = 'adminstudio_2fa_secret';
+	const META_PEND   = 'adminstudio_2fa_pending';
+	const META_BACKUP = 'adminstudio_2fa_backup';
+	const META_SLICE  = 'adminstudio_2fa_last_slice';
+	const META_LOGIN  = 'adminstudio_2fa_login';
+	const META_EMAIL  = 'adminstudio_2fa_email_code';
+	const META_SINCE  = 'adminstudio_2fa_required_since';
 
 	const LOGIN_TTL    = 600;
 	const MAX_ATTEMPTS = 5;
@@ -54,14 +54,14 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function init() {
-		if ( defined( 'ADVWP_DISABLE_2FA' ) && ADVWP_DISABLE_2FA ) {
+		if ( defined( 'ADMINSTUDIO_DISABLE_2FA' ) && ADMINSTUDIO_DISABLE_2FA ) {
 			return;
 		}
 
 		add_filter( 'authenticate', array( __CLASS__, 'intercept' ), PHP_INT_MAX );
 		add_action( 'set_auth_cookie', array( __CLASS__, 'capture_token' ), 10, 6 );
 		add_action( 'wp_login', array( __CLASS__, 'after_login' ), PHP_INT_MAX, 2 );
-		add_action( 'login_form_advwp_2fa', array( __CLASS__, 'screen' ) );
+		add_action( 'login_form_adminstudio_2fa', array( __CLASS__, 'screen' ) );
 
 		add_action( 'show_user_profile', array( __CLASS__, 'profile' ) );
 		add_action( 'edit_user_profile', array( __CLASS__, 'profile' ) );
@@ -69,7 +69,7 @@ class Two_Factor {
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 
 		foreach ( array( 'setup', 'verify', 'email_start', 'email_verify', 'backup', 'disable' ) as $action ) {
-			add_action( 'wp_ajax_advwp_2fa_' . $action, array( __CLASS__, 'ajax_' . $action ) );
+			add_action( 'wp_ajax_adminstudio_2fa_' . $action, array( __CLASS__, 'ajax_' . $action ) );
 		}
 
 		add_action( 'admin_init', array( __CLASS__, 'enforce' ) );
@@ -120,7 +120,7 @@ class Two_Factor {
 		}
 
 		if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {
-			return new \WP_Error( 'advwp_2fa_xmlrpc', __( 'Two-factor authentication is on for this account. Use an application password for XML-RPC.', 'advanced-wp' ) );
+			return new \WP_Error( 'adminstudio_2fa_xmlrpc', __( 'Two-factor authentication is on for this account. Use an application password for XML-RPC.', 'admin-studio' ) );
 		}
 
 		add_filter( 'send_auth_cookies', '__return_false', PHP_INT_MAX );
@@ -189,7 +189,7 @@ class Two_Factor {
 		}
 
 		$args = array(
-			'action' => 'advwp_2fa',
+			'action' => 'adminstudio_2fa',
 			'uid'    => $user->ID,
 			'token'  => $token,
 		);
@@ -220,7 +220,7 @@ class Two_Factor {
 	}
 
 	/**
-	 * The code entry screen, shown on wp-login.php?action=advwp_2fa.
+	 * The code entry screen, shown on wp-login.php?action=adminstudio_2fa.
 	 *
 	 * Runs inside wp-login.php, so login_header() and login_footer() are available
 	 * and the login page design applies.
@@ -240,9 +240,9 @@ class Two_Factor {
 		$notice  = '';
 
 		if ( ! $state ) {
-			$errors->add( 'advwp_2fa_expired', __( 'This sign-in link has expired. Please log in again.', 'advanced-wp' ) );
-			login_header( __( 'Two-factor authentication', 'advanced-wp' ), '', $errors );
-			printf( '<p id="nav"><a href="%s">%s</a></p>', esc_url( wp_login_url() ), esc_html__( 'Back to log in', 'advanced-wp' ) );
+			$errors->add( 'adminstudio_2fa_expired', __( 'This sign-in link has expired. Please log in again.', 'admin-studio' ) );
+			login_header( __( 'Two-factor authentication', 'admin-studio' ), '', $errors );
+			printf( '<p id="nav"><a href="%s">%s</a></p>', esc_url( wp_login_url() ), esc_html__( 'Back to log in', 'admin-studio' ) );
 			login_footer();
 			exit;
 		}
@@ -252,13 +252,13 @@ class Two_Factor {
 		$method_used = isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_key( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : '';
 
 		if ( 'post' === $method_used ) {
-			if ( ! isset( $_POST['_advwp_2fa'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_advwp_2fa'] ) ), 'advwp_2fa_login_' . $user_id ) ) {
-				$errors->add( 'advwp_2fa_nonce', __( 'The form expired. Please enter your code again.', 'advanced-wp' ) );
-			} elseif ( isset( $_POST['advwp_send_email'] ) ) {
+			if ( ! isset( $_POST['_adminstudio_2fa'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_2fa'] ) ), 'adminstudio_2fa_login_' . $user_id ) ) {
+				$errors->add( 'adminstudio_2fa_nonce', __( 'The form expired. Please enter your code again.', 'admin-studio' ) );
+			} elseif ( isset( $_POST['adminstudio_send_email'] ) ) {
 				self::send_email_code( $user );
-				$notice = __( 'We sent a code to your email address.', 'advanced-wp' );
+				$notice = __( 'We sent a code to your email address.', 'admin-studio' );
 			} else {
-				$code = isset( $_POST['advwp_code'] ) ? sanitize_text_field( wp_unslash( $_POST['advwp_code'] ) ) : '';
+				$code = isset( $_POST['adminstudio_code'] ) ? sanitize_text_field( wp_unslash( $_POST['adminstudio_code'] ) ) : '';
 
 				if ( self::verify_code( $user, $code ) ) {
 					delete_user_meta( $user_id, self::META_LOGIN );
@@ -266,7 +266,7 @@ class Two_Factor {
 
 					if ( $interim ) {
 						$interim_login = 'success'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Read by login_header().
-						login_header( '', '<p class="message">' . esc_html__( 'You have logged in successfully.', 'advanced-wp' ) . '</p>' );
+						login_header( '', '<p class="message">' . esc_html__( 'You have logged in successfully.', 'admin-studio' ) . '</p>' );
 						login_footer();
 						exit;
 					}
@@ -279,64 +279,64 @@ class Two_Factor {
 				++$state['attempts'];
 
 				// Feed the attempt limiter.
-				do_action( 'wp_login_failed', $user->user_login, new \WP_Error( 'advwp_2fa_invalid' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core hook.
+				do_action( 'wp_login_failed', $user->user_login, new \WP_Error( 'adminstudio_2fa_invalid' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core hook.
 
 				if ( $state['attempts'] >= self::MAX_ATTEMPTS ) {
 					delete_user_meta( $user_id, self::META_LOGIN );
-					$errors->add( 'advwp_2fa_locked', __( 'Too many incorrect codes. Please log in again.', 'advanced-wp' ) );
-					login_header( __( 'Two-factor authentication', 'advanced-wp' ), '', $errors );
-					printf( '<p id="nav"><a href="%s">%s</a></p>', esc_url( wp_login_url() ), esc_html__( 'Back to log in', 'advanced-wp' ) );
+					$errors->add( 'adminstudio_2fa_locked', __( 'Too many incorrect codes. Please log in again.', 'admin-studio' ) );
+					login_header( __( 'Two-factor authentication', 'admin-studio' ), '', $errors );
+					printf( '<p id="nav"><a href="%s">%s</a></p>', esc_url( wp_login_url() ), esc_html__( 'Back to log in', 'admin-studio' ) );
 					login_footer();
 					exit;
 				}
 
 				update_user_meta( $user_id, self::META_LOGIN, $state );
-				$errors->add( 'advwp_2fa_invalid', __( '<strong>Error:</strong> That code is not valid. Please try again.', 'advanced-wp' ) );
+				$errors->add( 'adminstudio_2fa_invalid', __( '<strong>Error:</strong> That code is not valid. Please try again.', 'admin-studio' ) );
 			}
 		}
 		// phpcs:enable
 
 		$intro = 'totp' === $method
-			? __( 'Enter the 6-digit code from your authenticator app.', 'advanced-wp' )
-			: __( 'Enter the 6-digit code we sent to your email address.', 'advanced-wp' );
+			? __( 'Enter the 6-digit code from your authenticator app.', 'admin-studio' )
+			: __( 'Enter the 6-digit code we sent to your email address.', 'admin-studio' );
 
 		if ( $notice ) {
 			$intro = $notice;
 		}
 
 		add_filter( 'shake_error_codes', array( __CLASS__, 'shake' ) );
-		login_header( __( 'Two-factor authentication', 'advanced-wp' ), '<p class="message">' . esc_html( $intro ) . '</p>', $errors );
+		login_header( __( 'Two-factor authentication', 'admin-studio' ), '<p class="message">' . esc_html( $intro ) . '</p>', $errors );
 
-		$action = add_query_arg( 'action', 'advwp_2fa', site_url( 'wp-login.php', 'login_post' ) );
+		$action = add_query_arg( 'action', 'adminstudio_2fa', site_url( 'wp-login.php', 'login_post' ) );
 		?>
-		<form name="advwp2faform" id="loginform" action="<?php echo esc_url( $action ); ?>" method="post" autocomplete="off">
+		<form name="adminstudio2faform" id="loginform" action="<?php echo esc_url( $action ); ?>" method="post" autocomplete="off">
 			<input type="hidden" name="uid" value="<?php echo esc_attr( $user_id ); ?>">
 			<input type="hidden" name="token" value="<?php echo esc_attr( $token ); ?>">
 			<?php if ( $interim ) : ?>
 				<input type="hidden" name="interim-login" value="1">
 			<?php endif; ?>
-			<?php wp_nonce_field( 'advwp_2fa_login_' . $user_id, '_advwp_2fa', false ); ?>
+			<?php wp_nonce_field( 'adminstudio_2fa_login_' . $user_id, '_adminstudio_2fa', false ); ?>
 			<p>
-				<label for="advwp_code"><?php esc_html_e( 'Authentication code', 'advanced-wp' ); ?></label>
-				<input type="text" name="advwp_code" id="advwp_code" class="input" value="" size="20" inputmode="numeric" autocomplete="one-time-code" autocapitalize="off" spellcheck="false" required>
+				<label for="adminstudio_code"><?php esc_html_e( 'Authentication code', 'admin-studio' ); ?></label>
+				<input type="text" name="adminstudio_code" id="adminstudio_code" class="input" value="" size="20" inputmode="numeric" autocomplete="one-time-code" autocapitalize="off" spellcheck="false" required>
 			</p>
-			<p class="description" style="margin-bottom:16px;"><?php esc_html_e( 'Lost access to your device? Enter one of your backup codes instead.', 'advanced-wp' ); ?></p>
+			<p class="description" style="margin-bottom:16px;"><?php esc_html_e( 'Lost access to your device? Enter one of your backup codes instead.', 'admin-studio' ); ?></p>
 			<p class="submit">
-				<input type="submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Verify', 'advanced-wp' ); ?>">
+				<input type="submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Verify', 'admin-studio' ); ?>">
 			</p>
 		</form>
 		<?php if ( 'email' === $method || Settings::get( 'security.twofa_email' ) ) : ?>
 			<form id="nav" method="post" action="<?php echo esc_url( $action ); ?>">
 				<input type="hidden" name="uid" value="<?php echo esc_attr( $user_id ); ?>">
 				<input type="hidden" name="token" value="<?php echo esc_attr( $token ); ?>">
-				<?php wp_nonce_field( 'advwp_2fa_login_' . $user_id, '_advwp_2fa', false ); ?>
-				<button type="submit" name="advwp_send_email" value="1" class="button-link">
-					<?php echo 'email' === $method ? esc_html__( 'Send a new code', 'advanced-wp' ) : esc_html__( 'Email me a code instead', 'advanced-wp' ); ?>
+				<?php wp_nonce_field( 'adminstudio_2fa_login_' . $user_id, '_adminstudio_2fa', false ); ?>
+				<button type="submit" name="adminstudio_send_email" value="1" class="button-link">
+					<?php echo 'email' === $method ? esc_html__( 'Send a new code', 'admin-studio' ) : esc_html__( 'Email me a code instead', 'admin-studio' ); ?>
 				</button>
 			</form>
 		<?php endif; ?>
 		<?php
-		login_footer( 'advwp_code' );
+		login_footer( 'adminstudio_code' );
 		exit;
 	}
 
@@ -347,7 +347,7 @@ class Two_Factor {
 	 * @return string[]
 	 */
 	public static function shake( $codes ) {
-		$codes[] = 'advwp_2fa_invalid';
+		$codes[] = 'adminstudio_2fa_invalid';
 
 		return $codes;
 	}
@@ -423,18 +423,18 @@ class Two_Factor {
 		$body = '<p>' . esc_html(
 			sprintf(
 				/* translators: %s: site title. */
-				__( 'Use this code to finish signing in to %s:', 'advanced-wp' ),
+				__( 'Use this code to finish signing in to %s:', 'admin-studio' ),
 				$site
 			)
 		) . '</p>'
 			. '<p style="font-size:32px;font-weight:700;letter-spacing:8px;margin:24px 0;">' . esc_html( $code ) . '</p>'
-			. '<p>' . esc_html__( 'The code expires in 10 minutes. If you did not try to sign in, change your password straight away.', 'advanced-wp' ) . '</p>';
+			. '<p>' . esc_html__( 'The code expires in 10 minutes. If you did not try to sign in, change your password straight away.', 'admin-studio' ) . '</p>';
 
 		return wp_mail(
 			$user->user_email,
 			/* translators: %s: site title. */
-			sprintf( __( '[%s] Your sign-in code', 'advanced-wp' ), $site ),
-			Renderer::layout( __( 'Your sign-in code', 'advanced-wp' ), $body ),
+			sprintf( __( '[%s] Your sign-in code', 'admin-studio' ), $site ),
+			Renderer::layout( __( 'Your sign-in code', 'admin-studio' ), $body ),
 			array( 'Content-Type: text/html; charset=UTF-8' )
 		);
 	}
@@ -475,21 +475,21 @@ class Two_Factor {
 			return;
 		}
 
-		wp_enqueue_script( 'advwp-qrcode', ADVWP_URL . 'assets/vendor/qrcode.js', array(), '1.4.4', true );
-		wp_enqueue_script( 'advwp-two-factor', ADVWP_URL . 'assets/js/two-factor.js', array( 'advwp-qrcode', 'wp-util' ), ADVWP_VERSION, true );
+		wp_enqueue_script( 'adminstudio-qrcode', ADMINSTUDIO_URL . 'assets/vendor/qrcode.js', array(), '1.4.4', true );
+		wp_enqueue_script( 'adminstudio-two-factor', ADMINSTUDIO_URL . 'assets/js/two-factor.js', array( 'adminstudio-qrcode', 'wp-util' ), ADMINSTUDIO_VERSION, true );
 		wp_localize_script(
-			'advwp-two-factor',
-			'advwp2fa',
+			'adminstudio-two-factor',
+			'adminstudio2fa',
 			array(
-				'nonce' => wp_create_nonce( 'advwp_2fa' ),
+				'nonce' => wp_create_nonce( 'adminstudio_2fa' ),
 				'i18n'  => array(
-					'invalid'  => __( 'That code is not valid. Check your app and try again.', 'advanced-wp' ),
-					'sent'     => __( 'We sent a code to your email address. Enter it below.', 'advanced-wp' ),
-					'error'    => __( 'Something went wrong. Please reload the page and try again.', 'advanced-wp' ),
-					'confirm'  => __( 'Turn off two-factor authentication for your account?', 'advanced-wp' ),
-					'copied'   => __( 'Copied', 'advanced-wp' ),
-					'enabled'  => __( 'Two-factor authentication is on. Save your backup codes now.', 'advanced-wp' ),
-					'disabled' => __( 'Two-factor authentication is off.', 'advanced-wp' ),
+					'invalid'  => __( 'That code is not valid. Check your app and try again.', 'admin-studio' ),
+					'sent'     => __( 'We sent a code to your email address. Enter it below.', 'admin-studio' ),
+					'error'    => __( 'Something went wrong. Please reload the page and try again.', 'admin-studio' ),
+					'confirm'  => __( 'Turn off two-factor authentication for your account?', 'admin-studio' ),
+					'copied'   => __( 'Copied', 'admin-studio' ),
+					'enabled'  => __( 'Two-factor authentication is on. Save your backup codes now.', 'admin-studio' ),
+					'disabled' => __( 'Two-factor authentication is off.', 'admin-studio' ),
 				),
 			)
 		);
@@ -508,80 +508,80 @@ class Two_Factor {
 		$left     = is_array( $backup ) ? count( $backup ) : 0;
 		$required = self::required( $user );
 		?>
-		<h2 id="advwp-2fa"><?php esc_html_e( 'Two-factor authentication', 'advanced-wp' ); ?></h2>
+		<h2 id="adminstudio-2fa"><?php esc_html_e( 'Two-factor authentication', 'admin-studio' ); ?></h2>
 		<table class="form-table" role="presentation">
 			<tr>
-				<th scope="row"><?php esc_html_e( 'Status', 'advanced-wp' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'Status', 'admin-studio' ); ?></th>
 				<td>
 					<p>
 						<?php
 						if ( 'totp' === $method ) {
-							esc_html_e( 'On, using an authenticator app.', 'advanced-wp' );
+							esc_html_e( 'On, using an authenticator app.', 'admin-studio' );
 						} elseif ( 'email' === $method ) {
-							esc_html_e( 'On, using codes sent by email.', 'advanced-wp' );
+							esc_html_e( 'On, using codes sent by email.', 'admin-studio' );
 						} else {
-							esc_html_e( 'Off.', 'advanced-wp' );
+							esc_html_e( 'Off.', 'admin-studio' );
 						}
 
 						if ( $method ) {
 							echo ' ';
 							/* translators: %d: number of unused backup codes. */
-							echo esc_html( sprintf( _n( '%d backup code left.', '%d backup codes left.', $left, 'advanced-wp' ), $left ) );
+							echo esc_html( sprintf( _n( '%d backup code left.', '%d backup codes left.', $left, 'admin-studio' ), $left ) );
 						}
 
 						if ( $required && ! $method ) {
-							echo ' <strong>' . esc_html__( 'Your role requires two-factor authentication.', 'advanced-wp' ) . '</strong>';
+							echo ' <strong>' . esc_html__( 'Your role requires two-factor authentication.', 'admin-studio' ) . '</strong>';
 						}
 						?>
 					</p>
 
 					<?php if ( $own ) : ?>
-						<div id="advwp-2fa-app" data-method="<?php echo esc_attr( $method ); ?>">
-							<p class="advwp-2fa-actions">
+						<div id="adminstudio-2fa-app" data-method="<?php echo esc_attr( $method ); ?>">
+							<p class="adminstudio-2fa-actions">
 								<?php if ( $method ) : ?>
-									<button type="button" class="button" data-advwp-2fa="backup"><?php esc_html_e( 'Generate new backup codes', 'advanced-wp' ); ?></button>
+									<button type="button" class="button" data-adminstudio-2fa="backup"><?php esc_html_e( 'Generate new backup codes', 'admin-studio' ); ?></button>
 									<?php if ( ! $required ) : ?>
-										<button type="button" class="button button-link-delete" data-advwp-2fa="disable"><?php esc_html_e( 'Turn off two-factor', 'advanced-wp' ); ?></button>
+										<button type="button" class="button button-link-delete" data-adminstudio-2fa="disable"><?php esc_html_e( 'Turn off two-factor', 'admin-studio' ); ?></button>
 									<?php endif; ?>
 								<?php else : ?>
-									<button type="button" class="button button-primary" data-advwp-2fa="setup"><?php esc_html_e( 'Set up an authenticator app', 'advanced-wp' ); ?></button>
+									<button type="button" class="button button-primary" data-adminstudio-2fa="setup"><?php esc_html_e( 'Set up an authenticator app', 'admin-studio' ); ?></button>
 									<?php if ( Settings::get( 'security.twofa_email' ) ) : ?>
-										<button type="button" class="button" data-advwp-2fa="email_start"><?php esc_html_e( 'Use email codes instead', 'advanced-wp' ); ?></button>
+										<button type="button" class="button" data-adminstudio-2fa="email_start"><?php esc_html_e( 'Use email codes instead', 'admin-studio' ); ?></button>
 									<?php endif; ?>
 								<?php endif; ?>
 							</p>
 
-							<div class="advwp-2fa-panel" data-panel="setup" hidden>
-								<p><?php esc_html_e( 'Scan this QR code with your authenticator app, such as Google Authenticator, Microsoft Authenticator, 1Password or Authy.', 'advanced-wp' ); ?></p>
-								<div class="advwp-2fa-qr"></div>
+							<div class="adminstudio-2fa-panel" data-panel="setup" hidden>
+								<p><?php esc_html_e( 'Scan this QR code with your authenticator app, such as Google Authenticator, Microsoft Authenticator, 1Password or Authy.', 'admin-studio' ); ?></p>
+								<div class="adminstudio-2fa-qr"></div>
 								<p>
-									<?php esc_html_e( 'Cannot scan it? Enter this key in the app instead:', 'advanced-wp' ); ?>
-									<code class="advwp-2fa-secret"></code>
+									<?php esc_html_e( 'Cannot scan it? Enter this key in the app instead:', 'admin-studio' ); ?>
+									<code class="adminstudio-2fa-secret"></code>
 								</p>
 							</div>
 
-							<div class="advwp-2fa-panel" data-panel="verify" hidden>
-								<label for="advwp-2fa-code"><?php esc_html_e( 'Enter the 6-digit code to confirm', 'advanced-wp' ); ?></label><br>
-								<input type="text" id="advwp-2fa-code" class="regular-text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
-								<button type="button" class="button button-primary" data-advwp-2fa="confirm"><?php esc_html_e( 'Verify and turn on', 'advanced-wp' ); ?></button>
+							<div class="adminstudio-2fa-panel" data-panel="verify" hidden>
+								<label for="adminstudio-2fa-code"><?php esc_html_e( 'Enter the 6-digit code to confirm', 'admin-studio' ); ?></label><br>
+								<input type="text" id="adminstudio-2fa-code" class="regular-text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+								<button type="button" class="button button-primary" data-adminstudio-2fa="confirm"><?php esc_html_e( 'Verify and turn on', 'admin-studio' ); ?></button>
 							</div>
 
-							<div class="advwp-2fa-panel" data-panel="codes" hidden>
-								<p><strong><?php esc_html_e( 'Backup codes', 'advanced-wp' ); ?></strong></p>
-								<p class="description"><?php esc_html_e( 'Each code works once. Keep them somewhere safe, such as a password manager. They will not be shown again.', 'advanced-wp' ); ?></p>
-								<ol class="advwp-2fa-codes"></ol>
-								<button type="button" class="button" data-advwp-2fa="copy"><?php esc_html_e( 'Copy codes', 'advanced-wp' ); ?></button>
+							<div class="adminstudio-2fa-panel" data-panel="codes" hidden>
+								<p><strong><?php esc_html_e( 'Backup codes', 'admin-studio' ); ?></strong></p>
+								<p class="description"><?php esc_html_e( 'Each code works once. Keep them somewhere safe, such as a password manager. They will not be shown again.', 'admin-studio' ); ?></p>
+								<ol class="adminstudio-2fa-codes"></ol>
+								<button type="button" class="button" data-adminstudio-2fa="copy"><?php esc_html_e( 'Copy codes', 'admin-studio' ); ?></button>
 							</div>
 
-							<p class="advwp-2fa-message" role="status" aria-live="polite"></p>
+							<p class="adminstudio-2fa-message" role="status" aria-live="polite"></p>
 						</div>
 					<?php elseif ( $method && current_user_can( 'edit_users' ) ) : ?>
 						<label>
-							<input type="checkbox" name="advwp_2fa_reset" value="1">
-							<?php esc_html_e( 'Reset two-factor for this user', 'advanced-wp' ); ?>
+							<input type="checkbox" name="adminstudio_2fa_reset" value="1">
+							<?php esc_html_e( 'Reset two-factor for this user', 'admin-studio' ); ?>
 						</label>
-						<?php wp_nonce_field( 'advwp_2fa_reset_' . $user->ID, '_advwp_2fa_reset', false ); ?>
-						<p class="description"><?php esc_html_e( 'Use this if they lost their device and backup codes. They can sign in with only a password until they set it up again.', 'advanced-wp' ); ?></p>
+						<?php wp_nonce_field( 'adminstudio_2fa_reset_' . $user->ID, '_adminstudio_2fa_reset', false ); ?>
+						<p class="description"><?php esc_html_e( 'Use this if they lost their device and backup codes. They can sign in with only a password until they set it up again.', 'admin-studio' ); ?></p>
 					<?php endif; ?>
 				</td>
 			</tr>
@@ -596,11 +596,11 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function admin_reset( $user_id ) {
-		if ( empty( $_POST['advwp_2fa_reset'] ) || ! current_user_can( 'edit_users' ) || ! current_user_can( 'edit_user', $user_id ) ) {
+		if ( empty( $_POST['adminstudio_2fa_reset'] ) || ! current_user_can( 'edit_users' ) || ! current_user_can( 'edit_user', $user_id ) ) {
 			return;
 		}
 
-		if ( ! isset( $_POST['_advwp_2fa_reset'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_advwp_2fa_reset'] ) ), 'advwp_2fa_reset_' . $user_id ) ) {
+		if ( ! isset( $_POST['_adminstudio_2fa_reset'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_2fa_reset'] ) ), 'adminstudio_2fa_reset_' . $user_id ) ) {
 			return;
 		}
 
@@ -629,7 +629,7 @@ class Two_Factor {
 	 * @return \WP_User
 	 */
 	private static function ajax_user() {
-		check_ajax_referer( 'advwp_2fa', 'nonce' );
+		check_ajax_referer( 'adminstudio_2fa', 'nonce' );
 
 		$user = wp_get_current_user();
 
@@ -803,7 +803,7 @@ class Two_Factor {
 		global $pagenow;
 
 		if ( 'profile.php' !== $pagenow ) {
-			wp_safe_redirect( admin_url( 'profile.php#advwp-2fa' ) );
+			wp_safe_redirect( admin_url( 'profile.php#adminstudio-2fa' ) );
 			exit;
 		}
 	}
@@ -815,7 +815,7 @@ class Two_Factor {
 	 */
 	public static function notice_style() {
 		if ( self::grace_left( wp_get_current_user() ) >= 0 ) {
-			wp_add_inline_style( 'common', '.advwp-notice{border:1px solid #dba617;border-radius:4px;background:#fcf9e8;box-shadow:none}' );
+			wp_add_inline_style( 'common', '.adminstudio-notice{border:1px solid #dba617;border-radius:4px;background:#fcf9e8;box-shadow:none}' );
 		}
 	}
 
@@ -832,18 +832,18 @@ class Two_Factor {
 		}
 
 		$message = 0 === $left
-			? __( 'Your role requires two-factor authentication. Set it up below to keep using the dashboard.', 'advanced-wp' )
+			? __( 'Your role requires two-factor authentication. Set it up below to keep using the dashboard.', 'admin-studio' )
 			: sprintf(
 				/* translators: %d: number of days. */
-				_n( 'Your role requires two-factor authentication. Please set it up within %d day.', 'Your role requires two-factor authentication. Please set it up within %d days.', $left, 'advanced-wp' ),
+				_n( 'Your role requires two-factor authentication. Please set it up within %d day.', 'Your role requires two-factor authentication. Please set it up within %d days.', $left, 'admin-studio' ),
 				$left
 			);
 
 		printf(
-			'<div class="notice notice-warning advwp-notice"><p>%s <a href="%s">%s</a></p></div>',
+			'<div class="notice notice-warning adminstudio-notice"><p>%s <a href="%s">%s</a></p></div>',
 			esc_html( $message ),
-			esc_url( admin_url( 'profile.php#advwp-2fa' ) ),
-			esc_html__( 'Set up two-factor', 'advanced-wp' )
+			esc_url( admin_url( 'profile.php#adminstudio-2fa' ) ),
+			esc_html__( 'Set up two-factor', 'admin-studio' )
 		);
 	}
 }

@@ -1,17 +1,17 @@
 /**
- * Advanced WP two-factor setup on the profile screen.
+ * Admin Studio two-factor setup on the profile screen.
  */
 ( function ( $, data ) {
 	'use strict';
 
-	var $app = $( '#advwp-2fa-app' );
+	var $app = $( '#adminstudio-2fa-app' );
 
 	if ( ! $app.length || ! data ) {
 		return;
 	}
 
 	var mode = 'totp',
-		$message = $app.find( '.advwp-2fa-message' ),
+		$message = $app.find( '.adminstudio-2fa-message' ),
 		codes = [];
 
 	function panel( name, show ) {
@@ -23,7 +23,7 @@
 	}
 
 	function post( action, extra ) {
-		return wp.ajax.post( 'advwp_2fa_' + action, $.extend( { nonce: data.nonce }, extra || {} ) );
+		return wp.ajax.post( 'adminstudio_2fa_' + action, $.extend( { nonce: data.nonce }, extra || {} ) );
 	}
 
 	function busy( $button, on ) {
@@ -32,7 +32,7 @@
 
 	function showCodes( list ) {
 		codes = list || [];
-		var $list = $app.find( '.advwp-2fa-codes' ).empty();
+		var $list = $app.find( '.adminstudio-2fa-codes' ).empty();
 		codes.forEach( function ( code ) {
 			$( '<li>' ).text( code ).appendTo( $list );
 		} );
@@ -43,12 +43,12 @@
 		var qr = window.qrcode( 0, 'M' );
 		qr.addData( uri );
 		qr.make();
-		$app.find( '.advwp-2fa-qr' ).html( qr.createSvgTag( { cellSize: 4, margin: 2, scalable: false } ) );
+		$app.find( '.adminstudio-2fa-qr' ).html( qr.createSvgTag( { cellSize: 4, margin: 2, scalable: false } ) );
 	}
 
-	$app.on( 'click', '[data-advwp-2fa]', function () {
+	$app.on( 'click', '[data-adminstudio-2fa]', function () {
 		var $button = $( this ),
-			action = $button.data( 'advwp-2fa' );
+			action = $button.data( 'adminstudio-2fa' );
 
 		say( '' );
 
@@ -58,10 +58,10 @@
 			post( 'setup' )
 				.done( function ( res ) {
 					drawQr( res.uri );
-					$app.find( '.advwp-2fa-secret' ).text( res.secret );
+					$app.find( '.adminstudio-2fa-secret' ).text( res.secret );
 					panel( 'setup', true );
 					panel( 'verify', true );
-					$( '#advwp-2fa-code' ).trigger( 'focus' );
+					$( '#adminstudio-2fa-code' ).trigger( 'focus' );
 				} )
 				.fail( function () {
 					say( data.i18n.error );
@@ -79,7 +79,7 @@
 					panel( 'setup', false );
 					panel( 'verify', true );
 					say( data.i18n.sent );
-					$( '#advwp-2fa-code' ).trigger( 'focus' );
+					$( '#adminstudio-2fa-code' ).trigger( 'focus' );
 				} )
 				.fail( function () {
 					say( data.i18n.error );
@@ -91,17 +91,17 @@
 
 		if ( 'confirm' === action ) {
 			busy( $button, true );
-			post( 'totp' === mode ? 'verify' : 'email_verify', { code: $( '#advwp-2fa-code' ).val() } )
+			post( 'totp' === mode ? 'verify' : 'email_verify', { code: $( '#adminstudio-2fa-code' ).val() } )
 				.done( function ( res ) {
 					panel( 'setup', false );
 					panel( 'verify', false );
-					$app.find( '.advwp-2fa-actions' ).prop( 'hidden', true );
+					$app.find( '.adminstudio-2fa-actions' ).prop( 'hidden', true );
 					showCodes( res.codes );
 					say( data.i18n.enabled );
 				} )
 				.fail( function () {
 					say( data.i18n.invalid );
-					$( '#advwp-2fa-code' ).trigger( 'focus' ).trigger( 'select' );
+					$( '#adminstudio-2fa-code' ).trigger( 'focus' ).trigger( 'select' );
 				} )
 				.always( function () {
 					busy( $button, false );
@@ -146,10 +146,10 @@
 	} );
 
 	// Submit the code with Enter without submitting the whole profile form.
-	$( '#advwp-2fa-code' ).on( 'keydown', function ( event ) {
+	$( '#adminstudio-2fa-code' ).on( 'keydown', function ( event ) {
 		if ( 'Enter' === event.key ) {
 			event.preventDefault();
-			$app.find( '[data-advwp-2fa="confirm"]' ).trigger( 'click' );
+			$app.find( '[data-adminstudio-2fa="confirm"]' ).trigger( 'click' );
 		}
 	} );
-} )( window.jQuery, window.advwp2fa );
+} )( window.jQuery, window.adminstudio2fa );

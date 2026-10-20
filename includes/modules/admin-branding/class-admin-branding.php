@@ -3,15 +3,15 @@
  * White-label the admin: admin bar logo, footer credit, dashboard widgets
  * and a colour scheme built from the brand kit.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Admin_Branding;
+namespace AdminStudio\Modules\Admin_Branding;
 
-use AdvancedWP\Brand_Kit;
-use AdvancedWP\Color;
-use AdvancedWP\Settings;
-use AdvancedWP\Modules\Emails\Renderer;
+use AdminStudio\Brand_Kit;
+use AdminStudio\Color;
+use AdminStudio\Settings;
+use AdminStudio\Modules\Emails\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Admin_Branding {
 
-	const SCHEME = 'advwp';
+	const SCHEME = 'adminstudio';
 
 	/**
 	 * Hooks.
@@ -87,12 +87,12 @@ class Admin_Branding {
 		$name  = get_bloginfo( 'name' );
 
 		$title = '' !== $image
-			? '<img src="' . esc_url( $image ) . '" alt="" class="advwp-ab-logo"><span class="screen-reader-text">' . esc_html( $name ) . '</span>'
+			? '<img src="' . esc_url( $image ) . '" alt="" class="adminstudio-ab-logo"><span class="screen-reader-text">' . esc_html( $name ) . '</span>'
 			: '<span class="ab-label">' . esc_html( $name ) . '</span>';
 
 		$bar->add_node(
 			array(
-				'id'    => 'advwp-logo',
+				'id'    => 'adminstudio-logo',
 				'title' => $title,
 				'href'  => '' !== $link ? $link : home_url( '/' ),
 				'meta'  => array( 'title' => $name ),
@@ -120,7 +120,7 @@ class Admin_Branding {
 			return;
 		}
 
-		wp_add_inline_style( 'admin-bar', '#wpadminbar #wp-admin-bar-advwp-logo .ab-item{display:flex;align-items:center;padding:0 8px}#wpadminbar .advwp-ab-logo{display:block;height:20px;width:auto;max-width:120px}' );
+		wp_add_inline_style( 'admin-bar', '#wpadminbar #wp-admin-bar-adminstudio-logo .ab-item{display:flex;align-items:center;padding:0 8px}#wpadminbar .adminstudio-ab-logo{display:block;height:20px;width:auto;max-width:120px}' );
 	}
 
 	/**
@@ -171,7 +171,7 @@ class Admin_Branding {
 
 		$title = Renderer::replace( Settings::get( 'admin_branding.welcome_title' ), Renderer::common_context(), false );
 
-		wp_add_dashboard_widget( 'advwp_welcome', esc_html( $title ), array( __CLASS__, 'welcome_widget' ), null, null, 'normal', 'high' );
+		wp_add_dashboard_widget( 'adminstudio_welcome', esc_html( $title ), array( __CLASS__, 'welcome_widget' ), null, null, 'normal', 'high' );
 	}
 
 	/**
@@ -201,8 +201,8 @@ class Admin_Branding {
 
 		wp_admin_css_color(
 			self::SCHEME,
-			__( 'Brand (Advanced WP)', 'advanced-wp' ),
-			ADVWP_URL . 'assets/css/admin-scheme.css',
+			__( 'Brand (Admin Studio)', 'admin-studio' ),
+			ADMINSTUDIO_URL . 'assets/css/admin-scheme.css',
 			array( self::menu_bg( $b ), $b['primary'], $b['secondary'], Color::readable_on( self::menu_bg( $b ) ) ),
 			array(
 				'base'    => Color::mix( Color::readable_on( self::menu_bg( $b ) ), self::menu_bg( $b ), 0.3 ),
@@ -259,15 +259,15 @@ class Admin_Branding {
 
 		$css = ':root{';
 		foreach ( $vars as $name => $value ) {
-			$css .= '--advwp-admin-' . $name . ':' . $value . ';';
+			$css .= '--adminstudio-admin-' . $name . ':' . $value . ';';
 		}
 		$css .= '}';
 
 		// The admin bar shows in the admin and on the front end; the rest of the
 		// scheme loads in the admin only, through the `colors` handle.
 		if ( is_admin_bar_showing() ) {
-			wp_enqueue_style( 'advwp-admin-bar-scheme', ADVWP_URL . 'assets/css/admin-bar-scheme.css', array( 'admin-bar' ), ADVWP_VERSION );
-			wp_add_inline_style( 'advwp-admin-bar-scheme', $css );
+			wp_enqueue_style( 'adminstudio-admin-bar-scheme', ADMINSTUDIO_URL . 'assets/css/admin-bar-scheme.css', array( 'admin-bar' ), ADMINSTUDIO_VERSION );
+			wp_add_inline_style( 'adminstudio-admin-bar-scheme', $css );
 		}
 
 		if ( is_admin() ) {

@@ -3,13 +3,13 @@
  * Front-end preview pages for the Customizer.
  *
  * The Customizer can only preview front-end URLs, so the login page, emails
- * and system pages are rendered at `?advwp_preview=...` for users who can
+ * and system pages are rendered at `?adminstudio_preview=...` for users who can
  * customize the site.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP;
+namespace AdminStudio;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -35,7 +35,7 @@ class Preview {
 	 * @return string
 	 */
 	public static function url( $type, array $args = array() ) {
-		return add_query_arg( array_merge( array( 'advwp_preview' => $type ), $args ), home_url( '/' ) );
+		return add_query_arg( array_merge( array( 'adminstudio_preview' => $type ), $args ), home_url( '/' ) );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Preview {
 	 */
 	public static function is_preview() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only routing; access is limited to the Customizer preview.
-		return isset( $_GET['advwp_preview'] ) && is_customize_preview() && current_user_can( 'customize' );
+		return isset( $_GET['adminstudio_preview'] ) && is_customize_preview() && current_user_can( 'customize' );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class Preview {
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- See is_preview().
-		$type = isset( $_GET['advwp_preview'] ) ? sanitize_key( wp_unslash( $_GET['advwp_preview'] ) ) : '';
+		$type = isset( $_GET['adminstudio_preview'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_preview'] ) ) : '';
 
 		switch ( $type ) {
 			case 'login':
@@ -67,14 +67,12 @@ class Preview {
 				break;
 
 			case 'email':
-				$template = isset( $_GET['advwp_template'] ) ? sanitize_key( wp_unslash( $_GET['advwp_template'] ) ) : 'welcome';
-				$html     = Modules\Emails\Renderer::preview( $template );
-				// Inject the bridge before </body> so the email markup stays intact.
-				echo str_replace( '</body>', self::bridge_html() . '</body>', $html ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Rendered email HTML, escaped during rendering.
+				$template = isset( $_GET['adminstudio_template'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_template'] ) ) : 'welcome';
+				Modules\Emails\Renderer::print_preview( $template, true );
 				break;
 
 			case 'page':
-				$page = isset( $_GET['advwp_page'] ) ? sanitize_key( wp_unslash( $_GET['advwp_page'] ) ) : 'critical';
+				$page = isset( $_GET['adminstudio_page'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_page'] ) ) : 'critical';
 				Modules\Error_Pages\Error_Pages::render_preview( $page );
 				break;
 
@@ -104,16 +102,5 @@ class Preview {
 
 		wp_print_scripts( array( 'customize-preview' ) );
 		$wp_customize->customize_preview_settings();
-	}
-
-	/**
-	 * Returns the bridge markup as a string.
-	 *
-	 * @return string
-	 */
-	public static function bridge_html() {
-		ob_start();
-		self::bridge();
-		return (string) ob_get_clean();
 	}
 }

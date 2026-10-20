@@ -4,16 +4,16 @@
  *
  * Logged-out requests to wp-login.php and /wp-admin are blocked. Every login
  * link WordPress builds is rewritten to the new address. Add
- * `define( 'ADVWP_DISABLE_LOGIN_URL', true );` to wp-config.php to switch this
+ * `define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );` to wp-config.php to switch this
  * off if you get locked out.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Security;
+namespace AdminStudio\Modules\Security;
 
-use AdvancedWP\Settings;
-use AdvancedWP\Modules\Error_Pages\Error_Pages;
+use AdminStudio\Settings;
+use AdminStudio\Modules\Error_Pages\Error_Pages;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -49,7 +49,7 @@ class Login_Url {
 	 * @return void
 	 */
 	public static function init() {
-		if ( defined( 'ADVWP_DISABLE_LOGIN_URL' ) && ADVWP_DISABLE_LOGIN_URL ) {
+		if ( defined( 'ADMINSTUDIO_DISABLE_LOGIN_URL' ) && ADMINSTUDIO_DISABLE_LOGIN_URL ) {
 			return;
 		}
 
@@ -180,7 +180,7 @@ class Login_Url {
 		status_header( 404 );
 		nocache_headers();
 		header( 'Content-Type: text/html; charset=utf-8' );
-		echo Error_Pages::render( 'notfound' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during rendering.
+		Error_Pages::output( 'notfound' );
 		exit;
 	}
 

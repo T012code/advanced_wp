@@ -1,18 +1,18 @@
 <?php
 /**
- * Settings → Advanced WP: page, assets and form handlers.
+ * Settings → Admin Studio: page, assets and form handlers.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Admin;
+namespace AdminStudio\Admin;
 
-use AdvancedWP\Settings;
-use AdvancedWP\Modules\Emails\Emails;
-use AdvancedWP\Modules\Emails\Renderer;
-use AdvancedWP\Modules\Emails\Templates;
-use AdvancedWP\Modules\Security\Attempts;
-use AdvancedWP\Modules\Security\Login_Url;
+use AdminStudio\Settings;
+use AdminStudio\Modules\Emails\Emails;
+use AdminStudio\Modules\Emails\Renderer;
+use AdminStudio\Modules\Emails\Templates;
+use AdminStudio\Modules\Security\Attempts;
+use AdminStudio\Modules\Security\Login_Url;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -21,7 +21,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Admin {
 
-	const SLUG = 'advanced-wp';
+	const SLUG = 'admin-studio';
 
 	/**
 	 * Hooks.
@@ -35,7 +35,7 @@ class Admin {
 		$actions = array( 'save', 'export', 'import', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log' );
 
 		foreach ( $actions as $action ) {
-			add_action( 'admin_post_advwp_' . $action, array( __CLASS__, 'handle_' . $action ) );
+			add_action( 'admin_post_adminstudio_' . $action, array( __CLASS__, 'handle_' . $action ) );
 		}
 	}
 
@@ -46,13 +46,13 @@ class Admin {
 	 */
 	public static function tabs() {
 		return array(
-			'overview'       => __( 'Overview', 'advanced-wp' ),
-			'emails'         => __( 'Emails', 'advanced-wp' ),
-			'tab_meta'       => __( 'Tab & page details', 'advanced-wp' ),
-			'admin_branding' => __( 'Admin branding', 'advanced-wp' ),
-			'security'       => __( 'Login protection', 'advanced-wp' ),
-			'maintenance'    => __( 'Coming soon', 'advanced-wp' ),
-			'tools'          => __( 'Tools', 'advanced-wp' ),
+			'overview'       => __( 'Overview', 'admin-studio' ),
+			'emails'         => __( 'Emails', 'admin-studio' ),
+			'tab_meta'       => __( 'Tab & page details', 'admin-studio' ),
+			'admin_branding' => __( 'Admin branding', 'admin-studio' ),
+			'security'       => __( 'Login protection', 'admin-studio' ),
+			'maintenance'    => __( 'Coming soon', 'admin-studio' ),
+			'tools'          => __( 'Tools', 'admin-studio' ),
 		);
 	}
 
@@ -95,8 +95,8 @@ class Admin {
 	 */
 	public static function menu() {
 		add_options_page(
-			__( 'Advanced WP', 'advanced-wp' ),
-			__( 'Advanced WP', 'advanced-wp' ),
+			__( 'Admin Studio', 'admin-studio' ),
+			__( 'Admin Studio', 'admin-studio' ),
 			'manage_options',
 			self::SLUG,
 			array( __CLASS__, 'render' )
@@ -111,7 +111,7 @@ class Admin {
 	 */
 	public static function enqueue( $hook ) {
 		if ( in_array( $hook, array( 'profile.php', 'user-edit.php' ), true ) ) {
-			wp_enqueue_style( 'advwp-admin', ADVWP_URL . 'assets/css/admin.css', array(), ADVWP_VERSION );
+			wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), ADMINSTUDIO_VERSION );
 			return;
 		}
 
@@ -119,16 +119,16 @@ class Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'advwp-admin', ADVWP_URL . 'assets/css/admin.css', array(), ADVWP_VERSION );
+		wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), ADMINSTUDIO_VERSION );
 		wp_enqueue_media();
-		wp_enqueue_script( 'advwp-admin', ADVWP_URL . 'assets/js/admin.js', array( 'jquery' ), ADVWP_VERSION, true );
+		wp_enqueue_script( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/js/admin.js', array( 'jquery' ), ADMINSTUDIO_VERSION, true );
 		wp_localize_script(
-			'advwp-admin',
-			'advwpAdmin',
+			'adminstudio-admin',
+			'adminstudioAdmin',
 			array(
-				'chooseImage' => __( 'Choose image', 'advanced-wp' ),
-				'useImage'    => __( 'Use this image', 'advanced-wp' ),
-				'confirm'     => __( 'Are you sure? This cannot be undone.', 'advanced-wp' ),
+				'chooseImage' => __( 'Choose image', 'admin-studio' ),
+				'useImage'    => __( 'Use this image', 'admin-studio' ),
+				'confirm'     => __( 'Are you sure? This cannot be undone.', 'admin-studio' ),
 			)
 		);
 	}
@@ -145,22 +145,22 @@ class Admin {
 
 		$tab = self::current_tab();
 		?>
-		<div class="wrap advwp-wrap">
-			<h1><?php esc_html_e( 'Advanced WP', 'advanced-wp' ); ?></h1>
+		<div class="wrap adminstudio-wrap">
+			<h1><?php esc_html_e( 'Admin Studio', 'admin-studio' ); ?></h1>
 			<?php self::notices(); ?>
-			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Advanced WP sections', 'advanced-wp' ); ?>">
+			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Admin Studio sections', 'admin-studio' ); ?>">
 				<?php foreach ( self::tabs() as $key => $label ) : ?>
 					<a href="<?php echo esc_url( self::url( $key ) ); ?>" class="nav-tab<?php echo $key === $tab ? ' nav-tab-active' : ''; ?>"<?php echo $key === $tab ? ' aria-current="page"' : ''; ?>><?php echo esc_html( $label ); ?></a>
 				<?php endforeach; ?>
 			</nav>
-			<div class="advwp-tab">
+			<div class="adminstudio-tab">
 				<?php Tabs::render( $tab ); ?>
 			</div>
-			<p class="advwp-credit">
+			<p class="adminstudio-credit">
 				<?php
 				printf(
 					/* translators: %s: author name linked to their website. */
-					esc_html__( 'Advanced WP by %s', 'advanced-wp' ),
+					esc_html__( 'Admin Studio by %s', 'admin-studio' ),
 					'<a href="https://www.layothedeveloper.com" target="_blank" rel="noopener">Láyò</a>'
 				);
 				?>
@@ -176,24 +176,24 @@ class Admin {
 	 */
 	private static function notices() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display only.
-		$notice = isset( $_GET['advwp_notice'] ) ? sanitize_key( wp_unslash( $_GET['advwp_notice'] ) ) : '';
+		$notice = isset( $_GET['adminstudio_notice'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_notice'] ) ) : '';
 
 		$messages = array(
-			'saved'         => array( 'success', __( 'Settings saved.', 'advanced-wp' ) ),
-			'imported'      => array( 'success', __( 'Settings imported.', 'advanced-wp' ) ),
-			'import_failed' => array( 'error', __( 'That file is not a valid Advanced WP export.', 'advanced-wp' ) ),
-			'reset'         => array( 'success', __( 'Settings reset to their defaults.', 'advanced-wp' ) ),
-			'reset_confirm' => array( 'error', __( 'Tick the confirmation box to reset settings.', 'advanced-wp' ) ),
-			'test_sent'     => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'advanced-wp' ) ),
-			'test_failed'   => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'advanced-wp' ) ),
-			'slug_invalid'  => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'advanced-wp' ) ),
-			'unlocked'      => array( 'success', __( 'Lockout lifted.', 'advanced-wp' ) ),
-			'log_cleared'   => array( 'success', __( 'Lockout log cleared.', 'advanced-wp' ) ),
+			'saved'         => array( 'success', __( 'Settings saved.', 'admin-studio' ) ),
+			'imported'      => array( 'success', __( 'Settings imported.', 'admin-studio' ) ),
+			'import_failed' => array( 'error', __( 'That file is not a valid Admin Studio export.', 'admin-studio' ) ),
+			'reset'         => array( 'success', __( 'Settings reset to their defaults.', 'admin-studio' ) ),
+			'reset_confirm' => array( 'error', __( 'Tick the confirmation box to reset settings.', 'admin-studio' ) ),
+			'test_sent'     => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'admin-studio' ) ),
+			'test_failed'   => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'admin-studio' ) ),
+			'slug_invalid'  => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'admin-studio' ) ),
+			'unlocked'      => array( 'success', __( 'Lockout lifted.', 'admin-studio' ) ),
+			'log_cleared'   => array( 'success', __( 'Lockout log cleared.', 'admin-studio' ) ),
 		);
 
 		if ( isset( $messages[ $notice ] ) ) {
 			printf(
-				'<div class="notice notice-%s is-dismissible advwp-notice"><p>%s</p></div>',
+				'<div class="notice notice-%s is-dismissible adminstudio-notice"><p>%s</p></div>',
 				esc_attr( $messages[ $notice ][0] ),
 				esc_html( $messages[ $notice ][1] )
 			);
@@ -201,8 +201,8 @@ class Admin {
 
 		if ( 'saved' === $notice && 'security' === self::current_tab() && Settings::get( 'security.login_url' ) && '' !== Login_Url::slug() ) {
 			printf(
-				'<div class="notice notice-warning advwp-notice"><p>%s <a href="%2$s"><strong>%2$s</strong></a></p></div>',
-				esc_html__( 'Your login page has moved. Bookmark the new address:', 'advanced-wp' ),
+				'<div class="notice notice-warning adminstudio-notice"><p>%s <a href="%2$s"><strong>%2$s</strong></a></p></div>',
+				esc_html__( 'Your login page has moved. Bookmark the new address:', 'admin-studio' ),
 				esc_url( Login_Url::url() )
 			);
 		}
@@ -216,7 +216,7 @@ class Admin {
 	 */
 	private static function guard( $action ) {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'advanced-wp' ), '', array( 'response' => 403 ) );
+			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
 		}
 
 		check_admin_referer( $action );
@@ -231,7 +231,7 @@ class Admin {
 	 * @return void
 	 */
 	private static function back( $tab, $notice, array $args = array() ) {
-		wp_safe_redirect( self::url( $tab, array_merge( array( 'advwp_notice' => $notice ), $args ) ) );
+		wp_safe_redirect( self::url( $tab, array_merge( array( 'adminstudio_notice' => $notice ), $args ) ) );
 		exit;
 	}
 
@@ -299,10 +299,10 @@ class Admin {
 	public static function handle_save() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
 		$tab = isset( $_POST['tab'] ) ? sanitize_key( wp_unslash( $_POST['tab'] ) ) : '';
-		self::guard( 'advwp_save_' . $tab );
+		self::guard( 'adminstudio_save_' . $tab );
 
 		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Nonce checked in guard(); every value is sanitized by Settings::update() against its field type.
-		$posted   = isset( $_POST['advwp'] ) && is_array( $_POST['advwp'] ) ? wp_unslash( $_POST['advwp'] ) : array();
+		$posted   = isset( $_POST['adminstudio'] ) && is_array( $_POST['adminstudio'] ) ? wp_unslash( $_POST['adminstudio'] ) : array();
 		$template = isset( $_POST['template'] ) ? sanitize_key( wp_unslash( $_POST['template'] ) ) : '';
 		// phpcs:enable
 
@@ -334,7 +334,7 @@ class Admin {
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
-		if ( 'maintenance' === $tab && ! empty( $_POST['advwp_new_bypass'] ) ) {
+		if ( 'maintenance' === $tab && ! empty( $_POST['adminstudio_new_bypass'] ) ) {
 			$values['maintenance.bypass_key'] = strtolower( wp_generate_password( 16, false ) );
 		}
 
@@ -349,11 +349,11 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_export() {
-		self::guard( 'advwp_export' );
+		self::guard( 'adminstudio_export' );
 
 		$data = array(
-			'plugin'   => 'advanced-wp',
-			'version'  => ADVWP_VERSION,
+			'plugin'   => 'admin-studio',
+			'version'  => ADMINSTUDIO_VERSION,
 			'exported' => gmdate( 'c' ),
 			'site'     => home_url(),
 			'settings' => Settings::raw(),
@@ -361,8 +361,8 @@ class Admin {
 
 		nocache_headers();
 		header( 'Content-Type: application/json; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=advanced-wp-settings-' . gmdate( 'Y-m-d' ) . '.json' );
-		echo wp_json_encode( $data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+		header( 'Content-Disposition: attachment; filename=admin-studio-settings-' . gmdate( 'Y-m-d' ) . '.json' );
+		echo wp_json_encode( $data, JSON_PRETTY_PRINT );
 		exit;
 	}
 
@@ -372,10 +372,10 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_import() {
-		self::guard( 'advwp_import' );
+		self::guard( 'adminstudio_import' );
 
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput, WordPress.Security.NonceVerification.Missing -- Nonce checked in guard(); only the temporary path is used, and checked with is_uploaded_file().
-		$file = isset( $_FILES['advwp_file']['tmp_name'] ) ? $_FILES['advwp_file']['tmp_name'] : '';
+		$file = isset( $_FILES['adminstudio_file']['tmp_name'] ) ? $_FILES['adminstudio_file']['tmp_name'] : '';
 
 		if ( ! $file || ! is_uploaded_file( $file ) ) {
 			self::back( 'tools', 'import_failed' );
@@ -383,7 +383,7 @@ class Admin {
 
 		$data = json_decode( (string) file_get_contents( $file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Uploaded temp file.
 
-		if ( ! is_array( $data ) || 'advanced-wp' !== ( $data['plugin'] ?? '' ) || ! isset( $data['settings'] ) || ! is_array( $data['settings'] ) ) {
+		if ( ! is_array( $data ) || 'admin-studio' !== ( $data['plugin'] ?? '' ) || ! isset( $data['settings'] ) || ! is_array( $data['settings'] ) ) {
 			self::back( 'tools', 'import_failed' );
 		}
 
@@ -398,14 +398,14 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_reset() {
-		self::guard( 'advwp_reset' );
+		self::guard( 'adminstudio_reset' );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Verified in guard().
-		if ( empty( $_POST['advwp_confirm'] ) ) {
+		if ( empty( $_POST['adminstudio_confirm'] ) ) {
 			self::back( 'tools', 'reset_confirm' );
 		}
 
-		$section = isset( $_POST['advwp_section'] ) ? sanitize_key( wp_unslash( $_POST['advwp_section'] ) ) : '';
+		$section = isset( $_POST['adminstudio_section'] ) ? sanitize_key( wp_unslash( $_POST['adminstudio_section'] ) ) : '';
 		// phpcs:enable
 
 		$allowed = array( 'all', 'brand', 'login', 'emails', 'error_pages', 'tab_meta', 'admin_branding', 'security', 'maintenance' );
@@ -423,11 +423,11 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_test_email() {
-		self::guard( 'advwp_test_email' );
+		self::guard( 'adminstudio_test_email' );
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Verified in guard().
 		$template = isset( $_POST['template'] ) ? sanitize_key( wp_unslash( $_POST['template'] ) ) : 'welcome';
-		$to       = isset( $_POST['advwp_to'] ) ? sanitize_email( wp_unslash( $_POST['advwp_to'] ) ) : '';
+		$to       = isset( $_POST['adminstudio_to'] ) ? sanitize_email( wp_unslash( $_POST['adminstudio_to'] ) ) : '';
 		// phpcs:enable
 
 		$template = Templates::get( $template ) ? $template : 'welcome';
@@ -442,13 +442,13 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_email_preview() {
-		self::guard( 'advwp_email_preview' );
+		self::guard( 'adminstudio_email_preview' );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Verified in guard().
 		$template = isset( $_GET['template'] ) ? sanitize_key( wp_unslash( $_GET['template'] ) ) : 'welcome';
 
 		header( 'Content-Type: text/html; charset=utf-8' );
-		echo Renderer::preview( $template ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped during rendering.
+		Renderer::print_preview( $template );
 		exit;
 	}
 
@@ -458,7 +458,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_reset_template() {
-		self::guard( 'advwp_reset_template' );
+		self::guard( 'adminstudio_reset_template' );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
 		$template = isset( $_POST['template'] ) ? sanitize_key( wp_unslash( $_POST['template'] ) ) : '';
@@ -478,7 +478,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_unlock() {
-		self::guard( 'advwp_unlock' );
+		self::guard( 'adminstudio_unlock' );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
 		$ip = isset( $_POST['ip'] ) ? sanitize_text_field( wp_unslash( $_POST['ip'] ) ) : '';
@@ -496,13 +496,13 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_clear_log() {
-		self::guard( 'advwp_clear_log' );
+		self::guard( 'adminstudio_clear_log' );
 		Attempts::clear_log();
 		self::back( 'security', 'log_cleared' );
 	}
 
 	/**
-	 * Plugins whose features overlap with an Advanced WP module.
+	 * Plugins whose features overlap with an Admin Studio module.
 	 *
 	 * @return array Plugin name => module key.
 	 */
@@ -540,11 +540,11 @@ class Admin {
 	 */
 	public static function dropin_labels() {
 		return array(
-			'active'     => __( 'Active', 'advanced-wp' ),
-			'conflict'   => __( 'Another plugin or your host already uses this file. Advanced WP leaves it alone.', 'advanced-wp' ),
-			'off'        => __( 'Off', 'advanced-wp' ),
-			'unwritable' => __( 'Cannot write to wp-content. Ask your host to make it writable, or turn this page off.', 'advanced-wp' ),
-			'missing'    => __( 'Not written yet. Save any setting to create it.', 'advanced-wp' ),
+			'active'     => __( 'Active', 'admin-studio' ),
+			'conflict'   => __( 'Another plugin or your host already uses this file. Admin Studio leaves it alone.', 'admin-studio' ),
+			'off'        => __( 'Off', 'admin-studio' ),
+			'unwritable' => __( 'Cannot write to wp-content. Ask your host to make it writable, or turn this page off.', 'admin-studio' ),
+			'missing'    => __( 'Not written yet. Save any setting to create it.', 'admin-studio' ),
 		);
 	}
 }

@@ -2,12 +2,12 @@
 /**
  * Login protection: custom login URL, attempt limits, honeypot and 2FA.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Security;
+namespace AdminStudio\Modules\Security;
 
-use AdvancedWP\Settings;
+use AdminStudio\Settings;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -3,14 +3,14 @@
  * Field renderers for the settings page.
  *
  * Field names follow the setting dot path, so `security.limit` posts as
- * `advwp[security][limit]`.
+ * `adminstudio[security][limit]`.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Admin;
+namespace AdminStudio\Admin;
 
-use AdvancedWP\Settings;
+use AdminStudio\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -26,7 +26,7 @@ class Fields {
 	 * @return string
 	 */
 	public static function name( $key ) {
-		return 'advwp[' . implode( '][', explode( '.', $key ) ) . ']';
+		return 'adminstudio[' . implode( '][', explode( '.', $key ) ) . ']';
 	}
 
 	/**
@@ -36,7 +36,7 @@ class Fields {
 	 * @return string
 	 */
 	public static function id( $key ) {
-		return 'advwp-' . str_replace( array( '.', '_' ), '-', $key );
+		return 'adminstudio-' . str_replace( array( '.', '_' ), '-', $key );
 	}
 
 	/**
@@ -83,8 +83,8 @@ class Fields {
 	 */
 	public static function show_if( $key, $value = '1' ) {
 		return array(
-			'data-advwp-show-if'    => self::name( $key ),
-			'data-advwp-show-value' => $value,
+			'data-adminstudio-show-if'    => self::name( $key ),
+			'data-adminstudio-show-value' => $value,
 		);
 	}
 
@@ -132,7 +132,7 @@ class Fields {
 		self::row_start( $label, self::id( $key ), $attrs );
 
 		if ( isset( $input['prefix'] ) ) {
-			echo '<code class="advwp-prefix">' . esc_html( $input['prefix'] ) . '</code>';
+			echo '<code class="adminstudio-prefix">' . esc_html( $input['prefix'] ) . '</code>';
 			unset( $input['prefix'] );
 		}
 
@@ -191,9 +191,9 @@ class Fields {
 		);
 		if ( $media ) {
 			printf(
-				' <button type="button" class="button" data-advwp-media="%s">%s</button>',
+				' <button type="button" class="button" data-adminstudio-media="%s">%s</button>',
 				esc_attr( self::id( $key ) ),
-				esc_html__( 'Choose image', 'advanced-wp' )
+				esc_html__( 'Choose image', 'admin-studio' )
 			);
 		}
 		self::row_end( $desc );
@@ -259,7 +259,7 @@ class Fields {
 		printf( '<input type="hidden" name="%s[]" value="">', esc_attr( self::name( $key ) ) );
 		foreach ( $choices as $value => $text ) {
 			printf(
-				'<label class="advwp-check"><input type="checkbox" name="%s[]" value="%s" %s> %s</label>',
+				'<label class="adminstudio-check"><input type="checkbox" name="%s[]" value="%s" %s> %s</label>',
 				esc_attr( self::name( $key ) ),
 				esc_attr( $value ),
 				checked( in_array( (string) $value, array_map( 'strval', $current ), true ), true, false ),

@@ -1,11 +1,11 @@
 <?php
 /**
- * The list of core emails Advanced WP can restyle.
+ * The list of core emails Admin Studio can restyle.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Emails;
+namespace AdminStudio\Modules\Emails;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -61,91 +61,91 @@ class Templates {
 		return array(
 			'welcome'                    => array(
 				'group' => 'user',
-				'label' => __( 'New account / welcome', 'advanced-wp' ),
+				'label' => __( 'New account / welcome', 'admin-studio' ),
 				'tags'  => array_merge( $user, array( 'set_password_link' ) ),
 				'link'  => 'set_password_link',
 			),
 			'password_reset'             => array(
 				'group' => 'user',
-				'label' => __( 'Password reset request', 'advanced-wp' ),
+				'label' => __( 'Password reset request', 'admin-studio' ),
 				'tags'  => array_merge( $user, array( 'reset_link', 'ip_address' ) ),
 				'link'  => 'reset_link',
 			),
 			'password_changed'           => array(
 				'group' => 'user',
-				'label' => __( 'Password changed', 'advanced-wp' ),
+				'label' => __( 'Password changed', 'admin-studio' ),
 				'tags'  => $user,
 				'link'  => 'login_url',
 			),
 			'email_change_confirm'       => array(
 				'group' => 'user',
-				'label' => __( 'Email address change confirmation', 'advanced-wp' ),
+				'label' => __( 'Email address change confirmation', 'admin-studio' ),
 				'tags'  => array_merge( $user, array( 'new_email', 'confirm_link' ) ),
 				'link'  => 'confirm_link',
 			),
 			'email_changed'              => array(
 				'group' => 'user',
-				'label' => __( 'Email address changed notice', 'advanced-wp' ),
+				'label' => __( 'Email address changed notice', 'admin-studio' ),
 				'tags'  => array_merge( $user, array( 'old_email', 'new_email' ) ),
 				'link'  => '',
 			),
 			'data_export'                => array(
 				'group' => 'user',
-				'label' => __( 'Personal data export ready', 'advanced-wp' ),
+				'label' => __( 'Personal data export ready', 'admin-studio' ),
 				'tags'  => array( 'user_email', 'download_link', 'expiry_date' ),
 				'link'  => 'download_link',
 			),
 			'data_erased'                => array(
 				'group' => 'user',
-				'label' => __( 'Personal data erased', 'advanced-wp' ),
+				'label' => __( 'Personal data erased', 'admin-studio' ),
 				'tags'  => array( 'user_email', 'privacy_policy_url' ),
 				'link'  => '',
 			),
 			'admin_new_user'             => array(
 				'group' => 'admin',
-				'label' => __( 'New user registered', 'advanced-wp' ),
+				'label' => __( 'New user registered', 'admin-studio' ),
 				'tags'  => array_merge( $user, array( 'user_edit_link' ) ),
 				'link'  => 'user_edit_link',
 			),
 			'admin_password_changed'     => array(
 				'group' => 'admin',
-				'label' => __( 'User changed their password', 'advanced-wp' ),
+				'label' => __( 'User changed their password', 'admin-studio' ),
 				'tags'  => $user,
 				'link'  => '',
 			),
 			'comment_notify'             => array(
 				'group' => 'admin',
-				'label' => __( 'New comment', 'advanced-wp' ),
+				'label' => __( 'New comment', 'admin-studio' ),
 				'tags'  => array( 'post_title', 'post_link', 'comment_author', 'comment_author_email', 'comment_content', 'comment_link' ),
 				'link'  => 'comment_link',
 			),
 			'comment_moderation'         => array(
 				'group' => 'admin',
-				'label' => __( 'Comment awaiting moderation', 'advanced-wp' ),
+				'label' => __( 'Comment awaiting moderation', 'admin-studio' ),
 				'tags'  => array( 'post_title', 'post_link', 'comment_author', 'comment_author_email', 'comment_content', 'moderate_link', 'pending_count' ),
 				'link'  => 'moderate_link',
 			),
 			'admin_email_change_confirm' => array(
 				'group' => 'admin',
-				'label' => __( 'Site admin email change confirmation', 'advanced-wp' ),
+				'label' => __( 'Site admin email change confirmation', 'admin-studio' ),
 				'tags'  => array( 'new_email', 'confirm_link' ),
 				'link'  => 'confirm_link',
 			),
 			'admin_email_changed'        => array(
 				'group' => 'admin',
-				'label' => __( 'Site admin email changed notice', 'advanced-wp' ),
+				'label' => __( 'Site admin email changed notice', 'admin-studio' ),
 				'tags'  => array( 'old_email', 'new_email' ),
 				'link'  => '',
 			),
 			'auto_update'                => array(
 				'group' => 'admin',
-				'label' => __( 'Automatic update results', 'advanced-wp' ),
+				'label' => __( 'Automatic update results', 'admin-studio' ),
 				'tags'  => array( 'update_subject', 'update_details', 'updates_link' ),
 				'link'  => 'updates_link',
 			),
 			'recovery_mode'              => array(
 				'group' => 'admin',
-				'label' => __( 'Recovery mode (site error)', 'advanced-wp' ),
+				'label' => __( 'Recovery mode (site error)', 'admin-studio' ),
 				'tags'  => array( 'recovery_link', 'technical_details' ),
 				'link'  => 'recovery_link',
 			),

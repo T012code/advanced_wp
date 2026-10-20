@@ -2,14 +2,14 @@
 /**
  * Settings storage, field schema and sanitizing.
  *
- * Every setting lives in one nested option, `advwp_settings`, and is addressed
+ * Every setting lives in one nested option, `adminstudio_settings`, and is addressed
  * with a dot path such as `login.layout`. The Customizer stores into the same
- * option through ids like `advwp_settings[login][layout]`.
+ * option through ids like `adminstudio_settings[login][layout]`.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP;
+namespace AdminStudio;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Settings {
 
-	const OPTION = 'advwp_settings';
+	const OPTION = 'adminstudio_settings';
 
 	/**
 	 * Field schema, built once per request.

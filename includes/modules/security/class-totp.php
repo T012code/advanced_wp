@@ -2,10 +2,10 @@
 /**
  * Time-based one-time passwords (RFC 6238), as used by authenticator apps.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Security;
+namespace AdminStudio\Modules\Security;
 
 defined( 'ABSPATH' ) || exit;
 

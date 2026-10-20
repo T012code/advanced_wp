@@ -6,10 +6,10 @@
  * and then served from the uploads folder. Visitors' browsers never contact
  * Google.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP;
+namespace AdminStudio;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Fonts {
 
-	const OPTION = 'advwp_fonts';
+	const OPTION = 'adminstudio_fonts';
 
 	/**
 	 * Google fonts offered: key => [family, generic fallback].
@@ -62,9 +62,9 @@ class Fonts {
 	 */
 	public static function choices() {
 		$choices = array(
-			'theme'  => __( 'Same as theme', 'advanced-wp' ),
-			'system' => __( 'System sans-serif', 'advanced-wp' ),
-			'serif'  => __( 'System serif', 'advanced-wp' ),
+			'theme'  => __( 'Same as theme', 'admin-studio' ),
+			'system' => __( 'System sans-serif', 'admin-studio' ),
+			'serif'  => __( 'System serif', 'admin-studio' ),
 		);
 
 		foreach ( self::google() as $key => $font ) {
@@ -231,7 +231,7 @@ class Fonts {
 	private static function base_dir() {
 		$uploads = wp_upload_dir( null, false );
 
-		return trailingslashit( $uploads['basedir'] ) . 'advanced-wp/fonts/';
+		return trailingslashit( $uploads['basedir'] ) . 'admin-studio/fonts/';
 	}
 
 	/**
@@ -242,6 +242,6 @@ class Fonts {
 	private static function base_url() {
 		$uploads = wp_upload_dir( null, false );
 
-		return set_url_scheme( trailingslashit( $uploads['baseurl'] ) . 'advanced-wp/fonts/' );
+		return set_url_scheme( trailingslashit( $uploads['baseurl'] ) . 'admin-studio/fonts/' );
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Advanced WP
+ * Plugin Name:       Admin Studio
  * Plugin URI:        https://www.layothedeveloper.com
  * Description:       Rebrand the login page, system emails, error pages, browser tab details and admin dashboard, using your theme's colours by default.
  * Version:           1.0.0
@@ -10,29 +10,29 @@
  * Author URI:        https://www.layothedeveloper.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       advanced-wp
+ * Text Domain:       admin-studio
  * Domain Path:       /languages
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'ADVWP_VERSION', '1.0.0' );
-define( 'ADVWP_FILE', __FILE__ );
-define( 'ADVWP_DIR', plugin_dir_path( __FILE__ ) );
-define( 'ADVWP_URL', plugin_dir_url( __FILE__ ) );
+define( 'ADMINSTUDIO_VERSION', '1.0.0' );
+define( 'ADMINSTUDIO_FILE', __FILE__ );
+define( 'ADMINSTUDIO_DIR', plugin_dir_path( __FILE__ ) );
+define( 'ADMINSTUDIO_URL', plugin_dir_url( __FILE__ ) );
 
 /**
- * Maps AdvancedWP\Sub\Class_Name to includes/sub/class-class-name.php.
+ * Maps AdminStudio\Sub\Class_Name to includes/sub/class-class-name.php.
  */
 spl_autoload_register(
 	static function ( $class_name ) {
-		if ( 0 !== strpos( $class_name, 'AdvancedWP\\' ) ) {
+		if ( 0 !== strpos( $class_name, 'AdminStudio\\' ) ) {
 			return;
 		}
 
-		$parts = explode( '\\', substr( $class_name, strlen( 'AdvancedWP\\' ) ) );
+		$parts = explode( '\\', substr( $class_name, strlen( 'AdminStudio\\' ) ) );
 		$name  = array_pop( $parts );
 		$path  = '';
 
@@ -40,7 +40,7 @@ spl_autoload_register(
 			$path .= strtolower( str_replace( '_', '-', $part ) ) . '/';
 		}
 
-		$file = ADVWP_DIR . 'includes/' . $path . 'class-' . strtolower( str_replace( '_', '-', $name ) ) . '.php';
+		$file = ADMINSTUDIO_DIR . 'includes/' . $path . 'class-' . strtolower( str_replace( '_', '-', $name ) ) . '.php';
 
 		if ( is_readable( $file ) ) {
 			require $file;
@@ -48,7 +48,7 @@ spl_autoload_register(
 	}
 );
 
-register_activation_hook( __FILE__, array( 'AdvancedWP\\Plugin', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'AdvancedWP\\Plugin', 'deactivate' ) );
+register_activation_hook( __FILE__, array( 'AdminStudio\\Plugin', 'activate' ) );
+register_deactivation_hook( __FILE__, array( 'AdminStudio\\Plugin', 'deactivate' ) );
 
-AdvancedWP\Plugin::instance();
+AdminStudio\Plugin::instance();

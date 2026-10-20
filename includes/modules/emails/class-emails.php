@@ -8,12 +8,12 @@
  * there avoids core's sprintf() on some subjects and covers emails that have
  * no subject filter at all.
  *
- * @package AdvancedWP
+ * @package AdminStudio
  */
 
-namespace AdvancedWP\Modules\Emails;
+namespace AdminStudio\Modules\Emails;
 
-use AdvancedWP\Settings;
+use AdminStudio\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -94,7 +94,7 @@ class Emails {
 
 		self::$pending[ $id ] = $email;
 
-		return str_replace( '<!-- advwp-email -->', '<!-- advwp-email:' . $id . ' -->', $email['html'] );
+		return str_replace( '<!-- adminstudio-email -->', '<!-- adminstudio-email:' . $id . ' -->', $email['html'] );
 	}
 
 	/**
@@ -106,7 +106,7 @@ class Emails {
 	public static function finalize( $args ) {
 		self::$alt_body = '';
 
-		if ( ! is_string( $args['message'] ) || ! preg_match( '/<!-- advwp-email:([a-z0-9_-]+) -->/', $args['message'], $m ) || ! isset( self::$pending[ $m[1] ] ) ) {
+		if ( ! is_string( $args['message'] ) || ! preg_match( '/<!-- adminstudio-email:([a-z0-9_-]+) -->/', $args['message'], $m ) || ! isset( self::$pending[ $m[1] ] ) ) {
 			return $args;
 		}
 
