@@ -1,0 +1,268 @@
+/* Advanced WP settings page and profile screen. */
+
+.advwp-wrap .advwp-tab {
+	max-width: 1100px;
+}
+
+.advwp-wrap .advwp-intro {
+	max-width: 720px;
+	color: #50575e;
+}
+
+.advwp-wrap .advwp-intro .button {
+	margin-left: 4px;
+	vertical-align: baseline;
+}
+
+.advwp-wrap h2.title {
+	margin-top: 32px;
+}
+
+.advwp-wrap .form-table .description .button {
+	margin-left: 4px;
+}
+
+.advwp-wrap .advwp-check {
+	display: inline-block;
+	min-width: 200px;
+	margin: 0 16px 8px 0;
+}
+
+.advwp-wrap .advwp-prefix {
+	padding: 6px 2px 6px 8px;
+	background: transparent;
+	color: #50575e;
+}
+
+.advwp-wrap .advwp-slug {
+	max-width: 16em;
+}
+
+.advwp-wrap [data-advwp-show-if][hidden] {
+	display: none;
+}
+
+.advwp-wrap .notice.inline {
+	margin: 16px 0;
+}
+
+/* Emails tab. */
+.advwp-emails {
+	display: grid;
+	grid-template-columns: 240px minmax(0, 1fr);
+	gap: 24px;
+	align-items: start;
+	margin-top: 16px;
+}
+
+.advwp-emails__list {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 8px 0;
+	position: sticky;
+	top: 48px;
+}
+
+.advwp-emails__list h3 {
+	margin: 12px 16px 4px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: #646970;
+}
+
+.advwp-emails__list ul {
+	margin: 0;
+}
+
+.advwp-emails__list li {
+	margin: 0;
+}
+
+.advwp-emails__list a {
+	display: block;
+	padding: 8px 16px;
+	text-decoration: none;
+	color: #1d2327;
+	border-left: 3px solid transparent;
+}
+
+.advwp-emails__list a:hover {
+	background: #f6f7f7;
+	color: #135e96;
+}
+
+.advwp-emails__list a.is-current {
+	border-left-color: #2271b1;
+	background: #f0f6fc;
+	font-weight: 600;
+}
+
+.advwp-emails__list a:focus {
+	box-shadow: inset 0 0 0 2px #2271b1;
+	outline: 2px solid transparent;
+}
+
+.advwp-emails__editor {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	padding: 8px 24px 24px;
+	min-width: 0;
+}
+
+.advwp-emails__editor .form-table th {
+	width: 140px;
+}
+
+.advwp-badge {
+	display: inline-block;
+	margin-left: 4px;
+	padding: 0 6px;
+	border-radius: 999px;
+	background: #dcdcde;
+	color: #50575e;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 18px;
+}
+
+.advwp-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.advwp-tags .button {
+	font-family: Consolas, Monaco, monospace;
+}
+
+.advwp-inline-forms {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	padding-top: 16px;
+	border-top: 1px solid #f0f0f1;
+}
+
+.advwp-inline-form {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+/* Tools and status. */
+.advwp-status th {
+	width: 320px;
+}
+
+.advwp-state--active {
+	color: #00a32a;
+	font-weight: 600;
+}
+
+.advwp-state--conflict,
+.advwp-state--unwritable {
+	color: #b32d2e;
+}
+
+.advwp-swatches {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 12px;
+}
+
+.advwp-swatch {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.advwp-swatch__chip {
+	width: 18px;
+	height: 18px;
+	border-radius: 4px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.advwp-conflicts {
+	margin: 0;
+}
+
+.advwp-log {
+	max-width: 900px;
+	margin-bottom: 8px;
+}
+
+.advwp-log form {
+	margin: 0;
+}
+
+.advwp-copyable {
+	display: inline-block;
+	padding: 6px 8px;
+	user-select: all;
+	word-break: break-all;
+}
+
+.advwp-credit {
+	margin-top: 32px;
+	color: #646970;
+}
+
+/* Two-factor on the profile screen. */
+.advwp-2fa-qr {
+	display: inline-block;
+	padding: 8px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+}
+
+.advwp-2fa-qr svg {
+	display: block;
+}
+
+.advwp-2fa-secret {
+	user-select: all;
+	word-break: break-all;
+}
+
+.advwp-2fa-codes {
+	columns: 2;
+	max-width: 22em;
+	font-family: Consolas, Monaco, monospace;
+	font-size: 14px;
+}
+
+#advwp-2fa-code {
+	max-width: 10em;
+}
+
+.advwp-2fa-panel {
+	margin: 16px 0;
+}
+
+.advwp-2fa-message:empty {
+	display: none;
+}
+
+@media (max-width: 960px) {
+	.advwp-emails {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.advwp-emails__list {
+		position: static;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.advwp-wrap * {
+		transition-duration: 1ms !important;
+	}
+}
