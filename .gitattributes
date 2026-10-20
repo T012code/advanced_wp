@@ -2,3 +2,4 @@
 /.distignore export-ignore
 /CLAUDE.md export-ignore
 /docs export-ignore
+/.wordpress-org export-ignore
