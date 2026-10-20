@@ -74,6 +74,7 @@ class Two_Factor {
 
 		add_action( 'admin_init', array( __CLASS__, 'enforce' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'notice' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'notice_style' ) );
 	}
 
 	/**
@@ -808,6 +809,17 @@ class Two_Factor {
 	}
 
 	/**
+	 * Styles the reminder with an even border on every admin screen.
+	 *
+	 * @return void
+	 */
+	public static function notice_style() {
+		if ( self::grace_left( wp_get_current_user() ) >= 0 ) {
+			wp_add_inline_style( 'common', '.advwp-notice{border:1px solid #dba617;border-radius:4px;background:#fcf9e8;box-shadow:none}' );
+		}
+	}
+
+	/**
 	 * Reminds users who still need to set up two-factor.
 	 *
 	 * @return void
@@ -828,7 +840,7 @@ class Two_Factor {
 			);
 
 		printf(
-			'<div class="notice notice-warning"><p>%s <a href="%s">%s</a></p></div>',
+			'<div class="notice notice-warning advwp-notice"><p>%s <a href="%s">%s</a></p></div>',
 			esc_html( $message ),
 			esc_url( admin_url( 'profile.php#advwp-2fa' ) ),
 			esc_html__( 'Set up two-factor', 'advanced-wp' )

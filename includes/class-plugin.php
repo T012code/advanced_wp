@@ -72,6 +72,17 @@ class Plugin {
 		add_action( 'add_option_' . Settings::OPTION, array( $this, 'settings_saved' ) );
 		add_action( 'update_option_' . Settings::OPTION, array( $this, 'settings_saved' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( ADVWP_FILE ), array( $this, 'action_links' ) );
+		add_action( 'login_enqueue_scripts', array( $this, 'login_notice_borders' ) );
+	}
+
+	/**
+	 * Gives login screen messages an even border instead of the thick side
+	 * stripe from core, even when the login design feature is off.
+	 *
+	 * @return void
+	 */
+	public function login_notice_borders() {
+		wp_add_inline_style( 'login', '.login .message,.login .notice,.login .success,.login #login_error{border-left-width:1px;border-radius:4px}' );
 	}
 
 	/**

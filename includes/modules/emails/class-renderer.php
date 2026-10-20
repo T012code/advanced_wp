@@ -293,7 +293,7 @@ class Renderer {
 			'a'          => 'color:' . $s['link'] . ';text-decoration:underline;',
 			'h2'         => 'margin:24px 0 12px;font-size:20px;line-height:1.3;',
 			'h3'         => 'margin:24px 0 8px;font-size:17px;line-height:1.3;',
-			'blockquote' => 'margin:16px 0;padding:12px 16px;border-left:4px solid ' . $s['link'] . ';background:' . Color::mix( $s['content_bg'], $s['text'], 0.04 ) . ';',
+			'blockquote' => 'margin:16px 0;padding:12px 16px;border:1px solid ' . $s['border'] . ';border-radius:' . (int) $s['radius'] . 'px;background:' . Color::mix( $s['content_bg'], $s['text'], 0.04 ) . ';',
 			'ul'         => 'margin:0 0 16px;padding-left:20px;',
 			'ol'         => 'margin:0 0 16px;padding-left:20px;',
 			'pre'        => 'white-space:pre-wrap;font-size:13px;',

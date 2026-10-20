@@ -273,27 +273,30 @@ body.login.advwp .reset-pass-submit .button {
 }
 
 /* Messages and errors. */
+/* Messages use an even border and a light tint, never a thick side stripe. */
 body.login.advwp .message,
 body.login.advwp .notice,
 body.login.advwp .success,
 body.login.advwp #login_error {
-	background: var(--advwp-surface);
+	background: color-mix(in srgb, var(--advwp-primary) 6%, var(--advwp-surface));
 	color: var(--advwp-text);
-	border: 1px solid var(--advwp-border);
-	border-left: 4px solid var(--advwp-primary);
+	border: 1px solid color-mix(in srgb, var(--advwp-primary) 30%, var(--advwp-border));
 	border-radius: calc(var(--advwp-radius) * 0.75);
 	box-shadow: none;
 	margin: 0 0 16px;
+	padding: 12px 14px;
 }
 
 body.login.advwp #login_error,
 body.login.advwp .notice-error {
-	border-left-color: var(--advwp-error);
+	background: color-mix(in srgb, var(--advwp-error) 7%, var(--advwp-surface));
+	border-color: color-mix(in srgb, var(--advwp-error) 45%, var(--advwp-border));
 }
 
 body.login.advwp .success,
 body.login.advwp .notice-success {
-	border-left-color: var(--advwp-success);
+	background: color-mix(in srgb, var(--advwp-success) 7%, var(--advwp-surface));
+	border-color: color-mix(in srgb, var(--advwp-success) 45%, var(--advwp-border));
 }
 
 body.login.advwp .advwp-message {

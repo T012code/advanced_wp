@@ -182,6 +182,5 @@ textarea:focus {
 
 #customize-controls .control-section .accordion-section-title:focus,
 #customize-controls .control-section .accordion-section-title:hover {
-	border-left-color: var(--advwp-admin-accent);
 	color: var(--advwp-admin-link);
 }

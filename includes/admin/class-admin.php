@@ -193,7 +193,7 @@ class Admin {
 
 		if ( isset( $messages[ $notice ] ) ) {
 			printf(
-				'<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
+				'<div class="notice notice-%s is-dismissible advwp-notice"><p>%s</p></div>',
 				esc_attr( $messages[ $notice ][0] ),
 				esc_html( $messages[ $notice ][1] )
 			);
@@ -201,7 +201,7 @@ class Admin {
 
 		if ( 'saved' === $notice && 'security' === self::current_tab() && Settings::get( 'security.login_url' ) && '' !== Login_Url::slug() ) {
 			printf(
-				'<div class="notice notice-warning"><p>%s <a href="%2$s"><strong>%2$s</strong></a></p></div>',
+				'<div class="notice notice-warning advwp-notice"><p>%s <a href="%2$s"><strong>%2$s</strong></a></p></div>',
 				esc_html__( 'Your login page has moved. Bookmark the new address:', 'advanced-wp' ),
 				esc_url( Login_Url::url() )
 			);
