@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin Studio Documentation</title>
+<style>
+/* Print stylesheet for the Admin Studio documentation. Two typefaces: a serif for headings, a sans for text. */
+:root {
+	--paper: oklch(99% 0.003 250);
+	--ink: oklch(22% 0.03 262);
+	--muted: oklch(46% 0.025 260);
+	--rule: oklch(88% 0.012 255);
+	--tint: oklch(96.5% 0.012 255);
+	--accent: oklch(50% 0.17 262);
+	--accent-tint: oklch(95% 0.03 258);
+	--warn-tint: oklch(96% 0.04 85);
+	--warn-rule: oklch(80% 0.1 80);
+	--space-1: 4px;
+	--space-2: 8px;
+	--space-3: 12px;
+	--space-4: 16px;
+	--space-6: 24px;
+	--space-8: 32px;
+	--font-head: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+	--font-body: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@page { size: A4; margin: 20mm 18mm 22mm; }
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; background: var(--paper); color: var(--ink); }
+
+body {
+	font-family: var(--font-body);
+	font-size: 10.5pt;
+	line-height: 1.55;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-head); font-weight: 700; line-height: 1.2; color: var(--ink); }
+h1 { font-size: 26pt; margin: 0 0 var(--space-4); }
+h2 { font-size: 17pt; margin: var(--space-8) 0 var(--space-3); break-after: avoid; }
+h3 { font-size: 13pt; margin: var(--space-6) 0 var(--space-2); break-after: avoid; }
+h4 { font-size: 11pt; margin: var(--space-4) 0 var(--space-1); break-after: avoid; }
+
+p { margin: 0 0 var(--space-3); }
+ul, ol { margin: 0 0 var(--space-3); padding-left: 20px; }
+li { margin-bottom: var(--space-1); }
+a { color: var(--accent); }
+code { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 9pt; background: var(--tint); border: 1px solid var(--rule); border-radius: 4px; padding: 0 4px; }
+
+table { width: 100%; border-collapse: collapse; margin: 0 0 var(--space-4); font-size: 9.5pt; break-inside: auto; }
+th, td { border: 1px solid var(--rule); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { background: var(--tint); font-weight: 600; }
+tr { break-inside: avoid; }
+
+/* Notes: an even border and a tint, never a side stripe. */
+.note { border: 1px solid var(--rule); background: var(--tint); border-radius: 8px; padding: var(--space-3) var(--space-4); margin: 0 0 var(--space-4); break-inside: avoid; }
+.note.warn { border-color: var(--warn-rule); background: var(--warn-tint); }
+.note.spec { border-color: oklch(82% 0.06 258); background: var(--accent-tint); }
+.note p:last-child { margin-bottom: 0; }
+
+figure { margin: 0 0 var(--space-6); break-inside: avoid; }
+figure img { display: block; width: 100%; border: 1px solid var(--rule); border-radius: 8px; }
+figure.half img { width: 70%; margin: 0 auto; }
+figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); text-align: center; }
+
+.part { break-before: page; }
+.part-title { font-size: 11pt; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; font-family: var(--font-body); font-weight: 600; margin: 0 0 var(--space-2); }
+
+.cover { height: 250mm; display: flex; flex-direction: column; justify-content: center; }
+.cover .lead { font-size: 14pt; color: var(--muted); max-width: 140mm; }
+.cover dl { display: grid; grid-template-columns: 35mm 1fr; gap: var(--space-2) var(--space-4); margin-top: var(--space-8); font-size: 10pt; }
+.cover dt { color: var(--muted); }
+.cover dd { margin: 0; }
+
+.toc ol { list-style: none; padding: 0; columns: 2; column-gap: var(--space-8); }
+.toc li { break-inside: avoid; }
+.toc .toc-part { font-weight: 600; margin-top: var(--space-3); }
+
+.kv { display: grid; grid-template-columns: 45mm 1fr; gap: var(--space-1) var(--space-4); margin-bottom: var(--space-4); }
+.kv dt { font-weight: 600; }
+.kv dd { margin: 0; }
+
+.status { display: inline-block; font-size: 8.5pt; font-weight: 600; padding: 0 6px; border-radius: 999px; border: 1px solid var(--rule); background: var(--tint); }
+</style>
+</head>
+<body>
+
+<!-- Cover -->
+<section class="cover">
+	<p class="part-title">Documentation</p>
+	<h1>Admin Studio</h1>
+	<p class="lead">Rebrand the login page, system emails, error pages, browser tab details and the admin dashboard of a WordPress site, starting from the colours and fonts of its theme.</p>
+	<dl>
+		<dt>Plugin version</dt><dd>1.0.0</dd>
+		<dt>Document date</dt><dd>20 October 2026</dd>
+		<dt>Requires</dt><dd>WordPress 6.4 or later, PHP 7.4 or later</dd>
+		<dt>Tested with</dt><dd>WordPress 7.1</dd>
+		<dt>Author</dt><dd>Láyò, <a href="https://www.layothedeveloper.com">www.layothedeveloper.com</a></dd>
+		<dt>Licence</dt><dd>GPLv2 or later</dd>
+	</dl>
+</section>
+
+<!-- Contents -->
+<section class="part toc">
+	<h2>Contents</h2>
+	<ol>
+		<li class="toc-part">Part 1. Using Admin Studio</li>
+		<li>1. What Admin Studio does</li>
+		<li>2. Installing and first steps</li>
+		<li>3. Where each setting lives</li>
+		<li>4. Brand kit</li>
+		<li>5. Login page</li>
+		<li>6. Emails</li>
+		<li>7. Error and system pages</li>
+		<li>8. Tab and page details</li>
+		<li>9. Admin branding</li>
+		<li>10. Login protection</li>
+		<li>11. Coming soon and maintenance mode</li>
+		<li>12. Tools</li>
+		<li>13. Troubleshooting</li>
+		<li>14. Privacy and external services</li>
+		<li class="toc-part">Part 2. Developer reference</li>
+		<li>15. Requirements and compatibility</li>
+		<li>16. File structure</li>
+		<li>17. How settings are stored</li>
+		<li>18. Data the plugin stores</li>
+		<li>19. WordPress hooks used</li>
+		<li>20. Constants</li>
+		<li>21. Drop-in files</li>
+		<li>22. Security model</li>
+		<li>23. WordPress.org compliance</li>
+		<li>24. Building the release and these documents</li>
+		<li class="toc-part">Part 3. Version 1.1 specification</li>
+		<li>25. Summary and status</li>
+		<li>26. Roles and permissions</li>
+		<li>27. Toolbar control</li>
+		<li>28. Admin templates</li>
+		<li>29. Dashboard widgets</li>
+		<li>30. Login screen text and links</li>
+		<li>31. Where the new settings live</li>
+		<li>32. Technical approach and build order</li>
+	</ol>
+</section>
+
+<!-- ============================================================ -->
+<section class="part">
+	<p class="part-title">Part 1</p>
+	<h2>1. What Admin Studio does</h2>
+	<p>WordPress shows many screens and emails in its own default style: the login page, password reset emails, the "critical error" page, the "briefly unavailable" screen during updates, and the "Thank you for creating with WordPress" credit in the dashboard. Admin Studio restyles all of them to match a brand, from one place.</p>
+	<p>It starts from the active theme. Colours and fonts are read from <code>theme.json</code> on block themes and from theme settings on classic themes. The logo comes from the theme logo, and the favicon is the site icon. Change any value once in the brand kit and every screen follows, or override it for one area only.</p>
+	<p>Each feature can be switched off. A switched-off feature loads no code.</p>
+
+	<h2>2. Installing and first steps</h2>
+	<ol>
+		<li>Upload the <code>admin-studio</code> folder to <code>wp-content/plugins/</code>, or install the zip from Plugins → Add New → Upload Plugin.</li>
+		<li>Activate the plugin. The login page, emails and error pages immediately take on your theme's colours and fonts.</li>
+		<li>Open <strong>Appearance → Customize → Admin Studio</strong> to adjust the brand kit and design the login page, emails and system pages with a live preview.</li>
+		<li>Open <strong>Settings → Admin Studio</strong> to edit email wording, admin branding, login protection, coming soon mode and tools.</li>
+	</ol>
+
+	<h2>3. Where each setting lives</h2>
+	<p>Anything visual that can be previewed lives in the Customizer. Everything else lives on the settings page.</p>
+	<table>
+		<tr><th>Customizer (Appearance → Customize → Admin Studio)</th><th>Settings page (Settings → Admin Studio)</th></tr>
+		<tr><td>Brand kit</td><td>Overview: switch features on or off; uninstall option</td></tr>
+		<tr><td>Login page: layout, background, logo, form, button, text, custom CSS</td><td>Emails: subject, heading, body and button of each email; preview; test send</td></tr>
+		<tr><td>Emails: design (colours, logo, font, width)</td><td>Tab and page details</td></tr>
+		<tr><td>System pages: design and wording of each page</td><td>Admin branding</td></tr>
+		<tr><td>Coming soon page design</td><td>Login protection; Coming soon access rules; Tools</td></tr>
+	</table>
+	<figure>
+		<img src="images/settings-overview.png" alt="The Overview tab of the settings page">
+		<figcaption>Settings → Admin Studio, Overview tab.</figcaption>
+	</figure>
+
+	<h2>4. Brand kit</h2>
+	<p>The brand kit holds the values every area uses: logo, logo width, eight colours (primary, secondary, text, background, surface, border, success, error), a heading font, a body font, corner radius and button style (filled, outline or pill).</p>
+	<h3>How values are chosen</h3>
+	<ol>
+		<li>A value you set in the brand kit always wins.</li>
+		<li>Otherwise the theme's value is used. On block themes this is the theme.json palette, the button colour and the heading and body fonts. On classic themes it is common theme settings such as the primary or accent colour and the background colour.</li>
+		<li>If the theme has no value, a neutral built-in palette is used.</li>
+	</ol>
+	<p>Each colour control shows the colour detected from the theme. Clear a colour to follow the theme again. Surface and border colours are derived from the background and text when not set, so dark themes get dark cards automatically.</p>
+	<h3>Fonts</h3>
+	<p>Choose "Same as theme", a system font, or one of 16 Google fonts. A Google font is downloaded to your site once, when you publish, and then served from your uploads folder. Visitors never load it from Google.</p>
+
+	<h2>5. Login page</h2>
+	<p>The design applies to every screen on the login page: log in, register, lost password, reset password, the two-factor code screen, and the "session expired" login that appears inside the dashboard.</p>
+	<figure class="half">
+		<img src="images/login-split.png" alt="Split screen login layout">
+		<figcaption>Split screen layout using the Twenty Twenty-Five theme's colours and font.</figcaption>
+	</figure>
+	<h3>Layouts</h3>
+	<table>
+		<tr><th>Layout</th><th>Description</th></tr>
+		<tr><td>Centered card</td><td>The form in a card in the middle of the page.</td></tr>
+		<tr><td>Split screen</td><td>An image fills one half of the screen; the form sits in the other half. Choose which side the image is on. On phones the image is hidden.</td></tr>
+		<tr><td>Full background</td><td>A full-page background with a translucent, blurred form card on top.</td></tr>
+		<tr><td>Minimal</td><td>WordPress's own layout, restyled with your colours and fonts.</td></tr>
+	</table>
+	<h3>Options</h3>
+	<ul>
+		<li><strong>Background:</strong> colour, gradient (two colours and an angle), image or video, with an overlay colour and strength. Videos are muted, looped and paused for visitors who prefer reduced motion.</li>
+		<li><strong>Logo:</strong> image (defaults to the brand logo), width, link (defaults to your home page instead of wordpress.org), text for screen readers, or hide it. With no logo image, the site title is shown as text.</li>
+		<li><strong>Form and button:</strong> width, padding, corner radius, background, shadow, field style (boxed, underline or filled), hidden labels with placeholders, text and link colours, button colour, button text colour (picked automatically for contrast when empty) and button corner radius.</li>
+		<li><strong>Text and links:</strong> a message above the form, footer text, and options to hide "Lost your password?", "Go to site", the language switcher and the privacy policy link.</li>
+		<li><strong>Custom CSS</strong> for anything else.</li>
+	</ul>
+	<p>The Customizer warns when the text and background colours you pick have a contrast ratio below 4.5:1.</p>
+	<figure>
+		<img src="images/customizer-login.png" alt="Login page settings in the Customizer">
+		<figcaption>Designing the login page in the Customizer. The preview updates as you change settings.</figcaption>
+	</figure>
+
+	<h2>6. Emails</h2>
+	<p>Admin Studio wraps 15 core WordPress emails in a branded HTML layout and lets you rewrite each one.</p>
+	<table>
+		<tr><th>Sent to users</th><th>Sent to administrators</th></tr>
+		<tr><td>New account / welcome</td><td>New user registered</td></tr>
+		<tr><td>Password reset request</td><td>User changed their password</td></tr>
+		<tr><td>Password changed</td><td>New comment</td></tr>
+		<tr><td>Email address change confirmation</td><td>Comment awaiting moderation</td></tr>
+		<tr><td>Email address changed notice</td><td>Site admin email change confirmation</td></tr>
+		<tr><td>Personal data export ready</td><td>Site admin email changed notice</td></tr>
+		<tr><td>Personal data erased</td><td>Automatic update results; Recovery mode (site error)</td></tr>
+	</table>
+	<h3>Editing an email</h3>
+	<p>Go to Settings → Admin Studio → Emails and pick an email from the list. Each email has an on/off switch, subject, heading, body and, where the email has a main link, button text. The body editor has a Visual tab and a Code (HTML) tab. Click a tag to insert it. Tags in braces, such as <code>{user_name}</code>, <code>{reset_link}</code> and <code>{site_name}</code>, are replaced when the email is sent. Unknown tags are left as they are, so nothing disappears silently.</p>
+	<p>Every email also gets an automatic plain-text version for mail apps that do not show HTML. "Preview saved version" opens the email in your browser, "Send test email" sends it to any address, and "Restore default text" brings back the original wording.</p>
+	<figure>
+		<img src="images/settings-emails.png" alt="Editing an email template">
+		<figcaption>Editing the "New account" email.</figcaption>
+	</figure>
+	<h3>Design</h3>
+	<p>Colours, logo, font, content width, corner radius and footer text are set in the Customizer under "Emails: design", with a live preview of any email. The layout uses tables and inline styles so it displays correctly in Gmail, Outlook and Apple Mail.</p>
+	<figure class="half">
+		<img src="images/email-preview.png" alt="Comment moderation email preview">
+		<figcaption>The "Comment awaiting moderation" email.</figcaption>
+	</figure>
+
+	<h2>7. Error and system pages</h2>
+	<table>
+		<tr><th>Page</th><th>When WordPress shows it</th><th>How Admin Studio handles it</th></tr>
+		<tr><td>Critical error</td><td>A plugin or theme causes a fatal PHP error.</td><td>Writes <code>wp-content/php-error.php</code>. Returns status 500. API and AJAX requests get a JSON error instead.</td></tr>
+		<tr><td>Database connection error</td><td>WordPress cannot reach its database.</td><td>Writes <code>wp-content/db-error.php</code> with a static copy of the design, because the database is unavailable. Status 500 with Retry-After.</td></tr>
+		<tr><td>Update maintenance</td><td>For a few seconds while updates install.</td><td>Writes <code>wp-content/maintenance.php</code>. Status 503 with Retry-After.</td></tr>
+		<tr><td>Notice screens</td><td>Messages such as "Sorry, you are not allowed to access this page".</td><td>Replaces WordPress's notice screen live. The original message is kept.</td></tr>
+		<tr><td>Page not found (404)</td><td>A missing page. Off by default so your theme keeps its own.</td><td>Replaces the theme's 404 template, with an optional search box.</td></tr>
+	</table>
+	<p>All pages share a design (background, card, text and button colours, logo, optional illustration) set in the Customizer, and each has its own title and message.</p>
+	<figure>
+		<img src="images/pages-maintenance-notice-404.png" alt="Update maintenance, notice and 404 pages">
+		<figcaption>Update maintenance, a permission notice and the 404 page.</figcaption>
+	</figure>
+	<div class="note">
+		<p><strong>Safe with other plugins and hosts.</strong> Admin Studio never overwrites or deletes one of these files unless it wrote it. Each file it writes carries an "Admin Studio drop-in" line. If another plugin or your host already uses the file, the Tools tab says so and leaves it alone. Admin Studio removes its own files when you deactivate it.</p>
+	</div>
+
+	<h2>8. Tab and page details</h2>
+	<ul>
+		<li><strong>Browser tab titles</strong> for admin and login screens, using <code>{page}</code> and <code>{site_name}</code>. The default drops WordPress's "— WordPress" ending.</li>
+		<li><strong>Favicon</strong> on login, admin and system pages. Uses the site icon from Settings → General, or the brand logo if there is none.</li>
+		<li><strong>Address bar colour</strong> on mobile browsers, from the brand primary colour.</li>
+		<li><strong>WordPress traces:</strong> remove the generator tag, the WordPress version on core asset URLs, the RSD and Windows Live Writer links, and point the login logo at your site.</li>
+	</ul>
+
+	<h2>9. Admin branding</h2>
+	<ul>
+		<li><strong>Admin bar:</strong> keep, replace or remove the WordPress logo menu; choose your own image and link. Optionally show just the user's name instead of "Howdy, Name".</li>
+		<li><strong>Footer credit:</strong> keep, replace or remove "Thank you for creating with WordPress" and the version number. Custom text supports basic HTML and <code>{site_name}</code>, <code>{site_url}</code> and <code>{year}</code>.</li>
+		<li><strong>Dashboard:</strong> hide the Welcome panel, Activity, At a Glance, Quick Draft, WordPress Events and News, and Site Health Status; add your own welcome panel with a title, text and button; remove the Help and Screen Options tabs.</li>
+		<li><strong>Colour scheme:</strong> adds a "Brand" admin colour scheme built from the brand kit, which users pick on their profile. It can be the default for new users. When the brand primary colour would disappear against the menu, the scheme uses the secondary colour for the current item instead.</li>
+	</ul>
+	<figure>
+		<img src="images/admin-dashboard-branding.png" alt="Branded dashboard">
+		<figcaption>Brand colour scheme, custom welcome panel and hidden widgets.</figcaption>
+	</figure>
+
+	<h2>10. Login protection</h2>
+	<p>Switch on any of the four features under Settings → Admin Studio → Login protection.</p>
+	<h3>Custom login URL</h3>
+	<p>Moves the login page to an address such as <code>/team-login</code>. Logged-out visitors who open <code>wp-login.php</code> or <code>/wp-admin</code> see a "page not found" page, are sent to the home page, or are sent to an address you choose. Every login, logout, registration and password link WordPress creates, including links in emails, uses the new address. The words "login", "admin", "dashboard" and WordPress folder names cannot be used.</p>
+	<h3>Limit login attempts</h3>
+	<p>After a set number of failed logins within a time window (default 5 in 15 minutes), the visitor's IP address is locked out for a set time (default 30 minutes). The login error shows how many attempts are left. IP addresses and IPv4 ranges on the allow list are never locked out. Turn on "behind a proxy" only if every request passes through Cloudflare or another proxy. The Login protection tab lists recent lockouts with an Unlock button.</p>
+	<h3>Honeypot</h3>
+	<p>Adds a hidden field to the login, registration and lost password forms. People never see it; bots that fill in every field are rejected.</p>
+	<h3>Two-factor authentication</h3>
+	<p>When switched on, each user can protect their account from their profile (Users → Profile):</p>
+	<ol>
+		<li>Click <strong>Set up an authenticator app</strong> and scan the QR code with an app such as Google Authenticator, Microsoft Authenticator, 1Password or Authy. Or click <strong>Use email codes instead</strong>.</li>
+		<li>Enter the 6-digit code to confirm.</li>
+		<li>Save the 10 backup codes shown. Each works once.</li>
+	</ol>
+	<figure>
+		<img src="images/profile-2fa-setup.png" alt="Setting up two-factor on the profile screen">
+		<figcaption>Setting up an authenticator app.</figcaption>
+	</figure>
+	<p>After entering their password, users see a second screen asking for a code. They can ask for an email code instead or enter a backup code. Five wrong codes end the attempt, and wrong codes count towards the login attempt limit.</p>
+	<figure class="half">
+		<img src="images/login-2fa.png" alt="Two-factor code screen">
+		<figcaption>The code screen uses the login page design.</figcaption>
+	</figure>
+	<p>Administrators can require two-factor for chosen roles, with a grace period in days. Users in those roles see a reminder, and once the grace period ends they are sent to their profile until they set it up. Administrators can reset another user's two-factor from that user's profile.</p>
+
+	<h2>11. Coming soon and maintenance mode</h2>
+	<p>Turn the mode on under Settings → Admin Studio → Coming soon, and design the page in the Customizer (headline, message, countdown, logo, background colour or image, and text colour).</p>
+	<ul>
+		<li><strong>Coming soon</strong> is for a site that has not launched. Visitors see the page with status 200 and search engines are asked not to index it.</li>
+		<li><strong>Maintenance</strong> is for a site that is temporarily down. The page is sent with status 503 and Retry-After, which tells search engines to come back later.</li>
+	</ul>
+	<p>Administrators and the roles you choose see the real site. You can list paths that stay open (such as <code>/contact</code>) and create a bypass link to share with clients; anyone who opens it sees the real site for a week. While the mode is on, the admin bar shows a reminder.</p>
+	<figure>
+		<img src="images/coming-soon.png" alt="Coming soon page">
+		<figcaption>Coming soon page with a background image and countdown.</figcaption>
+	</figure>
+
+	<h2>12. Tools</h2>
+	<ul>
+		<li><strong>Export</strong> downloads all Admin Studio settings as a JSON file.</li>
+		<li><strong>Import</strong> replaces the settings with an exported file. Each value is checked and cleaned on import. Image addresses still point to the site they came from.</li>
+		<li><strong>Reset</strong> restores the defaults for one section or for everything, after a confirmation.</li>
+		<li><strong>Status</strong> shows the state of each drop-in file, whether <code>wp-content</code> is writable, the colours detected from your theme, and any active plugins that do the same job as an Admin Studio feature.</li>
+	</ul>
+
+	<h2>13. Troubleshooting</h2>
+	<h4>I moved the login page and forgot the address.</h4>
+	<p>Add <code>define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );</code> to <code>wp-config.php</code>, log in at <code>/wp-login.php</code>, check the address on the Login protection tab, then remove the line.</p>
+	<h4>I lost my phone and my backup codes.</h4>
+	<p>Ask another administrator to tick "Reset two-factor for this user" on your profile. If you are the only administrator, add <code>define( 'ADMINSTUDIO_DISABLE_2FA', true );</code> to <code>wp-config.php</code>, sign in, set two-factor up again, and remove the line.</p>
+	<h4>Test emails do not arrive.</h4>
+	<p>Admin Studio only changes how emails look; delivery goes through WordPress's <code>wp_mail()</code>. Many hosts do not send mail reliably. An SMTP plugin usually fixes this, and Admin Studio's designs keep working with it.</p>
+	<h4>The Tools tab says a drop-in is used by another plugin.</h4>
+	<p>Another plugin or your host already provides that page. Admin Studio leaves it in place. Remove the other file if you want Admin Studio's version, then save any setting.</p>
+	<h4>A Google font does not show.</h4>
+	<p>The font is downloaded when you publish in the Customizer. If your server cannot reach Google Fonts, a system font is used instead.</p>
+
+	<h2>14. Privacy and external services</h2>
+	<p>Admin Studio makes no external requests and tracks nothing, with one exception: when an administrator chooses a Google font and publishes, the server downloads that font once from fonts.googleapis.com and fonts.gstatic.com. The request contains only the font name and the server's IP address. The files are then served from the site's own uploads folder. Google's <a href="https://developers.google.com/fonts/terms">terms</a> and <a href="https://policies.google.com/privacy">privacy policy</a> apply to that request.</p>
+	<p>Two-factor secrets, backup code hashes and lockout records are stored in your own database. Lockout records hold the IP address and the username that was tried.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="part">
+	<p class="part-title">Part 2</p>
+	<h2>15. Requirements and compatibility</h2>
+	<dl class="kv">
+		<dt>WordPress</dt><dd>6.4 or later; tested with 7.1</dd>
+		<dt>PHP</dt><dd>7.4 or later; checked with PHPCompatibility for 7.4+</dd>
+		<dt>Themes</dt><dd>Block themes (theme.json) and classic themes</dd>
+		<dt>Multisite</dt><dd>Works per site. Network-wide settings are planned for version 2.</dd>
+		<dt>Build step</dt><dd>None. Plain PHP, CSS and JavaScript.</dd>
+		<dt>Text domain</dt><dd><code>admin-studio</code>; translation template in <code>languages/admin-studio.pot</code></dd>
+	</dl>
+
+	<h2>16. File structure</h2>
+	<table>
+		<tr><th>Path</th><th>Contents</th></tr>
+		<tr><td><code>admin-studio.php</code></td><td>Plugin header, constants, autoloader, activation hooks</td></tr>
+		<tr><td><code>uninstall.php</code></td><td>Removes data when the owner opted in</td></tr>
+		<tr><td><code>includes/class-plugin.php</code></td><td>Module registry and save side effects</td></tr>
+		<tr><td><code>includes/class-settings.php</code></td><td>Field schema, storage and sanitizing</td></tr>
+		<tr><td><code>includes/class-defaults.php</code></td><td>Translatable default text</td></tr>
+		<tr><td><code>includes/class-brand-kit.php</code>, <code>class-color.php</code>, <code>class-fonts.php</code></td><td>Theme detection, colour maths, font hosting</td></tr>
+		<tr><td><code>includes/class-system-page.php</code>, <code>class-dropins.php</code></td><td>Standalone pages and drop-in files</td></tr>
+		<tr><td><code>includes/class-preview.php</code>, <code>includes/customizer/</code></td><td>Customizer panel and preview routing</td></tr>
+		<tr><td><code>includes/admin/</code></td><td>Settings page, tabs and field renderers</td></tr>
+		<tr><td><code>includes/modules/&lt;module&gt;/</code></td><td>login, emails, error-pages, tab-meta, admin-branding, security, maintenance</td></tr>
+		<tr><td><code>templates/notfound.php</code></td><td>404 template</td></tr>
+		<tr><td><code>assets/css</code>, <code>assets/js</code>, <code>assets/vendor</code></td><td>Styles, scripts, QR code library</td></tr>
+	</table>
+	<p>Classes use the <code>AdminStudio</code> namespace and are autoloaded: <code>AdminStudio\Modules\Error_Pages\Error_Pages</code> loads <code>includes/modules/error-pages/class-error-pages.php</code>.</p>
+
+	<h2>17. How settings are stored</h2>
+	<p>All settings are in one option, <code>adminstudio_settings</code>, as a nested array. Code addresses a setting by a dot path such as <code>login.layout</code>. The Customizer stores into the same option through setting ids such as <code>adminstudio_settings[login][layout]</code>, so both screens share one source of truth.</p>
+	<p><code>Settings::fields()</code> defines every setting with a type (bool, int, color, url, select, multi, roles, html, css, slug, lines, datetime or text), a default and any limits. Every save from the Customizer, the settings page or an import runs through <code>Settings::sanitize()</code> for that type. Translatable defaults are resolved only after <code>init</code>.</p>
+
+	<h2>18. Data the plugin stores</h2>
+	<table>
+		<tr><th>Where</th><th>Name</th><th>Purpose</th></tr>
+		<tr><td>Option (autoloaded)</td><td><code>adminstudio_settings</code></td><td>All settings</td></tr>
+		<tr><td>Option</td><td><code>adminstudio_version</code>, <code>adminstudio_fonts</code>, <code>adminstudio_lockouts</code></td><td>Installed version; downloaded font CSS; lockout log (last 100)</td></tr>
+		<tr><td>Transients</td><td><code>adminstudio_count_*</code>, <code>adminstudio_lock_*</code></td><td>Failed attempt counters and lockouts per IP hash</td></tr>
+		<tr><td>User meta</td><td><code>adminstudio_2fa_*</code></td><td>Two-factor method, secret, backup code hashes, last used time slice, pending login and email code</td></tr>
+		<tr><td>Files</td><td><code>wp-content/php-error.php</code>, <code>db-error.php</code>, <code>maintenance.php</code></td><td>Drop-in pages</td></tr>
+		<tr><td>Files</td><td><code>wp-content/uploads/admin-studio/fonts/</code></td><td>Downloaded Google fonts</td></tr>
+		<tr><td>Cookie</td><td><code>adminstudio_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>
+	</table>
+
+	<h2>19. WordPress hooks used</h2>
+	<table>
+		<tr><th>Module</th><th>Main hooks</th></tr>
+		<tr><td>Login page</td><td><code>login_enqueue_scripts</code>, <code>login_head</code>, <code>login_headerurl</code>, <code>login_headertext</code>, <code>login_body_class</code>, <code>login_message</code>, <code>login_footer</code>, <code>lost_password_html_link</code>, <code>login_site_html_link</code>, <code>login_display_language_dropdown</code>, <code>the_privacy_policy_link</code></td></tr>
+		<tr><td>Emails</td><td><code>wp_new_user_notification_email</code>, <code>_admin</code>, <code>retrieve_password_notification_email</code>, <code>password_change_email</code>, <code>email_change_email</code>, <code>new_user_email_content</code>, <code>new_admin_email_content</code>, <code>site_admin_email_change_email</code>, <code>wp_password_change_notification_email</code>, <code>comment_notification_text</code>, <code>comment_moderation_text</code>, <code>wp_privacy_personal_data_email_content</code>, <code>user_erasure_fulfillment_email_content</code>, <code>recovery_mode_email</code>, <code>auto_core_update_email</code>, <code>auto_plugin_theme_update_email</code>, then <code>wp_mail</code> and <code>phpmailer_init</code></td></tr>
+		<tr><td>Error pages</td><td><code>wp_die_handler</code>, <code>template_include</code></td></tr>
+		<tr><td>Tab and page details</td><td><code>admin_title</code>, <code>login_title</code>, <code>admin_head</code>, <code>wp_head</code>, <code>style_loader_src</code>, <code>script_loader_src</code></td></tr>
+		<tr><td>Admin branding</td><td><code>admin_bar_menu</code>, <code>admin_footer_text</code>, <code>update_footer</code>, <code>wp_dashboard_setup</code>, <code>admin_init</code> (colour scheme), <code>user_register</code></td></tr>
+		<tr><td>Login protection</td><td><code>plugins_loaded</code>, <code>wp_loaded</code>, <code>site_url</code>, <code>network_site_url</code>, <code>wp_redirect</code>, <code>authenticate</code>, <code>wp_login</code>, <code>wp_login_failed</code>, <code>set_auth_cookie</code>, <code>send_auth_cookies</code>, <code>login_form_adminstudio_2fa</code>, profile and AJAX hooks</td></tr>
+		<tr><td>Coming soon</td><td><code>template_redirect</code>, <code>admin_bar_menu</code></td></tr>
+	</table>
+
+	<h2>20. Constants</h2>
+	<table>
+		<tr><th>Constant</th><th>Effect when set to true in wp-config.php</th></tr>
+		<tr><td><code>ADMINSTUDIO_DISABLE_LOGIN_URL</code></td><td>Turns off the custom login URL; wp-login.php works again</td></tr>
+		<tr><td><code>ADMINSTUDIO_DISABLE_2FA</code></td><td>Turns off two-factor checks at login</td></tr>
+	</table>
+	<p>Internal constants: <code>ADMINSTUDIO_VERSION</code>, <code>ADMINSTUDIO_FILE</code>, <code>ADMINSTUDIO_DIR</code>, <code>ADMINSTUDIO_URL</code>.</p>
+
+	<h2>21. Drop-in files</h2>
+	<p>Drop-ins are regenerated at the end of any request that saves settings, and on activation. Each file contains a header with the signature "Admin Studio drop-in", sets the status code and headers, and prints a static copy of the page stored as a PHP string literal. Files are written through <code>WP_Filesystem</code> only when WordPress can write directly to disk. A file without the signature is never touched. All plugin-written drop-ins are deleted on deactivation.</p>
+
+	<h2>22. Security model</h2>
+	<ul>
+		<li>Every settings form and AJAX action checks a nonce and the <code>manage_options</code> capability (two-factor actions check the user's own session).</li>
+		<li>Every value is sanitized on save by its field type and escaped when printed. HTML fields are filtered with <code>wp_kses_post()</code>.</li>
+		<li>Two-factor stops the login cookie from being sent after the password step, destroys the session that was created, and only sets the cookie after a valid code. Login state tokens expire after 10 minutes. Authenticator codes cannot be reused. Backup codes are stored hashed.</li>
+		<li>The attempt limiter trusts proxy headers only when an administrator turns that on.</li>
+		<li>The custom login URL serves the real wp-login.php at the new address, so all core login behaviour is kept.</li>
+	</ul>
+
+	<h2>23. WordPress.org compliance</h2>
+	<p>The release copy is checked with the official Plugin Check tool and with PHPCS (WordPress Coding Standards 3 and PHPCompatibility for PHP 7.4+). Current result: <span class="status">No errors, no warnings</span></p>
+	<table>
+		<tr><th>Rule</th><th>How Admin Studio meets it</th></tr>
+		<tr><td>GPL compatible</td><td>GPLv2 or later; the QR code library is MIT</td></tr>
+		<tr><td>No restricted terms in name or slug</td><td>Renamed from "Advanced WP" to "Admin Studio" because "WP" is restricted</td></tr>
+		<tr><td>No trialware, no locked features</td><td>Everything is included</td></tr>
+		<tr><td>No tracking or calling home</td><td>Only the opt-in Google Fonts download, documented in the readme with terms and privacy links</td></tr>
+		<tr><td>No front-end credit links</td><td>None. The author credit appears only on the plugin's settings page.</td></tr>
+		<tr><td>Don't hijack the dashboard</td><td>The only site-wide notice is the two-factor reminder for required roles, which disappears once set up</td></tr>
+		<tr><td>Human-readable code; no bundled core libraries</td><td>No minified or obfuscated code; uses WordPress's jQuery and PHPMailer</td></tr>
+		<tr><td>Escaping, sanitizing, nonces, no HEREDOC</td><td>Checked by PHPCS and by review; output is escaped where it is printed</td></tr>
+		<tr><td>Enqueue API for scripts and styles</td><td>All scripts and styles are enqueued or printed through core functions</td></tr>
+		<tr><td>Readme standard</td><td>Stable tag matches the version; tested up to 7.1; five tags; External services and Third-party libraries sections</td></tr>
+	</table>
+	<div class="note warn">
+		<p><strong>Before submitting:</strong> set <code>Contributors:</code> in readme.txt to your WordPress.org username. It currently says "layothedeveloper", which is a guess.</p>
+	</div>
+
+	<h2>24. Building the release and these documents</h2>
+	<p>The release zip contains everything except the files listed in <code>.distignore</code> (also marked <code>export-ignore</code> in <code>.gitattributes</code>): development notes and the <code>docs</code> folder. The folder inside the zip must be named <code>admin-studio</code>.</p>
+	<p>This PDF is built from <code>docs/documentation.html</code> by <code>docs/build-pdf.js</code>, which prints the page with the Chromium browser that Playwright provides: <code>node docs/build-pdf.js</code>. The documentation is updated in the same change as every feature change.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="part">
+	<p class="part-title">Part 3</p>
+	<h2>25. Summary and status</h2>
+	<div class="note spec">
+		<p><strong>Status: proposed, waiting for approval.</strong> Nothing in Part 3 is built yet. It records the scope agreed in our questions so it can be approved before work starts. Once built, each section moves into Part 1 and Part 2.</p>
+	</div>
+	<p>Version 1.1 extends Admin Studio from branding into running the dashboard: who can do what, how the dashboard looks for each person, and what they see first. It adds five areas:</p>
+	<ol>
+		<li>Roles and permissions</li>
+		<li>Toolbar control</li>
+		<li>Admin templates (dashboard look), modelled on the portfolio site's admin panel</li>
+		<li>Dashboard widgets</li>
+		<li>Login screen text and link layout</li>
+	</ol>
+
+	<h2>26. Roles and permissions</h2>
+	<h3>Role manager</h3>
+	<ul>
+		<li>Create a role from scratch or by cloning an existing one (for example "Shop Manager" from Editor).</li>
+		<li>Rename any role's display name. Delete custom roles; if users have the role, choose which role they move to first.</li>
+		<li>Show the number of users in each role, with a link to the filtered user list.</li>
+	</ul>
+	<h3>Capability editor</h3>
+	<ul>
+		<li>Edit the capabilities of any role, including core roles such as Editor and Author.</li>
+		<li>Capabilities are grouped: Posts, Pages, Media, Comments, Users, Appearance, Plugins, Tools, Settings, and one group per plugin that registers its own (for example WooCommerce), detected automatically. Unknown capabilities go in "Other".</li>
+		<li>Each capability has a plain-language label and description, a search box, and "select all" per group.</li>
+	</ul>
+	<h3>Per-user permissions</h3>
+	<ul>
+		<li>Give a user more than one role.</li>
+		<li>Grant extra capabilities to one user, or deny specific capabilities that their role would otherwise give. Denials win.</li>
+		<li>Shown as an extra section on the user's profile, for users who can edit users.</li>
+	</ul>
+	<h3>Menu access per role</h3>
+	<ul>
+		<li>Choose which dashboard menu and submenu items each role sees, including items added by other plugins.</li>
+		<li>Hidden screens are also blocked when opened directly by URL; the visitor sees the branded notice screen.</li>
+	</ul>
+	<h3>Login redirect and dashboard access</h3>
+	<ul>
+		<li>Send each role to a chosen page after logging in (for example Customers to My Account, Editors to Posts).</li>
+		<li>Keep chosen roles out of the dashboard entirely and send them to the front end. AJAX and REST requests keep working.</li>
+	</ul>
+	<h3>Safety</h3>
+	<ul>
+		<li>The Administrator role is locked: its capabilities cannot be reduced and it cannot be deleted.</li>
+		<li>No change can remove your own ability to manage users or this plugin.</li>
+		<li>A copy of all roles is saved before each change. The last 20 copies can be restored, and "Restore WordPress default roles" resets core roles.</li>
+	</ul>
+	<h3>Audit log and export</h3>
+	<ul>
+		<li>A log records who changed which role, capability, user permission or menu rule, and when, with filters and a CSV download.</li>
+		<li>Roles, capabilities, per-user permissions and menu rules are included in the existing settings export and import.</li>
+	</ul>
+
+	<h2>27. Toolbar control</h2>
+	<ul>
+		<li>Hide the top toolbar on the front end per role, with per-user overrides on the profile screen.</li>
+		<li>Hide it inside the dashboard too. When it is hidden there, the account menu, notifications and "View site" move into the sidebar footer, as in the portfolio admin panel. This option requires an admin template other than "WordPress default".</li>
+		<li>Hide individual toolbar items instead of the whole bar: comments, "+ New", updates, search, customize, and items added by other plugins (detected automatically). Per role.</li>
+	</ul>
+
+	<h2>28. Admin templates</h2>
+	<p>Templates change the look of the whole dashboard: sidebar, top bar, page headers, cards and meta boxes, tables, forms, buttons and notices. The block editor's canvas and panels keep WordPress's own design, because they change often between WordPress versions.</p>
+	<h3>Templates in 1.1</h3>
+	<table>
+		<tr><th>Template</th><th>Look</th></tr>
+		<tr><td>Studio</td><td>Based on the portfolio site's admin panel: a soft tinted sidebar with section headings (Overview, Content, System), outline icons with labels, the active item as a filled accent pill with a soft glow, pill badges for counts, rounded cards with a soft floating shadow, and a sidebar footer.</td></tr>
+		<tr><td>Midnight</td><td>Dark sidebar and top bar, light content area, bright accent.</td></tr>
+		<tr><td>Minimal</td><td>White sidebar, thin even dividers, no shadows; the accent appears only on text and icons.</td></tr>
+		<tr><td>Compact</td><td>An icon-only rail that expands on hover or focus, and denser tables, for power users and small screens.</td></tr>
+	</table>
+	<h3>Colours and dark mode</h3>
+	<ul>
+		<li>Colours follow the brand kit by default, so the dashboard matches the site out of the box.</li>
+		<li>Each template has ready palettes (for example Cobalt, Forest, Plum and Graphite) and a custom option for accent, sidebar, background and text, with a contrast warning.</li>
+		<li>Every template has a dark version. Users choose light, dark or "follow my system" from a toggle in the sidebar footer.</li>
+	</ul>
+	<h3>Sidebar menu</h3>
+	<ul>
+		<li>Menu items are grouped into sections with headings. Admins can create sections and move items between them.</li>
+		<li>Rename, reorder (drag and drop, or keyboard) and choose an icon for each item from a bundled set of outline icons (Lucide, ISC licence). Plugin items keep their own icon, restyled to match.</li>
+		<li>One menu layout for the whole site; each role only sees the items it is allowed (section 26).</li>
+		<li>Sidebar footer: avatar and email, View site, Sign out, and the light/dark toggle.</li>
+	</ul>
+	<h3>Dashboard home</h3>
+	<p>Each template also styles the dashboard home: a greeting header with the user's name and the date, and widgets laid out as a card grid.</p>
+	<h3>Who gets which template</h3>
+	<ol>
+		<li>Site default for everyone.</li>
+		<li>Per role, overriding the default.</li>
+		<li>Per user, set by an administrator.</li>
+		<li>Users can choose from the templates allowed for their role on their profile, unless an administrator has locked their role or account.</li>
+	</ol>
+	<p>The most specific rule wins, in this order: user's own choice, administrator's per-user choice, role, site default.</p>
+	<h3>Trying a template</h3>
+	<p>"Try it on me" applies a template and colours to your own account only, so you can look around the real dashboard. "Apply to everyone" or "Apply to roles" then rolls it out in one click.</p>
+
+	<h2>29. Dashboard widgets</h2>
+	<ul>
+		<li><strong>Show or hide any widget per role</strong>, including widgets added by other plugins such as WooCommerce or Yoast, detected automatically. This replaces the current single "Hide widgets" list.</li>
+		<li><strong>Custom widgets,</strong> as many as needed, each with its own title and role visibility:
+			<ul>
+				<li>Rich text or HTML, with the same Visual/Code editor as emails.</li>
+				<li>Quick links: buttons to admin screens or any address, with icons.</li>
+				<li>Support card: contact details, a message and a button.</li>
+				<li>Video: an embedded video from a URL. The video loads from its provider (for example YouTube) only when someone views the dashboard; this is documented in the readme.</li>
+			</ul>
+		</li>
+		<li><strong>Built-in data widgets:</strong> recent sign-ups, content counts, recent comments, a site health summary, and "What's new", which lists the latest posts from a chosen category on your own site.</li>
+		<li><strong>Default layout for everyone:</strong> set the order, column and collapsed state of widgets for all users, with an option to stop users rearranging them.</li>
+		<li>The current welcome panel becomes one of the custom widgets; existing settings carry over.</li>
+	</ul>
+
+	<h2>30. Login screen text and links</h2>
+	<p>The aim is a login page that does not look like WordPress. Every word and the arrangement of the links under the form become editable, on the log in, register, lost password, reset password and two-factor screens.</p>
+	<h3>Link layout</h3>
+	<table>
+		<tr><th>Layout</th><th>Result</th></tr>
+		<tr><td>Stacked</td><td>WordPress's default: one link per line under the form.</td></tr>
+		<tr><td>Inline</td><td>Links side by side on one row, separated by a dot.</td></tr>
+		<tr><td>Split</td><td>One link on the left, one on the right.</td></tr>
+		<tr><td>Inside the card</td><td>Links move into the bottom of the form card.</td></tr>
+		<tr><td>Full-width buttons</td><td>Each link becomes a full-width secondary button.</td></tr>
+	</table>
+	<h3>Position of each link</h3>
+	<p>For each link ("Forgot password?", "Back to site", "Register", "Log in"), choose: next to the Password label (like most modern apps), above the main button, below the form, or hidden.</p>
+	<h3>Editable text</h3>
+	<ul>
+		<li>Link text, with the arrow in "← Go to site" removed by default.</li>
+		<li>Field labels and placeholders, "Remember Me", and button text (Log In, Get New Password, Save Password, Register).</li>
+		<li>The instruction message on each screen, for example the lost password instructions and the "check your email" confirmation.</li>
+		<li>A separate heading and message per screen.</li>
+		<li>Changes appear live in the Customizer preview, which gains a screen picker (log in, register, lost password, reset password, two-factor).</li>
+	</ul>
+
+	<h2>31. Where the new settings live</h2>
+	<table>
+		<tr><th>Feature</th><th>Location</th></tr>
+		<tr><td>Roles, capabilities, menu access, login redirect, dashboard access, audit log</td><td>Settings → Admin Studio → <strong>Roles &amp; permissions</strong> (new tab)</td></tr>
+		<tr><td>Per-user roles and permissions; per-user toolbar and template</td><td>The user's profile screen</td></tr>
+		<tr><td>Toolbar control</td><td><strong>Roles &amp; permissions</strong> tab, Toolbar section</td></tr>
+		<tr><td>Admin templates, colours, menu editor, assignment</td><td>Settings → Admin Studio → <strong>Dashboard look</strong> (new tab)</td></tr>
+		<tr><td>Dashboard widgets and default layout</td><td>Settings → Admin Studio → <strong>Dashboard widgets</strong> (new tab); replaces the widget options on Admin branding</td></tr>
+		<tr><td>Login text and link layout</td><td>Customizer → Admin Studio → <strong>Login: text and links</strong> (expanded)</td></tr>
+	</table>
+
+	<h2>32. Technical approach and build order</h2>
+	<ul>
+		<li>No build step, as in 1.0: plain PHP, CSS and JavaScript, using WordPress's bundled jQuery and core accessibility helpers. Drag and drop has a keyboard alternative.</li>
+		<li>Role changes use WordPress's own role API, so other plugins see them immediately. Per-user grants and denials use the <code>user_has_cap</code> filter. Role backups and the audit log are stored in options that are not autoloaded.</li>
+		<li>Admin templates are CSS files layered over core admin styles with brand variables; the sidebar markup is WordPress's own menu with added section headings, so plugin menu items keep working.</li>
+		<li>All new code follows the WordPress.org rules in section 23 and passes Plugin Check before each commit.</li>
+	</ul>
+	<h3>Build order</h3>
+	<ol>
+		<li>Login screen text and link layout</li>
+		<li>Roles and capability editor, with safety and backups</li>
+		<li>Per-user permissions, menu access, login redirect and dashboard access</li>
+		<li>Toolbar control</li>
+		<li>Admin templates: Studio first, then Midnight, Minimal and Compact</li>
+		<li>Menu editor and template assignment, including "Try it on me"</li>
+		<li>Dashboard widgets</li>
+		<li>Audit log, export and import, documentation and a full compliance pass</li>
+	</ol>
+	<p>Each step ends with tests on a real WordPress install, an updated version of this document, and a commit.</p>
+</section>
+
+</body>
+</html>
