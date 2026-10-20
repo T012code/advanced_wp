@@ -57,6 +57,7 @@ It starts from your theme. Colours and fonts are read from theme.json on block t
 = Login protection =
 
 * Custom login URL, with logged-out requests to wp-login.php and /wp-admin blocked.
+* Custom dashboard address: move /wp-admin to an address such as /office. Set up automatically on Apache and LiteSpeed, with ready-to-paste rules for Nginx, and switched on only after a test proves it works.
 * Limit failed login attempts per IP, with an allow list and a lockout log.
 * Honeypot field against bots.
 * Two-factor authentication with authenticator apps, email codes and backup codes. Require it for chosen roles.
@@ -89,6 +90,18 @@ Add this line to wp-config.php, above "That's all, stop editing!":
 `define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );`
 
 Log in at /wp-login.php, check the address under Settings → Admin Studio → Login protection, then remove the line.
+
+= I moved the dashboard and cannot reach it. What do I do? =
+
+Add this line to wp-config.php:
+
+`define( 'ADMINSTUDIO_DISABLE_ADMIN_URL', true );`
+
+The dashboard is back at /wp-admin straight away. Fix the setting under Settings → Admin Studio → Login protection, then remove the line. On Apache, deactivating Admin Studio also removes its .htaccess rules.
+
+= Does moving the dashboard hide that the site runs WordPress? =
+
+It hides the dashboard address, which stops most automated scans. WordPress's own scripts and styles still load from /wp-admin and /wp-includes, so it is one layer of protection, not a disguise.
 
 = I lost my phone and my backup codes. How do I sign in? =
 

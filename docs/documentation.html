@@ -89,6 +89,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 
 <!-- Cover -->
 <section class="cover">
+	<img src="../assets/images/logo.svg" width="96" height="96" alt="Admin Studio logo" style="margin-bottom:24px">
 	<p class="part-title">Documentation</p>
 	<h1>Admin Studio</h1>
 	<p class="lead">Rebrand the login page, system emails, error pages, browser tab details and the admin dashboard of a WordPress site, starting from the colours and fonts of its theme.</p>
@@ -131,7 +132,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li>21. Drop-in files</li>
 		<li>22. Security model</li>
 		<li>23. WordPress.org compliance</li>
-		<li>24. Building the release and these documents</li>
+		<li>24. Release, brand assets and these documents</li>
 		<li class="toc-part">Part 3. Version 1.1 specification</li>
 		<li>25. Summary and status</li>
 		<li>26. Roles and permissions</li>
@@ -287,6 +288,26 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p>After a set number of failed logins within a time window (default 5 in 15 minutes), the visitor's IP address is locked out for a set time (default 30 minutes). The login error shows how many attempts are left. IP addresses and IPv4 ranges on the allow list are never locked out. Turn on "behind a proxy" only if every request passes through Cloudflare or another proxy. The Login protection tab lists recent lockouts with an Unlock button.</p>
 	<h3>Honeypot</h3>
 	<p>Adds a hidden field to the login, registration and lost password forms. People never see it; bots that fill in every field are rejected.</p>
+	<h3>Custom dashboard address</h3>
+	<p>Moves the dashboard from <code>/wp-admin</code> to an address you choose, such as <code>/office</code>. It is set separately from the login address, and the two must differ.</p>
+	<ul>
+		<li>Logged-out visitors who open <code>/wp-admin</code> see a "page not found" page. When the custom login URL is also on, the new dashboard address shows "page not found" to logged-out visitors as well, so neither address gives away the other.</li>
+		<li>Logged-in users who open an old <code>/wp-admin</code> link, bookmark or plugin link are moved to the same screen at the new address. People already logged in when you switch move across without logging in again.</li>
+		<li>Front-end features keep working: <code>admin-ajax.php</code> and <code>admin-post.php</code> stay at their usual address.</li>
+	</ul>
+	<h4>How it is set up</h4>
+	<p>Because <code>wp-admin</code> is a real folder, the server has to send the new address to it.</p>
+	<ul>
+		<li><strong>Apache and LiteSpeed:</strong> Admin Studio adds two rules to the top of <code>.htaccess</code>, above WordPress's own rules, and keeps a copy of the original file. Deactivating the plugin removes the rules.</li>
+		<li><strong>Nginx and other servers:</strong> the settings page shows the exact lines to add. Your host can add them for you.</li>
+	</ul>
+	<p>After saving, Admin Studio requests a test page through the new address. The dashboard only moves once the test passes, so a missing rule never locks anyone out; until then it stays at <code>/wp-admin</code> and the settings page shows the rules, a "Test again" button and a link to the test page. Some servers cannot request their own pages. If the test page works in your browser but "Test again" fails, "Activate anyway" switches the address on.</p>
+	<figure>
+		<img src="images/settings-admin-url.png" alt="Custom dashboard address waiting for server rules">
+		<figcaption>Waiting for the server rules, with the lines to add and the test buttons.</figcaption>
+	</figure>
+	<p>This hides the dashboard address, which stops most automated scans. WordPress's own scripts and styles still load from <code>/wp-admin</code> and <code>/wp-includes</code>, so it is one layer of protection, not a disguise. It is not available on multisite networks.</p>
+
 	<h3>Two-factor authentication</h3>
 	<p>When switched on, each user can protect their account from their profile (Users → Profile):</p>
 	<ol>
@@ -328,6 +349,8 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h2>13. Troubleshooting</h2>
 	<h4>I moved the login page and forgot the address.</h4>
 	<p>Add <code>define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );</code> to <code>wp-config.php</code>, log in at <code>/wp-login.php</code>, check the address on the Login protection tab, then remove the line.</p>
+	<h4>I moved the dashboard and cannot reach it.</h4>
+	<p>Add <code>define( 'ADMINSTUDIO_DISABLE_ADMIN_URL', true );</code> to <code>wp-config.php</code>. The dashboard is back at <code>/wp-admin</code> straight away. Fix the setting on the Login protection tab, then remove the line.</p>
 	<h4>I lost my phone and my backup codes.</h4>
 	<p>Ask another administrator to tick "Reset two-factor for this user" on your profile. If you are the only administrator, add <code>define( 'ADMINSTUDIO_DISABLE_2FA', true );</code> to <code>wp-config.php</code>, sign in, set two-factor up again, and remove the line.</p>
 	<h4>Test emails do not arrive.</h4>
@@ -386,7 +409,10 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>User meta</td><td><code>adminstudio_2fa_*</code></td><td>Two-factor method, secret, backup code hashes, last used time slice, pending login and email code</td></tr>
 		<tr><td>Files</td><td><code>wp-content/php-error.php</code>, <code>db-error.php</code>, <code>maintenance.php</code></td><td>Drop-in pages</td></tr>
 		<tr><td>Files</td><td><code>wp-content/uploads/admin-studio/fonts/</code></td><td>Downloaded Google fonts</td></tr>
+		<tr><td>Option</td><td><code>adminstudio_admin_url</code>, <code>adminstudio_htaccess_backup</code>, <code>adminstudio_reapply_admin_url</code></td><td>Which dashboard address passed its test; the original .htaccess; a flag to re-test after activation</td></tr>
+		<tr><td>Files</td><td><code>.htaccess</code> block between <code># BEGIN Admin Studio</code> and <code># END Admin Studio</code></td><td>Rewrite rules for the custom dashboard address (Apache and LiteSpeed only)</td></tr>
 		<tr><td>Cookie</td><td><code>adminstudio_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>
+		<tr><td>Cookie</td><td>WordPress's dashboard login cookie, at the new address's path</td><td>A copy of the cookie WordPress scopes to <code>/wp-admin</code>, so the browser sends it to the custom dashboard address</td></tr>
 	</table>
 
 	<h2>19. WordPress hooks used</h2>
@@ -397,7 +423,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Error pages</td><td><code>wp_die_handler</code>, <code>template_include</code></td></tr>
 		<tr><td>Tab and page details</td><td><code>admin_title</code>, <code>login_title</code>, <code>admin_head</code>, <code>wp_head</code>, <code>style_loader_src</code>, <code>script_loader_src</code></td></tr>
 		<tr><td>Admin branding</td><td><code>admin_bar_menu</code>, <code>admin_footer_text</code>, <code>update_footer</code>, <code>wp_dashboard_setup</code>, <code>admin_init</code> (colour scheme), <code>user_register</code></td></tr>
-		<tr><td>Login protection</td><td><code>plugins_loaded</code>, <code>wp_loaded</code>, <code>site_url</code>, <code>network_site_url</code>, <code>wp_redirect</code>, <code>authenticate</code>, <code>wp_login</code>, <code>wp_login_failed</code>, <code>set_auth_cookie</code>, <code>send_auth_cookies</code>, <code>login_form_adminstudio_2fa</code>, profile and AJAX hooks</td></tr>
+		<tr><td>Login protection</td><td><code>plugins_loaded</code>, <code>wp_loaded</code>, <code>site_url</code>, <code>network_site_url</code>, <code>wp_redirect</code>, <code>authenticate</code>, <code>wp_login</code>, <code>wp_login_failed</code>, <code>set_auth_cookie</code>, <code>send_auth_cookies</code>, <code>login_form_adminstudio_2fa</code>, profile and AJAX hooks; for the dashboard address <code>admin_url</code>, <code>site_url</code>, <code>wp_redirect</code>, <code>set_auth_cookie</code>, <code>clear_auth_cookie</code> and the <code>adminstudio_ping</code> AJAX action</td></tr>
 		<tr><td>Coming soon</td><td><code>template_redirect</code>, <code>admin_bar_menu</code></td></tr>
 	</table>
 
@@ -406,6 +432,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><th>Constant</th><th>Effect when set to true in wp-config.php</th></tr>
 		<tr><td><code>ADMINSTUDIO_DISABLE_LOGIN_URL</code></td><td>Turns off the custom login URL; wp-login.php works again</td></tr>
 		<tr><td><code>ADMINSTUDIO_DISABLE_2FA</code></td><td>Turns off two-factor checks at login</td></tr>
+		<tr><td><code>ADMINSTUDIO_DISABLE_ADMIN_URL</code></td><td>Turns off the custom dashboard address; /wp-admin works again</td></tr>
 	</table>
 	<p>Internal constants: <code>ADMINSTUDIO_VERSION</code>, <code>ADMINSTUDIO_FILE</code>, <code>ADMINSTUDIO_DIR</code>, <code>ADMINSTUDIO_URL</code>.</p>
 
@@ -419,6 +446,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li>Two-factor stops the login cookie from being sent after the password step, destroys the session that was created, and only sets the cookie after a valid code. Login state tokens expire after 10 minutes. Authenticator codes cannot be reused. Backup codes are stored hashed.</li>
 		<li>The attempt limiter trusts proxy headers only when an administrator turns that on.</li>
 		<li>The custom login URL serves the real wp-login.php at the new address, so all core login behaviour is kept.</li>
+		<li>The custom dashboard address only takes effect after a test request through the new address succeeds (or the owner confirms it). The copied dashboard cookie respects <code>send_auth_cookies</code>, so the two-factor step still withholds it until a valid code is entered.</li>
 	</ul>
 
 	<h2>23. WordPress.org compliance</h2>
@@ -440,8 +468,17 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<p><strong>Before submitting:</strong> set <code>Contributors:</code> in readme.txt to your WordPress.org username. It currently says "layothedeveloper", which is a guess.</p>
 	</div>
 
-	<h2>24. Building the release and these documents</h2>
-	<p>The release zip contains everything except the files listed in <code>.distignore</code> (also marked <code>export-ignore</code> in <code>.gitattributes</code>): development notes and the <code>docs</code> folder. The folder inside the zip must be named <code>admin-studio</code>.</p>
+	<h2>24. Release, brand assets and these documents</h2>
+	<p>The release zip contains everything except the files listed in <code>.distignore</code> (also marked <code>export-ignore</code> in <code>.gitattributes</code>): development notes, the <code>docs</code> folder and the <code>.wordpress-org</code> folder. The folder inside the zip must be named <code>admin-studio</code>.</p>
+	<h3>Logo and directory assets</h3>
+	<p>The logo is an abstract dashboard: a cobalt sidebar with a lime active item beside two cards, on a navy rounded square. The plugin uses <code>assets/images/logo.svg</code> on its settings page. The WordPress.org directory files live in <code>.wordpress-org/</code> and are uploaded to the SVN <code>assets</code> folder, not the plugin zip:</p>
+	<table>
+		<tr><th>File</th><th>Use</th></tr>
+		<tr><td><code>icon.svg</code>, <code>icon-128x128.png</code>, <code>icon-256x256.png</code></td><td>Plugin icon in the directory and in Plugins → Add New</td></tr>
+		<tr><td><code>banner-772x250.png</code>, <code>banner-1544x500.png</code></td><td>Banner at the top of the directory page (normal and high resolution)</td></tr>
+	</table>
+	<p>Colours: navy <code>#1b2340</code>, cobalt <code>#2a5bea</code>, soft blue <code>#e8eefc</code>, lime <code>#c6f05a</code>.</p>
+	<h3>This document</h3>
 	<p>This PDF is built from <code>docs/documentation.html</code> by <code>docs/build-pdf.js</code>, which prints the page with the Chromium browser that Playwright provides: <code>node docs/build-pdf.js</code>. The documentation is updated in the same change as every feature change.</p>
 </section>
 

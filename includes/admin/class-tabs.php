@@ -12,6 +12,7 @@ use AdminStudio\Dropins;
 use AdminStudio\Files;
 use AdminStudio\Settings;
 use AdminStudio\Modules\Emails\Templates;
+use AdminStudio\Modules\Security\Admin_Url;
 use AdminStudio\Modules\Security\Attempts;
 use AdminStudio\Modules\Security\Login_Url;
 
@@ -368,6 +369,84 @@ class Tabs {
 	}
 
 	/**
+	 * Custom dashboard address settings and status, inside the security form.
+	 *
+	 * The test and "activate anyway" buttons belong to small forms printed after
+	 * the main form, linked with the `form` attribute.
+	 *
+	 * @return void
+	 */
+	private static function admin_url_section() {
+		self::section(
+			__( 'Custom dashboard address', 'admin-studio' ),
+			__( 'Moves the dashboard from /wp-admin to an address you choose. Logged-out visitors who open /wp-admin get a "page not found" page; logged-in users are moved to the new address, so old links keep working. If you ever get locked out, add <code>define( \'ADMINSTUDIO_DISABLE_ADMIN_URL\', true );</code> to wp-config.php.', 'admin-studio' )
+		);
+
+		if ( Admin_Url::disabled() ) {
+			echo '<div class="notice notice-info inline"><p>' . esc_html__( 'Not available: this needs a single site (not multisite), and the ADMINSTUDIO_DISABLE_ADMIN_URL constant must not be set.', 'admin-studio' ) . '</p></div>';
+			return;
+		}
+
+		$on     = Settings::get( 'security.admin_url' ) && '' !== Admin_Url::slug();
+		$active = $on && Admin_Url::active();
+		$server = Admin_Url::server();
+
+		if ( $active ) {
+			echo '<div class="notice notice-success inline"><p>' . esc_html__( 'Your dashboard is at:', 'admin-studio' ) . ' <a href="' . esc_url( Admin_Url::url() ) . '"><strong>' . esc_html( Admin_Url::url() ) . '</strong></a></p></div>';
+		}
+
+		echo '<table class="form-table" role="presentation">';
+		Fields::checkbox( 'security.admin_url', __( 'Custom dashboard address', 'admin-studio' ), __( 'On', 'admin-studio' ) );
+		Fields::text(
+			'security.admin_slug',
+			__( 'Dashboard address', 'admin-studio' ),
+			__( 'Letters, numbers and dashes, for example "office". Must differ from the login address.', 'admin-studio' ),
+			array(
+				'prefix' => trailingslashit( site_url() ),
+				'class'  => 'regular-text adminstudio-slug',
+			),
+			Fields::show_if( 'security.admin_url' )
+		);
+
+		if ( $on && ! $active ) {
+			Fields::row_start( __( 'Server setup', 'admin-studio' ) );
+
+			if ( 'nginx' === $server ) {
+				echo '<p>' . esc_html__( 'Your site runs on Nginx. Add these lines inside the server block of your site\'s Nginx configuration, above the "location /" block, and reload Nginx. Your host can do this for you.', 'admin-studio' ) . '</p>';
+				echo '<pre class="adminstudio-code">' . esc_html( Admin_Url::nginx_rules() ) . '</pre>';
+			} else {
+				echo '<p>' . esc_html__( 'Add these lines at the top of the .htaccess file in your site\'s root folder, above the WordPress block. If your server is not Apache or LiteSpeed, ask your host to rewrite the new address to /wp-admin.', 'admin-studio' ) . '</p>';
+				echo '<pre class="adminstudio-code">' . esc_html( "# BEGIN Admin Studio\n" . implode( "\n", Admin_Url::apache_rules() ) . "\n# END Admin Studio" ) . '</pre>';
+			}
+
+			$test = untrailingslashit( site_url() ) . '/' . Admin_Url::slug() . '/admin-ajax.php?action=adminstudio_ping';
+
+			echo '<p class="adminstudio-actions">';
+			echo '<button type="submit" class="button button-primary" form="adminstudio-admin-url-test">' . esc_html__( 'Test again', 'admin-studio' ) . '</button> ';
+			echo '<a class="button" target="_blank" rel="noopener" href="' . esc_url( $test ) . '">' . esc_html__( 'Open the test page', 'admin-studio' ) . '</a> ';
+			echo '<button type="submit" class="button button-link-delete" form="adminstudio-admin-url-force">' . esc_html__( 'Activate anyway', 'admin-studio' ) . '</button>';
+			echo '</p>';
+			Fields::row_end( __( 'The test page should show {"success":true,...}. Some servers cannot test themselves; if the test page works in your browser but "Test again" fails, use "Activate anyway".', 'admin-studio' ) );
+		}
+
+		echo '</table>';
+	}
+
+	/**
+	 * Small forms used by the dashboard address buttons.
+	 *
+	 * @return void
+	 */
+	private static function admin_url_forms() {
+		foreach ( array( 'test', 'force' ) as $action ) {
+			echo '<form id="adminstudio-admin-url-' . esc_attr( $action ) . '" method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"' . ( 'force' === $action ? ' data-adminstudio-confirm' : '' ) . '>';
+			echo '<input type="hidden" name="action" value="adminstudio_admin_url_' . esc_attr( $action ) . '">';
+			wp_nonce_field( 'adminstudio_admin_url_' . $action );
+			echo '</form>';
+		}
+	}
+
+	/**
 	 * Login protection.
 	 *
 	 * @return void
@@ -412,6 +491,8 @@ class Tabs {
 		Fields::url( 'security.blocked_url', __( 'Other address', 'admin-studio' ), '', false, Fields::show_if( 'security.blocked_action', 'custom' ) );
 		echo '</table>';
 
+		self::admin_url_section();
+
 		self::section( __( 'Limit login attempts', 'admin-studio' ) );
 		echo '<table class="form-table" role="presentation">';
 		Fields::checkbox( 'security.limit', __( 'Limit attempts', 'admin-studio' ), __( 'On', 'admin-studio' ) );
@@ -446,6 +527,7 @@ class Tabs {
 		echo '</table>';
 
 		self::form_end();
+		self::admin_url_forms();
 
 		$log = Attempts::get_log();
 

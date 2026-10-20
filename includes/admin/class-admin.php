@@ -11,6 +11,7 @@ use AdminStudio\Settings;
 use AdminStudio\Modules\Emails\Emails;
 use AdminStudio\Modules\Emails\Renderer;
 use AdminStudio\Modules\Emails\Templates;
+use AdminStudio\Modules\Security\Admin_Url;
 use AdminStudio\Modules\Security\Attempts;
 use AdminStudio\Modules\Security\Login_Url;
 
@@ -32,7 +33,7 @@ class Admin {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 
-		$actions = array( 'save', 'export', 'import', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log' );
+		$actions = array( 'save', 'export', 'import', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
 
 		foreach ( $actions as $action ) {
 			add_action( 'admin_post_adminstudio_' . $action, array( __CLASS__, 'handle_' . $action ) );
@@ -146,7 +147,10 @@ class Admin {
 		$tab = self::current_tab();
 		?>
 		<div class="wrap adminstudio-wrap">
-			<h1><?php esc_html_e( 'Admin Studio', 'admin-studio' ); ?></h1>
+			<h1 class="adminstudio-title">
+				<img src="<?php echo esc_url( ADMINSTUDIO_URL . 'assets/images/logo.svg' ); ?>" width="32" height="32" alt="">
+				<?php esc_html_e( 'Admin Studio', 'admin-studio' ); ?>
+			</h1>
 			<?php self::notices(); ?>
 			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Admin Studio sections', 'admin-studio' ); ?>">
 				<?php foreach ( self::tabs() as $key => $label ) : ?>
@@ -179,16 +183,20 @@ class Admin {
 		$notice = isset( $_GET['adminstudio_notice'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_notice'] ) ) : '';
 
 		$messages = array(
-			'saved'         => array( 'success', __( 'Settings saved.', 'admin-studio' ) ),
-			'imported'      => array( 'success', __( 'Settings imported.', 'admin-studio' ) ),
-			'import_failed' => array( 'error', __( 'That file is not a valid Admin Studio export.', 'admin-studio' ) ),
-			'reset'         => array( 'success', __( 'Settings reset to their defaults.', 'admin-studio' ) ),
-			'reset_confirm' => array( 'error', __( 'Tick the confirmation box to reset settings.', 'admin-studio' ) ),
-			'test_sent'     => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'admin-studio' ) ),
-			'test_failed'   => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'admin-studio' ) ),
-			'slug_invalid'  => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'admin-studio' ) ),
-			'unlocked'      => array( 'success', __( 'Lockout lifted.', 'admin-studio' ) ),
-			'log_cleared'   => array( 'success', __( 'Lockout log cleared.', 'admin-studio' ) ),
+			'saved'                => array( 'success', __( 'Settings saved.', 'admin-studio' ) ),
+			'imported'             => array( 'success', __( 'Settings imported.', 'admin-studio' ) ),
+			'import_failed'        => array( 'error', __( 'That file is not a valid Admin Studio export.', 'admin-studio' ) ),
+			'reset'                => array( 'success', __( 'Settings reset to their defaults.', 'admin-studio' ) ),
+			'reset_confirm'        => array( 'error', __( 'Tick the confirmation box to reset settings.', 'admin-studio' ) ),
+			'test_sent'            => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'admin-studio' ) ),
+			'test_failed'          => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'admin-studio' ) ),
+			'slug_invalid'         => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'admin-studio' ) ),
+			'unlocked'             => array( 'success', __( 'Lockout lifted.', 'admin-studio' ) ),
+			'log_cleared'          => array( 'success', __( 'Lockout log cleared.', 'admin-studio' ) ),
+			'admin_slug_invalid'   => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'admin-studio' ) ),
+			'admin_url_active'     => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'admin-studio' ) ),
+			'admin_url_pending'    => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'admin-studio' ) ),
+			'admin_url_unwritable' => array( 'warning', __( 'Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click "Test again".', 'admin-studio' ) ),
 		);
 
 		if ( isset( $messages[ $notice ] ) ) {
@@ -330,7 +338,14 @@ class Admin {
 				$notice                       = 'slug_invalid';
 			}
 
-			$values['modules.security'] = ! empty( $values['security.login_url'] ) || ! empty( $values['security.limit'] ) || ! empty( $values['security.honeypot'] ) || ! empty( $values['security.twofa'] );
+			$admin_slug = isset( $values['security.admin_slug'] ) ? sanitize_title( $values['security.admin_slug'] ) : '';
+
+			if ( ! empty( $values['security.admin_url'] ) && ( '' === $admin_slug || in_array( $admin_slug, Login_Url::RESERVED, true ) || $admin_slug === $slug ) ) {
+				$values['security.admin_url'] = false;
+				$notice                       = 'admin_slug_invalid';
+			}
+
+			$values['modules.security'] = ! empty( $values['security.login_url'] ) || ! empty( $values['security.admin_url'] ) || ! empty( $values['security.limit'] ) || ! empty( $values['security.honeypot'] ) || ! empty( $values['security.twofa'] );
 		}
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
@@ -340,7 +355,41 @@ class Admin {
 
 		Settings::update( $values );
 
+		if ( 'security' === $tab ) {
+			$state = Admin_Url::apply();
+
+			if ( 'saved' === $notice && 'off' !== $state ) {
+				$notice = 'admin_url_' . $state;
+			}
+		}
+
 		self::back( $tab, $notice, 'emails' === $tab ? array( 'template' => $template ) : array() );
+	}
+
+	/**
+	 * Re-tests the custom dashboard address, for example after adding the
+	 * Nginx rules.
+	 *
+	 * @return void
+	 */
+	public static function handle_admin_url_test() {
+		self::guard( 'adminstudio_admin_url_test' );
+
+		self::back( 'security', 'admin_url_' . Admin_Url::apply() );
+	}
+
+	/**
+	 * Switches the custom dashboard address on without a passing test, after
+	 * the owner has confirmed the test page works in their browser.
+	 *
+	 * @return void
+	 */
+	public static function handle_admin_url_force() {
+		self::guard( 'adminstudio_admin_url_force' );
+
+		Admin_Url::force();
+
+		self::back( 'security', 'admin_url_active' );
 	}
 
 	/**

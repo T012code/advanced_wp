@@ -329,6 +329,11 @@ class Settings {
 				'choices' => array( '404', 'home', 'custom' ),
 			),
 			'security.blocked_url'              => $url,
+			'security.admin_url'                => $off,
+			'security.admin_slug'               => array(
+				'type'    => 'slug',
+				'default' => '',
+			),
 			'security.limit'                    => $off,
 			'security.max_attempts'             => array(
 				'type'    => 'int',

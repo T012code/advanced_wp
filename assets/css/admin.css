@@ -1,5 +1,16 @@
 /* Admin Studio settings page and profile screen. */
 
+.adminstudio-wrap .adminstudio-title {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.adminstudio-wrap .adminstudio-title img {
+	display: block;
+	border-radius: 8px;
+}
+
 .adminstudio-wrap .adminstudio-tab {
 	max-width: 1100px;
 }
@@ -76,6 +87,26 @@
 
 .adminstudio-wrap .notice.inline {
 	margin: 16px 0;
+}
+
+.adminstudio-wrap .adminstudio-code {
+	max-width: 760px;
+	margin: 8px 0 12px;
+	padding: 12px 14px;
+	overflow-x: auto;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	font-size: 12px;
+	line-height: 1.6;
+	white-space: pre;
+}
+
+.adminstudio-wrap .adminstudio-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	align-items: center;
 }
 
 /* Emails tab. */

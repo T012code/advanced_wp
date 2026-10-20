@@ -26,6 +26,10 @@ class Security {
 			Login_Url::init();
 		}
 
+		if ( Settings::get( 'security.admin_url' ) ) {
+			Admin_Url::init();
+		}
+
 		if ( Settings::get( 'security.limit' ) ) {
 			Attempts::init();
 		}

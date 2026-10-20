@@ -9,16 +9,16 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-20T14:27:21+00:00\n"
+"POT-Creation-Date: 2026-10-20T14:45:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: admin-studio\n"
 
 #. Plugin Name of the plugin
 #: admin-studio.php
-#: includes/admin/class-admin.php:98
 #: includes/admin/class-admin.php:99
-#: includes/admin/class-admin.php:149
+#: includes/admin/class-admin.php:100
+#: includes/admin/class-admin.php:152
 #: includes/customizer/class-customizer.php:67
 msgid "Admin Studio"
 msgstr ""
@@ -39,692 +39,762 @@ msgstr ""
 msgid "Láyò"
 msgstr ""
 
-#: includes/admin/class-admin.php:49
+#: includes/admin/class-admin.php:50
 msgid "Overview"
 msgstr ""
 
-#: includes/admin/class-admin.php:50
-#: includes/admin/class-tabs.php:99
-#: includes/admin/class-tabs.php:551
+#: includes/admin/class-admin.php:51
+#: includes/admin/class-tabs.php:100
+#: includes/admin/class-tabs.php:633
 msgid "Emails"
 msgstr ""
 
-#: includes/admin/class-admin.php:51
+#: includes/admin/class-admin.php:52
 msgid "Tab & page details"
 msgstr ""
 
-#: includes/admin/class-admin.php:52
-#: includes/admin/class-tabs.php:102
-#: includes/admin/class-tabs.php:554
+#: includes/admin/class-admin.php:53
+#: includes/admin/class-tabs.php:103
+#: includes/admin/class-tabs.php:636
 msgid "Admin branding"
 msgstr ""
 
-#: includes/admin/class-admin.php:53
-#: includes/admin/class-tabs.php:122
-#: includes/admin/class-tabs.php:555
+#: includes/admin/class-admin.php:54
+#: includes/admin/class-tabs.php:123
+#: includes/admin/class-tabs.php:637
 msgid "Login protection"
 msgstr ""
 
-#: includes/admin/class-admin.php:54
-#: includes/admin/class-tabs.php:556
+#: includes/admin/class-admin.php:55
+#: includes/admin/class-tabs.php:638
 msgid "Coming soon"
 msgstr ""
 
-#: includes/admin/class-admin.php:55
+#: includes/admin/class-admin.php:56
 msgid "Tools"
 msgstr ""
 
-#: includes/admin/class-admin.php:129
+#: includes/admin/class-admin.php:130
 #: includes/admin/class-fields.php:196
 msgid "Choose image"
 msgstr ""
 
-#: includes/admin/class-admin.php:130
+#: includes/admin/class-admin.php:131
 msgid "Use this image"
 msgstr ""
 
-#: includes/admin/class-admin.php:131
+#: includes/admin/class-admin.php:132
 msgid "Are you sure? This cannot be undone."
 msgstr ""
 
-#: includes/admin/class-admin.php:151
+#: includes/admin/class-admin.php:155
 msgid "Admin Studio sections"
 msgstr ""
 
 #. translators: %s: author name linked to their website.
-#: includes/admin/class-admin.php:163
+#: includes/admin/class-admin.php:167
 #, php-format
 msgid "Admin Studio by %s"
 msgstr ""
 
-#: includes/admin/class-admin.php:182
+#: includes/admin/class-admin.php:186
 msgid "Settings saved."
 msgstr ""
 
-#: includes/admin/class-admin.php:183
+#: includes/admin/class-admin.php:187
 msgid "Settings imported."
 msgstr ""
 
-#: includes/admin/class-admin.php:184
+#: includes/admin/class-admin.php:188
 msgid "That file is not a valid Admin Studio export."
 msgstr ""
 
-#: includes/admin/class-admin.php:185
+#: includes/admin/class-admin.php:189
 msgid "Settings reset to their defaults."
 msgstr ""
 
-#: includes/admin/class-admin.php:186
+#: includes/admin/class-admin.php:190
 msgid "Tick the confirmation box to reset settings."
 msgstr ""
 
-#: includes/admin/class-admin.php:187
+#: includes/admin/class-admin.php:191
 msgid "Test email sent. Check your inbox (and spam folder)."
 msgstr ""
 
-#: includes/admin/class-admin.php:188
+#: includes/admin/class-admin.php:192
 msgid "The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this."
 msgstr ""
 
-#: includes/admin/class-admin.php:189
+#: includes/admin/class-admin.php:193
 msgid "That login address cannot be used. Choose another one; the custom login URL has been left off."
 msgstr ""
 
-#: includes/admin/class-admin.php:190
+#: includes/admin/class-admin.php:194
 msgid "Lockout lifted."
 msgstr ""
 
-#: includes/admin/class-admin.php:191
+#: includes/admin/class-admin.php:195
 msgid "Lockout log cleared."
 msgstr ""
 
-#: includes/admin/class-admin.php:205
+#: includes/admin/class-admin.php:196
+msgid "That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off."
+msgstr ""
+
+#: includes/admin/class-admin.php:197
+msgid "Settings saved. The dashboard has moved to its new address."
+msgstr ""
+
+#: includes/admin/class-admin.php:198
+msgid "Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click \"Test again\"."
+msgstr ""
+
+#: includes/admin/class-admin.php:199
+msgid "Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click \"Test again\"."
+msgstr ""
+
+#: includes/admin/class-admin.php:213
 msgid "Your login page has moved. Bookmark the new address:"
 msgstr ""
 
-#: includes/admin/class-admin.php:219
+#: includes/admin/class-admin.php:227
 msgid "Sorry, you are not allowed to do that."
 msgstr ""
 
-#: includes/admin/class-admin.php:543
+#: includes/admin/class-admin.php:592
 msgid "Active"
 msgstr ""
 
-#: includes/admin/class-admin.php:544
+#: includes/admin/class-admin.php:593
 msgid "Another plugin or your host already uses this file. Admin Studio leaves it alone."
 msgstr ""
 
-#: includes/admin/class-admin.php:545
-#: includes/admin/class-tabs.php:123
-#: includes/admin/class-tabs.php:127
-#: includes/admin/class-tabs.php:180
+#: includes/admin/class-admin.php:594
+#: includes/admin/class-tabs.php:124
+#: includes/admin/class-tabs.php:128
+#: includes/admin/class-tabs.php:181
 msgid "Off"
 msgstr ""
 
-#: includes/admin/class-admin.php:546
+#: includes/admin/class-admin.php:595
 msgid "Cannot write to wp-content. Ask your host to make it writable, or turn this page off."
 msgstr ""
 
-#: includes/admin/class-admin.php:547
+#: includes/admin/class-admin.php:596
 msgid "Not written yet. Save any setting to create it."
 msgstr ""
 
-#: includes/admin/class-tabs.php:98
-#: includes/admin/class-tabs.php:550
+#: includes/admin/class-tabs.php:99
+#: includes/admin/class-tabs.php:632
 msgid "Login page"
 msgstr ""
 
-#: includes/admin/class-tabs.php:98
+#: includes/admin/class-tabs.php:99
 msgid "Layouts, colours, logo and text for every screen on wp-login.php."
 msgstr ""
 
-#: includes/admin/class-tabs.php:99
+#: includes/admin/class-tabs.php:100
 msgid "Branded HTML layout and editable wording for 15 core WordPress emails."
 msgstr ""
 
-#: includes/admin/class-tabs.php:100
-#: includes/admin/class-tabs.php:552
+#: includes/admin/class-tabs.php:101
+#: includes/admin/class-tabs.php:634
 msgid "Error and system pages"
 msgstr ""
 
-#: includes/admin/class-tabs.php:100
+#: includes/admin/class-tabs.php:101
 msgid "Critical error, database error, update maintenance, permission screens and an optional 404."
 msgstr ""
 
-#: includes/admin/class-tabs.php:101
-#: includes/admin/class-tabs.php:553
+#: includes/admin/class-tabs.php:102
+#: includes/admin/class-tabs.php:635
 msgid "Tab and page details"
 msgstr ""
 
-#: includes/admin/class-tabs.php:101
+#: includes/admin/class-tabs.php:102
 msgid "Browser tab titles, favicon, address bar colour and hiding WordPress traces."
 msgstr ""
 
-#: includes/admin/class-tabs.php:102
+#: includes/admin/class-tabs.php:103
 msgid "Admin bar logo, footer credit, dashboard widgets and a brand colour scheme."
 msgstr ""
 
-#: includes/admin/class-tabs.php:106
-#: includes/admin/class-tabs.php:549
+#: includes/admin/class-tabs.php:107
+#: includes/admin/class-tabs.php:631
 #: includes/customizer/class-customizer.php:277
 msgid "Brand kit"
 msgstr ""
 
-#: includes/admin/class-tabs.php:107
+#: includes/admin/class-tabs.php:108
 msgid "Logo, colours and fonts are read from your theme. Adjust them once in the Customizer and every area below follows."
 msgstr ""
 
-#: includes/admin/class-tabs.php:107
+#: includes/admin/class-tabs.php:108
 msgid "Edit brand kit"
 msgstr ""
 
-#: includes/admin/class-tabs.php:111
+#: includes/admin/class-tabs.php:112
 msgid "Features"
 msgstr ""
 
-#: includes/admin/class-tabs.php:111
+#: includes/admin/class-tabs.php:112
 msgid "Switch off anything you do not need. Switched-off features load no code."
 msgstr ""
 
-#: includes/admin/class-tabs.php:117
+#: includes/admin/class-tabs.php:118
 msgid "Design"
 msgstr ""
 
-#: includes/admin/class-tabs.php:119
-#: includes/admin/class-tabs.php:123
-#: includes/admin/class-tabs.php:127
-#: includes/admin/class-tabs.php:192
-#: includes/admin/class-tabs.php:390
-#: includes/admin/class-tabs.php:417
-#: includes/admin/class-tabs.php:442
+#: includes/admin/class-tabs.php:120
+#: includes/admin/class-tabs.php:124
+#: includes/admin/class-tabs.php:128
+#: includes/admin/class-tabs.php:193
+#: includes/admin/class-tabs.php:399
+#: includes/admin/class-tabs.php:469
 #: includes/admin/class-tabs.php:498
+#: includes/admin/class-tabs.php:523
+#: includes/admin/class-tabs.php:580
 msgid "On"
 msgstr ""
 
-#: includes/admin/class-tabs.php:123
-#: includes/admin/class-tabs.php:127
+#: includes/admin/class-tabs.php:124
+#: includes/admin/class-tabs.php:128
 msgid "Configure"
 msgstr ""
 
-#: includes/admin/class-tabs.php:126
+#: includes/admin/class-tabs.php:127
 msgid "Coming soon mode"
 msgstr ""
 
-#: includes/admin/class-tabs.php:130
+#: includes/admin/class-tabs.php:131
 msgid "Uninstall"
 msgstr ""
 
-#: includes/admin/class-tabs.php:130
+#: includes/admin/class-tabs.php:131
 msgid "Remove all Admin Studio data when the plugin is deleted"
 msgstr ""
 
-#: includes/admin/class-tabs.php:130
+#: includes/admin/class-tabs.php:131
 msgid "Leave this off if you might reinstall later."
 msgstr ""
 
-#: includes/admin/class-tabs.php:150
+#: includes/admin/class-tabs.php:151
 msgid "The Emails feature is switched off on the Overview tab, so these templates are not in use."
 msgstr ""
 
 #. translators: %s: Customizer link.
-#: includes/admin/class-tabs.php:156
+#: includes/admin/class-tabs.php:157
 #, php-format
 msgid "Edit the wording of each email here. Colours, logo and fonts are set in the Customizer. %s"
 msgstr ""
 
-#: includes/admin/class-tabs.php:157
+#: includes/admin/class-tabs.php:158
 msgid "Design emails"
 msgstr ""
 
-#: includes/admin/class-tabs.php:163
+#: includes/admin/class-tabs.php:164
 msgid "Email templates"
 msgstr ""
 
-#: includes/admin/class-tabs.php:165
+#: includes/admin/class-tabs.php:166
 msgid "To users"
 msgstr ""
 
-#: includes/admin/class-tabs.php:166
+#: includes/admin/class-tabs.php:167
 msgid "To admins"
 msgstr ""
 
-#: includes/admin/class-tabs.php:192
+#: includes/admin/class-tabs.php:193
 msgid "Use this template"
 msgstr ""
 
-#: includes/admin/class-tabs.php:192
+#: includes/admin/class-tabs.php:193
 msgid "When off, WordPress sends its default plain-text email."
 msgstr ""
 
-#: includes/admin/class-tabs.php:193
+#: includes/admin/class-tabs.php:194
 msgid "Subject"
 msgstr ""
 
-#: includes/admin/class-tabs.php:194
+#: includes/admin/class-tabs.php:195
 msgid "Heading"
 msgstr ""
 
-#: includes/admin/class-tabs.php:196
+#: includes/admin/class-tabs.php:197
 msgid "Body"
 msgstr ""
 
-#: includes/admin/class-tabs.php:208
+#: includes/admin/class-tabs.php:209
 msgid "Switch between Visual and Code (HTML) with the tabs above the editor."
 msgstr ""
 
-#: includes/admin/class-tabs.php:211
-#: includes/admin/class-tabs.php:346
+#: includes/admin/class-tabs.php:212
+#: includes/admin/class-tabs.php:347
 #: includes/customizer/class-customizer.php:499
 #: includes/customizer/class-customizer.php:533
 msgid "Button text"
 msgstr ""
 
-#: includes/admin/class-tabs.php:211
+#: includes/admin/class-tabs.php:212
 #: includes/customizer/class-customizer.php:499
 msgid "Leave empty to hide the button."
 msgstr ""
 
-#: includes/admin/class-tabs.php:214
+#: includes/admin/class-tabs.php:215
 msgid "Available tags"
 msgstr ""
 
-#: includes/admin/class-tabs.php:220
+#: includes/admin/class-tabs.php:221
 msgid "Click a tag to insert it into the body."
 msgstr ""
 
-#: includes/admin/class-tabs.php:224
+#: includes/admin/class-tabs.php:225
 msgid "Save template"
 msgstr ""
 
-#: includes/admin/class-tabs.php:228
+#: includes/admin/class-tabs.php:229
 msgid "Preview saved version"
 msgstr ""
 
-#: includes/admin/class-tabs.php:237
+#: includes/admin/class-tabs.php:238
 msgid "Send a test to"
 msgstr ""
 
-#: includes/admin/class-tabs.php:239
+#: includes/admin/class-tabs.php:240
 msgid "Send test email"
 msgstr ""
 
-#: includes/admin/class-tabs.php:245
+#: includes/admin/class-tabs.php:246
 msgid "Restore default text"
 msgstr ""
 
-#: includes/admin/class-tabs.php:259
+#: includes/admin/class-tabs.php:260
 msgid "Browser tab titles"
 msgstr ""
 
-#: includes/admin/class-tabs.php:259
+#: includes/admin/class-tabs.php:260
 msgid "Use {page} for the screen name and {site_name} for your site title."
 msgstr ""
 
-#: includes/admin/class-tabs.php:261
+#: includes/admin/class-tabs.php:262
 msgid "Admin screens"
 msgstr ""
 
-#: includes/admin/class-tabs.php:261
+#: includes/admin/class-tabs.php:262
 msgid "WordPress default: \"Dashboard ‹ Site — WordPress\"."
 msgstr ""
 
-#: includes/admin/class-tabs.php:262
+#: includes/admin/class-tabs.php:263
 msgid "Login screens"
 msgstr ""
 
-#: includes/admin/class-tabs.php:262
+#: includes/admin/class-tabs.php:263
 msgid "WordPress default: \"Log In ‹ Site — WordPress\"."
 msgstr ""
 
-#: includes/admin/class-tabs.php:265
+#: includes/admin/class-tabs.php:266
 msgid "Icons and colours"
 msgstr ""
 
-#: includes/admin/class-tabs.php:269
+#: includes/admin/class-tabs.php:270
 msgid "Favicon"
 msgstr ""
 
-#: includes/admin/class-tabs.php:270
+#: includes/admin/class-tabs.php:271
 msgid "Show the site icon on login, admin and system pages"
 msgstr ""
 
 #. translators: %s: link to Settings > General.
-#: includes/admin/class-tabs.php:273
+#: includes/admin/class-tabs.php:274
 #, php-format
 msgid "Set the site icon in <a href=\"%s\">Settings &rarr; General</a>. Without one, the brand logo is used."
 msgstr ""
 
-#: includes/admin/class-tabs.php:277
+#: includes/admin/class-tabs.php:278
 msgid "Address bar colour"
 msgstr ""
 
-#: includes/admin/class-tabs.php:277
+#: includes/admin/class-tabs.php:278
 msgid "Tint the mobile browser address bar with the brand primary colour"
 msgstr ""
 
-#: includes/admin/class-tabs.php:280
+#: includes/admin/class-tabs.php:281
 msgid "WordPress traces"
 msgstr ""
 
-#: includes/admin/class-tabs.php:280
+#: includes/admin/class-tabs.php:281
 msgid "Removes small giveaways in your page source. This is tidying, not a security feature."
 msgstr ""
 
-#: includes/admin/class-tabs.php:282
+#: includes/admin/class-tabs.php:283
 msgid "Generator tag"
 msgstr ""
 
-#: includes/admin/class-tabs.php:282
+#: includes/admin/class-tabs.php:283
 msgid "Remove the WordPress version meta tag and feed generator"
 msgstr ""
 
-#: includes/admin/class-tabs.php:283
+#: includes/admin/class-tabs.php:284
 msgid "Asset versions"
 msgstr ""
 
-#: includes/admin/class-tabs.php:283
+#: includes/admin/class-tabs.php:284
 msgid "Remove the WordPress version from core CSS and JavaScript URLs"
 msgstr ""
 
-#: includes/admin/class-tabs.php:284
+#: includes/admin/class-tabs.php:285
 msgid "Legacy links"
 msgstr ""
 
-#: includes/admin/class-tabs.php:284
+#: includes/admin/class-tabs.php:285
 msgid "Remove the RSD and Windows Live Writer links"
 msgstr ""
 
-#: includes/admin/class-tabs.php:285
+#: includes/admin/class-tabs.php:286
 msgid "Login logo link"
 msgstr ""
 
-#: includes/admin/class-tabs.php:285
+#: includes/admin/class-tabs.php:286
 msgid "Point the login logo to your site instead of wordpress.org"
 msgstr ""
 
-#: includes/admin/class-tabs.php:285
+#: includes/admin/class-tabs.php:286
 msgid "Applies when the Login page feature is off; that feature has its own setting."
 msgstr ""
 
-#: includes/admin/class-tabs.php:298
+#: includes/admin/class-tabs.php:299
 msgid "WordPress default"
 msgstr ""
 
-#: includes/admin/class-tabs.php:299
+#: includes/admin/class-tabs.php:300
 msgid "Custom text"
 msgstr ""
 
-#: includes/admin/class-tabs.php:300
+#: includes/admin/class-tabs.php:301
 msgid "Remove"
 msgstr ""
 
-#: includes/admin/class-tabs.php:305
+#: includes/admin/class-tabs.php:306
 msgid "Admin bar"
 msgstr ""
 
-#: includes/admin/class-tabs.php:309
+#: includes/admin/class-tabs.php:310
 msgid "WordPress logo"
 msgstr ""
 
-#: includes/admin/class-tabs.php:311
+#: includes/admin/class-tabs.php:312
 msgid "Keep the WordPress logo"
 msgstr ""
 
-#: includes/admin/class-tabs.php:312
+#: includes/admin/class-tabs.php:313
 msgid "Replace with my logo"
 msgstr ""
 
-#: includes/admin/class-tabs.php:313
+#: includes/admin/class-tabs.php:314
 msgid "Remove it"
 msgstr ""
 
-#: includes/admin/class-tabs.php:316
+#: includes/admin/class-tabs.php:317
 msgid "Logo image"
 msgstr ""
 
-#: includes/admin/class-tabs.php:316
+#: includes/admin/class-tabs.php:317
 msgid "Shown 20px tall. Defaults to your site icon."
 msgstr ""
 
-#: includes/admin/class-tabs.php:317
+#: includes/admin/class-tabs.php:318
 #: includes/customizer/class-customizer.php:366
 msgid "Logo link"
 msgstr ""
 
-#: includes/admin/class-tabs.php:317
+#: includes/admin/class-tabs.php:318
 #: includes/customizer/class-customizer.php:366
 #: includes/customizer/class-customizer.php:500
 msgid "Defaults to your home page."
 msgstr ""
 
-#: includes/admin/class-tabs.php:318
+#: includes/admin/class-tabs.php:319
 msgid "Greeting"
 msgstr ""
 
-#: includes/admin/class-tabs.php:318
+#: includes/admin/class-tabs.php:319
 msgid "Show just the name instead of \"Howdy, Name\""
 msgstr ""
 
-#: includes/admin/class-tabs.php:321
+#: includes/admin/class-tabs.php:322
 msgid "Footer credit"
 msgstr ""
 
-#: includes/admin/class-tabs.php:323
+#: includes/admin/class-tabs.php:324
 msgid "\"Thank you for creating with WordPress\""
 msgstr ""
 
-#: includes/admin/class-tabs.php:324
+#: includes/admin/class-tabs.php:325
 msgid "Left footer text"
 msgstr ""
 
-#: includes/admin/class-tabs.php:324
+#: includes/admin/class-tabs.php:325
 msgid "Basic HTML and {site_name}, {site_url} and {year} are allowed."
 msgstr ""
 
-#: includes/admin/class-tabs.php:325
+#: includes/admin/class-tabs.php:326
 msgid "WordPress version"
 msgstr ""
 
-#: includes/admin/class-tabs.php:326
+#: includes/admin/class-tabs.php:327
 msgid "Right footer text"
 msgstr ""
 
-#: includes/admin/class-tabs.php:329
+#: includes/admin/class-tabs.php:330
 msgid "Dashboard"
 msgstr ""
 
-#: includes/admin/class-tabs.php:333
+#: includes/admin/class-tabs.php:334
 msgid "Hide widgets"
 msgstr ""
 
-#: includes/admin/class-tabs.php:335
-#: includes/admin/class-tabs.php:343
+#: includes/admin/class-tabs.php:336
+#: includes/admin/class-tabs.php:344
 msgid "Welcome panel"
 msgstr ""
 
-#: includes/admin/class-tabs.php:336
+#: includes/admin/class-tabs.php:337
 msgid "Activity"
 msgstr ""
 
-#: includes/admin/class-tabs.php:337
+#: includes/admin/class-tabs.php:338
 msgid "At a Glance"
 msgstr ""
 
-#: includes/admin/class-tabs.php:338
+#: includes/admin/class-tabs.php:339
 msgid "Quick Draft"
 msgstr ""
 
-#: includes/admin/class-tabs.php:339
+#: includes/admin/class-tabs.php:340
 msgid "WordPress Events and News"
 msgstr ""
 
-#: includes/admin/class-tabs.php:340
+#: includes/admin/class-tabs.php:341
 msgid "Site Health Status"
 msgstr ""
 
-#: includes/admin/class-tabs.php:343
+#: includes/admin/class-tabs.php:344
 msgid "Add my own welcome panel to the dashboard"
 msgstr ""
 
-#: includes/admin/class-tabs.php:344
+#: includes/admin/class-tabs.php:345
 msgid "Panel title"
 msgstr ""
 
-#: includes/admin/class-tabs.php:345
+#: includes/admin/class-tabs.php:346
 msgid "Panel content"
 msgstr ""
 
-#: includes/admin/class-tabs.php:345
+#: includes/admin/class-tabs.php:346
 #: includes/customizer/class-customizer.php:415
 msgid "Basic HTML is allowed."
 msgstr ""
 
-#: includes/admin/class-tabs.php:347
+#: includes/admin/class-tabs.php:348
 #: includes/customizer/class-customizer.php:500
 msgid "Button link"
 msgstr ""
 
-#: includes/admin/class-tabs.php:348
+#: includes/admin/class-tabs.php:349
 msgid "Help tab"
 msgstr ""
 
-#: includes/admin/class-tabs.php:348
+#: includes/admin/class-tabs.php:349
 msgid "Remove the Help tab from admin screens"
 msgstr ""
 
-#: includes/admin/class-tabs.php:349
+#: includes/admin/class-tabs.php:350
 msgid "Screen Options"
 msgstr ""
 
-#: includes/admin/class-tabs.php:349
+#: includes/admin/class-tabs.php:350
 msgid "Remove the Screen Options tab from admin screens"
 msgstr ""
 
-#: includes/admin/class-tabs.php:352
+#: includes/admin/class-tabs.php:353
 msgid "Colour scheme"
 msgstr ""
 
-#: includes/admin/class-tabs.php:356
+#: includes/admin/class-tabs.php:357
 msgid "Brand scheme"
 msgstr ""
 
-#: includes/admin/class-tabs.php:357
+#: includes/admin/class-tabs.php:358
 msgid "Add a colour scheme built from the brand kit"
 msgstr ""
 
 #. translators: %s: profile URL.
-#: includes/admin/class-tabs.php:360
+#: includes/admin/class-tabs.php:361
 #, php-format
 msgid "Each user picks it under Admin Color Scheme on <a href=\"%s\">their profile</a>."
 msgstr ""
 
-#: includes/admin/class-tabs.php:364
+#: includes/admin/class-tabs.php:365
 msgid "New users"
 msgstr ""
 
-#: includes/admin/class-tabs.php:364
+#: includes/admin/class-tabs.php:365
 msgid "Give new users the brand scheme by default"
 msgstr ""
 
 #: includes/admin/class-tabs.php:381
-#: includes/admin/class-tabs.php:390
-msgid "Custom login URL"
+#: includes/admin/class-tabs.php:399
+msgid "Custom dashboard address"
 msgstr ""
 
 #: includes/admin/class-tabs.php:382
-msgid "Moves the login page so bots stop hammering wp-login.php. If you ever get locked out, add <code>define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );</code> to wp-config.php."
+msgid "Moves the dashboard from /wp-admin to an address you choose. Logged-out visitors who open /wp-admin get a \"page not found\" page; logged-in users are moved to the new address, so old links keep working. If you ever get locked out, add <code>define( 'ADMINSTUDIO_DISABLE_ADMIN_URL', true );</code> to wp-config.php."
 msgstr ""
 
 #: includes/admin/class-tabs.php:386
-msgid "Your login page is at:"
+msgid "Not available: this needs a single site (not multisite), and the ADMINSTUDIO_DISABLE_ADMIN_URL constant must not be set."
 msgstr ""
 
-#: includes/admin/class-tabs.php:393
-msgid "Login address"
+#: includes/admin/class-tabs.php:395
+msgid "Your dashboard is at:"
 msgstr ""
 
-#: includes/admin/class-tabs.php:394
-msgid "Letters, numbers and dashes. Not \"login\", \"admin\" or \"dashboard\"."
+#: includes/admin/class-tabs.php:402
+msgid "Dashboard address"
 msgstr ""
 
 #: includes/admin/class-tabs.php:403
-msgid "When someone opens wp-login.php or /wp-admin"
-msgstr ""
-
-#: includes/admin/class-tabs.php:405
-msgid "Show a \"page not found\" page"
-msgstr ""
-
-#: includes/admin/class-tabs.php:406
-msgid "Send them to the home page"
-msgstr ""
-
-#: includes/admin/class-tabs.php:407
-msgid "Send them to another address"
+msgid "Letters, numbers and dashes, for example \"office\". Must differ from the login address."
 msgstr ""
 
 #: includes/admin/class-tabs.php:412
-msgid "Other address"
+msgid "Server setup"
 msgstr ""
 
 #: includes/admin/class-tabs.php:415
-msgid "Limit login attempts"
-msgstr ""
-
-#: includes/admin/class-tabs.php:417
-msgid "Limit attempts"
+msgid "Your site runs on Nginx. Add these lines inside the server block of your site's Nginx configuration, above the \"location /\" block, and reload Nginx. Your host can do this for you."
 msgstr ""
 
 #: includes/admin/class-tabs.php:418
-msgid "Failed attempts allowed"
-msgstr ""
-
-#: includes/admin/class-tabs.php:419
-msgid "Within (minutes)"
-msgstr ""
-
-#: includes/admin/class-tabs.php:420
-msgid "Lockout length (minutes)"
-msgstr ""
-
-#: includes/admin/class-tabs.php:421
-msgid "Never lock out these IPs"
-msgstr ""
-
-#: includes/admin/class-tabs.php:421
-msgid "One per line. IPv4 ranges such as 192.168.1.0/24 work too."
-msgstr ""
-
-#: includes/admin/class-tabs.php:424
-msgid "Proxy headers"
+msgid "Add these lines at the top of the .htaccess file in your site's root folder, above the WordPress block. If your server is not Apache or LiteSpeed, ask your host to rewrite the new address to /wp-admin."
 msgstr ""
 
 #: includes/admin/class-tabs.php:425
+msgid "Test again"
+msgstr ""
+
+#: includes/admin/class-tabs.php:426
+msgid "Open the test page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:427
+msgid "Activate anyway"
+msgstr ""
+
+#: includes/admin/class-tabs.php:429
+msgid "The test page should show {\"success\":true,...}. Some servers cannot test themselves; if the test page works in your browser but \"Test again\" fails, use \"Activate anyway\"."
+msgstr ""
+
+#: includes/admin/class-tabs.php:460
+#: includes/admin/class-tabs.php:469
+msgid "Custom login URL"
+msgstr ""
+
+#: includes/admin/class-tabs.php:461
+msgid "Moves the login page so bots stop hammering wp-login.php. If you ever get locked out, add <code>define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );</code> to wp-config.php."
+msgstr ""
+
+#: includes/admin/class-tabs.php:465
+msgid "Your login page is at:"
+msgstr ""
+
+#: includes/admin/class-tabs.php:472
+msgid "Login address"
+msgstr ""
+
+#: includes/admin/class-tabs.php:473
+msgid "Letters, numbers and dashes. Not \"login\", \"admin\" or \"dashboard\"."
+msgstr ""
+
+#: includes/admin/class-tabs.php:482
+msgid "When someone opens wp-login.php or /wp-admin"
+msgstr ""
+
+#: includes/admin/class-tabs.php:484
+msgid "Show a \"page not found\" page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:485
+msgid "Send them to the home page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:486
+msgid "Send them to another address"
+msgstr ""
+
+#: includes/admin/class-tabs.php:491
+msgid "Other address"
+msgstr ""
+
+#: includes/admin/class-tabs.php:496
+msgid "Limit login attempts"
+msgstr ""
+
+#: includes/admin/class-tabs.php:498
+msgid "Limit attempts"
+msgstr ""
+
+#: includes/admin/class-tabs.php:499
+msgid "Failed attempts allowed"
+msgstr ""
+
+#: includes/admin/class-tabs.php:500
+msgid "Within (minutes)"
+msgstr ""
+
+#: includes/admin/class-tabs.php:501
+msgid "Lockout length (minutes)"
+msgstr ""
+
+#: includes/admin/class-tabs.php:502
+msgid "Never lock out these IPs"
+msgstr ""
+
+#: includes/admin/class-tabs.php:502
+msgid "One per line. IPv4 ranges such as 192.168.1.0/24 work too."
+msgstr ""
+
+#: includes/admin/class-tabs.php:505
+msgid "Proxy headers"
+msgstr ""
+
+#: includes/admin/class-tabs.php:506
 msgid "My site is behind Cloudflare or another proxy"
 msgstr ""
 
 #. translators: %s: visitor IP address.
-#: includes/admin/class-tabs.php:427
+#: includes/admin/class-tabs.php:508
 #, php-format
 msgid "Only turn this on if every request passes through a proxy, or visitors could fake their IP. Your IP as seen now: %s"
 msgstr ""
 
-#: includes/admin/class-tabs.php:432
+#: includes/admin/class-tabs.php:513
 msgid "Honeypot"
 msgstr ""
 
-#: includes/admin/class-tabs.php:434
+#: includes/admin/class-tabs.php:515
 msgid "Honeypot field"
 msgstr ""
 
-#: includes/admin/class-tabs.php:434
+#: includes/admin/class-tabs.php:515
 msgid "Add a hidden field to the login, registration and lost password forms"
 msgstr ""
 
-#: includes/admin/class-tabs.php:434
+#: includes/admin/class-tabs.php:515
 msgid "People never see it. Bots that fill in every field get rejected."
 msgstr ""
 
-#: includes/admin/class-tabs.php:438
+#: includes/admin/class-tabs.php:519
 #: includes/modules/security/class-two-factor.php:244
 #: includes/modules/security/class-two-factor.php:287
 #: includes/modules/security/class-two-factor.php:308
@@ -732,232 +802,232 @@ msgstr ""
 msgid "Two-factor authentication"
 msgstr ""
 
-#: includes/admin/class-tabs.php:439
+#: includes/admin/class-tabs.php:520
 msgid "Users turn it on from their profile with an authenticator app or email codes, and get one-time backup codes. If you get locked out, add <code>define( 'ADMINSTUDIO_DISABLE_2FA', true );</code> to wp-config.php."
 msgstr ""
 
-#: includes/admin/class-tabs.php:442
+#: includes/admin/class-tabs.php:523
 msgid "Two-factor"
 msgstr ""
 
-#: includes/admin/class-tabs.php:443
+#: includes/admin/class-tabs.php:524
 msgid "Email codes"
 msgstr ""
 
-#: includes/admin/class-tabs.php:443
+#: includes/admin/class-tabs.php:524
 msgid "Allow codes by email, as a method and as a fallback"
 msgstr ""
 
-#: includes/admin/class-tabs.php:443
+#: includes/admin/class-tabs.php:524
 msgid "Email is less secure than an app but easier for most people."
 msgstr ""
 
-#: includes/admin/class-tabs.php:444
+#: includes/admin/class-tabs.php:525
 msgid "Require for these roles"
 msgstr ""
 
-#: includes/admin/class-tabs.php:444
+#: includes/admin/class-tabs.php:525
 msgid "Users with these roles must set it up before the grace period ends."
 msgstr ""
 
-#: includes/admin/class-tabs.php:445
+#: includes/admin/class-tabs.php:526
 msgid "Grace period (days)"
 msgstr ""
 
-#: includes/admin/class-tabs.php:445
+#: includes/admin/class-tabs.php:526
 msgid "0 means they must set it up straight away."
 msgstr ""
 
-#: includes/admin/class-tabs.php:456
+#: includes/admin/class-tabs.php:538
 msgid "Recent lockouts"
 msgstr ""
 
-#: includes/admin/class-tabs.php:457
+#: includes/admin/class-tabs.php:539
 msgid "When"
 msgstr ""
 
-#: includes/admin/class-tabs.php:457
+#: includes/admin/class-tabs.php:539
 msgid "IP address"
 msgstr ""
 
-#: includes/admin/class-tabs.php:457
+#: includes/admin/class-tabs.php:539
 msgid "Username tried"
 msgstr ""
 
-#: includes/admin/class-tabs.php:457
-#: includes/admin/class-tabs.php:568
+#: includes/admin/class-tabs.php:539
+#: includes/admin/class-tabs.php:650
 #: includes/modules/security/class-two-factor.php:514
 msgid "Status"
 msgstr ""
 
-#: includes/admin/class-tabs.php:467
+#: includes/admin/class-tabs.php:549
 msgid "Unlock"
 msgstr ""
 
-#: includes/admin/class-tabs.php:470
+#: includes/admin/class-tabs.php:552
 msgid "Expired"
 msgstr ""
 
-#: includes/admin/class-tabs.php:479
+#: includes/admin/class-tabs.php:561
 msgid "Clear log"
 msgstr ""
 
-#: includes/admin/class-tabs.php:493
+#: includes/admin/class-tabs.php:575
 msgid "Coming soon and maintenance mode"
 msgstr ""
 
-#: includes/admin/class-tabs.php:494
+#: includes/admin/class-tabs.php:576
 msgid "Visitors see a holding page while you work. Design it in the Customizer."
 msgstr ""
 
-#: includes/admin/class-tabs.php:494
+#: includes/admin/class-tabs.php:576
 msgid "Design the page"
 msgstr ""
 
-#: includes/admin/class-tabs.php:498
+#: includes/admin/class-tabs.php:580
 msgid "Mode"
 msgstr ""
 
-#: includes/admin/class-tabs.php:498
+#: includes/admin/class-tabs.php:580
 msgid "Administrators always see the real site."
 msgstr ""
 
-#: includes/admin/class-tabs.php:501
+#: includes/admin/class-tabs.php:583
 msgid "Type"
 msgstr ""
 
-#: includes/admin/class-tabs.php:503
+#: includes/admin/class-tabs.php:585
 msgid "Coming soon (for a site that has not launched)"
 msgstr ""
 
-#: includes/admin/class-tabs.php:504
+#: includes/admin/class-tabs.php:586
 msgid "Maintenance (tells search engines to come back later)"
 msgstr ""
 
-#: includes/admin/class-tabs.php:507
+#: includes/admin/class-tabs.php:589
 msgid "Who can see the real site"
 msgstr ""
 
-#: includes/admin/class-tabs.php:507
+#: includes/admin/class-tabs.php:589
 msgid "Logged-in users with these roles."
 msgstr ""
 
-#: includes/admin/class-tabs.php:508
+#: includes/admin/class-tabs.php:590
 msgid "Always open pages"
 msgstr ""
 
-#: includes/admin/class-tabs.php:508
+#: includes/admin/class-tabs.php:590
 msgid "One path per line, such as /contact or /privacy-policy."
 msgstr ""
 
-#: includes/admin/class-tabs.php:510
+#: includes/admin/class-tabs.php:592
 msgid "Bypass link"
 msgstr ""
 
-#: includes/admin/class-tabs.php:515
+#: includes/admin/class-tabs.php:597
 msgid "Remove this link"
 msgstr ""
 
-#: includes/admin/class-tabs.php:517
+#: includes/admin/class-tabs.php:599
 msgid "Create a new link (the old one stops working)"
 msgstr ""
 
-#: includes/admin/class-tabs.php:517
+#: includes/admin/class-tabs.php:599
 msgid "Create a link"
 msgstr ""
 
-#: includes/admin/class-tabs.php:518
+#: includes/admin/class-tabs.php:600
 msgid "Anyone who opens this link sees the real site for a week. Useful for clients."
 msgstr ""
 
-#: includes/admin/class-tabs.php:532
+#: includes/admin/class-tabs.php:614
 msgid "Export"
 msgstr ""
 
-#: includes/admin/class-tabs.php:532
+#: includes/admin/class-tabs.php:614
 msgid "Download every Admin Studio setting as a JSON file to copy them to another site."
 msgstr ""
 
-#: includes/admin/class-tabs.php:535
+#: includes/admin/class-tabs.php:617
 msgid "Download settings"
 msgstr ""
 
-#: includes/admin/class-tabs.php:538
+#: includes/admin/class-tabs.php:620
 msgid "Import"
 msgstr ""
 
-#: includes/admin/class-tabs.php:538
+#: includes/admin/class-tabs.php:620
 msgid "Replace the current settings with an exported file. Image addresses still point to the original site."
 msgstr ""
 
-#: includes/admin/class-tabs.php:541
+#: includes/admin/class-tabs.php:623
 msgid "Settings file"
 msgstr ""
 
-#: includes/admin/class-tabs.php:542
+#: includes/admin/class-tabs.php:624
 msgid "Import settings"
 msgstr ""
 
-#: includes/admin/class-tabs.php:545
-#: includes/admin/class-tabs.php:565
+#: includes/admin/class-tabs.php:627
+#: includes/admin/class-tabs.php:647
 msgid "Reset"
 msgstr ""
 
-#: includes/admin/class-tabs.php:557
+#: includes/admin/class-tabs.php:639
 msgid "Everything"
 msgstr ""
 
-#: includes/admin/class-tabs.php:559
+#: includes/admin/class-tabs.php:641
 msgid "Section"
 msgstr ""
 
-#: includes/admin/class-tabs.php:564
+#: includes/admin/class-tabs.php:646
 msgid "I understand this restores the defaults for the chosen section"
 msgstr ""
 
-#: includes/admin/class-tabs.php:573
+#: includes/admin/class-tabs.php:655
 msgid "Critical error page"
 msgstr ""
 
-#: includes/admin/class-tabs.php:574
+#: includes/admin/class-tabs.php:656
 msgid "Database error page"
 msgstr ""
 
-#: includes/admin/class-tabs.php:575
+#: includes/admin/class-tabs.php:657
 msgid "Update maintenance page"
 msgstr ""
 
-#: includes/admin/class-tabs.php:590
+#: includes/admin/class-tabs.php:672
 msgid "wp-content writable"
 msgstr ""
 
-#: includes/admin/class-tabs.php:591
+#: includes/admin/class-tabs.php:673
 msgid "Yes"
 msgstr ""
 
-#: includes/admin/class-tabs.php:591
+#: includes/admin/class-tabs.php:673
 msgid "No"
 msgstr ""
 
-#: includes/admin/class-tabs.php:595
+#: includes/admin/class-tabs.php:677
 msgid "Colours detected from the theme"
 msgstr ""
 
-#: includes/admin/class-tabs.php:608
+#: includes/admin/class-tabs.php:690
 msgid "None. The built-in palette is used until you pick colours in the brand kit."
 msgstr ""
 
-#: includes/admin/class-tabs.php:613
+#: includes/admin/class-tabs.php:695
 msgid "Overlapping plugins"
 msgstr ""
 
 #. translators: 1: plugin name, 2: Admin Studio feature name.
-#: includes/admin/class-tabs.php:618
+#: includes/admin/class-tabs.php:700
 #, php-format
 msgid "%1$s does similar things to the %2$s feature. Use one or the other to avoid surprises."
 msgstr ""
 
-#: includes/admin/class-tabs.php:622
+#: includes/admin/class-tabs.php:704
 msgid "None found."
 msgstr ""
 
@@ -1259,11 +1329,11 @@ msgstr ""
 msgid "System serif"
 msgstr ""
 
-#: includes/class-plugin.php:120
+#: includes/class-plugin.php:121
 msgid "Settings"
 msgstr ""
 
-#: includes/class-plugin.php:121
+#: includes/class-plugin.php:122
 msgid "Customize"
 msgstr ""
 
