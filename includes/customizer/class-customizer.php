@@ -610,7 +610,7 @@ class Customizer {
 	 * @return void
 	 */
 	public static function enqueue() {
-		wp_enqueue_script( 'adminstudio-customizer', ADMINSTUDIO_URL . 'assets/js/customizer-controls.js', array( 'customize-controls', 'jquery' ), ADMINSTUDIO_VERSION, true );
+		wp_enqueue_script( 'adminstudio-customizer', ADMINSTUDIO_URL . 'assets/js/customizer-controls.js', array( 'customize-controls', 'jquery' ), \AdminStudio\Plugin::asset_version( 'assets/js/customizer-controls.js' ), true );
 
 		$brand = Brand_Kit::get();
 

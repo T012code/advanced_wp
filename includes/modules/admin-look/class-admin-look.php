@@ -511,7 +511,7 @@ class Admin_Look {
 
 		list( $light, $dark ) = self::colors( $current );
 
-		wp_enqueue_style( 'adminstudio-look', ADMINSTUDIO_URL . 'assets/css/look.css', array( 'common' ), ADMINSTUDIO_VERSION );
+		wp_enqueue_style( 'adminstudio-look', ADMINSTUDIO_URL . 'assets/css/look.css', array( 'common' ), \AdminStudio\Plugin::asset_version( 'assets/css/look.css' ) );
 		wp_add_inline_style(
 			'adminstudio-look',
 			'body.adminstudio-look{' . self::css_vars( $light ) . '}'
@@ -521,7 +521,7 @@ class Admin_Look {
 
 		$user = wp_get_current_user();
 
-		wp_enqueue_script( 'adminstudio-look', ADMINSTUDIO_URL . 'assets/js/look.js', array(), ADMINSTUDIO_VERSION, true );
+		wp_enqueue_script( 'adminstudio-look', ADMINSTUDIO_URL . 'assets/js/look.js', array(), \AdminStudio\Plugin::asset_version( 'assets/js/look.js' ), true );
 		wp_localize_script(
 			'adminstudio-look',
 			'adminstudioLook',

@@ -476,7 +476,7 @@ class Two_Factor {
 		}
 
 		wp_enqueue_script( 'adminstudio-qrcode', ADMINSTUDIO_URL . 'assets/vendor/qrcode.js', array(), '1.4.4', true );
-		wp_enqueue_script( 'adminstudio-two-factor', ADMINSTUDIO_URL . 'assets/js/two-factor.js', array( 'adminstudio-qrcode', 'wp-util' ), ADMINSTUDIO_VERSION, true );
+		wp_enqueue_script( 'adminstudio-two-factor', ADMINSTUDIO_URL . 'assets/js/two-factor.js', array( 'adminstudio-qrcode', 'wp-util' ), \AdminStudio\Plugin::asset_version( 'assets/js/two-factor.js' ), true );
 		wp_localize_script(
 			'adminstudio-two-factor',
 			'adminstudio2fa',

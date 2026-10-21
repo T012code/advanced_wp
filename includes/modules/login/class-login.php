@@ -79,9 +79,9 @@ class Login {
 	 * @return void
 	 */
 	public static function enqueue() {
-		wp_enqueue_style( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/css/login.css', array( 'login' ), ADMINSTUDIO_VERSION );
+		wp_enqueue_style( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/css/login.css', array( 'login' ), \AdminStudio\Plugin::asset_version( 'assets/css/login.css' ) );
 		wp_add_inline_style( 'adminstudio-login', self::css() );
-		wp_enqueue_script( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/js/login.js', array(), ADMINSTUDIO_VERSION, true );
+		wp_enqueue_script( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/js/login.js', array(), \AdminStudio\Plugin::asset_version( 'assets/js/login.js' ), true );
 	}
 
 	/**

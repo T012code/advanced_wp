@@ -202,7 +202,7 @@ class Admin_Branding {
 		wp_admin_css_color(
 			self::SCHEME,
 			__( 'Brand (Admin Studio)', 'admin-studio' ),
-			ADMINSTUDIO_URL . 'assets/css/admin-scheme.css',
+			add_query_arg( 'v', \AdminStudio\Plugin::asset_version( 'assets/css/admin-scheme.css' ), ADMINSTUDIO_URL . 'assets/css/admin-scheme.css' ),
 			array( self::menu_bg( $b ), $b['primary'], $b['secondary'], Color::readable_on( self::menu_bg( $b ) ) ),
 			array(
 				'base'    => Color::mix( Color::readable_on( self::menu_bg( $b ) ), self::menu_bg( $b ), 0.3 ),
@@ -266,7 +266,7 @@ class Admin_Branding {
 		// The admin bar shows in the admin and on the front end; the rest of the
 		// scheme loads in the admin only, through the `colors` handle.
 		if ( is_admin_bar_showing() ) {
-			wp_enqueue_style( 'adminstudio-admin-bar-scheme', ADMINSTUDIO_URL . 'assets/css/admin-bar-scheme.css', array( 'admin-bar' ), ADMINSTUDIO_VERSION );
+			wp_enqueue_style( 'adminstudio-admin-bar-scheme', ADMINSTUDIO_URL . 'assets/css/admin-bar-scheme.css', array( 'admin-bar' ), \AdminStudio\Plugin::asset_version( 'assets/css/admin-bar-scheme.css' ) );
 			wp_add_inline_style( 'adminstudio-admin-bar-scheme', $css );
 		}
 

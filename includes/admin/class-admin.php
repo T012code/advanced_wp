@@ -122,11 +122,11 @@ class Admin {
 	 */
 	public static function enqueue( $hook ) {
 		if ( in_array( $hook, array( 'profile.php', 'user-edit.php', 'users.php' ), true ) ) {
-			wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), ADMINSTUDIO_VERSION );
+			wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), \AdminStudio\Plugin::asset_version( 'assets/css/admin.css' ) );
 
 			// Shows the page or address box for the login destination picker.
 			if ( 'users.php' !== $hook ) {
-				wp_enqueue_script( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/js/admin.js', array( 'jquery' ), ADMINSTUDIO_VERSION, true );
+				wp_enqueue_script( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/js/admin.js', array( 'jquery' ), \AdminStudio\Plugin::asset_version( 'assets/js/admin.js' ), true );
 			}
 			return;
 		}
@@ -135,9 +135,9 @@ class Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), ADMINSTUDIO_VERSION );
+		wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), \AdminStudio\Plugin::asset_version( 'assets/css/admin.css' ) );
 		wp_enqueue_media();
-		wp_enqueue_script( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/js/admin.js', array( 'jquery' ), ADMINSTUDIO_VERSION, true );
+		wp_enqueue_script( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/js/admin.js', array( 'jquery' ), \AdminStudio\Plugin::asset_version( 'assets/js/admin.js' ), true );
 		wp_localize_script(
 			'adminstudio-admin',
 			'adminstudioAdmin',

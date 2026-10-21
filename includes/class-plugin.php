@@ -115,6 +115,19 @@ class Plugin {
 	}
 
 	/**
+	 * Version string for a plugin asset. It changes whenever the file
+	 * changes, so browsers load the new copy straight after an update.
+	 *
+	 * @param string $path Path inside the plugin folder, such as assets/css/admin.css.
+	 * @return string
+	 */
+	public static function asset_version( $path ) {
+		$file = ADMINSTUDIO_DIR . ltrim( $path, '/' );
+
+		return file_exists( $file ) ? ADMINSTUDIO_VERSION . '.' . filemtime( $file ) : ADMINSTUDIO_VERSION;
+	}
+
+	/**
 	 * Adds Settings and Customize links on the Plugins screen.
 	 *
 	 * @param array $links Existing links.
