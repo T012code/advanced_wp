@@ -643,8 +643,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
-	padding-top: 16px;
-	border-top: 1px solid #f0f0f1;
+	margin-top: 8px;
 }
 
 .adminstudio-inline-form {
@@ -1423,4 +1422,8 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 
 .adminstudio-parts small {
 	color: var(--as-muted, #646970);
+}
+
+.adminstudio-parts .adminstudio-parts__sub {
+	margin-left: 26px;
 }

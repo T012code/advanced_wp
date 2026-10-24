@@ -778,11 +778,12 @@ class Tabs {
 	 * Checkboxes for the parts of an export or import.
 	 *
 	 * @param string[] $checked Parts ticked to start with.
+	 * @param bool     $import  Whether this is the import form.
 	 * @return void
 	 */
-	private static function transfer_parts( array $checked ) {
+	private static function transfer_parts( array $checked, $import = false ) {
 		echo '<fieldset class="adminstudio-parts"><legend>' . esc_html__( 'Include', 'admin-studio' ) . '</legend>';
-		foreach ( Transfer::parts() as $key => $part ) {
+		foreach ( $import ? Transfer::import_parts() : Transfer::parts() as $key => $part ) {
 			printf(
 				'<label><input type="checkbox" name="adminstudio_parts[]" value="%1$s"%2$s> <span><strong>%3$s</strong><small>%4$s</small></span></label>',
 				esc_attr( $key ),
@@ -790,6 +791,10 @@ class Tabs {
 				esc_html( $part[0] ),
 				esc_html( $part[1] )
 			);
+
+			if ( $import && 'roles' === $key ) {
+				echo '<label class="adminstudio-parts__sub"><input type="checkbox" name="adminstudio_roles_update" value="1"> <span><strong>' . esc_html__( 'Also replace the capabilities of roles that exist here', 'admin-studio' ) . '</strong><small>' . esc_html__( 'Leave this off to keep roles you changed on this site, and roles set up by plugins such as WooCommerce, as they are. The Administrator role is never changed, and nothing is imported if it would remove your own access.', 'admin-studio' ) . '</small></span></label>';
+			}
 		}
 		echo '</fieldset>';
 	}
@@ -815,7 +820,7 @@ class Tabs {
 		echo '<form method="post" enctype="multipart/form-data" action="' . esc_url( $post ) . '" data-adminstudio-confirm><input type="hidden" name="action" value="adminstudio_import">';
 		wp_nonce_field( 'adminstudio_import' );
 		echo '<label for="adminstudio-file" class="screen-reader-text">' . esc_html__( 'Settings file', 'admin-studio' ) . '</label><input type="file" id="adminstudio-file" name="adminstudio_file" accept=".json,application/json" required>';
-		self::transfer_parts( Transfer::default_import_parts() );
+		self::transfer_parts( Transfer::default_import_parts(), true );
 		echo '<p>';
 		submit_button( __( 'Import settings', 'admin-studio' ), 'secondary', 'submit', false );
 		echo '</p></form></section>';

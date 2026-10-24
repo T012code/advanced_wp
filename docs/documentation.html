@@ -92,10 +92,10 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<img src="../assets/images/logo.svg" width="96" height="96" alt="Admin Studio logo" style="margin-bottom:24px">
 	<p class="part-title">Documentation</p>
 	<h1>Admin Studio</h1>
-	<p class="lead">Rebrand the login page, system emails, error pages, browser tab details and the admin dashboard of a WordPress site, starting from the colours and fonts of its theme.</p>
+	<p class="lead">Rebrand the login page, system emails, error pages, browser tab details and the admin dashboard of a WordPress site, starting from the colours and fonts of its theme, and run the dashboard for the people who use it.</p>
 	<dl>
 		<dt>Plugin version</dt><dd>1.0.0</dd>
-		<dt>Document date</dt><dd>20 October 2026</dd>
+		<dt>Document date</dt><dd>24 October 2026</dd>
 		<dt>Requires</dt><dd>WordPress 6.4 or later, PHP 7.4 or later</dd>
 		<dt>Tested with</dt><dd>WordPress 7.1</dd>
 		<dt>Author</dt><dd>Láyò, <a href="https://www.layothedeveloper.com">www.layothedeveloper.com</a></dd>
@@ -117,31 +117,26 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li>7. Error and system pages</li>
 		<li>8. Tab and page details</li>
 		<li>9. Admin branding</li>
-		<li>10. Login protection</li>
-		<li>11. Coming soon and maintenance mode</li>
-		<li>12. Tools</li>
-		<li>13. Troubleshooting</li>
-		<li>14. Privacy and external services</li>
+		<li>10. Dashboard look</li>
+		<li>11. Dashboard widgets</li>
+		<li>12. Roles and permissions</li>
+		<li>13. Login protection</li>
+		<li>14. Sessions</li>
+		<li>15. Coming soon and maintenance mode</li>
+		<li>16. Tools</li>
+		<li>17. Troubleshooting</li>
+		<li>18. Privacy and external services</li>
 		<li class="toc-part">Part 2. Developer reference</li>
-		<li>15. Requirements and compatibility</li>
-		<li>16. File structure</li>
-		<li>17. How settings are stored</li>
-		<li>18. Data the plugin stores</li>
-		<li>19. WordPress hooks used</li>
-		<li>20. Constants</li>
-		<li>21. Drop-in files</li>
-		<li>22. Security model</li>
-		<li>23. WordPress.org compliance</li>
-		<li>24. Release, brand assets and these documents</li>
-		<li class="toc-part">Part 3. Version 1.1 specification</li>
-		<li>25. Summary and status</li>
-		<li>26. Roles and permissions</li>
-		<li>27. Toolbar control</li>
-		<li>28. Admin templates</li>
-		<li>29. Dashboard widgets</li>
-		<li>30. Login screen text and links</li>
-		<li>31. Where the new settings live</li>
-		<li>32. Technical approach and build order</li>
+		<li>19. Requirements and compatibility</li>
+		<li>20. File structure</li>
+		<li>21. How settings are stored</li>
+		<li>22. Data the plugin stores</li>
+		<li>23. WordPress hooks used</li>
+		<li>24. Constants</li>
+		<li>25. Drop-in files</li>
+		<li>26. Security model</li>
+		<li>27. WordPress.org compliance</li>
+		<li>28. Release, brand assets and these documents</li>
 	</ol>
 </section>
 
@@ -151,25 +146,34 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h2>1. What Admin Studio does</h2>
 	<p>WordPress shows many screens and emails in its own default style: the login page, password reset emails, the "critical error" page, the "briefly unavailable" screen during updates, and the "Thank you for creating with WordPress" credit in the dashboard. Admin Studio restyles all of them to match a brand, from one place.</p>
 	<p>It starts from the active theme. Colours and fonts are read from <code>theme.json</code> on block themes and from theme settings on classic themes. The logo comes from the theme logo, and the favicon is the site icon. Change any value once in the brand kit and every screen follows, or override it for one area only.</p>
-	<p>Each feature can be switched off. A switched-off feature loads no code.</p>
+	<p>It also helps you run the dashboard for the people who use it: what each role can do and see (section 12), how the dashboard looks for each person (section 10), which widgets they see first (section 11), who is signed in and on which device (section 14), and how the login is protected (section 13).</p>
+	<p>Each feature can be switched off on the Overview tab. A switched-off feature loads no code.</p>
 
 	<h2>2. Installing and first steps</h2>
 	<ol>
 		<li>Upload the <code>admin-studio</code> folder to <code>wp-content/plugins/</code>, or install the zip from Plugins → Add New → Upload Plugin.</li>
 		<li>Activate the plugin. The login page, emails and error pages immediately take on your theme's colours and fonts.</li>
 		<li>Open <strong>Appearance → Customize → Admin Studio</strong> to adjust the brand kit and design the login page, emails and system pages with a live preview.</li>
-		<li>Open <strong>Settings → Admin Studio</strong> to edit email wording, admin branding, login protection, coming soon mode and tools.</li>
+		<li>Open <strong>Settings → Admin Studio</strong> for everything else. The Overview tab shows every feature with its switch and the brand kit's colour source.</li>
 	</ol>
 
 	<h2>3. Where each setting lives</h2>
 	<p>Anything visual that can be previewed lives in the Customizer. Everything else lives on the settings page, where each group of settings sits in its own card and the Overview tab shows every feature as a card with its switch. Tables and cards share the same width, border and rounded corners. Every setting is always visible: switching a feature off does not hide its details, so you can read and fill them in before switching it on. Only a choice in a list (such as "Other address") reveals the box it needs.</p>
 	<table>
-		<tr><th>Customizer (Appearance → Customize → Admin Studio)</th><th>Settings page (Settings → Admin Studio)</th></tr>
-		<tr><td>Brand kit</td><td>Overview: switch features on or off; uninstall option</td></tr>
-		<tr><td>Login page: layout, background, logo, form, button, text, custom CSS</td><td>Emails: subject, heading, body and button of each email; preview; test send</td></tr>
-		<tr><td>Emails: design (colours, logo, font, width)</td><td>Tab and page details</td></tr>
-		<tr><td>System pages: design and wording of each page</td><td>Admin branding</td></tr>
-		<tr><td>Coming soon page design</td><td>Login protection; Sessions; Coming soon access rules; Tools</td></tr>
+		<tr><th>Where</th><th>What you set there</th></tr>
+		<tr><td>Customizer (Appearance → Customize → Admin Studio)</td><td>Brand kit; login page layout, background, logo, form, text and links, wording and custom CSS; email design; system page design and wording; the coming soon page design</td></tr>
+		<tr><td>Settings → Admin Studio → Overview</td><td>Feature switches, the brand kit's colour source, the uninstall option</td></tr>
+		<tr><td>Emails</td><td>Subject, heading, body and button of each email; preview; test send</td></tr>
+		<tr><td>Tab &amp; page details</td><td>Browser tab titles, favicon, address bar colour, WordPress traces</td></tr>
+		<tr><td>Admin branding</td><td>Admin bar logo, footer credit, Help and Screen Options tabs, brand colour scheme</td></tr>
+		<tr><td>Dashboard look</td><td>Admin templates, palettes, templates per role and person, the sidebar menu</td></tr>
+		<tr><td>Dashboard widgets</td><td>Widgets per role, custom widgets, the default layout</td></tr>
+		<tr><td>Roles &amp; permissions</td><td>Roles and capabilities, menu access, toolbar, login destinations and dashboard access, role backups, activity log</td></tr>
+		<tr><td>Sessions</td><td>Who is signed in, blocked accounts, session limits, sign-in history</td></tr>
+		<tr><td>Login protection</td><td>Custom login and dashboard addresses, attempt limits, honeypot, two-factor</td></tr>
+		<tr><td>Coming soon</td><td>Mode, holding page, who sees the real site, bypass link</td></tr>
+		<tr><td>Tools</td><td>Export, import, reset, status</td></tr>
+		<tr><td>A user's profile (Users → Profile)</td><td>Their roles and own permissions, login destination, toolbar, template, light or dark mode, two-factor</td></tr>
 	</table>
 	<figure>
 		<img src="images/settings-overview.png" alt="The Overview tab of the settings page">
@@ -315,7 +319,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<ul>
 		<li><strong>Admin bar:</strong> keep, replace or remove the WordPress logo menu; choose your own image and link. Optionally show just the user's name instead of "Howdy, Name".</li>
 		<li><strong>Footer credit:</strong> keep, replace or remove "Thank you for creating with WordPress" and the version number. Custom text supports basic HTML and <code>{site_name}</code>, <code>{site_url}</code> and <code>{year}</code>.</li>
-		<li><strong>Admin screens:</strong> remove the Help and Screen Options tabs. Dashboard widgets, including the welcome panel, moved to their own tab (section 29); earlier settings carry over automatically.</li>
+		<li><strong>Admin screens:</strong> remove the Help and Screen Options tabs. Dashboard widgets, including the welcome panel, moved to their own tab (section 11); earlier settings carry over automatically.</li>
 		<li><strong>Colour scheme:</strong> adds a "Brand" admin colour scheme built from the brand kit, which users pick on their profile. It can be the default for new users. When the brand primary colour would disappear against the menu, the scheme uses the secondary colour for the current item instead.</li>
 	</ul>
 	<figure>
@@ -323,8 +327,146 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<figcaption>The brand colour scheme on the dashboard.</figcaption>
 	</figure>
 
-	<h2>10. Login protection</h2>
-	<p>Switch on any of the four features under Settings → Admin Studio → Login protection.</p>
+	<h2>10. Dashboard look</h2>
+	<p>Settings → Admin Studio → <strong>Dashboard look</strong> has three sections: Templates, Roles and users, and Sidebar menu.</p>
+	<p>Templates change the look of the whole dashboard: sidebar, top bar, page headers, cards and meta boxes, tables, forms, buttons and notices. The block editor's canvas and panels keep WordPress's own design, because they change often between WordPress versions.</p>
+	<h3>Templates</h3>
+	<table>
+		<tr><th>Template</th><th>Look</th></tr>
+		<tr><td>Studio</td><td>A soft tinted sidebar with section headings (Overview, Content, System), outline icons with labels, the active item as a filled accent pill with a soft glow, pill badges for counts, rounded cards with a soft floating shadow, and a sidebar footer.</td></tr>
+		<tr><td>Midnight</td><td>Dark sidebar and top bar, light content area, bright accent.</td></tr>
+		<tr><td>Minimal</td><td>White sidebar, thin even dividers, no shadows; the accent appears only on text and icons.</td></tr>
+		<tr><td>Compact</td><td>An icon-only rail that expands on hover or focus, and denser tables, for power users and small screens.</td></tr>
+	</table>
+	<figure>
+		<img src="images/look-studio.png" alt="The Studio template on the dashboard home, with section headings, outline icons, the current item as a filled pill, the greeting and the sidebar footer">
+		<figcaption>Studio with the Plum palette: section headings, outline icons, the greeting and the sidebar footer.</figcaption>
+	</figure>
+	<figure class="half">
+		<img src="images/look-midnight.png" alt="The Midnight template on the Posts screen">
+		<figcaption>Midnight with the Cobalt palette.</figcaption>
+	</figure>
+	<figure class="half">
+		<img src="images/look-studio-dark.png" alt="The Studio template in dark mode">
+		<figcaption>Studio in dark mode.</figcaption>
+	</figure>
+	<figure>
+		<img src="images/settings-look.png" alt="The Templates section of the Dashboard look tab, with template cards, Try it on me buttons and palettes">
+		<figcaption>Settings → Admin Studio → Dashboard look → Templates.</figcaption>
+	</figure>
+	<h3>Colours and dark mode</h3>
+	<ul>
+		<li>Colours follow the brand kit by default, so the dashboard matches the site out of the box.</li>
+		<li>Ready palettes: Brand kit, Cobalt, Forest, Plum, Graphite and Sunset, plus Custom, where you set the accent, sidebar, background and text colours. Any colour left empty is worked out from the accent.</li>
+		<li>Text and icon colours are chosen for contrast automatically. If the accent is too close to the sidebar colour (for example a black brand colour on the dark Midnight sidebar), the current menu item uses a lighter shade so it still stands out.</li>
+		<li>Every template has a dark version. Users switch between light, dark and "system" (follow the device) with the button in the sidebar footer, or on their profile. The choice is saved per user.</li>
+		<li>While a template is in use, WordPress's own colour scheme is set aside for that user and its picker is hidden from their profile. Their saved scheme comes back when they return to "WordPress default".</li>
+	</ul>
+	<h3>Sidebar menu</h3>
+	<ul>
+		<li>Menu items are grouped into sections with headings. Admins can create sections and move items between them.</li>
+		<li>Rename, reorder (drag and drop, or the up and down buttons from the keyboard) and choose an icon for each item from a bundled set of outline icons drawn in the style of Lucide (ISC licence). Core items get a matching icon automatically; plugin items keep their own icon unless you pick one.</li>
+		<li>Sections can be renamed, reordered, removed and added. Items in a removed section fall back to their usual section. "Reset to the standard layout" clears every change.</li>
+		<li>One menu layout for the whole site; each role only sees the items it is allowed (section 12, Menu access).</li>
+		<li>Sidebar footer: avatar and email, View site, Sign out, and the light/dark toggle.</li>
+		<li>Hovered and focused menu items, including plugin menus such as WooCommerce, get a rounded tint in the template's colours instead of WordPress's dark row and side stripe. Keyboard focus shows a full ring.</li>
+	</ul>
+	<figure>
+		<img src="images/settings-look-menu.png" alt="The Sidebar menu section: sections and menu items with labels, sections and icons">
+		<figcaption>Dashboard look → Sidebar menu.</figcaption>
+	</figure>
+	<h3>Dashboard home</h3>
+	<p>Each template also styles the dashboard home: a greeting ("Good morning", "Good afternoon" or "Good evening" with the user's first name) and the date replace the plain "Dashboard" heading, and widgets become rounded cards.</p>
+	<h3>Who gets which template</h3>
+	<ol>
+		<li>Site default for everyone.</li>
+		<li>Per role, overriding the default.</li>
+		<li>Per user, set by an administrator.</li>
+		<li>Users can choose their own template and palette on their profile, unless "Personal choice" is switched off or an administrator has locked their role or account.</li>
+	</ol>
+	<p>The most specific rule wins, in this order: a template an administrator is trying on themselves, the user's own choice, the administrator's per-user choice, the role, the site default. Settings → Admin Studio → Dashboard look → Roles and users sets the template per role and lists everyone with a template of their own.</p>
+	<h3>Trying a template</h3>
+	<p>"Try it on me" on each template card applies that template, with the palette selected on the page, to your own account only, and opens the dashboard so you can look around. A banner at the top of every screen then offers "Apply to everyone" (makes it the site default), "Apply to roles" (opens the per-role table) and "Stop trying".</p>
+
+	<h2>11. Dashboard widgets</h2>
+	<p>Settings → Admin Studio → <strong>Dashboard widgets</strong> has three sections. The feature can be switched off on the Overview tab.</p>
+	<h3>Show and hide</h3>
+	<p>A table lists every dashboard widget with a column per role. Untick a role to hide that widget from everyone in it. The list starts with the WordPress widgets, including the welcome panel. Widgets from other plugins, such as WooCommerce or Elementor, are added automatically the first time an administrator opens the dashboard with those plugins active, and stay listed if the plugin is switched off for a while. Someone with several roles sees a widget if any of their roles does.</p>
+	<h3>Custom widgets</h3>
+	<p>Add as many widgets as you like. Each has a title (which can use <code>{site_name}</code>), a starting column, and the roles that see it; tick none to show it to everyone. The types are:</p>
+	<ul>
+		<li><strong>Text:</strong> rich text or HTML with the Visual/Code editor and media button, plus an optional button.</li>
+		<li><strong>Quick links:</strong> up to 12 buttons, each with a label, an address and an icon. An address can be an admin screen such as <code>post-new.php</code> or <code>edit.php?post_type=page</code>, or a full address, which opens in a new tab. Drag rows to reorder them.</li>
+		<li><strong>Support card:</strong> a message, an email address, a phone number and a button.</li>
+		<li><strong>Video:</strong> the page address of a video on YouTube, Vimeo or another site WordPress can embed, with optional text underneath. The player loads from that site when someone views the dashboard; see External services in the readme.</li>
+		<li><strong>What's new:</strong> the latest posts from a category on this site.</li>
+		<li><strong>Recent sign-ups</strong>, <strong>Content counts</strong> (posts, pages, products and other content types, comments and users), <strong>Recent comments</strong> and a <strong>Site health summary</strong> from the last Site Health check. These show site data to everyone they are shown to, so limit them to the right roles. Links to edit screens only appear for people allowed to use them, and people who cannot moderate comments only see approved ones.</li>
+	</ul>
+	<p>The welcome panel from earlier versions becomes a Text widget, and widgets hidden under Admin branding stay hidden for every role.</p>
+	<figure>
+		<img src="images/dashboard-widgets.png" alt="Custom widgets list and the widget types">
+		<figcaption>Custom widgets, and the types you can add.</figcaption>
+	</figure>
+	<h3>Default layout</h3>
+	<p>Arrange your own dashboard the way everyone should see it: drag widgets into place, collapse the ones that should start closed and hide any with Screen Options. Then click <strong>Save my dashboard as the default</strong>. The page shows the saved columns. People who have not arranged their own dashboard get the default straight away. Tick "Also replace the arrangement people have already made" to clear everyone's own order, collapsed and hidden widgets.</p>
+	<p><strong>Lock</strong> stops people dragging widgets: they get the saved order and the move buttons disappear, though they can still collapse widgets. Administrators are never locked, so they can change the default. "Remove the default layout" goes back to the WordPress arrangement.</p>
+
+	<h2>12. Roles and permissions</h2>
+	<p>Settings → Admin Studio → <strong>Roles &amp; permissions</strong> has six sections: Roles, Menu access, Toolbar, Login and access, Backups and Activity log. A person's own roles and permissions are on their profile.</p>
+	<h3>Role manager</h3>
+	<ul>
+		<li>Create a role from scratch or by cloning an existing one (for example "Shop Manager" from Editor).</li>
+		<li>Rename any role's display name. Delete custom roles; if users have the role, choose which role they move to first.</li>
+		<li>Show the number of users in each role, with a link to the filtered user list.</li>
+	</ul>
+	<h3>Capability editor</h3>
+	<ul>
+		<li>Edit the capabilities of any role, including core roles such as Editor and Author.</li>
+		<li>Capabilities are grouped: Posts, Pages, Media, Comments, Users, Appearance, Plugins, Tools, Settings, and one group per plugin that registers its own (for example WooCommerce), detected automatically. Unknown capabilities go in "Other".</li>
+		<li>Each capability has a plain-language label and description, a search box, and "select all" per group.</li>
+	</ul>
+	<h3>Per-user permissions</h3>
+	<ul>
+		<li>Give a user more than one role.</li>
+		<li>Grant extra capabilities to one user, or deny specific capabilities that their role would otherwise give. Denials win.</li>
+		<li>Shown as an extra section on the user's profile, for users who can edit users.</li>
+	</ul>
+	<h3>Menu access per role</h3>
+	<ul>
+		<li>Choose which dashboard menu and submenu items each role sees, including items added by other plugins. Each menu is a small card with its submenu items, and the cards flow into columns, so even a long menu fits on one screen. A search box narrows the cards to the items that match.</li>
+		<li>Hidden screens are also blocked when opened directly by URL; the visitor sees the branded notice screen.</li>
+	</ul>
+	<h3>Login redirect and dashboard access</h3>
+	<ul>
+		<li><strong>Per role</strong> (Roles &amp; permissions → Login and access): choose where each role goes after logging in, Administrator included. Destinations: the dashboard home, their profile, the site home page, Posts, Add a new post, Pages, Media, Comments, Users, any published page on the site (picked from a list), or any other address.</li>
+		<li><strong>Per person</strong> (the user's profile → After logging in): the same choices for one account, set by an administrator. It wins over the role's destination. The Login and access section lists everyone with a destination of their own.</li>
+		<li>Order: the person's own destination, then their role's (for someone with several roles, the first role that has one), then the home page for kept-out roles, then WordPress's default.</li>
+		<li>Someone who logs in from a link to a particular screen still goes to that screen, unless "Always use these destinations" is ticked.</li>
+		<li>If a chosen page is later unpublished or deleted, the next rule in the order applies instead.</li>
+		<li>Keep chosen roles out of the dashboard entirely and send them to the front end. AJAX and REST requests keep working.</li>
+	</ul>
+	<h3>Toolbar</h3>
+	<ul>
+		<li>Hide the top toolbar on the front end per role, with per-user overrides on the profile screen.</li>
+		<li>Hide it inside the dashboard too. When it is hidden there, the account details, "View site", "Sign out" and the colour mode switch are in the sidebar footer. This option only takes effect for people who see an admin template other than "WordPress default". On phones the toolbar stays, because it holds the button that opens the menu.</li>
+		<li>A user with several roles loses the toolbar only when every one of their roles hides it. Administrators always keep it.</li>
+		<li>Hide individual toolbar items instead of the whole bar: comments, "+ New", updates, search, customize, and items added by other plugins (detected automatically). Per role.</li>
+		<li>The table groups its columns under "Hide the whole toolbar" and "Hide one item". With many items it scrolls sideways while the Role column stays in place, and so does the role table on the Dashboard widgets tab.</li>
+	</ul>
+	<h3>Safety</h3>
+	<ul>
+		<li>The Administrator role is locked: its capabilities cannot be reduced and it cannot be deleted.</li>
+		<li>No change can remove your own ability to manage users or this plugin.</li>
+		<li>A copy of all roles is saved before each change. The last 20 copies can be restored, and "Restore WordPress default roles" resets core roles.</li>
+	</ul>
+	<h3>Activity log and export</h3>
+	<ul>
+		<li>The activity log records who changed which role, capability, user permission, menu rule, toolbar rule, login destination, template, widget or import, and when, with a CSV download.</li>
+		<li>Roles and capabilities, menu rules, toolbar rules and login destinations are included in the settings export and import (section 16). Roles and permissions given to one person are not, so an import cannot give anyone extra rights.</li>
+	</ul>
+
+	<h2>13. Login protection</h2>
+	<p>Switch on any of these features under Settings → Admin Studio → Login protection: a custom login URL, limits on failed logins, a honeypot field, a custom dashboard address and two-factor authentication.</p>
 	<h3>Custom login URL</h3>
 	<p>Moves the login page to an address such as <code>/team-login</code>. Logged-out visitors who open <code>wp-login.php</code> or <code>/wp-admin</code> see a "page not found" page, are sent to the home page, or are sent to an address you choose. Every login, logout, registration and password link WordPress creates, including links in emails, uses the new address. The words "login", "admin", "dashboard" and WordPress folder names cannot be used.</p>
 	<h3>Limit login attempts</h3>
@@ -369,7 +511,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</figure>
 	<p>Administrators can require two-factor for chosen roles, with a grace period in days. Users in those roles see a reminder, and once the grace period ends they are sent to their profile until they set it up. Administrators can reset another user's two-factor from that user's profile.</p>
 
-	<h3>Sessions and devices</h3>
+	<h2>14. Sessions</h2>
 	<p>Settings → Admin Studio → <strong>Sessions</strong> shows who is signed in and where. Each browser or app someone signs in on is one session; Admin Studio reads WordPress's own sessions, so ending one signs that device out on its next page load.</p>
 	<ul>
 		<li><strong>Signed in now:</strong> everyone with an active session, grouped by person, with the device (browser, system and whether it is a computer, phone, tablet or the WordPress app), IP address, when they signed in, when they were last active (updated every five minutes) and when the session expires. Your own current session is marked "This device".</li>
@@ -389,7 +531,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<figcaption>Sessions → Sign-in history.</figcaption>
 	</figure>
 
-	<h2>11. Coming soon and maintenance mode</h2>
+	<h2>15. Coming soon and maintenance mode</h2>
 	<p>Turn the mode on under Settings → Admin Studio → Coming soon. Under <strong>Holding page</strong>, choose what visitors see:</p>
 	<ul>
 		<li><strong>The page designed in the Customizer:</strong> headline, message, countdown, logo, background colour or image, and text colour.</li>
@@ -412,7 +554,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<figcaption>Coming soon page with a background image and countdown.</figcaption>
 	</figure>
 
-	<h2>12. Tools</h2>
+	<h2>16. Tools</h2>
 	<ul>
 		<li><strong>Export</strong> downloads Admin Studio's settings as a JSON file. Tick the parts to include; all are ticked to start with:
 			<ul>
@@ -427,7 +569,12 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li><strong>Import</strong> replaces the ticked parts with the ones in an exported file; parts the file does not contain, or that are not ticked, stay as they are. Each value is checked and cleaned on import, and the import is recorded in the activity log. Image addresses still point to the site they came from.
 			<ul>
 				<li><strong>Pages and categories</strong> (the coming soon page, login destinations, the category of a "What's new" widget) have different IDs on every site, so the file carries their slug, and the import links them to the page or category with the same slug here. Drafts, which have no slug yet, are matched by their exact title. Anything that cannot be found goes back to its default, and a notice says how many.</li>
-				<li><strong>Roles and capabilities</strong> are not ticked to start with, because they change what people can do. When ticked, roles in the file are added or updated, roles that are not in the file stay, and the Administrator role is never changed. A backup of your roles is saved first (Roles &amp; permissions → Backups), and nothing is imported if the roles would remove your own access.</li>
+				<li><strong>Roles that differ between the sites.</strong> Many settings name roles: menu access, the toolbar, login destinations, templates per role, widget visibility, who sees the real site during coming soon, and the roles that need two-factor or a session limit. A rule for a role this site does not have would be lost, so the import form has two boxes:
+					<ul>
+						<li><strong>Add roles this site does not have</strong> (ticked to start with): roles in the file that are missing here are created with their capabilities, so their rules come across too.</li>
+						<li><strong>Also replace the capabilities of roles that exist here</strong> (not ticked): gives roles that exist on both sites the file's capabilities. Leave it off to keep roles you changed on this site, and roles set up by plugins such as WooCommerce, as they are.</li>
+					</ul>
+					Roles that are only on this site stay, the Administrator role is never changed, a backup of your roles is saved first (Roles &amp; permissions → Backups), and nothing in the roles is changed if it would remove your own access. After the import a notice lists the roles added and updated. If you untick "Add roles", it lists the roles this site does not have, whose rules were skipped.</li>
 				<li><strong>Personal settings</strong> go to the people with the same username, or else the same email address. Roles and permissions given to one person are not part of an export, so an import can never hand someone extra rights.</li>
 				<li><strong>Login and dashboard addresses</strong> are checked as when you save the Login protection tab: an address that cannot be used is switched off, and the dashboard only moves after the server test passes.</li>
 				<li>Files exported by Admin Studio 1.0 still import.</li>
@@ -437,7 +584,12 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li><strong>Status</strong> shows the state of each drop-in file, whether <code>wp-content</code> is writable, the colours detected from your theme, and any active plugins that do the same job as an Admin Studio feature.</li>
 	</ul>
 
-	<h2>13. Troubleshooting</h2>
+	<figure class="half">
+		<img src="images/tools-import.png" alt="The Import card with the parts to import and the two role boxes">
+		<figcaption>Tools → Import, with "Add roles this site does not have" ticked and "Also replace" left off.</figcaption>
+	</figure>
+
+	<h2>17. Troubleshooting</h2>
 	<h4>I moved the login page and forgot the address.</h4>
 	<p>Add <code>define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );</code> to <code>wp-config.php</code>, log in at <code>/wp-login.php</code>, check the address on the Login protection tab, then remove the line.</p>
 	<h4>I moved the dashboard and cannot reach it.</h4>
@@ -450,27 +602,37 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p>Another plugin or your host already provides that page. Admin Studio leaves it in place. Remove the other file if you want Admin Studio's version, then save any setting.</p>
 	<h4>A Google font does not show.</h4>
 	<p>The font is downloaded when you publish in the Customizer. If your server cannot reach Google Fonts, a system font is used instead.</p>
+	<h4>An import says rules for some roles were skipped.</h4>
+	<p>The file has rules for roles this site does not have, and "Add roles this site does not have" was not ticked. Import the same file again with it ticked, or create those roles under Roles &amp; permissions first.</p>
+	<h4>Someone can no longer reach a dashboard screen.</h4>
+	<p>Check Roles &amp; permissions → Menu access for their role, "Keep out of the dashboard" under Login and access, and the permissions on their profile. Administrators always see everything, so an administrator can put it right.</p>
 
-	<h2>14. Privacy and external services</h2>
-	<p>Admin Studio makes no external requests and tracks nothing, with one exception: when an administrator chooses a Google font and publishes, the server downloads that font once from fonts.googleapis.com and fonts.gstatic.com. The request contains only the font name and the server's IP address. The files are then served from the site's own uploads folder. Google's <a href="https://developers.google.com/fonts/terms">terms</a> and <a href="https://policies.google.com/privacy">privacy policy</a> apply to that request.</p>
+	<h2>18. Privacy and external services</h2>
+	<p>Admin Studio tracks nothing and contacts outside services only in two cases, both started by an administrator:</p>
+	<ul>
+		<li><strong>Google Fonts:</strong> when an administrator chooses a Google font and publishes, the server downloads that font once from fonts.googleapis.com and fonts.gstatic.com. The request contains only the font name and the server's IP address. The files are then served from the site's own uploads folder, so visitors never contact Google. Google's <a href="https://developers.google.com/fonts/terms">terms</a> and <a href="https://policies.google.com/privacy">privacy policy</a> apply.</li>
+		<li><strong>Video dashboard widget:</strong> when an administrator adds one, the server asks the video site (for example YouTube or Vimeo) for the embed code once a day, and the browsers of people who see the widget load the player from that site, which receives their IP address and browser details. That site's terms and privacy policy apply.</li>
+	</ul>
+	<p>Two other requests stay within your own site: "Read colours from my site" opens your home page in your own browser, and the custom dashboard address test requests a page from your own server.</p>
 	<p>Two-factor secrets, backup code hashes and lockout records are stored in your own database. Lockout records hold the IP address and the username that was tried.</p>
 	<p>The sign-in history and the session list hold IP addresses and browser details, which count as personal data in many countries. Mention them in your privacy policy, or switch off recording sign-ins under Sessions → Limits and history. WordPress itself already stores the IP address and browser of every session.</p>
+
 </section>
 
 <!-- ============================================================ -->
 <section class="part">
 	<p class="part-title">Part 2</p>
-	<h2>15. Requirements and compatibility</h2>
+	<h2>19. Requirements and compatibility</h2>
 	<dl class="kv">
 		<dt>WordPress</dt><dd>6.4 or later; tested with 7.1</dd>
 		<dt>PHP</dt><dd>7.4 or later; checked with PHPCompatibility for 7.4+</dd>
 		<dt>Themes</dt><dd>Block themes (theme.json) and classic themes</dd>
-		<dt>Multisite</dt><dd>Works per site. Network-wide settings are planned for version 2.</dd>
+		<dt>Multisite</dt><dd>Works per site. The custom dashboard address is not available on multisite networks.</dd>
 		<dt>Build step</dt><dd>None. Plain PHP, CSS and JavaScript.</dd>
 		<dt>Text domain</dt><dd><code>admin-studio</code>; translation template in <code>languages/admin-studio.pot</code></dd>
 	</dl>
 
-	<h2>16. File structure</h2>
+	<h2>20. File structure</h2>
 	<table>
 		<tr><th>Path</th><th>Contents</th></tr>
 		<tr><td><code>admin-studio.php</code></td><td>Plugin header, constants, autoloader, activation hooks</td></tr>
@@ -481,22 +643,25 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td><code>includes/class-brand-kit.php</code>, <code>class-color.php</code>, <code>class-fonts.php</code></td><td>Theme detection, colour maths, font hosting</td></tr>
 		<tr><td><code>includes/class-system-page.php</code>, <code>class-dropins.php</code></td><td>Standalone pages and drop-in files</td></tr>
 		<tr><td><code>includes/class-preview.php</code>, <code>includes/customizer/</code></td><td>Customizer panel and preview routing</td></tr>
-		<tr><td><code>includes/admin/</code></td><td>Settings page, tabs and field renderers</td></tr>
-		<tr><td><code>includes/modules/&lt;module&gt;/</code></td><td>login, emails, error-pages, tab-meta, admin-branding, security, maintenance, roles, admin-look, sessions</td></tr>
-		<tr><td><code>templates/notfound.php</code></td><td>404 template</td></tr>
+		<tr><td><code>includes/admin/</code></td><td>Settings page, one class per larger tab (roles, look, widgets, sessions), field renderers, and <code>class-transfer.php</code> for export and import</td></tr>
+		<tr><td><code>includes/modules/&lt;module&gt;/</code></td><td>login, emails, error-pages, tab-meta, admin-branding, security, maintenance, roles, admin-look, widgets, sessions</td></tr>
+		<tr><td><code>includes/class-logo-colors.php</code></td><td>Reads brand colours from the logo</td></tr>
+		<tr><td><code>templates/notfound.php</code>, <code>templates/holding-page.php</code></td><td>404 template; full-screen template for a coming soon page built in the editor or Elementor</td></tr>
 		<tr><td><code>assets/css</code>, <code>assets/js</code>, <code>assets/vendor</code></td><td>Styles, scripts, QR code library</td></tr>
 	</table>
 	<p>Classes use the <code>AdminStudio</code> namespace and are autoloaded: <code>AdminStudio\Modules\Error_Pages\Error_Pages</code> loads <code>includes/modules/error-pages/class-error-pages.php</code>.</p>
 
-	<h2>17. How settings are stored</h2>
+	<h2>21. How settings are stored</h2>
 	<p>All settings are in one option, <code>adminstudio_settings</code>, as a nested array. Code addresses a setting by a dot path such as <code>login.layout</code>. The Customizer stores into the same option through setting ids such as <code>adminstudio_settings[login][layout]</code>, so both screens share one source of truth.</p>
+	<p>Larger features keep their own option, cleaned by their own class: <code>adminstudio_look</code> (Admin_Look), <code>adminstudio_widgets</code> (Widgets) and <code>adminstudio_access</code> (Access). Roles are WordPress's own roles, changed through its role API.</p>
 	<p><code>Settings::fields()</code> defines every setting with a type (bool, int, color, url, select, multi, roles, html, css, slug, lines, datetime or text), a default and any limits. Every save from the Customizer, the settings page or an import runs through <code>Settings::sanitize()</code> for that type. Translatable defaults are resolved only after <code>init</code>.</p>
 
-	<h2>18. Data the plugin stores</h2>
+	<h2>22. Data the plugin stores</h2>
 	<table>
 		<tr><th>Where</th><th>Name</th><th>Purpose</th></tr>
 		<tr><td>Option (autoloaded)</td><td><code>adminstudio_settings</code></td><td>All settings</td></tr>
 		<tr><td>Option</td><td><code>adminstudio_version</code>, <code>adminstudio_fonts</code>, <code>adminstudio_lockouts</code></td><td>Installed version; downloaded font CSS; lockout log (last 100)</td></tr>
+		<tr><td>Roles</td><td>WordPress's own roles option; capabilities in each user's own record</td><td>Roles you create or change, and permissions given to one person, are stored where WordPress keeps them, so other plugins see them</td></tr>
 		<tr><td>Transients</td><td><code>adminstudio_count_*</code>, <code>adminstudio_lock_*</code></td><td>Failed attempt counters and lockouts per IP hash</td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_2fa_*</code></td><td>Two-factor method, secret, backup code hashes, last used time slice, pending login and email code</td></tr>
 		<tr><td>Files</td><td><code>wp-content/php-error.php</code>, <code>db-error.php</code>, <code>maintenance.php</code></td><td>Drop-in pages</td></tr>
@@ -511,26 +676,30 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_brand_palette</code></td><td>Colours read from the logo (with the logo address they came from) and from the front end (with the time they were read)</td></tr>
 		<tr><td>Option</td><td><code>adminstudio_look</code></td><td>Site template and palette, custom colours, templates per role, personal choice switch, sidebar sections and menu item labels, icons and order</td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_toolbar</code>, <code>adminstudio_look_admin</code>, <code>adminstudio_look_self</code>, <code>adminstudio_look_try</code>, <code>adminstudio_look_mode</code></td><td>Per-user toolbar override; template set by an administrator; the user's own template; a template an administrator is trying; light, dark or system mode</td></tr>
+		<tr><td>Option</td><td><code>adminstudio_widgets</code>, <code>adminstudio_widgets_seen</code></td><td>Widget visibility per role, custom widgets and the default layout; the names of widgets other plugins add, so the settings page can list them</td></tr>
+		<tr><td>Transients</td><td><code>adminstudio_embed_*</code>, <code>adminstudio_import_*</code></td><td>Video widget embed code (a day); the result of an import, shown once to the person who ran it (ten minutes)</td></tr>
 		<tr><td>Cookie</td><td><code>adminstudio_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>
 		<tr><td>Cookie</td><td>WordPress's dashboard login cookie, at the new address's path</td><td>A copy of the cookie WordPress scopes to <code>/wp-admin</code>, so the browser sends it to the custom dashboard address</td></tr>
 	</table>
 
-	<h2>19. WordPress hooks used</h2>
+	<h2>23. WordPress hooks used</h2>
 	<table>
 		<tr><th>Module</th><th>Main hooks</th></tr>
-		<tr><td>Login page</td><td><code>login_enqueue_scripts</code>, <code>login_head</code>, <code>login_headerurl</code>, <code>login_headertext</code>, <code>login_body_class</code>, <code>login_message</code>, <code>login_footer</code>, <code>lost_password_html_link</code>, <code>login_site_html_link</code>, <code>login_display_language_dropdown</code>, <code>the_privacy_policy_link</code></td></tr>
+		<tr><td>Login page</td><td><code>login_enqueue_scripts</code>, <code>login_head</code>, <code>login_headerurl</code>, <code>login_headertext</code>, <code>login_body_class</code>, <code>login_message</code>, <code>login_footer</code>, <code>lost_password_html_link</code>, <code>login_site_html_link</code>, <code>register</code>, <code>login_display_language_dropdown</code>, <code>the_privacy_policy_link</code></td></tr>
 		<tr><td>Emails</td><td><code>wp_new_user_notification_email</code>, <code>_admin</code>, <code>retrieve_password_notification_email</code>, <code>password_change_email</code>, <code>email_change_email</code>, <code>new_user_email_content</code>, <code>new_admin_email_content</code>, <code>site_admin_email_change_email</code>, <code>wp_password_change_notification_email</code>, <code>comment_notification_text</code>, <code>comment_moderation_text</code>, <code>wp_privacy_personal_data_email_content</code>, <code>user_erasure_fulfillment_email_content</code>, <code>recovery_mode_email</code>, <code>auto_core_update_email</code>, <code>auto_plugin_theme_update_email</code>, then <code>wp_mail</code> and <code>phpmailer_init</code></td></tr>
 		<tr><td>Error pages</td><td><code>wp_die_handler</code>, <code>template_include</code></td></tr>
 		<tr><td>Sessions</td><td><code>attach_session_information</code> (limit and history at session creation), <code>authenticate</code> (priority 90: blocked accounts and refused sign-ins), <code>init</code> (last active), <code>wp_logout</code>, <code>wp_login_failed</code>, <code>allow_password_reset</code>, <code>wp_is_application_passwords_available_for_user</code>, <code>manage_users_columns</code>, <code>user_row_actions</code></td></tr>
 		<tr><td>Login wording</td><td><code>login_init</code>, then <code>gettext</code> (WordPress's own strings, on login screens only), <code>login_site_html_link</code>, <code>wp_login_errors</code></td></tr>
 		<tr><td>Tab and page details</td><td><code>admin_title</code>, <code>login_title</code>, <code>document_title_separator</code>, <code>document_title_parts</code>, <code>get_site_icon_url</code>, <code>do_faviconico</code>, <code>admin_head</code>, <code>wp_head</code>, <code>style_loader_src</code>, <code>script_loader_src</code>, <code>xmlrpc_enabled</code>, <code>xmlrpc_methods</code>, <code>wp_headers</code>, <code>rest_endpoints</code>, <code>wp_sitemaps_add_provider</code></td></tr>
-		<tr><td>Admin branding</td><td><code>admin_bar_menu</code>, <code>admin_footer_text</code>, <code>update_footer</code>, <code>wp_dashboard_setup</code>, <code>admin_init</code> (colour scheme), <code>user_register</code></td></tr>
+		<tr><td>Admin branding</td><td><code>admin_bar_menu</code>, <code>admin_footer_text</code>, <code>update_footer</code>, <code>admin_head</code>, <code>screen_options_show_screen</code>, <code>admin_init</code> (colour scheme), <code>user_register</code></td></tr>
 		<tr><td>Login protection</td><td><code>plugins_loaded</code>, <code>wp_loaded</code>, <code>site_url</code>, <code>network_site_url</code>, <code>wp_redirect</code>, <code>authenticate</code>, <code>wp_login</code>, <code>wp_login_failed</code>, <code>set_auth_cookie</code>, <code>send_auth_cookies</code>, <code>login_form_adminstudio_2fa</code>, profile and AJAX hooks; for the dashboard address <code>admin_url</code>, <code>site_url</code>, <code>wp_redirect</code>, <code>set_auth_cookie</code>, <code>clear_auth_cookie</code> and the <code>adminstudio_ping</code> AJAX action</td></tr>
-		<tr><td>Coming soon</td><td><code>template_redirect</code>, <code>admin_bar_menu</code></td></tr>
+		<tr><td>Coming soon</td><td><code>template_redirect</code> (priority 1 to decide, 11 to show a built page after Elementor's own checks), <code>template_include</code>, <code>wp_robots</code>, <code>wp_before_admin_bar_render</code> and <code>wp_after_admin_bar_render</code> (to leave the toolbar's links alone), <code>admin_bar_menu</code></td></tr>
+		<tr><td>Roles and access</td><td><code>admin_menu</code> (menu access), <code>admin_init</code> (blocked screens and dashboard access), <code>login_redirect</code>, <code>show_admin_bar</code>, <code>wp_before_admin_bar_render</code> and <code>admin_bar_menu</code> (toolbar items), profile hooks</td></tr>
+		<tr><td>Dashboard widgets</td><td><code>wp_dashboard_setup</code> (priority 998 to record, 999 to hide and add), <code>get_user_option_meta-box-order_dashboard</code>, <code>get_user_option_closedpostboxes_dashboard</code>, <code>get_user_option_metaboxhidden_dashboard</code>, <code>wp_ajax_meta-box-order</code> (priority 0, for the lock)</td></tr>
 		<tr><td>Admin templates</td><td><code>admin_body_class</code>, <code>admin_enqueue_scripts</code>, <code>admin_menu</code> (labels), <code>custom_menu_order</code>, <code>menu_order</code>, <code>get_user_option_admin_color</code>, <code>admin_head-profile.php</code>, profile hooks, and the <code>adminstudio_look_mode</code> AJAX action</td></tr>
 	</table>
 
-	<h2>20. Constants</h2>
+	<h2>24. Constants</h2>
 	<table>
 		<tr><th>Constant</th><th>Effect when set to true in wp-config.php</th></tr>
 		<tr><td><code>ADMINSTUDIO_DISABLE_LOGIN_URL</code></td><td>Turns off the custom login URL; wp-login.php works again</td></tr>
@@ -539,39 +708,41 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</table>
 	<p>Internal constants: <code>ADMINSTUDIO_VERSION</code>, <code>ADMINSTUDIO_FILE</code>, <code>ADMINSTUDIO_DIR</code>, <code>ADMINSTUDIO_URL</code>.</p>
 
-	<h2>21. Drop-in files</h2>
+	<h2>25. Drop-in files</h2>
 	<p>Drop-ins are regenerated at the end of any request that saves settings, and on activation. Each file contains a header with the signature "Admin Studio drop-in", sets the status code and headers, and prints a static copy of the page stored as a PHP string literal. Files are written through <code>WP_Filesystem</code> only when WordPress can write directly to disk. A file without the signature is never touched. All plugin-written drop-ins are deleted on deactivation.</p>
 
-	<h2>22. Security model</h2>
+	<h2>26. Security model</h2>
 	<ul>
 		<li>Every settings form and AJAX action checks a nonce and the <code>manage_options</code> capability (two-factor actions check the user's own session).</li>
 		<li>Every value is sanitized on save by its field type and escaped when printed. HTML fields are filtered with <code>wp_kses_post()</code>.</li>
 		<li>Two-factor stops the login cookie from being sent after the password step, destroys the session that was created, and only sets the cookie after a valid code. Login state tokens expire after 10 minutes. Authenticator codes cannot be reused. Backup codes are stored hashed.</li>
 		<li>The attempt limiter trusts proxy headers only when an administrator turns that on.</li>
 		<li>The custom login URL serves the real wp-login.php at the new address, so all core login behaviour is kept.</li>
+		<li>Role changes, including imports, never change the Administrator role, never remove the access of the person making the change, and save a backup of all roles first.</li>
+		<li>Imports clean every value through the same code as the settings screens. Per-person roles and permissions are never exported, and personal settings are matched by username or email only.</li>
+		<li>A coming soon or maintenance page never links into the closed site: links to the site's own pages lose their address before the page is sent.</li>
 		<li>The custom dashboard address only takes effect after a test request through the new address succeeds (or the owner confirms it). The copied dashboard cookie respects <code>send_auth_cookies</code>, so the two-factor step still withholds it until a valid code is entered.</li>
 	</ul>
 
-	<h2>23. WordPress.org compliance</h2>
+	<h2>27. WordPress.org compliance</h2>
 	<p>The release copy is checked with the official Plugin Check tool and with PHPCS (WordPress Coding Standards 3 and PHPCompatibility for PHP 7.4+). Current result: <span class="status">No errors, no warnings</span></p>
 	<table>
 		<tr><th>Rule</th><th>How Admin Studio meets it</th></tr>
 		<tr><td>GPL compatible</td><td>GPLv2 or later; the QR code library is MIT</td></tr>
 		<tr><td>No restricted terms in name or slug</td><td>Renamed from "Advanced WP" to "Admin Studio" because "WP" is restricted</td></tr>
 		<tr><td>No trialware, no locked features</td><td>Everything is included</td></tr>
-		<tr><td>No tracking or calling home</td><td>Only the opt-in Google Fonts download, documented in the readme with terms and privacy links</td></tr>
+		<tr><td>No tracking or calling home</td><td>Only the opt-in Google Fonts download and the video dashboard widget, both started by an administrator and documented in the readme's External services section with terms and privacy links</td></tr>
 		<tr><td>No front-end credit links</td><td>None. The author credit appears only on the plugin's settings page.</td></tr>
-		<tr><td>Don't hijack the dashboard</td><td>The only site-wide notice is the two-factor reminder for required roles, which disappears once set up</td></tr>
+		<tr><td>Don't hijack the dashboard</td><td>Admin Studio adds three notices outside its own page, each tied to something the person is doing: the two-factor reminder for required roles (gone once set up), the "you are trying a template" banner (gone with Stop trying) and a one-time result on the Users screen after signing someone out or blocking them (dismissible). No advertising.</td></tr>
 		<tr><td>Human-readable code; no bundled core libraries</td><td>No minified or obfuscated code; uses WordPress's jQuery and PHPMailer</td></tr>
-		<tr><td>Escaping, sanitizing, nonces, no HEREDOC</td><td>Checked by PHPCS and by review; output is escaped where it is printed</td></tr>
+		<tr><td>Escaping, sanitizing, nonces, no HEREDOC</td><td>Checked by PHPCS and by review; output is escaped where it is printed. Every form and AJAX handler checks a nonce and a capability; the few that do not need a capability only change the signed-in person's own choice (light or dark mode, two-factor setup) or only refuse a request.</td></tr>
+		<tr><td>Uninstall</td><td>Only when the owner ticks "Remove all Admin Studio data", <code>uninstall.php</code> deletes every option and user setting the plugin created, its fonts folder, and the brand colour scheme choice</td></tr>
 		<tr><td>Enqueue API for scripts and styles</td><td>All scripts and styles are enqueued or printed through core functions</td></tr>
 		<tr><td>Readme standard</td><td>Stable tag matches the version; tested up to 7.1; five tags; External services and Third-party libraries sections</td></tr>
 	</table>
-	<div class="note warn">
-		<p><strong>Before submitting:</strong> set <code>Contributors:</code> in readme.txt to your WordPress.org username. It currently says "layothedeveloper", which is a guess.</p>
-	</div>
+	<p>Last full pass: 24 October 2026. Plugin Check (all categories) and PHPCS report no errors; every form and AJAX handler was checked for a nonce and a capability, every remote request and admin notice was reviewed, and no style in the plugin draws a border on one side only.</p>
 
-	<h2>24. Release, brand assets and these documents</h2>
+	<h2>28. Release, brand assets and these documents</h2>
 	<p>The release zip contains everything except the files listed in <code>.distignore</code> (also marked <code>export-ignore</code> in <code>.gitattributes</code>): development notes, the <code>docs</code> folder and the <code>.wordpress-org</code> folder. The folder inside the zip must be named <code>admin-studio</code>.</p>
 	<h3>Logo and directory assets</h3>
 	<p>The logo is an abstract dashboard: a cobalt sidebar with a lime active item beside two cards, on a navy rounded square. The plugin uses <code>assets/images/logo.svg</code> on its settings page. The WordPress.org directory files live in <code>.wordpress-org/</code> and are uploaded to the SVN <code>assets</code> folder, not the plugin zip:</p>
@@ -583,213 +754,9 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p>Colours: navy <code>#1b2340</code>, cobalt <code>#2a5bea</code>, soft blue <code>#e8eefc</code>, lime <code>#c6f05a</code>.</p>
 	<h3>This document</h3>
 	<p>This PDF is built from <code>docs/documentation.html</code> by <code>docs/build-pdf.js</code>, which prints the page with the Chromium browser that Playwright provides: <code>node docs/build-pdf.js</code>. The documentation is updated in the same change as every feature change.</p>
-</section>
+	<h3>Translation template</h3>
+	<p><code>languages/admin-studio.pot</code> is regenerated with <code>wp i18n make-pot . languages/admin-studio.pot --slug=admin-studio --domain=admin-studio --exclude=docs</code> whenever strings change.</p>
 
-<!-- ============================================================ -->
-<section class="part">
-	<p class="part-title">Part 3</p>
-	<h2>25. Summary and status</h2>
-	<div class="note spec">
-		<p><strong>Status: in progress.</strong> Built and tested: roles and permissions (section 26), toolbar control (section 27) and admin templates (section 28). The editable wording from section 30 is built and documented in section 5. Dashboard widgets (section 29) and the login link layouts, link positions and Customizer screen picker from section 30 are built and tested too, and documented in section 5. Once version 1.1 is finished, these sections move into Part 1 and Part 2.</p>
-	</div>
-	<p>Version 1.1 extends Admin Studio from branding into running the dashboard: who can do what, how the dashboard looks for each person, and what they see first. It adds five areas:</p>
-	<ol>
-		<li>Roles and permissions</li>
-		<li>Toolbar control</li>
-		<li>Admin templates (dashboard look), modelled on the portfolio site's admin panel</li>
-		<li>Dashboard widgets</li>
-		<li>Login screen text and link layout</li>
-	</ol>
-
-	<h2>26. Roles and permissions</h2>
-	<h3>Role manager</h3>
-	<ul>
-		<li>Create a role from scratch or by cloning an existing one (for example "Shop Manager" from Editor).</li>
-		<li>Rename any role's display name. Delete custom roles; if users have the role, choose which role they move to first.</li>
-		<li>Show the number of users in each role, with a link to the filtered user list.</li>
-	</ul>
-	<h3>Capability editor</h3>
-	<ul>
-		<li>Edit the capabilities of any role, including core roles such as Editor and Author.</li>
-		<li>Capabilities are grouped: Posts, Pages, Media, Comments, Users, Appearance, Plugins, Tools, Settings, and one group per plugin that registers its own (for example WooCommerce), detected automatically. Unknown capabilities go in "Other".</li>
-		<li>Each capability has a plain-language label and description, a search box, and "select all" per group.</li>
-	</ul>
-	<h3>Per-user permissions</h3>
-	<ul>
-		<li>Give a user more than one role.</li>
-		<li>Grant extra capabilities to one user, or deny specific capabilities that their role would otherwise give. Denials win.</li>
-		<li>Shown as an extra section on the user's profile, for users who can edit users.</li>
-	</ul>
-	<h3>Menu access per role</h3>
-	<ul>
-		<li>Choose which dashboard menu and submenu items each role sees, including items added by other plugins. Each menu is a small card with its submenu items, and the cards flow into columns, so even a long menu fits on one screen. A search box narrows the cards to the items that match.</li>
-		<li>Hidden screens are also blocked when opened directly by URL; the visitor sees the branded notice screen.</li>
-	</ul>
-	<h3>Login redirect and dashboard access</h3>
-	<ul>
-		<li><strong>Per role</strong> (Roles &amp; permissions → Login and access): choose where each role goes after logging in, Administrator included. Destinations: the dashboard home, their profile, the site home page, Posts, Add a new post, Pages, Media, Comments, Users, any published page on the site (picked from a list), or any other address.</li>
-		<li><strong>Per person</strong> (the user's profile → After logging in): the same choices for one account, set by an administrator. It wins over the role's destination. The Login and access section lists everyone with a destination of their own.</li>
-		<li>Order: the person's own destination, then their role's (for someone with several roles, the first role that has one), then the home page for kept-out roles, then WordPress's default.</li>
-		<li>Someone who logs in from a link to a particular screen still goes to that screen, unless "Always use these destinations" is ticked.</li>
-		<li>If a chosen page is later unpublished or deleted, the next rule in the order applies instead.</li>
-		<li>Keep chosen roles out of the dashboard entirely and send them to the front end. AJAX and REST requests keep working.</li>
-	</ul>
-	<h3>Safety</h3>
-	<ul>
-		<li>The Administrator role is locked: its capabilities cannot be reduced and it cannot be deleted.</li>
-		<li>No change can remove your own ability to manage users or this plugin.</li>
-		<li>A copy of all roles is saved before each change. The last 20 copies can be restored, and "Restore WordPress default roles" resets core roles.</li>
-	</ul>
-	<h3>Audit log and export</h3>
-	<ul>
-		<li>A log records who changed which role, capability, user permission or menu rule, and when, with filters and a CSV download.</li>
-		<li>Roles and capabilities, menu rules, toolbar rules and login destinations are included in the settings export and import (section 12). Roles and permissions given to one person are not, so an import cannot give anyone extra rights.</li>
-	</ul>
-
-	<h2>27. Toolbar control</h2>
-	<ul>
-		<li>Hide the top toolbar on the front end per role, with per-user overrides on the profile screen.</li>
-		<li>Hide it inside the dashboard too. When it is hidden there, the account details, "View site", "Sign out" and the colour mode switch are in the sidebar footer, as in the portfolio admin panel. This option only takes effect for people who see an admin template other than "WordPress default". On phones the toolbar stays, because it holds the button that opens the menu.</li>
-		<li>A user with several roles loses the toolbar only when every one of their roles hides it. Administrators always keep it.</li>
-		<li>Hide individual toolbar items instead of the whole bar: comments, "+ New", updates, search, customize, and items added by other plugins (detected automatically). Per role.</li>
-		<li>The table groups its columns under "Hide the whole toolbar" and "Hide one item". With many items it scrolls sideways while the Role column stays in place, and so does the role table on the Dashboard widgets tab.</li>
-	</ul>
-
-	<h2>28. Admin templates</h2>
-	<p>Templates change the look of the whole dashboard: sidebar, top bar, page headers, cards and meta boxes, tables, forms, buttons and notices. The block editor's canvas and panels keep WordPress's own design, because they change often between WordPress versions.</p>
-	<h3>Templates in 1.1</h3>
-	<table>
-		<tr><th>Template</th><th>Look</th></tr>
-		<tr><td>Studio</td><td>Based on the portfolio site's admin panel: a soft tinted sidebar with section headings (Overview, Content, System), outline icons with labels, the active item as a filled accent pill with a soft glow, pill badges for counts, rounded cards with a soft floating shadow, and a sidebar footer.</td></tr>
-		<tr><td>Midnight</td><td>Dark sidebar and top bar, light content area, bright accent.</td></tr>
-		<tr><td>Minimal</td><td>White sidebar, thin even dividers, no shadows; the accent appears only on text and icons.</td></tr>
-		<tr><td>Compact</td><td>An icon-only rail that expands on hover or focus, and denser tables, for power users and small screens.</td></tr>
-	</table>
-	<figure>
-		<img src="images/look-studio.png" alt="The Studio template on the dashboard home, with section headings, outline icons, the current item as a filled pill, the greeting and the sidebar footer">
-		<figcaption>Studio with the Plum palette: section headings, outline icons, the greeting and the sidebar footer.</figcaption>
-	</figure>
-	<figure class="half">
-		<img src="images/look-midnight.png" alt="The Midnight template on the Posts screen">
-		<figcaption>Midnight with the Cobalt palette.</figcaption>
-	</figure>
-	<figure class="half">
-		<img src="images/look-studio-dark.png" alt="The Studio template in dark mode">
-		<figcaption>Studio in dark mode.</figcaption>
-	</figure>
-	<figure>
-		<img src="images/settings-look.png" alt="The Templates section of the Dashboard look tab, with template cards, Try it on me buttons and palettes">
-		<figcaption>Settings → Admin Studio → Dashboard look → Templates.</figcaption>
-	</figure>
-	<h3>Colours and dark mode</h3>
-	<ul>
-		<li>Colours follow the brand kit by default, so the dashboard matches the site out of the box.</li>
-		<li>Ready palettes: Brand kit, Cobalt, Forest, Plum, Graphite and Sunset, plus Custom, where you set the accent, sidebar, background and text colours. Any colour left empty is worked out from the accent.</li>
-		<li>Text and icon colours are chosen for contrast automatically. If the accent is too close to the sidebar colour (for example a black brand colour on the dark Midnight sidebar), the current menu item uses a lighter shade so it still stands out.</li>
-		<li>Every template has a dark version. Users switch between light, dark and "system" (follow the device) with the button in the sidebar footer, or on their profile. The choice is saved per user.</li>
-		<li>While a template is in use, WordPress's own colour scheme is set aside for that user and its picker is hidden from their profile. Their saved scheme comes back when they return to "WordPress default".</li>
-	</ul>
-	<h3>Sidebar menu</h3>
-	<ul>
-		<li>Menu items are grouped into sections with headings. Admins can create sections and move items between them.</li>
-		<li>Rename, reorder (drag and drop, or the up and down buttons from the keyboard) and choose an icon for each item from a bundled set of outline icons drawn in the style of Lucide (ISC licence). Core items get a matching icon automatically; plugin items keep their own icon unless you pick one.</li>
-		<li>Sections can be renamed, reordered, removed and added. Items in a removed section fall back to their usual section. "Reset to the standard layout" clears every change.</li>
-		<li>One menu layout for the whole site; each role only sees the items it is allowed (section 26).</li>
-		<li>Sidebar footer: avatar and email, View site, Sign out, and the light/dark toggle.</li>
-		<li>Hovered and focused menu items, including plugin menus such as WooCommerce, get a rounded tint in the template's colours instead of WordPress's dark row and side stripe. Keyboard focus shows a full ring.</li>
-	</ul>
-	<figure>
-		<img src="images/settings-look-menu.png" alt="The Sidebar menu section: sections and menu items with labels, sections and icons">
-		<figcaption>Dashboard look → Sidebar menu.</figcaption>
-	</figure>
-	<h3>Dashboard home</h3>
-	<p>Each template also styles the dashboard home: a greeting ("Good morning", "Good afternoon" or "Good evening" with the user's first name) and the date replace the plain "Dashboard" heading, and widgets become rounded cards.</p>
-	<h3>Who gets which template</h3>
-	<ol>
-		<li>Site default for everyone.</li>
-		<li>Per role, overriding the default.</li>
-		<li>Per user, set by an administrator.</li>
-		<li>Users can choose their own template and palette on their profile, unless "Personal choice" is switched off or an administrator has locked their role or account.</li>
-	</ol>
-	<p>The most specific rule wins, in this order: a template an administrator is trying on themselves, the user's own choice, the administrator's per-user choice, the role, the site default. Settings → Admin Studio → Dashboard look → Roles and users sets the template per role and lists everyone with a template of their own.</p>
-	<h3>Trying a template</h3>
-	<p>"Try it on me" on each template card applies that template, with the palette selected on the page, to your own account only, and opens the dashboard so you can look around. A banner at the top of every screen then offers "Apply to everyone" (makes it the site default), "Apply to roles" (opens the per-role table) and "Stop trying".</p>
-
-	<h2>29. Dashboard widgets</h2>
-	<p>Settings → Admin Studio → <strong>Dashboard widgets</strong> has three sections. The feature can be switched off on the Overview tab.</p>
-	<h3>Show and hide</h3>
-	<p>A table lists every dashboard widget with a column per role. Untick a role to hide that widget from everyone in it. The list starts with the WordPress widgets, including the welcome panel. Widgets from other plugins, such as WooCommerce or Elementor, are added automatically the first time an administrator opens the dashboard with those plugins active, and stay listed if the plugin is switched off for a while. Someone with several roles sees a widget if any of their roles does.</p>
-	<h3>Custom widgets</h3>
-	<p>Add as many widgets as you like. Each has a title (which can use <code>{site_name}</code>), a starting column, and the roles that see it; tick none to show it to everyone. The types are:</p>
-	<ul>
-		<li><strong>Text:</strong> rich text or HTML with the Visual/Code editor and media button, plus an optional button.</li>
-		<li><strong>Quick links:</strong> up to 12 buttons, each with a label, an address and an icon. An address can be an admin screen such as <code>post-new.php</code> or <code>edit.php?post_type=page</code>, or a full address, which opens in a new tab. Drag rows to reorder them.</li>
-		<li><strong>Support card:</strong> a message, an email address, a phone number and a button.</li>
-		<li><strong>Video:</strong> the page address of a video on YouTube, Vimeo or another site WordPress can embed, with optional text underneath. The player loads from that site when someone views the dashboard; see External services in the readme.</li>
-		<li><strong>What's new:</strong> the latest posts from a category on this site.</li>
-		<li><strong>Recent sign-ups</strong>, <strong>Content counts</strong> (posts, pages, products and other content types, comments and users), <strong>Recent comments</strong> and a <strong>Site health summary</strong> from the last Site Health check. These show site data to everyone they are shown to, so limit them to the right roles. Links to edit screens only appear for people allowed to use them, and people who cannot moderate comments only see approved ones.</li>
-	</ul>
-	<p>The welcome panel from earlier versions becomes a Text widget, and widgets hidden under Admin branding stay hidden for every role.</p>
-	<figure>
-		<img src="images/dashboard-widgets.png" alt="Custom widgets list and the widget types">
-		<figcaption>Custom widgets, and the types you can add.</figcaption>
-	</figure>
-	<h3>Default layout</h3>
-	<p>Arrange your own dashboard the way everyone should see it: drag widgets into place, collapse the ones that should start closed and hide any with Screen Options. Then click <strong>Save my dashboard as the default</strong>. The page shows the saved columns. People who have not arranged their own dashboard get the default straight away. Tick "Also replace the arrangement people have already made" to clear everyone's own order, collapsed and hidden widgets.</p>
-	<p><strong>Lock</strong> stops people dragging widgets: they get the saved order and the move buttons disappear, though they can still collapse widgets. Administrators are never locked, so they can change the default. "Remove the default layout" goes back to the WordPress arrangement.</p>
-
-	<h2>30. Login screen text and links</h2>
-	<p>The aim is a login page that does not look like WordPress. Every word and the arrangement of the links under the form become editable, on the log in, register, lost password, reset password and two-factor screens.</p>
-	<h3>Link layout</h3>
-	<table>
-		<tr><th>Layout</th><th>Result</th></tr>
-		<tr><td>Stacked</td><td>WordPress's default: one link per line under the form.</td></tr>
-		<tr><td>Inline</td><td>Links side by side on one row, separated by a dot.</td></tr>
-		<tr><td>Split</td><td>One link on the left, one on the right.</td></tr>
-		<tr><td>Inside the card</td><td>Links move into the bottom of the form card.</td></tr>
-		<tr><td>Full-width buttons</td><td>Each link becomes a full-width secondary button.</td></tr>
-	</table>
-	<h3>Position of each link</h3>
-	<p>For each link ("Forgot password?", "Back to site", "Register", "Log in"), choose: next to the Password label (like most modern apps), above the main button, below the form, or hidden.</p>
-	<h3>Editable text</h3>
-	<ul>
-		<li>Link text. The "Go to site" link can have your own text without the arrow, for example "Back to {site_name}".</li>
-		<li>Field labels and placeholders, "Remember Me", and button text (Log In, Get New Password, Save Password, Register).</li>
-		<li>The instruction message on each screen, for example the lost password instructions and the "check your email" confirmation.</li>
-		<li>A separate heading and message per screen.</li>
-		<li>Changes appear live in the Customizer preview, which gains a screen picker (log in, register, lost password, reset password, two-factor).</li>
-	</ul>
-
-	<h2>31. Where the new settings live</h2>
-	<table>
-		<tr><th>Feature</th><th>Location</th></tr>
-		<tr><td>Roles, capabilities, menu access, login redirect, dashboard access, audit log</td><td>Settings → Admin Studio → <strong>Roles &amp; permissions</strong> (new tab)</td></tr>
-		<tr><td>Per-user roles and permissions; per-user toolbar and template</td><td>The user's profile screen</td></tr>
-		<tr><td>Toolbar control</td><td><strong>Roles &amp; permissions</strong> tab, Toolbar section</td></tr>
-		<tr><td>Admin templates, colours, menu editor, assignment</td><td>Settings → Admin Studio → <strong>Dashboard look</strong> (new tab)</td></tr>
-		<tr><td>Dashboard widgets and default layout</td><td>Settings → Admin Studio → <strong>Dashboard widgets</strong> (new tab); replaces the widget options on Admin branding</td></tr>
-		<tr><td>Login text and link layout</td><td>Customizer → Admin Studio → <strong>Login: text and links</strong> (expanded)</td></tr>
-	</table>
-
-	<h2>32. Technical approach and build order</h2>
-	<ul>
-		<li>No build step, as in 1.0: plain PHP, CSS and JavaScript, using WordPress's bundled jQuery and core accessibility helpers. Drag and drop has a keyboard alternative.</li>
-		<li>Role changes use WordPress's own role API, so other plugins see them immediately. Per-user grants and denials use the <code>user_has_cap</code> filter. Role backups and the audit log are stored in options that are not autoloaded.</li>
-		<li>Admin templates are CSS files layered over core admin styles with brand variables; the sidebar markup is WordPress's own menu with added section headings, so plugin menu items keep working.</li>
-		<li>All new code follows the WordPress.org rules in section 23 and passes Plugin Check before each commit.</li>
-	</ul>
-	<h3>Build order</h3>
-	<ol>
-		<li>Login screen text and link layout</li>
-		<li>Roles and capability editor, with safety and backups</li>
-		<li>Per-user permissions, menu access, login redirect and dashboard access</li>
-		<li>Toolbar control</li>
-		<li>Admin templates: Studio first, then Midnight, Minimal and Compact</li>
-		<li>Menu editor and template assignment, including "Try it on me"</li>
-		<li>Dashboard widgets</li>
-		<li>Audit log, export and import, documentation and a full compliance pass</li>
-	</ol>
-	<p>Each step ends with tests on a real WordPress install, an updated version of this document, and a commit.</p>
 </section>
 
 </body>

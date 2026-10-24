@@ -87,13 +87,12 @@
 }
 
 .adminstudio-feed li {
-	padding: 8px 0;
-	margin: 0;
-	border-bottom: 1px solid #f0f0f1;
+	padding: 0;
+	margin: 0 0 14px;
 }
 
 .adminstudio-feed li:last-child {
-	border-bottom: 0;
+	margin-bottom: 0;
 }
 
 .adminstudio-feed time {

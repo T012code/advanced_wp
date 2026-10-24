@@ -14,6 +14,8 @@ Rebrand the login page, system emails, error pages, browser tab details and admi
 
 WordPress shows a lot of screens and emails in its own default style: the login page, password reset emails, the "critical error" page, the "briefly unavailable" screen, the admin footer credit. Admin Studio lets you restyle all of them to match your brand, from one place.
 
+It also helps you run the dashboard for the people who use it: what each role can do and see, how the dashboard looks, which widgets appear, who is signed in, and how the login is protected.
+
 It starts from your site. Brand colours come from your choice of source: your theme, your logo, the colours visitors see on your front end (page builders included), or custom colours. Fonts are read from your theme, the logo comes from your theme logo, and the favicon is your site icon. Change any of them once in the brand kit and every screen follows, or override a value for one area only.
 
 = Login page =
@@ -104,7 +106,7 @@ It starts from your site. Brand colours come from your choice of source: your th
 
 = Tools =
 
-* Export and import settings as JSON, choosing the parts: settings and designs, dashboard look, dashboard widgets, menu and toolbar rules, roles, and personal settings. Pages and categories are matched by slug on the new site.
+* Export and import settings as JSON, choosing the parts: settings and designs, dashboard look, dashboard widgets, menu and toolbar rules, roles, and personal settings. Pages and categories are matched by slug on the new site. Roles the new site does not have are added; roles it already has are only changed if you ask.
 * Reset any section to its defaults.
 * Status panel showing drop-in files, detected theme colours and overlapping plugins.
 
@@ -112,8 +114,8 @@ It starts from your site. Brand colours come from your choice of source: your th
 
 1. Upload the `admin-studio` folder to `/wp-content/plugins/`, or install it from Plugins → Add New.
 2. Activate the plugin.
-3. Go to Appearance → Customize → Admin Studio to design the login page, emails and system pages.
-4. Go to Settings → Admin Studio for email wording, admin branding, login protection, coming soon mode and tools.
+3. Go to Appearance → Customize → Admin Studio to set the brand kit and design the login page, emails, system pages and coming soon page, with a live preview.
+4. Go to Settings → Admin Studio for everything else: email wording, tab and page details, admin branding, dashboard look, dashboard widgets, roles and permissions, sessions, login protection, coming soon mode and tools. The Overview tab switches each feature on or off.
 
 == Frequently Asked Questions ==
 

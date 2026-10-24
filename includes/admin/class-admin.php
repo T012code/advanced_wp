@@ -24,7 +24,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class Admin {
 
-	const SLUG = 'admin-studio';
+	const SLUG   = 'admin-studio';
+	const REPORT = 'adminstudio_import_';
 
 	/**
 	 * Hooks.
@@ -250,34 +251,33 @@ class Admin {
 		$notice = isset( $_GET['adminstudio_notice'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_notice'] ) ) : '';
 
 		$messages = array(
-			'saved'                  => array( 'success', __( 'Settings saved.', 'admin-studio' ) ),
-			'imported'               => array( 'success', __( 'Settings imported.', 'admin-studio' ) ),
-			'imported_without_roles' => array( 'warning', __( 'Settings imported, except the roles: they would have removed your own access, so your roles were left as they were.', 'admin-studio' ) ),
-			'import_roles_failed'    => array( 'error', __( 'Nothing was imported. The roles in the file would have removed your own access.', 'admin-studio' ) ),
-			'import_nothing'         => array( 'error', __( 'Nothing was imported. Tick at least one part that the file contains.', 'admin-studio' ) ),
-			'import_failed'          => array( 'error', __( 'That file is not a valid Admin Studio export.', 'admin-studio' ) ),
-			'reset'                  => array( 'success', __( 'Settings reset to their defaults.', 'admin-studio' ) ),
-			'reset_confirm'          => array( 'error', __( 'Tick the confirmation box to reset settings.', 'admin-studio' ) ),
-			'test_sent'              => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'admin-studio' ) ),
-			'test_failed'            => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'admin-studio' ) ),
-			'slug_invalid'           => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'admin-studio' ) ),
-			'unlocked'               => array( 'success', __( 'Lockout lifted.', 'admin-studio' ) ),
-			'log_cleared'            => array( 'success', __( 'Lockout log cleared.', 'admin-studio' ) ),
-			'role_saved'             => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'admin-studio' ) ),
-			'role_deleted'           => array( 'success', __( 'Role deleted and its users moved.', 'admin-studio' ) ),
-			'roles_restored'         => array( 'success', __( 'Roles restored.', 'admin-studio' ) ),
-			'look_stopped'           => array( 'success', __( 'Trial ended. Your dashboard is back to its usual template.', 'admin-studio' ) ),
-			'session_ended'          => array( 'success', __( 'That device has been signed out.', 'admin-studio' ) ),
-			'sessions_ended'         => array( 'success', __( 'Signed out everywhere.', 'admin-studio' ) ),
-			'user_blocked'           => array( 'success', __( 'Account blocked and signed out everywhere.', 'admin-studio' ) ),
-			'user_unblocked'         => array( 'success', __( 'Account unblocked. They can sign in again.', 'admin-studio' ) ),
-			'user_not_found'         => array( 'error', __( 'No user found with that username or email address.', 'admin-studio' ) ),
-			'widget_deleted'         => array( 'success', __( 'Widget deleted.', 'admin-studio' ) ),
-			'history_cleared'        => array( 'success', __( 'Sign-in history cleared.', 'admin-studio' ) ),
-			'admin_slug_invalid'     => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'admin-studio' ) ),
-			'admin_url_active'       => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'admin-studio' ) ),
-			'admin_url_pending'      => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'admin-studio' ) ),
-			'admin_url_unwritable'   => array( 'warning', __( 'Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click "Test again".', 'admin-studio' ) ),
+			'saved'                => array( 'success', __( 'Settings saved.', 'admin-studio' ) ),
+			'imported'             => array( 'success', __( 'Settings imported.', 'admin-studio' ) ),
+			'import_roles_failed'  => array( 'error', __( 'Nothing was imported. The roles in the file would have removed your own access.', 'admin-studio' ) ),
+			'import_nothing'       => array( 'error', __( 'Nothing was imported. Tick at least one part that the file contains.', 'admin-studio' ) ),
+			'import_failed'        => array( 'error', __( 'That file is not a valid Admin Studio export.', 'admin-studio' ) ),
+			'reset'                => array( 'success', __( 'Settings reset to their defaults.', 'admin-studio' ) ),
+			'reset_confirm'        => array( 'error', __( 'Tick the confirmation box to reset settings.', 'admin-studio' ) ),
+			'test_sent'            => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'admin-studio' ) ),
+			'test_failed'          => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'admin-studio' ) ),
+			'slug_invalid'         => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'admin-studio' ) ),
+			'unlocked'             => array( 'success', __( 'Lockout lifted.', 'admin-studio' ) ),
+			'log_cleared'          => array( 'success', __( 'Lockout log cleared.', 'admin-studio' ) ),
+			'role_saved'           => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'admin-studio' ) ),
+			'role_deleted'         => array( 'success', __( 'Role deleted and its users moved.', 'admin-studio' ) ),
+			'roles_restored'       => array( 'success', __( 'Roles restored.', 'admin-studio' ) ),
+			'look_stopped'         => array( 'success', __( 'Trial ended. Your dashboard is back to its usual template.', 'admin-studio' ) ),
+			'session_ended'        => array( 'success', __( 'That device has been signed out.', 'admin-studio' ) ),
+			'sessions_ended'       => array( 'success', __( 'Signed out everywhere.', 'admin-studio' ) ),
+			'user_blocked'         => array( 'success', __( 'Account blocked and signed out everywhere.', 'admin-studio' ) ),
+			'user_unblocked'       => array( 'success', __( 'Account unblocked. They can sign in again.', 'admin-studio' ) ),
+			'user_not_found'       => array( 'error', __( 'No user found with that username or email address.', 'admin-studio' ) ),
+			'widget_deleted'       => array( 'success', __( 'Widget deleted.', 'admin-studio' ) ),
+			'history_cleared'      => array( 'success', __( 'Sign-in history cleared.', 'admin-studio' ) ),
+			'admin_slug_invalid'   => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'admin-studio' ) ),
+			'admin_url_active'     => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'admin-studio' ) ),
+			'admin_url_pending'    => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'admin-studio' ) ),
+			'admin_url_unwritable' => array( 'warning', __( 'Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click "Test again".', 'admin-studio' ) ),
 		);
 
 		if ( isset( $messages[ $notice ] ) ) {
@@ -288,31 +288,8 @@ class Admin {
 			);
 		}
 
-		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- Display only.
-		$missing = isset( $_GET['missing'] ) ? absint( $_GET['missing'] ) : 0;
-		$skipped = ! empty( $_GET['roles_skipped'] );
-		// phpcs:enable
-
-		if ( $skipped ) {
-			echo '<div class="notice notice-warning is-dismissible adminstudio-notice"><p>' . esc_html( $messages['imported_without_roles'][1] ) . '</p></div>';
-		}
-
-		if ( $missing ) {
-			printf(
-				'<div class="notice notice-warning is-dismissible adminstudio-notice"><p>%s</p></div>',
-				esc_html(
-					sprintf(
-						/* translators: %d: number of pages or categories. */
-						_n(
-							'%d page or category from the file does not exist on this site, so the setting that used it went back to its default: the Customizer design for coming soon, the next login destination rule, or all categories for a "What\'s new" widget. Create it with the same slug and import again, or choose another one.',
-							'%d pages or categories from the file do not exist on this site, so the settings that used them went back to their defaults: the Customizer design for coming soon, the next login destination rule, or all categories for a "What\'s new" widget. Create them with the same slugs and import again, or choose others.',
-							$missing,
-							'admin-studio'
-						),
-						$missing
-					)
-				)
-			);
+		if ( 'import_done' === $notice ) {
+			self::import_report();
 		}
 
 		if ( 'saved' === $notice && 'security' === self::current_tab() && Settings::get( 'security.login_url' ) && '' !== Login_Url::slug() ) {
@@ -543,28 +520,96 @@ class Admin {
 			self::back( 'tools', 'import_failed' );
 		}
 
-		$report = Transfer::import( $data, self::posted_parts() );
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
+		$update = ! empty( $_POST['adminstudio_roles_update'] );
+		$report = Transfer::import( $data, self::posted_parts(), $update );
 
 		if ( ! $report['imported'] ) {
 			self::back( 'tools', '' !== $report['roles_error'] ? 'import_roles_failed' : 'import_nothing' );
 		}
 
-		$notice = '' !== $report['roles_error'] ? 'imported_without_roles' : 'imported';
-		$args   = array();
+		// The details are shown once on the next page load.
+		set_transient( self::REPORT . get_current_user_id(), $report, 10 * MINUTE_IN_SECONDS );
 
-		// A login or dashboard address that had to be switched off matters most.
-		if ( '' !== $report['security'] ) {
-			$notice = $report['security'];
-			if ( '' !== $report['roles_error'] ) {
-				$args['roles_skipped'] = 1;
-			}
+		self::back( 'tools', 'import_done' );
+	}
+
+	/**
+	 * Prints what an import did, then forgets it.
+	 *
+	 * @return void
+	 */
+	private static function import_report() {
+		$key    = self::REPORT . get_current_user_id();
+		$report = get_transient( $key );
+
+		if ( ! is_array( $report ) ) {
+			return;
 		}
 
-		if ( $report['missing'] ) {
-			$args['missing'] = $report['missing'];
+		delete_transient( $key );
+
+		$lines = array( array( 'success', __( 'Settings imported.', 'admin-studio' ) ) );
+
+		if ( ! empty( $report['roles_added'] ) ) {
+			/* translators: %s: list of role names. */
+			$lines[] = array( 'success', sprintf( __( 'Roles added: %s.', 'admin-studio' ), implode( ', ', $report['roles_added'] ) ) );
 		}
 
-		self::back( 'tools', $notice, $args );
+		if ( ! empty( $report['roles_updated'] ) ) {
+			/* translators: %s: list of role names. */
+			$lines[] = array( 'success', sprintf( __( 'Roles given the capabilities from the file: %s. A backup of the previous roles is under Roles & permissions → Backups.', 'admin-studio' ), implode( ', ', $report['roles_updated'] ) ) );
+		}
+
+		if ( ! empty( $report['roles_error'] ) ) {
+			$lines[] = array( 'warning', __( 'The roles were not imported, because they would have removed your own access. Everything else was imported.', 'admin-studio' ) );
+		}
+
+		if ( ! empty( $report['roles_missing'] ) ) {
+			$lines[] = array(
+				'warning',
+				sprintf(
+					/* translators: %s: list of role names. */
+					__( 'This site does not have these roles, so the rules for them were skipped: %s. Import again with "Add roles this site does not have" ticked, or create the roles under Roles & permissions and import again.', 'admin-studio' ),
+					implode( ', ', $report['roles_missing'] )
+				),
+			);
+		}
+
+		if ( ! empty( $report['missing'] ) ) {
+			$lines[] = array(
+				'warning',
+				sprintf(
+					/* translators: %d: number of pages or categories. */
+					_n(
+						'%d page or category from the file does not exist on this site, so the setting that used it went back to its default: the Customizer design for coming soon, the next login destination rule, or all categories for a "What\'s new" widget. Create it with the same slug and import again, or choose another one.',
+						'%d pages or categories from the file do not exist on this site, so the settings that used them went back to their defaults: the Customizer design for coming soon, the next login destination rule, or all categories for a "What\'s new" widget. Create them with the same slugs and import again, or choose others.',
+						(int) $report['missing'],
+						'admin-studio'
+					),
+					(int) $report['missing']
+				),
+			);
+		}
+
+		$security = array(
+			'slug_invalid'         => __( 'The login address in the file cannot be used here, so the custom login address was left off.', 'admin-studio' ),
+			'admin_slug_invalid'   => __( 'The dashboard address in the file cannot be used here, so the custom dashboard address was left off.', 'admin-studio' ),
+			'admin_url_pending'    => __( 'The custom dashboard address is not working on this server yet, so the dashboard stays at /wp-admin. See Login protection for the server rules to add.', 'admin-studio' ),
+			'admin_url_unwritable' => __( 'The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection for the rules to add.', 'admin-studio' ),
+		);
+
+		if ( ! empty( $report['security'] ) && isset( $security[ $report['security'] ] ) ) {
+			$lines[] = array( 'warning', $security[ $report['security'] ] );
+		}
+
+		foreach ( $lines as $line ) {
+			printf(
+				'<div class="notice notice-%s is-dismissible adminstudio-notice"><p>%s</p></div>',
+				esc_attr( $line[0] ),
+				esc_html( $line[1] )
+			);
+		}
 	}
 
 	/**
