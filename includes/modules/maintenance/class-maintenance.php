@@ -26,6 +26,7 @@ class Maintenance {
 
 	const COOKIE  = 'adminstudio_bypass';
 	const PREVIEW = 'adminstudio_holding';
+	const TOOLBAR = 'adminstudio-toolbar';
 
 	/**
 	 * Holding page being shown on this request.
@@ -116,8 +117,8 @@ class Maintenance {
 	 * Makes links into the site on the holding page plain text, so visitors
 	 * cannot open any other page from it. The logo, menus and buttons that
 	 * point at the site stop being links. Links to other sites, links within
-	 * the page (#section), email and phone links, and links to pages that
-	 * stay open keep working.
+	 * the page (#section), email and phone links, links to pages that stay
+	 * open, and the toolbar for people allowed to see it keep working.
 	 *
 	 * Used as an output buffer callback for the whole holding page.
 	 *
@@ -129,6 +130,30 @@ class Maintenance {
 			return $html;
 		}
 
+		$toolbar = '<!--' . self::TOOLBAR . '-->';
+
+		if ( false !== strpos( $html, $toolbar ) ) {
+			$parts = preg_split( '#(<!--' . preg_quote( self::TOOLBAR, '#' ) . '-->.*?<!--/' . preg_quote( self::TOOLBAR, '#' ) . '-->)#s', $html, -1, PREG_SPLIT_DELIM_CAPTURE );
+			$out   = '';
+
+			foreach ( $parts as $part ) {
+				// Only the real toolbar is left as it is, never text that copies the markers.
+				$out .= 0 === strpos( $part, $toolbar ) && false !== strpos( $part, 'id="wpadminbar"' ) ? $part : self::strip_links( $part );
+			}
+
+			return $out;
+		}
+
+		return self::strip_links( $html );
+	}
+
+	/**
+	 * Removes the address from every link into the site in a piece of HTML.
+	 *
+	 * @param string $html HTML.
+	 * @return string
+	 */
+	private static function strip_links( $html ) {
 		$tags = new \WP_HTML_Tag_Processor( $html );
 
 		while ( $tags->next_tag() ) {
@@ -364,15 +389,35 @@ class Maintenance {
 			add_filter( 'wp_robots', 'wp_robots_no_robots' );
 		}
 
-		// Nothing on the holding page may lead into the site: no toolbar, and
-		// no head links that give away the page's own address.
-		add_filter( 'show_admin_bar', '__return_false' );
-		remove_action( 'wp_enqueue_scripts', 'wp_enqueue_admin_bar_bump_styles' );
+		// No head links that give away the page's own address.
 		remove_action( 'wp_head', 'rel_canonical' );
 		remove_action( 'wp_head', 'wp_shortlink_wp_head' );
 		remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
 
+		// The toolbar follows the Toolbar settings like on any other page, and
+		// its links are left alone, so mark where it starts and ends.
+		add_action( 'wp_before_admin_bar_render', array( __CLASS__, 'toolbar_start' ) );
+		add_action( 'wp_after_admin_bar_render', array( __CLASS__, 'toolbar_end' ) );
+
 		add_filter( 'template_include', array( __CLASS__, 'page_template' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * Marks the start of the toolbar in the holding page.
+	 *
+	 * @return void
+	 */
+	public static function toolbar_start() {
+		echo '<!--' . esc_html( self::TOOLBAR ) . '-->';
+	}
+
+	/**
+	 * Marks the end of the toolbar in the holding page.
+	 *
+	 * @return void
+	 */
+	public static function toolbar_end() {
+		echo '<!--/' . esc_html( self::TOOLBAR ) . '-->';
 	}
 
 	/**
