@@ -1143,3 +1143,130 @@ body.adminstudio-look .adminstudio-badge {
 	border: 0;
 	visibility: hidden;
 }
+
+/* Dashboard widgets tab. */
+
+.adminstudio-widget-matrix th[scope="row"] small {
+	display: block;
+	margin-top: 2px;
+	font-weight: 400;
+	color: #646970;
+}
+
+.adminstudio-widget-matrix td,
+.adminstudio-widget-matrix thead th:not(:first-child) {
+	text-align: center;
+}
+
+.adminstudio-widget-types {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 12px;
+	margin: 12px 0 0;
+}
+
+.adminstudio-widget-types li {
+	margin: 0;
+}
+
+.adminstudio-widget-types a {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	column-gap: 12px;
+	row-gap: 2px;
+	height: 100%;
+	box-sizing: border-box;
+	padding: 14px 16px;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	background: #fff;
+	color: #1d2327;
+	text-decoration: none;
+}
+
+.adminstudio-widget-types a:hover {
+	border-color: #2271b1;
+}
+
+.adminstudio-widget-types a:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+	box-shadow: none;
+}
+
+.adminstudio-widget-types__icon {
+	grid-row: span 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	border-radius: 8px;
+	background: #f0f6fc;
+	color: #2271b1;
+}
+
+.adminstudio-widget-types small {
+	color: #646970;
+}
+
+.adminstudio-link-list .adminstudio-sortable__row input[type="text"] {
+	flex: 1 1 160px;
+}
+
+.adminstudio-layout {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 12px;
+}
+
+.adminstudio-layout__col {
+	padding: 10px 12px;
+	border: 1px dashed #c3c4c7;
+	border-radius: 6px;
+}
+
+.adminstudio-layout__col h3 {
+	margin: 0 0 8px;
+	font-size: 13px;
+}
+
+.adminstudio-layout__col ul {
+	margin: 0;
+}
+
+.adminstudio-layout__col li {
+	padding: 6px 8px;
+	margin: 0 0 6px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	background: #f6f7f7;
+}
+
+.adminstudio-layout__col li small {
+	color: #646970;
+}
+
+.adminstudio-layout__col .adminstudio-layout__empty {
+	border-style: dashed;
+	background: none;
+	color: #646970;
+}
+
+.adminstudio-check {
+	display: inline-block;
+	margin: 0 16px 6px 0;
+}
+
+.adminstudio-wrap .adminstudio-card h2.title {
+	margin-top: 0;
+}
+
+.adminstudio-widget-list .adminstudio-row-actions {
+	white-space: nowrap;
+	text-align: right;
+}
+
+.adminstudio-widget-list .adminstudio-row-actions form {
+	display: inline-block;
+}

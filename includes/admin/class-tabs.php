@@ -108,6 +108,15 @@ class Tabs {
 	}
 
 	/**
+	 * Dashboard widgets.
+	 *
+	 * @return void
+	 */
+	private static function tab_widgets() {
+		Widgets_Tab::render();
+	}
+
+	/**
 	 * Sessions.
 	 *
 	 * @return void
@@ -449,25 +458,15 @@ class Tabs {
 		Fields::textarea( 'admin_branding.footer_right_text', __( 'Right footer text', 'admin-studio' ), '', 2, Fields::show_if( 'admin_branding.footer_right', 'custom' ) );
 		echo '</table>';
 
-		self::section( __( 'Dashboard', 'admin-studio' ) );
-		echo '<table class="form-table" role="presentation">';
-		Fields::checkboxes(
-			'admin_branding.hide_widgets',
-			__( 'Hide widgets', 'admin-studio' ),
-			array(
-				'welcome_panel'         => __( 'Welcome panel', 'admin-studio' ),
-				'dashboard_activity'    => __( 'Activity', 'admin-studio' ),
-				'dashboard_right_now'   => __( 'At a Glance', 'admin-studio' ),
-				'dashboard_quick_press' => __( 'Quick Draft', 'admin-studio' ),
-				'dashboard_primary'     => __( 'WordPress Events and News', 'admin-studio' ),
-				'dashboard_site_health' => __( 'Site Health Status', 'admin-studio' ),
+		self::section(
+			__( 'Admin screens', 'admin-studio' ),
+			sprintf(
+				/* translators: %s: link to the Dashboard widgets tab. */
+				__( 'Dashboard widgets, including the welcome panel, are managed on the <a href="%s">Dashboard widgets</a> tab.', 'admin-studio' ),
+				esc_url( Admin::url( 'widgets' ) )
 			)
 		);
-		Fields::checkbox( 'admin_branding.welcome', __( 'Welcome panel', 'admin-studio' ), __( 'Add my own welcome panel to the dashboard', 'admin-studio' ) );
-		Fields::text( 'admin_branding.welcome_title', __( 'Panel title', 'admin-studio' ), '', array(), Fields::show_if( 'admin_branding.welcome' ) );
-		Fields::textarea( 'admin_branding.welcome_content', __( 'Panel content', 'admin-studio' ), __( 'Basic HTML is allowed.', 'admin-studio' ), 5, Fields::show_if( 'admin_branding.welcome' ) );
-		Fields::text( 'admin_branding.welcome_button', __( 'Button text', 'admin-studio' ), '', array(), Fields::show_if( 'admin_branding.welcome' ) );
-		Fields::url( 'admin_branding.welcome_button_url', __( 'Button link', 'admin-studio' ), '', false, Fields::show_if( 'admin_branding.welcome' ) );
+		echo '<table class="form-table" role="presentation">';
 		Fields::checkbox( 'admin_branding.hide_help', __( 'Help tab', 'admin-studio' ), __( 'Remove the Help tab from admin screens', 'admin-studio' ) );
 		Fields::checkbox( 'admin_branding.hide_screen_opts', __( 'Screen Options', 'admin-studio' ), __( 'Remove the Screen Options tab from admin screens', 'admin-studio' ) );
 		echo '</table>';

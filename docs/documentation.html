@@ -298,12 +298,12 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<ul>
 		<li><strong>Admin bar:</strong> keep, replace or remove the WordPress logo menu; choose your own image and link. Optionally show just the user's name instead of "Howdy, Name".</li>
 		<li><strong>Footer credit:</strong> keep, replace or remove "Thank you for creating with WordPress" and the version number. Custom text supports basic HTML and <code>{site_name}</code>, <code>{site_url}</code> and <code>{year}</code>.</li>
-		<li><strong>Dashboard:</strong> hide the Welcome panel, Activity, At a Glance, Quick Draft, WordPress Events and News, and Site Health Status; add your own welcome panel with a title, text and button; remove the Help and Screen Options tabs.</li>
+		<li><strong>Admin screens:</strong> remove the Help and Screen Options tabs. Dashboard widgets, including the welcome panel, moved to their own tab (section 29); earlier settings carry over automatically.</li>
 		<li><strong>Colour scheme:</strong> adds a "Brand" admin colour scheme built from the brand kit, which users pick on their profile. It can be the default for new users. When the brand primary colour would disappear against the menu, the scheme uses the secondary colour for the current item instead.</li>
 	</ul>
 	<figure>
 		<img src="images/admin-dashboard-branding.png" alt="Branded dashboard">
-		<figcaption>Brand colour scheme, custom welcome panel and hidden widgets.</figcaption>
+		<figcaption>The brand colour scheme on the dashboard.</figcaption>
 	</figure>
 
 	<h2>10. Login protection</h2>
@@ -545,7 +545,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p class="part-title">Part 3</p>
 	<h2>25. Summary and status</h2>
 	<div class="note spec">
-		<p><strong>Status: in progress.</strong> Built and tested: roles and permissions (section 26), toolbar control (section 27) and admin templates (section 28). The editable wording from section 30 is built and documented in section 5. Still to come: dashboard widgets (section 29), and the link layouts, link positions and Customizer screen picker from section 30. Once version 1.1 is finished, these sections move into Part 1 and Part 2.</p>
+		<p><strong>Status: in progress.</strong> Built and tested: roles and permissions (section 26), toolbar control (section 27) and admin templates (section 28). The editable wording from section 30 is built and documented in section 5. Dashboard widgets (section 29) are built and tested too. Still to come: the link layouts, link positions and Customizer screen picker from section 30. Once version 1.1 is finished, these sections move into Part 1 and Part 2.</p>
 	</div>
 	<p>Version 1.1 extends Admin Studio from branding into running the dashboard: who can do what, how the dashboard looks for each person, and what they see first. It adds five areas:</p>
 	<ol>
@@ -670,20 +670,27 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p>"Try it on me" on each template card applies that template, with the palette selected on the page, to your own account only, and opens the dashboard so you can look around. A banner at the top of every screen then offers "Apply to everyone" (makes it the site default), "Apply to roles" (opens the per-role table) and "Stop trying".</p>
 
 	<h2>29. Dashboard widgets</h2>
+	<p>Settings → Admin Studio → <strong>Dashboard widgets</strong> has three sections. The feature can be switched off on the Overview tab.</p>
+	<h3>Show and hide</h3>
+	<p>A table lists every dashboard widget with a column per role. Untick a role to hide that widget from everyone in it. The list starts with the WordPress widgets, including the welcome panel. Widgets from other plugins, such as WooCommerce or Elementor, are added automatically the first time an administrator opens the dashboard with those plugins active, and stay listed if the plugin is switched off for a while. Someone with several roles sees a widget if any of their roles does.</p>
+	<h3>Custom widgets</h3>
+	<p>Add as many widgets as you like. Each has a title (which can use <code>{site_name}</code>), a starting column, and the roles that see it; tick none to show it to everyone. The types are:</p>
 	<ul>
-		<li><strong>Show or hide any widget per role</strong>, including widgets added by other plugins such as WooCommerce or Yoast, detected automatically. This replaces the current single "Hide widgets" list.</li>
-		<li><strong>Custom widgets,</strong> as many as needed, each with its own title and role visibility:
-			<ul>
-				<li>Rich text or HTML, with the same Visual/Code editor as emails.</li>
-				<li>Quick links: buttons to admin screens or any address, with icons.</li>
-				<li>Support card: contact details, a message and a button.</li>
-				<li>Video: an embedded video from a URL. The video loads from its provider (for example YouTube) only when someone views the dashboard; this is documented in the readme.</li>
-			</ul>
-		</li>
-		<li><strong>Built-in data widgets:</strong> recent sign-ups, content counts, recent comments, a site health summary, and "What's new", which lists the latest posts from a chosen category on your own site.</li>
-		<li><strong>Default layout for everyone:</strong> set the order, column and collapsed state of widgets for all users, with an option to stop users rearranging them.</li>
-		<li>The current welcome panel becomes one of the custom widgets; existing settings carry over.</li>
+		<li><strong>Text:</strong> rich text or HTML with the Visual/Code editor and media button, plus an optional button.</li>
+		<li><strong>Quick links:</strong> up to 12 buttons, each with a label, an address and an icon. An address can be an admin screen such as <code>post-new.php</code> or <code>edit.php?post_type=page</code>, or a full address, which opens in a new tab. Drag rows to reorder them.</li>
+		<li><strong>Support card:</strong> a message, an email address, a phone number and a button.</li>
+		<li><strong>Video:</strong> the page address of a video on YouTube, Vimeo or another site WordPress can embed, with optional text underneath. The player loads from that site when someone views the dashboard; see External services in the readme.</li>
+		<li><strong>What's new:</strong> the latest posts from a category on this site.</li>
+		<li><strong>Recent sign-ups</strong>, <strong>Content counts</strong> (posts, pages, products and other content types, comments and users), <strong>Recent comments</strong> and a <strong>Site health summary</strong> from the last Site Health check. These show site data to everyone they are shown to, so limit them to the right roles. Links to edit screens only appear for people allowed to use them, and people who cannot moderate comments only see approved ones.</li>
 	</ul>
+	<p>The welcome panel from earlier versions becomes a Text widget, and widgets hidden under Admin branding stay hidden for every role.</p>
+	<figure>
+		<img src="images/dashboard-widgets.png" alt="Custom widgets list and the widget types">
+		<figcaption>Custom widgets, and the types you can add.</figcaption>
+	</figure>
+	<h3>Default layout</h3>
+	<p>Arrange your own dashboard the way everyone should see it: drag widgets into place, collapse the ones that should start closed and hide any with Screen Options. Then click <strong>Save my dashboard as the default</strong>. The page shows the saved columns. People who have not arranged their own dashboard get the default straight away. Tick "Also replace the arrangement people have already made" to clear everyone's own order, collapsed and hidden widgets.</p>
+	<p><strong>Lock</strong> stops people dragging widgets: they get the saved order and the move buttons disappear, though they can still collapse widgets. Administrators are never locked, so they can change the default. "Remove the default layout" goes back to the WordPress arrangement.</p>
 
 	<h2>30. Login screen text and links</h2>
 	<p>The aim is a login page that does not look like WordPress. Every word and the arrangement of the links under the form become editable, on the log in, register, lost password, reset password and two-factor screens.</p>

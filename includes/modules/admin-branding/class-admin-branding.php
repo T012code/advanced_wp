@@ -1,6 +1,6 @@
 <?php
 /**
- * White-label the admin: admin bar logo, footer credit, dashboard widgets
+ * White-label the admin: admin bar logo, footer credit
  * and a colour scheme built from the brand kit.
  *
  * @package AdminStudio
@@ -44,8 +44,6 @@ class Admin_Branding {
 		if ( 'keep' !== Settings::get( 'admin_branding.footer_right' ) ) {
 			add_filter( 'update_footer', array( __CLASS__, 'footer_right' ), 99 );
 		}
-
-		add_action( 'wp_dashboard_setup', array( __CLASS__, 'dashboard' ), 999 );
 
 		if ( Settings::get( 'admin_branding.color_scheme' ) ) {
 			add_action( 'admin_init', array( __CLASS__, 'register_scheme' ) );
@@ -147,48 +145,6 @@ class Admin_Branding {
 		}
 
 		return wp_kses_post( Renderer::replace( Settings::get( 'admin_branding.footer_right_text' ), Renderer::common_context(), true ) );
-	}
-
-	/**
-	 * Removes chosen widgets and adds the custom welcome panel.
-	 *
-	 * @return void
-	 */
-	public static function dashboard() {
-		// Core adds the welcome panel after plugins load, so remove it here.
-		if ( in_array( 'welcome_panel', (array) Settings::get( 'admin_branding.hide_widgets' ), true ) ) {
-			remove_action( 'welcome_panel', 'wp_welcome_panel' );
-		}
-
-		foreach ( (array) Settings::get( 'admin_branding.hide_widgets' ) as $widget ) {
-			remove_meta_box( $widget, 'dashboard', 'normal' );
-			remove_meta_box( $widget, 'dashboard', 'side' );
-		}
-
-		if ( ! Settings::get( 'admin_branding.welcome' ) ) {
-			return;
-		}
-
-		$title = Renderer::replace( Settings::get( 'admin_branding.welcome_title' ), Renderer::common_context(), false );
-
-		wp_add_dashboard_widget( 'adminstudio_welcome', esc_html( $title ), array( __CLASS__, 'welcome_widget' ), null, null, 'normal', 'high' );
-	}
-
-	/**
-	 * Renders the welcome widget.
-	 *
-	 * @return void
-	 */
-	public static function welcome_widget() {
-		$content = Renderer::replace( Settings::get( 'admin_branding.welcome_content' ), Renderer::common_context(), true );
-		$button  = Settings::get( 'admin_branding.welcome_button' );
-		$url     = Settings::get( 'admin_branding.welcome_button_url' );
-
-		echo wp_kses_post( wpautop( $content ) );
-
-		if ( '' !== $button && '' !== $url ) {
-			printf( '<p><a class="button button-primary" href="%s">%s</a></p>', esc_url( $url ), esc_html( $button ) );
-		}
 	}
 
 	/**

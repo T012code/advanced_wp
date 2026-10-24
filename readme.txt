@@ -54,8 +54,13 @@ It starts from your site. Brand colours come from your choice of source: your th
 
 * Replace or remove the WordPress logo in the admin bar.
 * Replace or remove the "Thank you for creating with WordPress" footer and the version number.
-* Hide dashboard widgets and add your own welcome panel.
 * A brand admin colour scheme built from your colours.
+
+= Dashboard widgets =
+
+* Show or hide any dashboard widget per role, including widgets from other plugins such as WooCommerce and Elementor.
+* Add your own widgets: rich text, quick links with icons, a support card, a video, "What's new" from a category, recent sign-ups, content counts, recent comments and a Site Health summary. Each can be limited to chosen roles.
+* Save your own dashboard arrangement as the default for everyone, and optionally stop people rearranging it.
 
 = Dashboard look =
 
@@ -146,7 +151,7 @@ When the database is down or WordPress hits a fatal error, plugins cannot run. W
 
 = Does it contact outside services? =
 
-Only when you choose a Google font in the brand kit. See External services below. No other external requests are made, and nothing is tracked.
+Only when you choose a Google font in the brand kit, or add a video widget to the dashboard. See External services below. No other external requests are made, and nothing is tracked.
 
 = Does Admin Studio store personal data? =
 
@@ -159,6 +164,11 @@ This plugin can connect to Google Fonts, but only after a site administrator pic
 * What is sent and when: when the change is published, your server requests the font's stylesheet from fonts.googleapis.com and the font files from fonts.gstatic.com, once per font. The request contains the font name and your server's IP address. No visitor or user data is sent.
 * What happens next: the files are saved in your uploads folder (`wp-content/uploads/admin-studio/fonts/`) and served from your own site. Visitors' browsers never contact Google.
 * Service provider: Google Fonts. Terms of service: https://developers.google.com/fonts/terms. Privacy policy: https://policies.google.com/privacy.
+
+The Video dashboard widget embeds a video from the site an administrator chooses, such as YouTube or Vimeo. Nothing is sent until an administrator adds a video widget with a video address.
+
+* What is sent and when: when the widget is first shown, your server asks the video site for the embed code through WordPress's built-in oEmbed support, sending the video address. The answer is kept for a day. Each time someone who can see the widget opens the dashboard, their browser loads the player from the video site, which receives their IP address and browser details as with any embedded video.
+* Service providers: whichever site hosts the video. For YouTube: terms https://www.youtube.com/t/terms, privacy policy https://policies.google.com/privacy. For Vimeo: terms https://vimeo.com/terms, privacy policy https://vimeo.com/privacy.
 
 == Third-party libraries ==
 

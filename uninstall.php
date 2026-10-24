@@ -24,6 +24,8 @@ delete_option( 'adminstudio_toolbar_nodes' );
 delete_option( 'adminstudio_role_backups' );
 delete_option( 'adminstudio_audit' );
 delete_option( 'adminstudio_look' );
+delete_option( 'adminstudio_widgets' );
+delete_option( 'adminstudio_widgets_seen' );
 delete_option( 'adminstudio_signins' );
 delete_option( 'adminstudio_brand_palette' );
 delete_option( 'adminstudio_admin_url' );

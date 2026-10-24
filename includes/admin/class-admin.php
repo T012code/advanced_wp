@@ -39,6 +39,7 @@ class Admin {
 		Roles_Tab::init();
 		Look_Tab::init();
 		Sessions_Tab::init();
+		Widgets_Tab::init();
 
 		$actions = array( 'save', 'export', 'import', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
 
@@ -59,6 +60,7 @@ class Admin {
 			'tab_meta'       => __( 'Tab & page details', 'admin-studio' ),
 			'admin_branding' => __( 'Admin branding', 'admin-studio' ),
 			'look'           => __( 'Dashboard look', 'admin-studio' ),
+			'widgets'        => __( 'Dashboard widgets', 'admin-studio' ),
 			'roles'          => __( 'Roles & permissions', 'admin-studio' ),
 			'sessions'       => __( 'Sessions', 'admin-studio' ),
 			'security'       => __( 'Login protection', 'admin-studio' ),
@@ -267,6 +269,7 @@ class Admin {
 			'user_blocked'         => array( 'success', __( 'Account blocked and signed out everywhere.', 'admin-studio' ) ),
 			'user_unblocked'       => array( 'success', __( 'Account unblocked. They can sign in again.', 'admin-studio' ) ),
 			'user_not_found'       => array( 'error', __( 'No user found with that username or email address.', 'admin-studio' ) ),
+			'widget_deleted'       => array( 'success', __( 'Widget deleted.', 'admin-studio' ) ),
 			'history_cleared'      => array( 'success', __( 'Sign-in history cleared.', 'admin-studio' ) ),
 			'admin_slug_invalid'   => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'admin-studio' ) ),
 			'admin_url_active'     => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'admin-studio' ) ),
