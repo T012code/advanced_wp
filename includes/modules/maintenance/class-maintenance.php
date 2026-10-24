@@ -87,8 +87,19 @@ class Maintenance {
 			}
 		}
 
-		$uri  = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
-		$path = '/' . ltrim( (string) wp_parse_url( $uri, PHP_URL_PATH ), '/' );
+		$uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+
+		return self::path_allowed( (string) wp_parse_url( $uri, PHP_URL_PATH ) );
+	}
+
+	/**
+	 * Whether a path is one of the pages that stay open.
+	 *
+	 * @param string $path Address path, such as /contact.
+	 * @return bool
+	 */
+	private static function path_allowed( $path ) {
+		$path = '/' . ltrim( $path, '/' );
 
 		foreach ( preg_split( '/[\r\n]+/', (string) Settings::get( 'maintenance.allowed_paths' ) ) as $allowed ) {
 			$allowed = trim( $allowed );
@@ -99,6 +110,81 @@ class Maintenance {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Makes links into the site on the holding page plain text, so visitors
+	 * cannot open any other page from it. The logo, menus and buttons that
+	 * point at the site stop being links. Links to other sites, links within
+	 * the page (#section), email and phone links, and links to pages that
+	 * stay open keep working.
+	 *
+	 * Used as an output buffer callback for the whole holding page.
+	 *
+	 * @param string $html Page HTML.
+	 * @return string
+	 */
+	public static function strip_site_links( $html ) {
+		if ( '' === $html || ! class_exists( '\WP_HTML_Tag_Processor' ) ) {
+			return $html;
+		}
+
+		$tags = new \WP_HTML_Tag_Processor( $html );
+
+		while ( $tags->next_tag() ) {
+			if ( ! in_array( $tags->get_tag(), array( 'A', 'AREA' ), true ) ) {
+				continue;
+			}
+
+			$href = $tags->get_attribute( 'href' );
+
+			if ( is_string( $href ) && self::leads_into_site( $href ) ) {
+				$tags->remove_attribute( 'href' );
+				$tags->remove_attribute( 'target' );
+			}
+		}
+
+		return $tags->get_updated_html();
+	}
+
+	/**
+	 * Whether following a link would open another page of this site.
+	 *
+	 * @param string $href Link address.
+	 * @return bool
+	 */
+	private static function leads_into_site( $href ) {
+		$href = trim( $href );
+
+		// A jump within the page.
+		if ( '' !== $href && '#' === $href[0] ) {
+			return false;
+		}
+
+		$scheme = wp_parse_url( $href, PHP_URL_SCHEME );
+
+		// mailto:, tel: and similar do not open a page here.
+		if ( $scheme && ! in_array( strtolower( $scheme ), array( 'http', 'https' ), true ) ) {
+			return false;
+		}
+
+		$host = wp_parse_url( $href, PHP_URL_HOST );
+
+		if ( $host ) {
+			$own = array_filter(
+				array(
+					wp_parse_url( home_url(), PHP_URL_HOST ),
+					wp_parse_url( site_url(), PHP_URL_HOST ),
+				)
+			);
+
+			if ( ! in_array( strtolower( $host ), array_map( 'strtolower', $own ), true ) ) {
+				return false;
+			}
+		}
+
+		// An address on this site, or a relative one (which is always on this site).
+		return ! self::path_allowed( (string) wp_parse_url( $href, PHP_URL_PATH ) );
 	}
 
 	/**
@@ -137,6 +223,7 @@ class Maintenance {
 
 		header( 'Content-Type: text/html; charset=utf-8' );
 
+		ob_start( array( __CLASS__, 'strip_site_links' ) );
 		self::render_page();
 		exit;
 	}
@@ -277,6 +364,14 @@ class Maintenance {
 			add_filter( 'wp_robots', 'wp_robots_no_robots' );
 		}
 
+		// Nothing on the holding page may lead into the site: no toolbar, and
+		// no head links that give away the page's own address.
+		add_filter( 'show_admin_bar', '__return_false' );
+		remove_action( 'wp_enqueue_scripts', 'wp_enqueue_admin_bar_bump_styles' );
+		remove_action( 'wp_head', 'rel_canonical' );
+		remove_action( 'wp_head', 'wp_shortlink_wp_head' );
+		remove_action( 'wp_head', 'wp_oembed_add_discovery_links' );
+
 		add_filter( 'template_include', array( __CLASS__, 'page_template' ), PHP_INT_MAX );
 	}
 
@@ -304,6 +399,8 @@ class Maintenance {
 	 * @return string
 	 */
 	public static function page_template() {
+		ob_start( array( __CLASS__, 'strip_site_links' ) );
+
 		return ADMINSTUDIO_DIR . 'templates/holding-page.php';
 	}
 

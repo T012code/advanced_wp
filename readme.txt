@@ -98,6 +98,7 @@ It starts from your site. Brand colours come from your choice of source: your th
 = Coming soon and maintenance mode =
 
 * A branded holding page with an optional countdown, or any page you built yourself, including Elementor pages and templates.
+* Links on the holding page that lead into the site, including the logo, are switched off, so visitors cannot reach pages that are closed. Links to other websites keep working.
 * Choose which roles see the real site, allow-list pages, and share a bypass link with clients.
 * Maintenance mode sends a 503 status so search engines come back later.
 
