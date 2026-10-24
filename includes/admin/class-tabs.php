@@ -777,13 +777,13 @@ class Tabs {
 	/**
 	 * Checkboxes for the parts of an export or import.
 	 *
+	 * @param array    $parts   Part key => [ label, description ].
 	 * @param string[] $checked Parts ticked to start with.
-	 * @param bool     $import  Whether this is the import form.
 	 * @return void
 	 */
-	private static function transfer_parts( array $checked, $import = false ) {
+	private static function transfer_parts( array $parts, array $checked ) {
 		echo '<fieldset class="adminstudio-parts"><legend>' . esc_html__( 'Include', 'admin-studio' ) . '</legend>';
-		foreach ( $import ? Transfer::import_parts() : Transfer::parts() as $key => $part ) {
+		foreach ( $parts as $key => $part ) {
 			printf(
 				'<label><input type="checkbox" name="adminstudio_parts[]" value="%1$s"%2$s> <span><strong>%3$s</strong><small>%4$s</small></span></label>',
 				esc_attr( $key ),
@@ -791,12 +791,117 @@ class Tabs {
 				esc_html( $part[0] ),
 				esc_html( $part[1] )
 			);
-
-			if ( $import && 'roles' === $key ) {
-				echo '<label class="adminstudio-parts__sub"><input type="checkbox" name="adminstudio_roles_update" value="1"> <span><strong>' . esc_html__( 'Also replace the capabilities of roles that exist here', 'admin-studio' ) . '</strong><small>' . esc_html__( 'Leave this off to keep roles you changed on this site, and roles set up by plugins such as WooCommerce, as they are. The Administrator role is never changed, and nothing is imported if it would remove your own access.', 'admin-studio' ) . '</small></span></label>';
-			}
 		}
 		echo '</fieldset>';
+	}
+
+	/**
+	 * Prints capability names as code.
+	 *
+	 * @param string[] $caps Capabilities.
+	 * @return void
+	 */
+	private static function cap_list( array $caps ) {
+		foreach ( $caps as $cap ) {
+			echo '<code>' . esc_html( $cap ) . '</code> ';
+		}
+	}
+
+	/**
+	 * Second step of an import: choose the parts and the roles.
+	 *
+	 * @param array $data Uploaded export.
+	 * @return void
+	 */
+	private static function import_review( array $data ) {
+		$parts = Transfer::parts_in( $data );
+		$rows  = Transfer::role_rows( $data );
+		$post  = admin_url( 'admin-post.php' );
+
+		self::section(
+			__( 'Review the import', 'admin-studio' ),
+			sprintf(
+				/* translators: 1: site address, 2: date. */
+				__( 'Exported from %1$s on %2$s. Nothing changes until you click Import.', 'admin-studio' ),
+				isset( $data['site'] ) ? esc_html( $data['site'] ) : esc_html__( 'another site', 'admin-studio' ),
+				isset( $data['exported'] ) ? esc_html( wp_date( get_option( 'date_format' ), (int) strtotime( $data['exported'] ) ) ) : '&mdash;'
+			)
+		);
+
+		echo '<form method="post" action="' . esc_url( $post ) . '" id="adminstudio-import-review" data-adminstudio-confirm><input type="hidden" name="action" value="adminstudio_import_apply">';
+		wp_nonce_field( 'adminstudio_import_apply' );
+
+		if ( $parts ) {
+			echo '<div class="adminstudio-card">';
+			self::transfer_parts( $parts, array_keys( $parts ) );
+			echo '<p class="description">' . esc_html__( 'Each ticked part replaces the same part on this site. Pages and categories are matched by their slug. Image addresses still point to the original site.', 'admin-studio' ) . '</p></div>';
+		}
+
+		if ( $rows ) {
+			self::section( __( 'Roles', 'admin-studio' ), __( 'Tick the roles to bring across. Each comes with all of its capabilities: a role this site does not have is added, and a role it already has is given the file\'s capabilities. Roles you leave unticked, and roles that are only on this site, stay as they are. A backup of your roles is saved first.', 'admin-studio' ) );
+
+			echo '<p class="adminstudio-actions"><button type="button" class="button button-small" data-adminstudio-tick="all">' . esc_html__( 'Tick all', 'admin-studio' ) . '</button> <button type="button" class="button button-small" data-adminstudio-tick="new">' . esc_html__( 'Only roles new to this site', 'admin-studio' ) . '</button> <button type="button" class="button button-small" data-adminstudio-tick="none">' . esc_html__( 'Tick none', 'admin-studio' ) . '</button></p>';
+
+			echo '<table class="widefat striped adminstudio-import-roles"><thead><tr><th scope="col" class="check-column"><span class="screen-reader-text">' . esc_html__( 'Import', 'admin-studio' ) . '</span></th><th scope="col">' . esc_html__( 'Role', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'On this site', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'Capabilities in the file', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'People here', 'admin-studio' ) . '</th></tr></thead><tbody>';
+
+			foreach ( $rows as $row ) {
+				$locked = 'locked' === $row['status'];
+				$new    = 'new' === $row['status'];
+
+				echo '<tr data-status="' . esc_attr( $row['status'] ) . '"><th scope="row" class="check-column">';
+				if ( $locked ) {
+					echo '<input type="checkbox" disabled aria-label="' . esc_attr( $row['name'] ) . '">';
+				} else {
+					printf( '<input type="checkbox" name="adminstudio_roles[]" value="%1$s"%2$s aria-label="%3$s">', esc_attr( $row['slug'] ), checked( $new, true, false ), esc_attr( sprintf( /* translators: %s: role name. */ __( 'Import %s', 'admin-studio' ), $row['name'] ) ) );
+				}
+				echo '</th><td><strong>' . esc_html( $row['name'] ) . '</strong><br><code>' . esc_html( $row['slug'] ) . '</code>';
+				if ( $row['used'] && $new ) {
+					echo '<br><small>' . esc_html__( 'Rules in the file use this role. Leave it unticked and they are skipped.', 'admin-studio' ) . '</small>';
+				}
+				echo '</td><td>';
+
+				if ( $locked ) {
+					echo '<span class="adminstudio-badge">' . esc_html__( 'Never replaced', 'admin-studio' ) . '</span><br><small>' . esc_html__( 'Administrators always have every capability. Capabilities the imported roles have are added to it.', 'admin-studio' ) . '</small>';
+				} elseif ( $new ) {
+					echo '<span class="adminstudio-badge adminstudio-badge--new">' . esc_html__( 'New here', 'admin-studio' ) . '</span>';
+				} elseif ( ! $row['added'] && ! $row['removed'] ) {
+					echo esc_html__( 'Exists, same capabilities', 'admin-studio' );
+				} else {
+					echo esc_html__( 'Exists, different capabilities', 'admin-studio' );
+					echo '<details class="adminstudio-diff"><summary>' . esc_html(
+						sprintf(
+							/* translators: 1: capabilities gained, 2: capabilities lost. */
+							__( '%1$d gained, %2$d removed if imported', 'admin-studio' ),
+							count( $row['added'] ),
+							count( $row['removed'] )
+						)
+					) . '</summary>';
+					if ( $row['added'] ) {
+						echo '<p><strong>' . esc_html__( 'Gained:', 'admin-studio' ) . '</strong> ';
+						self::cap_list( $row['added'] );
+						echo '</p>';
+					}
+					if ( $row['removed'] ) {
+						echo '<p><strong>' . esc_html__( 'Removed:', 'admin-studio' ) . '</strong> ';
+						self::cap_list( $row['removed'] );
+						echo '</p>';
+					}
+					echo '</details>';
+				}
+
+				echo '</td><td>' . esc_html( number_format_i18n( count( $row['caps'] ) ) ) . '</td><td>' . esc_html( number_format_i18n( $row['users'] ) ) . '</td></tr>';
+			}
+			echo '</tbody></table>';
+		}
+
+		echo '<p class="submit">';
+		submit_button( __( 'Import', 'admin-studio' ), 'primary', 'submit', false );
+		echo '</p></form>';
+
+		echo '<form method="post" action="' . esc_url( $post ) . '" class="adminstudio-inline-form"><input type="hidden" name="action" value="adminstudio_import_cancel">';
+		wp_nonce_field( 'adminstudio_import_cancel' );
+		submit_button( __( 'Cancel and discard the file', 'admin-studio' ), 'secondary', 'cancel', false );
+		echo '</form>';
 	}
 
 	/**
@@ -807,22 +912,33 @@ class Tabs {
 	private static function tab_tools() {
 		$post = esc_url( admin_url( 'admin-post.php' ) );
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Navigation only.
+		$step    = isset( $_GET['step'] ) ? sanitize_key( wp_unslash( $_GET['step'] ) ) : '';
+		$pending = Admin::pending_import();
+
+		if ( 'review' === $step && $pending ) {
+			self::import_review( $pending );
+			return;
+		}
+
 		echo '<div class="adminstudio-cards">';
 
 		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Export', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Download Admin Studio\'s settings as a JSON file to copy them to another site.', 'admin-studio' ) . '</p>';
 		echo '<form method="post" action="' . esc_url( $post ) . '"><input type="hidden" name="action" value="adminstudio_export">';
 		wp_nonce_field( 'adminstudio_export' );
-		self::transfer_parts( array_keys( Transfer::parts() ) );
+		self::transfer_parts( Transfer::parts(), array_keys( Transfer::parts() ) );
 		submit_button( __( 'Download settings', 'admin-studio' ), 'secondary', 'submit', false );
 		echo '</form></section>';
 
-		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Import', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Replace the ticked parts with the ones in an exported file. Parts the file does not contain are left as they are. Pages and categories are matched by their slug. Image addresses still point to the original site.', 'admin-studio' ) . '</p>';
-		echo '<form method="post" enctype="multipart/form-data" action="' . esc_url( $post ) . '" data-adminstudio-confirm><input type="hidden" name="action" value="adminstudio_import">';
+		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Import', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Upload an exported file. The next screen shows what it contains, and you choose the parts and the roles to bring across before anything changes.', 'admin-studio' ) . '</p>';
+		if ( $pending ) {
+			echo '<p><a href="' . esc_url( Admin::url( 'tools', array( 'step' => 'review' ) ) ) . '">' . esc_html__( 'Continue the import you started', 'admin-studio' ) . '</a></p>';
+		}
+		echo '<form method="post" enctype="multipart/form-data" action="' . esc_url( $post ) . '"><input type="hidden" name="action" value="adminstudio_import">';
 		wp_nonce_field( 'adminstudio_import' );
 		echo '<label for="adminstudio-file" class="screen-reader-text">' . esc_html__( 'Settings file', 'admin-studio' ) . '</label><input type="file" id="adminstudio-file" name="adminstudio_file" accept=".json,application/json" required>';
-		self::transfer_parts( Transfer::default_import_parts(), true );
 		echo '<p>';
-		submit_button( __( 'Import settings', 'admin-studio' ), 'secondary', 'submit', false );
+		submit_button( __( 'Upload and review', 'admin-studio' ), 'secondary', 'submit', false );
 		echo '</p></form></section>';
 
 		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Reset', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Put one section, or everything, back to its defaults.', 'admin-studio' ) . '</p>';

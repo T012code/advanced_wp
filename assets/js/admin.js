@@ -144,6 +144,16 @@
 		this.form.submit();
 	} );
 
+	// Import review: tick every role, only the new ones, or none.
+	$( document ).on( 'click', '[data-adminstudio-tick]', function () {
+		var mode = $( this ).data( 'adminstudio-tick' );
+
+		$( '.adminstudio-import-roles tbody tr' ).each( function () {
+			var box = $( this ).find( 'input[name="adminstudio_roles[]"]' );
+			box.prop( 'checked', 'all' === mode || ( 'new' === mode && 'new' === $( this ).data( 'status' ) ) );
+		} );
+	} );
+
 	// Menu access search: a matching menu shows all its items, otherwise only matching items show.
 	$( document ).on( 'input', '[data-adminstudio-menu-filter]', function () {
 		var term = this.value.toLowerCase().trim();

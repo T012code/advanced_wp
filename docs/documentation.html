@@ -566,15 +566,18 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 				<li><strong>Personal settings:</strong> each person's login destination, template and toolbar choice.</li>
 			</ul>
 		</li>
-		<li><strong>Import</strong> replaces the ticked parts with the ones in an exported file; parts the file does not contain, or that are not ticked, stay as they are. Each value is checked and cleaned on import, and the import is recorded in the activity log. Image addresses still point to the site they came from.
+		<li><strong>Import</strong> works in two steps. Upload the file, and a review screen shows what it contains: tick the parts and the roles to bring across, then click Import. Nothing changes before that, and "Cancel and discard the file" drops it. The uploaded file waits for you for an hour. Each ticked part replaces the same part on this site; parts that are not ticked stay as they are. Each value is checked and cleaned on import, and the import is recorded in the activity log. Image addresses still point to the site they came from.
 			<ul>
 				<li><strong>Pages and categories</strong> (the coming soon page, login destinations, the category of a "What's new" widget) have different IDs on every site, so the file carries their slug, and the import links them to the page or category with the same slug here. Drafts, which have no slug yet, are matched by their exact title. Anything that cannot be found goes back to its default, and a notice says how many.</li>
-				<li><strong>Roles that differ between the sites.</strong> Many settings name roles: menu access, the toolbar, login destinations, templates per role, widget visibility, who sees the real site during coming soon, and the roles that need two-factor or a session limit. A rule for a role this site does not have would be lost, so the import form has two boxes:
+				<li><strong>Roles</strong> are chosen one by one in a table that lists every role in the file with:
 					<ul>
-						<li><strong>Add roles this site does not have</strong> (ticked to start with): roles in the file that are missing here are created with their capabilities, so their rules come across too.</li>
-						<li><strong>Also replace the capabilities of roles that exist here</strong> (not ticked): gives roles that exist on both sites the file's capabilities. Leave it off to keep roles you changed on this site, and roles set up by plugins such as WooCommerce, as they are.</li>
+						<li>whether this site already has it ("New here"), and for a role it has, whether its capabilities differ, with the exact capabilities it would gain and lose;</li>
+						<li>how many capabilities it has in the file, and how many people have it here;</li>
+						<li>a note when rules in the file use a role this site does not have.</li>
 					</ul>
-					Roles that are only on this site stay, the Administrator role is never changed, a backup of your roles is saved first (Roles &amp; permissions → Backups), and nothing in the roles is changed if it would remove your own access. After the import a notice lists the roles added and updated. If you untick "Add roles", it lists the roles this site does not have, whose rules were skipped.</li>
+					Roles new to this site are ticked to start with; roles it already has are not, so a role you changed here, or one set up by a plugin such as WooCommerce, is only replaced when you tick it. "Tick all", "Only roles new to this site" and "Tick none" set the boxes quickly. A ticked role comes with all of its capabilities: a new role is created, and an existing one is given the file's capabilities. Roles you leave unticked, and roles that are only on this site, stay as they are.</li>
+				<li><strong>The Administrator role</strong> is never replaced. Administrators always have every capability: any capability an imported role has that the Administrator role lacks (for example one from a plugin on the other site) is added to it.</li>
+				<li><strong>Safety:</strong> a backup of your roles is saved first (Roles &amp; permissions → Backups), and nothing in the roles changes if it would remove your own access. Many settings name roles (menu access, the toolbar, login destinations, templates per role, widget visibility, who sees the real site during coming soon, and the roles that need two-factor or a session limit); a rule for a role this site still does not have is skipped, and the notice after the import names those roles.</li>
 				<li><strong>Personal settings</strong> go to the people with the same username, or else the same email address. Roles and permissions given to one person are not part of an export, so an import can never hand someone extra rights.</li>
 				<li><strong>Login and dashboard addresses</strong> are checked as when you save the Login protection tab: an address that cannot be used is switched off, and the dashboard only moves after the server test passes.</li>
 				<li>Files exported by Admin Studio 1.0 still import.</li>
@@ -584,9 +587,9 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li><strong>Status</strong> shows the state of each drop-in file, whether <code>wp-content</code> is writable, the colours detected from your theme, and any active plugins that do the same job as an Admin Studio feature.</li>
 	</ul>
 
-	<figure class="half">
-		<img src="images/tools-import.png" alt="The Import card with the parts to import and the two role boxes">
-		<figcaption>Tools → Import, with "Add roles this site does not have" ticked and "Also replace" left off.</figcaption>
+	<figure>
+		<img src="images/tools-import-roles.png" alt="The roles table on the import review screen, with the status, capability changes and people for each role">
+		<figcaption>Choosing roles on the import review screen. Desk Manager is new here; Boss exists and would gain two capabilities.</figcaption>
 	</figure>
 
 	<h2>17. Troubleshooting</h2>
@@ -603,7 +606,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h4>A Google font does not show.</h4>
 	<p>The font is downloaded when you publish in the Customizer. If your server cannot reach Google Fonts, a system font is used instead.</p>
 	<h4>An import says rules for some roles were skipped.</h4>
-	<p>The file has rules for roles this site does not have, and "Add roles this site does not have" was not ticked. Import the same file again with it ticked, or create those roles under Roles &amp; permissions first.</p>
+	<p>The file has rules for roles this site does not have, and those roles were not ticked on the review screen. Import the same file again and tick them, or create those roles under Roles &amp; permissions first.</p>
 	<h4>Someone can no longer reach a dashboard screen.</h4>
 	<p>Check Roles &amp; permissions → Menu access for their role, "Keep out of the dashboard" under Login and access, and the permissions on their profile. Administrators always see everything, so an administrator can put it right.</p>
 
@@ -677,7 +680,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Option</td><td><code>adminstudio_look</code></td><td>Site template and palette, custom colours, templates per role, personal choice switch, sidebar sections and menu item labels, icons and order</td></tr>
 		<tr><td>User meta</td><td><code>adminstudio_toolbar</code>, <code>adminstudio_look_admin</code>, <code>adminstudio_look_self</code>, <code>adminstudio_look_try</code>, <code>adminstudio_look_mode</code></td><td>Per-user toolbar override; template set by an administrator; the user's own template; a template an administrator is trying; light, dark or system mode</td></tr>
 		<tr><td>Option</td><td><code>adminstudio_widgets</code>, <code>adminstudio_widgets_seen</code></td><td>Widget visibility per role, custom widgets and the default layout; the names of widgets other plugins add, so the settings page can list them</td></tr>
-		<tr><td>Transients</td><td><code>adminstudio_embed_*</code>, <code>adminstudio_import_*</code></td><td>Video widget embed code (a day); the result of an import, shown once to the person who ran it (ten minutes)</td></tr>
+		<tr><td>Transients</td><td><code>adminstudio_embed_*</code>, <code>adminstudio_import_file_*</code>, <code>adminstudio_import_*</code></td><td>Video widget embed code (a day); an uploaded settings file waiting on its review screen, per person (an hour, or until imported or cancelled); the result of an import, shown once to the person who ran it (ten minutes)</td></tr>
 		<tr><td>Cookie</td><td><code>adminstudio_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>
 		<tr><td>Cookie</td><td>WordPress's dashboard login cookie, at the new address's path</td><td>A copy of the cookie WordPress scopes to <code>/wp-admin</code>, so the browser sends it to the custom dashboard address</td></tr>
 	</table>
@@ -718,7 +721,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li>Two-factor stops the login cookie from being sent after the password step, destroys the session that was created, and only sets the cookie after a valid code. Login state tokens expire after 10 minutes. Authenticator codes cannot be reused. Backup codes are stored hashed.</li>
 		<li>The attempt limiter trusts proxy headers only when an administrator turns that on.</li>
 		<li>The custom login URL serves the real wp-login.php at the new address, so all core login behaviour is kept.</li>
-		<li>Role changes, including imports, never change the Administrator role, never remove the access of the person making the change, and save a backup of all roles first.</li>
+		<li>Role changes never reduce the Administrator role, never remove the access of the person making the change, and save a backup of all roles first. An import only changes the roles ticked on its review screen, and adds any new capabilities they bring to the Administrator role.</li>
 		<li>Imports clean every value through the same code as the settings screens. Per-person roles and permissions are never exported, and personal settings are matched by username or email only.</li>
 		<li>A coming soon or maintenance page never links into the closed site: links to the site's own pages lose their address before the page is sent.</li>
 		<li>The custom dashboard address only takes effect after a test request through the new address succeeds (or the owner confirms it). The copied dashboard cookie respects <code>send_auth_cookies</code>, so the two-factor step still withholds it until a valid code is entered.</li>

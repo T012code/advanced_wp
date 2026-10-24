@@ -1427,3 +1427,48 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 .adminstudio-parts .adminstudio-parts__sub {
 	margin-left: 26px;
 }
+
+/* Import review. */
+.adminstudio-import-roles .check-column {
+	width: 2.6em;
+	padding: 12px 0 0 12px;
+	vertical-align: top;
+}
+
+.adminstudio-import-roles td,
+.adminstudio-import-roles th {
+	vertical-align: top;
+}
+
+.adminstudio-import-roles small {
+	color: var(--as-muted, #646970);
+}
+
+.adminstudio-import-roles .adminstudio-badge {
+	margin-left: 0;
+}
+
+.adminstudio-badge--new {
+	border: 1px solid #00a32a;
+	background: #edfaef;
+	color: #1d2327;
+}
+
+.adminstudio-diff summary {
+	cursor: pointer;
+	color: var(--as-muted, #50575e);
+}
+
+.adminstudio-diff summary:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+.adminstudio-diff p {
+	margin: 6px 0 0;
+}
+
+.adminstudio-diff code {
+	display: inline-block;
+	margin: 0 4px 4px 0;
+}

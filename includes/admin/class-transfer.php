@@ -48,28 +48,95 @@ class Transfer {
 	}
 
 	/**
-	 * Parts as they are named on the import form, where roles work differently.
+	 * Parts the file contains, apart from roles, which are chosen one by one.
 	 *
-	 * @return array
+	 * @param array $data Decoded export.
+	 * @return array Part key => [ label, description ].
 	 */
-	public static function import_parts() {
-		$parts          = self::parts();
-		$parts['roles'] = array( __( 'Add roles this site does not have', 'admin-studio' ), __( 'Roles in the file that are missing here are created with their capabilities, so the rules for them come across too. A backup of your roles is saved first.', 'admin-studio' ) );
+	public static function parts_in( array $data ) {
+		$parts = array();
+
+		foreach ( self::parts() as $key => $part ) {
+			if ( 'roles' !== $key && isset( $data[ $key ] ) && is_array( $data[ $key ] ) ) {
+				$parts[ $key ] = $part;
+			}
+		}
 
 		return $parts;
 	}
 
 	/**
-	 * Parts ticked by default on the import form.
+	 * The roles in a file, compared with this site, for the review screen.
 	 *
-	 * Roles are ticked so that rules for roles this site does not have yet
-	 * survive the import. Roles that already exist here are only changed when
-	 * the separate "replace" box is ticked as well.
-	 *
-	 * @return string[]
+	 * @param array $data Decoded export.
+	 * @return array List of { slug, name, status: new|exists|locked, caps, added, removed, users, used }.
 	 */
-	public static function default_import_parts() {
-		return array_keys( self::parts() );
+	public static function role_rows( array $data ) {
+		if ( empty( $data['roles'] ) || ! is_array( $data['roles'] ) ) {
+			return array();
+		}
+
+		$here   = wp_roles()->roles;
+		$counts = count_users();
+		$used   = self::referenced_roles( $data, array_keys( self::parts() ) );
+		$rows   = array();
+
+		foreach ( self::clean_roles( $data['roles'] ) as $slug => $role ) {
+			$caps = array_keys( array_filter( $role['capabilities'] ) );
+			$have = isset( $here[ $slug ] ) ? array_keys( array_filter( (array) $here[ $slug ]['capabilities'] ) ) : array();
+
+			if ( Role_Manager::LOCKED === $slug ) {
+				$status = 'locked';
+			} else {
+				$status = isset( $here[ $slug ] ) ? 'exists' : 'new';
+			}
+
+			$rows[] = array(
+				'slug'    => $slug,
+				'name'    => $role['name'],
+				'status'  => $status,
+				'caps'    => $caps,
+				'added'   => isset( $here[ $slug ] ) ? array_values( array_diff( $caps, $have ) ) : array(),
+				'removed' => isset( $here[ $slug ] ) ? array_values( array_diff( $have, $caps ) ) : array(),
+				'users'   => isset( $counts['avail_roles'][ $slug ] ) ? (int) $counts['avail_roles'][ $slug ] : 0,
+				'used'    => in_array( $slug, $used, true ),
+			);
+		}
+
+		return $rows;
+	}
+
+	/**
+	 * Roles from a file with clean slugs, names and capabilities.
+	 *
+	 * @param array $roles Role slug => { name, capabilities }.
+	 * @return array
+	 */
+	private static function clean_roles( array $roles ) {
+		$clean = array();
+
+		foreach ( $roles as $slug => $role ) {
+			$slug = sanitize_key( $slug );
+
+			if ( '' === $slug || ! is_array( $role ) || empty( $role['name'] ) ) {
+				continue;
+			}
+
+			$caps = array();
+			foreach ( isset( $role['capabilities'] ) ? (array) $role['capabilities'] : array() as $cap => $grant ) {
+				$cap = sanitize_key( $cap );
+				if ( '' !== $cap ) {
+					$caps[ $cap ] = (bool) $grant;
+				}
+			}
+
+			$clean[ $slug ] = array(
+				'name'         => sanitize_text_field( $role['name'] ),
+				'capabilities' => $caps,
+			);
+		}
+
+		return $clean;
 	}
 
 	// ------------------------------------------------------------------
@@ -272,12 +339,12 @@ class Transfer {
 	/**
 	 * Imports the chosen parts that the file contains.
 	 *
-	 * @param array    $data         Decoded export.
-	 * @param string[] $parts        Parts to import.
-	 * @param bool     $update_roles Whether roles that exist here get the file's capabilities.
-	 * @return array { imported, missing, roles_error, roles_added, roles_updated, roles_missing, security }
+	 * @param array    $data  Decoded export.
+	 * @param string[] $parts Parts to import, apart from roles.
+	 * @param string[] $roles Roles to import from the file: new ones are added, existing ones get the file's capabilities.
+	 * @return array { imported, missing, roles_error, roles_added, roles_updated, roles_missing, admin_caps, security }
 	 */
-	public static function import( array $data, array $parts, $update_roles = false ) {
+	public static function import( array $data, array $parts, array $roles = array() ) {
 		$report = array(
 			'imported'      => array(),
 			'missing'       => 0,
@@ -285,19 +352,21 @@ class Transfer {
 			'roles_added'   => array(),
 			'roles_updated' => array(),
 			'roles_missing' => array(),
+			'admin_caps'    => 0,
 			'security'      => '',
 		);
 		$refs   = isset( $data['refs'] ) && is_array( $data['refs'] ) ? $data['refs'] : array();
 		$parts  = array_intersect( $parts, array_keys( self::parts() ) );
 
 		// Roles first, so rules for imported roles are kept by the parts after them.
-		if ( in_array( 'roles', $parts, true ) && isset( $data['roles'] ) && is_array( $data['roles'] ) ) {
-			$result = self::import_roles( $data['roles'], $update_roles );
+		if ( $roles && isset( $data['roles'] ) && is_array( $data['roles'] ) ) {
+			$result = self::import_roles( $data['roles'], $roles );
 			if ( is_wp_error( $result ) ) {
 				$report['roles_error'] = $result->get_error_message();
 			} else {
 				$report['roles_added']   = $result['added'];
 				$report['roles_updated'] = $result['updated'];
+				$report['admin_caps']    = $result['admin_caps'];
 				$report['imported'][]    = 'roles';
 			}
 		}
@@ -458,55 +527,43 @@ class Transfer {
 	}
 
 	/**
-	 * Adds the roles from the file that this site does not have and, when
-	 * asked, gives roles that exist here the file's capabilities. Roles that
-	 * are not in the file stay, the Administrator role is never changed, and
-	 * nothing may take away the access of the person importing.
+	 * Imports the chosen roles with their capabilities: roles this site does
+	 * not have are added, roles it has get the file's capabilities. Other
+	 * roles stay, the Administrator role is never replaced, and nothing may
+	 * take away the access of the person importing.
 	 *
-	 * @param array $roles  Role slug => { name, capabilities }.
-	 * @param bool  $update Whether to replace roles that already exist here.
-	 * @return array|\WP_Error { added: names, updated: names }.
+	 * The Administrator role then gets every capability the imported roles
+	 * have that it does not, so administrators can always do everything.
+	 *
+	 * @param array    $roles    Role slug => { name, capabilities }, from the file.
+	 * @param string[] $selected Roles to import.
+	 * @return array|\WP_Error { added: names, updated: names, admin_caps: count }.
 	 */
-	private static function import_roles( array $roles, $update ) {
+	private static function import_roles( array $roles, array $selected ) {
 		$result   = array(
-			'added'   => array(),
-			'updated' => array(),
+			'added'      => array(),
+			'updated'    => array(),
+			'admin_caps' => 0,
 		);
+		$selected = array_map( 'sanitize_key', $selected );
 		$wp_roles = wp_roles();
 		$current  = $wp_roles->roles;
 		$changes  = array();
 
-		foreach ( $roles as $slug => $role ) {
-			$slug = sanitize_key( $slug );
-
-			if ( '' === $slug || Role_Manager::LOCKED === $slug || ! is_array( $role ) || empty( $role['name'] ) ) {
+		foreach ( self::clean_roles( $roles ) as $slug => $role ) {
+			if ( Role_Manager::LOCKED === $slug || ! in_array( $slug, $selected, true ) ) {
 				continue;
 			}
 
 			$exists = isset( $current[ $slug ] );
 
-			if ( $exists && ! $update ) {
-				continue;
-			}
-
-			$caps = array();
-			foreach ( isset( $role['capabilities'] ) ? (array) $role['capabilities'] : array() as $cap => $grant ) {
-				$cap = sanitize_key( $cap );
-				if ( '' !== $cap ) {
-					$caps[ $cap ] = (bool) $grant;
-				}
-			}
-
-			if ( $exists && ! Role_Manager::keeps_access( $slug, array_keys( array_filter( $caps ) ) ) ) {
+			if ( $exists && ! Role_Manager::keeps_access( $slug, array_keys( array_filter( $role['capabilities'] ) ) ) ) {
 				return new \WP_Error( 'adminstudio_self_lockout', __( 'The roles were not imported, because they would remove your own access.', 'admin-studio' ) );
 			}
 
-			$changes[ $slug ] = array(
-				'name'         => sanitize_text_field( $role['name'] ),
-				'capabilities' => $caps,
-			);
+			$changes[ $slug ] = $role;
 
-			$result[ $exists ? 'updated' : 'added' ][] = $changes[ $slug ]['name'];
+			$result[ $exists ? 'updated' : 'added' ][] = $role['name'];
 		}
 
 		if ( ! $changes ) {
@@ -515,7 +572,20 @@ class Transfer {
 
 		Role_Manager::backup( 'Before importing roles' );
 
-		update_option( $wp_roles->role_key, array_merge( $current, $changes ) );
+		$current = array_merge( $current, $changes );
+
+		if ( isset( $current[ Role_Manager::LOCKED ] ) ) {
+			foreach ( $changes as $role ) {
+				foreach ( array_keys( array_filter( $role['capabilities'] ) ) as $cap ) {
+					if ( empty( $current[ Role_Manager::LOCKED ]['capabilities'][ $cap ] ) ) {
+						$current[ Role_Manager::LOCKED ]['capabilities'][ $cap ] = true;
+						++$result['admin_caps'];
+					}
+				}
+			}
+		}
+
+		update_option( $wp_roles->role_key, $current );
 		$wp_roles->for_site();
 
 		return $result;

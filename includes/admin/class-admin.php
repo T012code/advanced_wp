@@ -26,6 +26,7 @@ class Admin {
 
 	const SLUG   = 'admin-studio';
 	const REPORT = 'adminstudio_import_';
+	const UPLOAD = 'adminstudio_import_file_';
 
 	/**
 	 * Hooks.
@@ -42,7 +43,7 @@ class Admin {
 		Sessions_Tab::init();
 		Widgets_Tab::init();
 
-		$actions = array( 'save', 'export', 'import', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
+		$actions = array( 'save', 'export', 'import', 'import_apply', 'import_cancel', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
 
 		foreach ( $actions as $action ) {
 			add_action( 'admin_post_adminstudio_' . $action, array( __CLASS__, 'handle_' . $action ) );
@@ -254,7 +255,9 @@ class Admin {
 			'saved'                => array( 'success', __( 'Settings saved.', 'admin-studio' ) ),
 			'imported'             => array( 'success', __( 'Settings imported.', 'admin-studio' ) ),
 			'import_roles_failed'  => array( 'error', __( 'Nothing was imported. The roles in the file would have removed your own access.', 'admin-studio' ) ),
-			'import_nothing'       => array( 'error', __( 'Nothing was imported. Tick at least one part that the file contains.', 'admin-studio' ) ),
+			'import_nothing'       => array( 'error', __( 'Nothing was imported. Tick at least one part or role.', 'admin-studio' ) ),
+			'import_expired'       => array( 'error', __( 'The uploaded file is no longer waiting to be imported. Upload it again.', 'admin-studio' ) ),
+			'import_cancelled'     => array( 'success', __( 'Import cancelled. Nothing was changed.', 'admin-studio' ) ),
 			'import_failed'        => array( 'error', __( 'That file is not a valid Admin Studio export.', 'admin-studio' ) ),
 			'reset'                => array( 'success', __( 'Settings reset to their defaults.', 'admin-studio' ) ),
 			'reset_confirm'        => array( 'error', __( 'Tick the confirmation box to reset settings.', 'admin-studio' ) ),
@@ -520,9 +523,42 @@ class Admin {
 			self::back( 'tools', 'import_failed' );
 		}
 
+		// Kept until the review screen is confirmed or cancelled.
+		set_transient( self::UPLOAD . get_current_user_id(), $data, HOUR_IN_SECONDS );
+
+		self::back( 'tools', '', array( 'step' => 'review' ) );
+	}
+
+	/**
+	 * The uploaded file waiting on the review screen, or null.
+	 *
+	 * @return array|null
+	 */
+	public static function pending_import() {
+		$data = get_transient( self::UPLOAD . get_current_user_id() );
+
+		return Transfer::is_export( $data ) ? $data : null;
+	}
+
+	/**
+	 * Imports the parts and roles chosen on the review screen.
+	 *
+	 * @return void
+	 */
+	public static function handle_import_apply() {
+		self::guard( 'adminstudio_import_apply' );
+
+		$data = self::pending_import();
+
+		if ( ! $data ) {
+			self::back( 'tools', 'import_expired' );
+		}
+
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
-		$update = ! empty( $_POST['adminstudio_roles_update'] );
-		$report = Transfer::import( $data, self::posted_parts(), $update );
+		$roles  = isset( $_POST['adminstudio_roles'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_roles'] ) ) : array();
+		$report = Transfer::import( $data, self::posted_parts(), $roles );
+
+		delete_transient( self::UPLOAD . get_current_user_id() );
 
 		if ( ! $report['imported'] ) {
 			self::back( 'tools', '' !== $report['roles_error'] ? 'import_roles_failed' : 'import_nothing' );
@@ -532,6 +568,17 @@ class Admin {
 		set_transient( self::REPORT . get_current_user_id(), $report, 10 * MINUTE_IN_SECONDS );
 
 		self::back( 'tools', 'import_done' );
+	}
+
+	/**
+	 * Drops the uploaded file without importing it.
+	 *
+	 * @return void
+	 */
+	public static function handle_import_cancel() {
+		self::guard( 'adminstudio_import_cancel' );
+		delete_transient( self::UPLOAD . get_current_user_id() );
+		self::back( 'tools', 'import_cancelled' );
 	}
 
 	/**
@@ -556,6 +603,17 @@ class Admin {
 			$lines[] = array( 'success', sprintf( __( 'Roles added: %s.', 'admin-studio' ), implode( ', ', $report['roles_added'] ) ) );
 		}
 
+		if ( ! empty( $report['admin_caps'] ) ) {
+			$lines[] = array(
+				'success',
+				sprintf(
+					/* translators: %d: number of capabilities. */
+					_n( 'The Administrator role was given %d capability from the imported roles, so administrators can still do everything.', 'The Administrator role was given %d capabilities from the imported roles, so administrators can still do everything.', (int) $report['admin_caps'], 'admin-studio' ),
+					(int) $report['admin_caps']
+				),
+			);
+		}
+
 		if ( ! empty( $report['roles_updated'] ) ) {
 			/* translators: %s: list of role names. */
 			$lines[] = array( 'success', sprintf( __( 'Roles given the capabilities from the file: %s. A backup of the previous roles is under Roles & permissions → Backups.', 'admin-studio' ), implode( ', ', $report['roles_updated'] ) ) );
@@ -570,7 +628,7 @@ class Admin {
 				'warning',
 				sprintf(
 					/* translators: %s: list of role names. */
-					__( 'This site does not have these roles, so the rules for them were skipped: %s. Import again with "Add roles this site does not have" ticked, or create the roles under Roles & permissions and import again.', 'admin-studio' ),
+					__( 'This site does not have these roles, so the rules for them were skipped: %s. Import the file again and tick those roles, or create them under Roles & permissions first.', 'admin-studio' ),
 					implode( ', ', $report['roles_missing'] )
 				),
 			);

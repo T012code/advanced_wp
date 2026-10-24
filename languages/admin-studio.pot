@@ -9,16 +9,16 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-24T10:50:08+00:00\n"
+"POT-Creation-Date: 2026-10-24T11:10:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: admin-studio\n"
 
 #. Plugin Name of the plugin
 #: admin-studio.php
-#: includes/admin/class-admin.php:111
-#: includes/admin/class-admin.php:112
-#: includes/admin/class-admin.php:178
+#: includes/admin/class-admin.php:113
+#: includes/admin/class-admin.php:114
+#: includes/admin/class-admin.php:180
 #: includes/customizer/class-customizer.php:70
 #: includes/modules/sessions/class-sessions.php:521
 msgid "Admin Studio"
@@ -39,233 +39,230 @@ msgstr ""
 msgid "https://www.layothedeveloper.com"
 msgstr ""
 
-#: includes/admin/class-admin.php:58
+#: includes/admin/class-admin.php:60
 #: includes/modules/admin-look/class-admin-look.php:132
 msgid "Overview"
 msgstr ""
 
-#: includes/admin/class-admin.php:59
+#: includes/admin/class-admin.php:61
 #: includes/admin/class-tabs.php:208
-#: includes/admin/class-tabs.php:829
+#: includes/admin/class-tabs.php:950
 msgid "Emails"
 msgstr ""
 
-#: includes/admin/class-admin.php:60
+#: includes/admin/class-admin.php:62
 msgid "Tab & page details"
 msgstr ""
 
-#: includes/admin/class-admin.php:61
+#: includes/admin/class-admin.php:63
 #: includes/admin/class-tabs.php:211
-#: includes/admin/class-tabs.php:832
+#: includes/admin/class-tabs.php:953
 msgid "Admin branding"
 msgstr ""
 
-#: includes/admin/class-admin.php:62
+#: includes/admin/class-admin.php:64
 #: includes/admin/class-tabs.php:213
 #: includes/admin/class-transfer.php:42
 #: includes/modules/admin-look/class-admin-look.php:940
 msgid "Dashboard look"
 msgstr ""
 
-#: includes/admin/class-admin.php:63
+#: includes/admin/class-admin.php:65
 #: includes/admin/class-tabs.php:214
 #: includes/admin/class-transfer.php:43
 msgid "Dashboard widgets"
 msgstr ""
 
-#: includes/admin/class-admin.php:64
+#: includes/admin/class-admin.php:66
 msgid "Roles & permissions"
 msgstr ""
 
-#: includes/admin/class-admin.php:65
+#: includes/admin/class-admin.php:67
 #: includes/admin/class-tabs.php:215
 #: includes/modules/sessions/class-sessions.php:542
 msgid "Sessions"
 msgstr ""
 
-#: includes/admin/class-admin.php:66
+#: includes/admin/class-admin.php:68
 #: includes/admin/class-tabs.php:236
-#: includes/admin/class-tabs.php:833
+#: includes/admin/class-tabs.php:954
 msgid "Login protection"
 msgstr ""
 
-#: includes/admin/class-admin.php:67
-#: includes/admin/class-tabs.php:834
+#: includes/admin/class-admin.php:69
+#: includes/admin/class-tabs.php:955
 msgid "Coming soon"
 msgstr ""
 
-#: includes/admin/class-admin.php:68
+#: includes/admin/class-admin.php:70
 msgid "Tools"
 msgstr ""
 
-#: includes/admin/class-admin.php:147
+#: includes/admin/class-admin.php:149
 #: includes/admin/class-fields.php:205
 msgid "Choose image"
 msgstr ""
 
-#: includes/admin/class-admin.php:148
+#: includes/admin/class-admin.php:150
 msgid "Use this image"
 msgstr ""
 
-#: includes/admin/class-admin.php:149
+#: includes/admin/class-admin.php:151
 msgid "Are you sure? This cannot be undone."
 msgstr ""
 
-#: includes/admin/class-admin.php:154
+#: includes/admin/class-admin.php:156
 msgid "Reading your site…"
 msgstr ""
 
-#: includes/admin/class-admin.php:155
+#: includes/admin/class-admin.php:157
 msgid "Colours read from your home page. Save to use them."
 msgstr ""
 
-#: includes/admin/class-admin.php:156
+#: includes/admin/class-admin.php:158
 msgid "The colours visitors see on your home page, including page builders. Read just now."
 msgstr ""
 
-#: includes/admin/class-admin.php:157
+#: includes/admin/class-admin.php:159
 msgid "Your home page could not be read here, possibly because a security setting stops it opening inside the dashboard. Pick another option."
 msgstr ""
 
-#: includes/admin/class-admin.php:181
+#: includes/admin/class-admin.php:183
 msgid "Admin Studio sections"
 msgstr ""
 
 #. translators: %s: author name linked to their website.
-#: includes/admin/class-admin.php:193
+#: includes/admin/class-admin.php:195
 #, php-format
 msgid "Admin Studio by %s"
 msgstr ""
 
-#: includes/admin/class-admin.php:253
+#: includes/admin/class-admin.php:255
 msgid "Settings saved."
 msgstr ""
 
-#: includes/admin/class-admin.php:254
+#: includes/admin/class-admin.php:256
+#: includes/admin/class-admin.php:599
 msgid "Settings imported."
 msgstr ""
 
-#: includes/admin/class-admin.php:255
-msgid "Settings imported, except the roles: they would have removed your own access, so your roles were left as they were."
-msgstr ""
-
-#: includes/admin/class-admin.php:256
+#: includes/admin/class-admin.php:257
 msgid "Nothing was imported. The roles in the file would have removed your own access."
 msgstr ""
 
-#: includes/admin/class-admin.php:257
-msgid "Nothing was imported. Tick at least one part that the file contains."
-msgstr ""
-
 #: includes/admin/class-admin.php:258
-msgid "That file is not a valid Admin Studio export."
+msgid "Nothing was imported. Tick at least one part or role."
 msgstr ""
 
 #: includes/admin/class-admin.php:259
-msgid "Settings reset to their defaults."
+msgid "The uploaded file is no longer waiting to be imported. Upload it again."
 msgstr ""
 
 #: includes/admin/class-admin.php:260
-msgid "Tick the confirmation box to reset settings."
+msgid "Import cancelled. Nothing was changed."
 msgstr ""
 
 #: includes/admin/class-admin.php:261
-msgid "Test email sent. Check your inbox (and spam folder)."
+msgid "That file is not a valid Admin Studio export."
 msgstr ""
 
 #: includes/admin/class-admin.php:262
-msgid "The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this."
+msgid "Settings reset to their defaults."
 msgstr ""
 
 #: includes/admin/class-admin.php:263
-msgid "That login address cannot be used. Choose another one; the custom login URL has been left off."
+msgid "Tick the confirmation box to reset settings."
 msgstr ""
 
 #: includes/admin/class-admin.php:264
-msgid "Lockout lifted."
+msgid "Test email sent. Check your inbox (and spam folder)."
 msgstr ""
 
 #: includes/admin/class-admin.php:265
-msgid "Lockout log cleared."
+msgid "The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this."
 msgstr ""
 
 #: includes/admin/class-admin.php:266
-msgid "Role saved. A backup of the previous roles was kept."
+msgid "That login address cannot be used. Choose another one; the custom login URL has been left off."
 msgstr ""
 
 #: includes/admin/class-admin.php:267
-msgid "Role deleted and its users moved."
+msgid "Lockout lifted."
 msgstr ""
 
 #: includes/admin/class-admin.php:268
-msgid "Roles restored."
+msgid "Lockout log cleared."
 msgstr ""
 
 #: includes/admin/class-admin.php:269
-msgid "Trial ended. Your dashboard is back to its usual template."
+msgid "Role saved. A backup of the previous roles was kept."
 msgstr ""
 
 #: includes/admin/class-admin.php:270
-msgid "That device has been signed out."
+msgid "Role deleted and its users moved."
 msgstr ""
 
 #: includes/admin/class-admin.php:271
+msgid "Roles restored."
+msgstr ""
+
+#: includes/admin/class-admin.php:272
+msgid "Trial ended. Your dashboard is back to its usual template."
+msgstr ""
+
+#: includes/admin/class-admin.php:273
+msgid "That device has been signed out."
+msgstr ""
+
+#: includes/admin/class-admin.php:274
 #: includes/admin/class-sessions-tab.php:676
 msgid "Signed out everywhere."
 msgstr ""
 
-#: includes/admin/class-admin.php:272
+#: includes/admin/class-admin.php:275
 #: includes/admin/class-sessions-tab.php:677
 msgid "Account blocked and signed out everywhere."
 msgstr ""
 
-#: includes/admin/class-admin.php:273
+#: includes/admin/class-admin.php:276
 #: includes/admin/class-sessions-tab.php:678
 msgid "Account unblocked. They can sign in again."
 msgstr ""
 
-#: includes/admin/class-admin.php:274
+#: includes/admin/class-admin.php:277
 #: includes/admin/class-sessions-tab.php:339
 msgid "No user found with that username or email address."
 msgstr ""
 
-#: includes/admin/class-admin.php:275
+#: includes/admin/class-admin.php:278
 msgid "Widget deleted."
 msgstr ""
 
-#: includes/admin/class-admin.php:276
+#: includes/admin/class-admin.php:279
 msgid "Sign-in history cleared."
 msgstr ""
 
-#: includes/admin/class-admin.php:277
+#: includes/admin/class-admin.php:280
 msgid "That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off."
 msgstr ""
 
-#: includes/admin/class-admin.php:278
+#: includes/admin/class-admin.php:281
 msgid "Settings saved. The dashboard has moved to its new address."
 msgstr ""
 
-#: includes/admin/class-admin.php:279
+#: includes/admin/class-admin.php:282
 msgid "Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click \"Test again\"."
 msgstr ""
 
-#: includes/admin/class-admin.php:280
+#: includes/admin/class-admin.php:283
 msgid "Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click \"Test again\"."
 msgstr ""
 
-#. translators: %d: number of pages or categories.
-#: includes/admin/class-admin.php:306
-#, php-format
-msgid "%d page or category from the file does not exist on this site, so the setting that used it went back to its default: the Customizer design for coming soon, the next login destination rule, or all categories for a \"What's new\" widget. Create it with the same slug and import again, or choose another one."
-msgid_plural "%d pages or categories from the file do not exist on this site, so the settings that used them went back to their defaults: the Customizer design for coming soon, the next login destination rule, or all categories for a \"What's new\" widget. Create them with the same slugs and import again, or choose others."
-msgstr[0] ""
-msgstr[1] ""
-
-#: includes/admin/class-admin.php:321
+#: includes/admin/class-admin.php:301
 msgid "Your login page has moved. Bookmark the new address:"
 msgstr ""
 
-#: includes/admin/class-admin.php:335
+#: includes/admin/class-admin.php:315
 #: includes/admin/class-look-tab.php:79
 #: includes/admin/class-roles-tab.php:88
 #: includes/admin/class-sessions-tab.php:504
@@ -275,26 +272,80 @@ msgstr ""
 msgid "Sorry, you are not allowed to do that."
 msgstr ""
 
-#: includes/admin/class-admin.php:730
+#. translators: %s: list of role names.
+#: includes/admin/class-admin.php:603
+#, php-format
+msgid "Roles added: %s."
+msgstr ""
+
+#. translators: %d: number of capabilities.
+#: includes/admin/class-admin.php:611
+#, php-format
+msgid "The Administrator role was given %d capability from the imported roles, so administrators can still do everything."
+msgid_plural "The Administrator role was given %d capabilities from the imported roles, so administrators can still do everything."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: list of role names.
+#: includes/admin/class-admin.php:619
+#, php-format
+msgid "Roles given the capabilities from the file: %s. A backup of the previous roles is under Roles & permissions → Backups."
+msgstr ""
+
+#: includes/admin/class-admin.php:623
+msgid "The roles were not imported, because they would have removed your own access. Everything else was imported."
+msgstr ""
+
+#. translators: %s: list of role names.
+#: includes/admin/class-admin.php:631
+#, php-format
+msgid "This site does not have these roles, so the rules for them were skipped: %s. Import the file again and tick those roles, or create them under Roles & permissions first."
+msgstr ""
+
+#. translators: %d: number of pages or categories.
+#: includes/admin/class-admin.php:642
+#, php-format
+msgid "%d page or category from the file does not exist on this site, so the setting that used it went back to its default: the Customizer design for coming soon, the next login destination rule, or all categories for a \"What's new\" widget. Create it with the same slug and import again, or choose another one."
+msgid_plural "%d pages or categories from the file do not exist on this site, so the settings that used them went back to their defaults: the Customizer design for coming soon, the next login destination rule, or all categories for a \"What's new\" widget. Create them with the same slugs and import again, or choose others."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/admin/class-admin.php:654
+msgid "The login address in the file cannot be used here, so the custom login address was left off."
+msgstr ""
+
+#: includes/admin/class-admin.php:655
+msgid "The dashboard address in the file cannot be used here, so the custom dashboard address was left off."
+msgstr ""
+
+#: includes/admin/class-admin.php:656
+msgid "The custom dashboard address is not working on this server yet, so the dashboard stays at /wp-admin. See Login protection for the server rules to add."
+msgstr ""
+
+#: includes/admin/class-admin.php:657
+msgid "The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection for the rules to add."
+msgstr ""
+
+#: includes/admin/class-admin.php:833
 msgid "Active"
 msgstr ""
 
-#: includes/admin/class-admin.php:731
+#: includes/admin/class-admin.php:834
 msgid "Another plugin or your host already uses this file. Admin Studio leaves it alone."
 msgstr ""
 
-#: includes/admin/class-admin.php:732
+#: includes/admin/class-admin.php:835
 #: includes/admin/class-tabs.php:237
 #: includes/admin/class-tabs.php:241
 #: includes/admin/class-tabs.php:294
 msgid "Off"
 msgstr ""
 
-#: includes/admin/class-admin.php:733
+#: includes/admin/class-admin.php:836
 msgid "Cannot write to wp-content. Ask your host to make it writable, or turn this page off."
 msgstr ""
 
-#: includes/admin/class-admin.php:734
+#: includes/admin/class-admin.php:837
 msgid "Not written yet. Save any setting to create it."
 msgstr ""
 
@@ -395,6 +446,7 @@ msgstr ""
 #: includes/admin/class-roles-tab.php:297
 #: includes/admin/class-roles-tab.php:391
 #: includes/admin/class-roles-tab.php:431
+#: includes/admin/class-tabs.php:845
 msgid "Role"
 msgstr ""
 
@@ -460,7 +512,7 @@ msgid "Label"
 msgstr ""
 
 #: includes/admin/class-look-tab.php:359
-#: includes/admin/class-tabs.php:837
+#: includes/admin/class-tabs.php:958
 msgid "Section"
 msgstr ""
 
@@ -522,6 +574,7 @@ msgstr ""
 #: includes/admin/class-roles-tab.php:42
 #: includes/admin/class-roles-tab.php:484
 #: includes/admin/class-tabs.php:760
+#: includes/admin/class-tabs.php:841
 msgid "Roles"
 msgstr ""
 
@@ -1190,7 +1243,7 @@ msgid "Colours you choose yourself in the Customizer."
 msgstr ""
 
 #: includes/admin/class-tabs.php:175
-#: includes/admin/class-tabs.php:827
+#: includes/admin/class-tabs.php:948
 #: includes/customizer/class-customizer.php:310
 #: includes/modules/admin-look/class-admin-look.php:115
 msgid "Brand kit"
@@ -1218,7 +1271,7 @@ msgid "Read colours from my site"
 msgstr ""
 
 #: includes/admin/class-tabs.php:207
-#: includes/admin/class-tabs.php:828
+#: includes/admin/class-tabs.php:949
 msgid "Login page"
 msgstr ""
 
@@ -1231,7 +1284,7 @@ msgid "Branded HTML layout and editable wording for 15 core WordPress emails."
 msgstr ""
 
 #: includes/admin/class-tabs.php:209
-#: includes/admin/class-tabs.php:830
+#: includes/admin/class-tabs.php:951
 msgid "Error and system pages"
 msgstr ""
 
@@ -1240,7 +1293,7 @@ msgid "Critical error, database error, update maintenance, permission screens an
 msgstr ""
 
 #: includes/admin/class-tabs.php:210
-#: includes/admin/class-tabs.php:831
+#: includes/admin/class-tabs.php:952
 msgid "Tab and page details"
 msgstr ""
 
@@ -1950,7 +2003,7 @@ msgid "Username tried"
 msgstr ""
 
 #: includes/admin/class-tabs.php:661
-#: includes/admin/class-tabs.php:848
+#: includes/admin/class-tabs.php:969
 #: includes/modules/security/class-two-factor.php:514
 msgid "Status"
 msgstr ""
@@ -2089,98 +2142,198 @@ msgstr ""
 msgid "Anyone who opens this link sees the real site for a week. Useful for clients."
 msgstr ""
 
-#: includes/admin/class-tabs.php:784
+#: includes/admin/class-tabs.php:785
 msgid "Include"
 msgstr ""
 
-#: includes/admin/class-tabs.php:807
-msgid "Export"
+#: includes/admin/class-tabs.php:822
+msgid "Review the import"
 msgstr ""
 
-#: includes/admin/class-tabs.php:807
-msgid "Download Admin Studio's settings as a JSON file to copy them to another site."
+#. translators: 1: site address, 2: date.
+#: includes/admin/class-tabs.php:825
+#, php-format
+msgid "Exported from %1$s on %2$s. Nothing changes until you click Import."
 msgstr ""
 
-#: includes/admin/class-tabs.php:811
-msgid "Download settings"
+#: includes/admin/class-tabs.php:826
+msgid "another site"
 msgstr ""
 
-#: includes/admin/class-tabs.php:814
+#: includes/admin/class-tabs.php:837
+msgid "Each ticked part replaces the same part on this site. Pages and categories are matched by their slug. Image addresses still point to the original site."
+msgstr ""
+
+#: includes/admin/class-tabs.php:841
+msgid "Tick the roles to bring across. Each comes with all of its capabilities: a role this site does not have is added, and a role it already has is given the file's capabilities. Roles you leave unticked, and roles that are only on this site, stay as they are. A backup of your roles is saved first."
+msgstr ""
+
+#: includes/admin/class-tabs.php:843
+msgid "Tick all"
+msgstr ""
+
+#: includes/admin/class-tabs.php:843
+msgid "Only roles new to this site"
+msgstr ""
+
+#: includes/admin/class-tabs.php:843
+msgid "Tick none"
+msgstr ""
+
+#: includes/admin/class-tabs.php:845
+#: includes/admin/class-tabs.php:898
+#: includes/admin/class-tabs.php:933
 msgid "Import"
 msgstr ""
 
-#: includes/admin/class-tabs.php:814
-msgid "Replace the ticked parts with the ones in an exported file. Parts the file does not contain are left as they are. Pages and categories are matched by their slug. Image addresses still point to the original site."
+#: includes/admin/class-tabs.php:845
+msgid "On this site"
 msgstr ""
 
-#: includes/admin/class-tabs.php:817
-msgid "Settings file"
+#: includes/admin/class-tabs.php:845
+msgid "Capabilities in the file"
 msgstr ""
 
-#: includes/admin/class-tabs.php:820
-msgid "Import settings"
+#: includes/admin/class-tabs.php:845
+msgid "People here"
 msgstr ""
 
-#: includes/admin/class-tabs.php:823
-#: includes/admin/class-tabs.php:843
-msgid "Reset"
-msgstr ""
-
-#: includes/admin/class-tabs.php:823
-msgid "Put one section, or everything, back to its defaults."
-msgstr ""
-
-#: includes/admin/class-tabs.php:835
-msgid "Everything"
-msgstr ""
-
-#: includes/admin/class-tabs.php:842
-msgid "I understand this restores the defaults for the chosen section"
-msgstr ""
-
-#: includes/admin/class-tabs.php:853
-msgid "Critical error page"
-msgstr ""
-
-#: includes/admin/class-tabs.php:854
-msgid "Database error page"
-msgstr ""
-
+#. translators: %s: role name.
 #: includes/admin/class-tabs.php:855
-msgid "Update maintenance page"
+#, php-format
+msgid "Import %s"
+msgstr ""
+
+#: includes/admin/class-tabs.php:859
+msgid "Rules in the file use this role. Leave it unticked and they are skipped."
+msgstr ""
+
+#: includes/admin/class-tabs.php:864
+msgid "Never replaced"
+msgstr ""
+
+#: includes/admin/class-tabs.php:864
+msgid "Administrators always have every capability. Capabilities the imported roles have are added to it."
+msgstr ""
+
+#: includes/admin/class-tabs.php:866
+msgid "New here"
+msgstr ""
+
+#: includes/admin/class-tabs.php:868
+msgid "Exists, same capabilities"
 msgstr ""
 
 #: includes/admin/class-tabs.php:870
+msgid "Exists, different capabilities"
+msgstr ""
+
+#. translators: 1: capabilities gained, 2: capabilities lost.
+#: includes/admin/class-tabs.php:874
+#, php-format
+msgid "%1$d gained, %2$d removed if imported"
+msgstr ""
+
+#: includes/admin/class-tabs.php:880
+msgid "Gained:"
+msgstr ""
+
+#: includes/admin/class-tabs.php:885
+msgid "Removed:"
+msgstr ""
+
+#: includes/admin/class-tabs.php:903
+msgid "Cancel and discard the file"
+msgstr ""
+
+#: includes/admin/class-tabs.php:926
+msgid "Export"
+msgstr ""
+
+#: includes/admin/class-tabs.php:926
+msgid "Download Admin Studio's settings as a JSON file to copy them to another site."
+msgstr ""
+
+#: includes/admin/class-tabs.php:930
+msgid "Download settings"
+msgstr ""
+
+#: includes/admin/class-tabs.php:933
+msgid "Upload an exported file. The next screen shows what it contains, and you choose the parts and the roles to bring across before anything changes."
+msgstr ""
+
+#: includes/admin/class-tabs.php:935
+msgid "Continue the import you started"
+msgstr ""
+
+#: includes/admin/class-tabs.php:939
+msgid "Settings file"
+msgstr ""
+
+#: includes/admin/class-tabs.php:941
+msgid "Upload and review"
+msgstr ""
+
+#: includes/admin/class-tabs.php:944
+#: includes/admin/class-tabs.php:964
+msgid "Reset"
+msgstr ""
+
+#: includes/admin/class-tabs.php:944
+msgid "Put one section, or everything, back to its defaults."
+msgstr ""
+
+#: includes/admin/class-tabs.php:956
+msgid "Everything"
+msgstr ""
+
+#: includes/admin/class-tabs.php:963
+msgid "I understand this restores the defaults for the chosen section"
+msgstr ""
+
+#: includes/admin/class-tabs.php:974
+msgid "Critical error page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:975
+msgid "Database error page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:976
+msgid "Update maintenance page"
+msgstr ""
+
+#: includes/admin/class-tabs.php:991
 msgid "wp-content writable"
 msgstr ""
 
-#: includes/admin/class-tabs.php:871
+#: includes/admin/class-tabs.php:992
 msgid "Yes"
 msgstr ""
 
-#: includes/admin/class-tabs.php:871
+#: includes/admin/class-tabs.php:992
 msgid "No"
 msgstr ""
 
-#: includes/admin/class-tabs.php:875
+#: includes/admin/class-tabs.php:996
 msgid "Colours detected from the theme"
 msgstr ""
 
-#: includes/admin/class-tabs.php:888
+#: includes/admin/class-tabs.php:1009
 msgid "None. The built-in palette is used until you pick colours in the brand kit."
 msgstr ""
 
-#: includes/admin/class-tabs.php:893
+#: includes/admin/class-tabs.php:1014
 msgid "Overlapping plugins"
 msgstr ""
 
 #. translators: 1: plugin name, 2: Admin Studio feature name.
-#: includes/admin/class-tabs.php:898
+#: includes/admin/class-tabs.php:1019
 #, php-format
 msgid "%1$s does similar things to the %2$s feature. Use one or the other to avoid surprises."
 msgstr ""
 
-#: includes/admin/class-tabs.php:902
+#: includes/admin/class-tabs.php:1023
 msgid "None found."
 msgstr ""
 
@@ -2213,7 +2366,7 @@ msgid "Roles and capabilities"
 msgstr ""
 
 #: includes/admin/class-transfer.php:45
-msgid "Custom roles and what every role can do. The Administrator role is never changed, and a backup of your roles is saved first."
+msgid "Every role and what it can do."
 msgstr ""
 
 #: includes/admin/class-transfer.php:46
@@ -2224,11 +2377,11 @@ msgstr ""
 msgid "Login destination, template and toolbar choice of each person, matched by username or email. Roles and permissions given to one person are not included."
 msgstr ""
 
-#: includes/admin/class-transfer.php:343
+#: includes/admin/class-transfer.php:439
 msgid "Settings imported from a file."
 msgstr ""
 
-#: includes/admin/class-transfer.php:418
+#: includes/admin/class-transfer.php:561
 msgid "The roles were not imported, because they would remove your own access."
 msgstr ""
 
