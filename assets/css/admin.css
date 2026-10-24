@@ -1124,6 +1124,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 .adminstudio-cards {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	align-items: start;
 	gap: 12px;
 	margin: 20px 0 8px;
 }
@@ -1147,10 +1148,6 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 .adminstudio-card > p {
 	margin: 0;
 	color: var(--as-muted, #50575e);
-}
-
-.adminstudio-card form {
-	margin-top: auto;
 }
 
 .adminstudio-card form p {
@@ -1396,4 +1393,34 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 
 .adminstudio-widget-matrix .adminstudio-matrix__group {
 	left: 256px;
+}
+
+/* Parts to export or import. */
+.adminstudio-parts {
+	margin: 12px 0 14px;
+}
+
+.adminstudio-parts legend {
+	margin-bottom: 6px;
+	font-weight: 600;
+}
+
+.adminstudio-parts label {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	margin: 0 0 8px;
+}
+
+.adminstudio-parts input[type="checkbox"] {
+	margin-top: 2px;
+}
+
+.adminstudio-parts span {
+	display: flex;
+	flex-direction: column;
+}
+
+.adminstudio-parts small {
+	color: var(--as-muted, #646970);
 }

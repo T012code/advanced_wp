@@ -775,6 +775,26 @@ class Tabs {
 	}
 
 	/**
+	 * Checkboxes for the parts of an export or import.
+	 *
+	 * @param string[] $checked Parts ticked to start with.
+	 * @return void
+	 */
+	private static function transfer_parts( array $checked ) {
+		echo '<fieldset class="adminstudio-parts"><legend>' . esc_html__( 'Include', 'admin-studio' ) . '</legend>';
+		foreach ( Transfer::parts() as $key => $part ) {
+			printf(
+				'<label><input type="checkbox" name="adminstudio_parts[]" value="%1$s"%2$s> <span><strong>%3$s</strong><small>%4$s</small></span></label>',
+				esc_attr( $key ),
+				checked( in_array( $key, $checked, true ), true, false ),
+				esc_html( $part[0] ),
+				esc_html( $part[1] )
+			);
+		}
+		echo '</fieldset>';
+	}
+
+	/**
 	 * Tools: import, export, reset and status.
 	 *
 	 * @return void
@@ -784,16 +804,18 @@ class Tabs {
 
 		echo '<div class="adminstudio-cards">';
 
-		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Export', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Download every Admin Studio setting as a JSON file to copy them to another site.', 'admin-studio' ) . '</p>';
+		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Export', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Download Admin Studio\'s settings as a JSON file to copy them to another site.', 'admin-studio' ) . '</p>';
 		echo '<form method="post" action="' . esc_url( $post ) . '"><input type="hidden" name="action" value="adminstudio_export">';
 		wp_nonce_field( 'adminstudio_export' );
+		self::transfer_parts( array_keys( Transfer::parts() ) );
 		submit_button( __( 'Download settings', 'admin-studio' ), 'secondary', 'submit', false );
 		echo '</form></section>';
 
-		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Import', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Replace the current settings with an exported file. Image addresses still point to the original site.', 'admin-studio' ) . '</p>';
+		echo '<section class="adminstudio-card"><h2>' . esc_html__( 'Import', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Replace the ticked parts with the ones in an exported file. Parts the file does not contain are left as they are. Pages and categories are matched by their slug. Image addresses still point to the original site.', 'admin-studio' ) . '</p>';
 		echo '<form method="post" enctype="multipart/form-data" action="' . esc_url( $post ) . '" data-adminstudio-confirm><input type="hidden" name="action" value="adminstudio_import">';
 		wp_nonce_field( 'adminstudio_import' );
 		echo '<label for="adminstudio-file" class="screen-reader-text">' . esc_html__( 'Settings file', 'admin-studio' ) . '</label><input type="file" id="adminstudio-file" name="adminstudio_file" accept=".json,application/json" required>';
+		self::transfer_parts( Transfer::default_import_parts() );
 		echo '<p>';
 		submit_button( __( 'Import settings', 'admin-studio' ), 'secondary', 'submit', false );
 		echo '</p></form></section>';

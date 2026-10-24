@@ -330,7 +330,7 @@ class Widget_Render {
 				esc_html( get_the_title( $comment->comment_post_ID ) ),
 				$pending ? ' <span class="adminstudio-pill">' . esc_html__( 'Waiting for approval', 'admin-studio' ) . '</span>' : '',
 				esc_attr( mysql2date( 'c', $comment->comment_date_gmt ) ),
-				/* translators: %s: time span such as "3 days". */
+				/* translators: %s: time span such as "5 minutes". */
 				esc_html( sprintf( __( '%s ago', 'admin-studio' ), human_time_diff( strtotime( $comment->comment_date_gmt . ' UTC' ), time() ) ) ),
 				esc_html( wp_trim_words( wp_strip_all_tags( $comment->comment_content ), 20 ) )
 			);

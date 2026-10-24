@@ -414,8 +414,25 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 
 	<h2>12. Tools</h2>
 	<ul>
-		<li><strong>Export</strong> downloads all Admin Studio settings as a JSON file.</li>
-		<li><strong>Import</strong> replaces the settings with an exported file. Each value is checked and cleaned on import. Image addresses still point to the site they came from.</li>
+		<li><strong>Export</strong> downloads Admin Studio's settings as a JSON file. Tick the parts to include; all are ticked to start with:
+			<ul>
+				<li><strong>Settings and designs:</strong> brand kit (including colours read from the front end), login page, emails, system pages, tab details, admin branding, login protection, sessions and coming soon.</li>
+				<li><strong>Dashboard look:</strong> templates, colours, templates per role and the sidebar menu layout.</li>
+				<li><strong>Dashboard widgets:</strong> which roles see each widget, custom widgets and the default layout.</li>
+				<li><strong>Menu, toolbar and login rules:</strong> menu access, toolbar settings, login destinations and dashboard access per role.</li>
+				<li><strong>Roles and capabilities:</strong> every role and what it can do.</li>
+				<li><strong>Personal settings:</strong> each person's login destination, template and toolbar choice.</li>
+			</ul>
+		</li>
+		<li><strong>Import</strong> replaces the ticked parts with the ones in an exported file; parts the file does not contain, or that are not ticked, stay as they are. Each value is checked and cleaned on import, and the import is recorded in the activity log. Image addresses still point to the site they came from.
+			<ul>
+				<li><strong>Pages and categories</strong> (the coming soon page, login destinations, the category of a "What's new" widget) have different IDs on every site, so the file carries their slug, and the import links them to the page or category with the same slug here. Drafts, which have no slug yet, are matched by their exact title. Anything that cannot be found goes back to its default, and a notice says how many.</li>
+				<li><strong>Roles and capabilities</strong> are not ticked to start with, because they change what people can do. When ticked, roles in the file are added or updated, roles that are not in the file stay, and the Administrator role is never changed. A backup of your roles is saved first (Roles &amp; permissions → Backups), and nothing is imported if the roles would remove your own access.</li>
+				<li><strong>Personal settings</strong> go to the people with the same username, or else the same email address. Roles and permissions given to one person are not part of an export, so an import can never hand someone extra rights.</li>
+				<li><strong>Login and dashboard addresses</strong> are checked as when you save the Login protection tab: an address that cannot be used is switched off, and the dashboard only moves after the server test passes.</li>
+				<li>Files exported by Admin Studio 1.0 still import.</li>
+			</ul>
+		</li>
 		<li><strong>Reset</strong> restores the defaults for one section or for everything, after a confirmation.</li>
 		<li><strong>Status</strong> shows the state of each drop-in file, whether <code>wp-content</code> is writable, the colours detected from your theme, and any active plugins that do the same job as an Admin Studio feature.</li>
 	</ul>
@@ -626,7 +643,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h3>Audit log and export</h3>
 	<ul>
 		<li>A log records who changed which role, capability, user permission or menu rule, and when, with filters and a CSV download.</li>
-		<li>Roles, capabilities, per-user permissions and menu rules are included in the existing settings export and import.</li>
+		<li>Roles and capabilities, menu rules, toolbar rules and login destinations are included in the settings export and import (section 12). Roles and permissions given to one person are not, so an import cannot give anyone extra rights.</li>
 	</ul>
 
 	<h2>27. Toolbar control</h2>

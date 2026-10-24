@@ -104,7 +104,7 @@ It starts from your site. Brand colours come from your choice of source: your th
 
 = Tools =
 
-* Export and import settings as JSON.
+* Export and import settings as JSON, choosing the parts: settings and designs, dashboard look, dashboard widgets, menu and toolbar rules, roles, and personal settings. Pages and categories are matched by slug on the new site.
 * Reset any section to its defaults.
 * Status panel showing drop-in files, detected theme colours and overlapping plugins.
 

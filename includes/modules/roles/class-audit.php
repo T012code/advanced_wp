@@ -68,6 +68,9 @@ class Audit {
 			'menu_access'    => __( 'Menu access changed', 'admin-studio' ),
 			'access'         => __( 'Login and access changed', 'admin-studio' ),
 			'toolbar'        => __( 'Toolbar changed', 'admin-studio' ),
+			'look'           => __( 'Dashboard look changed', 'admin-studio' ),
+			'widgets'        => __( 'Dashboard widgets changed', 'admin-studio' ),
+			'import'         => __( 'Settings imported', 'admin-studio' ),
 		);
 	}
 

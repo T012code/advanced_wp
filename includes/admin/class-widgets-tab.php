@@ -412,9 +412,9 @@ class Widgets_Tab {
 			$name = '' !== $link['label'] ? $link['label'] : __( 'New link', 'admin-studio' );
 			echo '<li class="adminstudio-sortable__row" draggable="true">';
 			echo '<span class="adminstudio-sortable__handle" aria-hidden="true"></span>';
-			/* translators: %s: link label. */
+			/* translators: %s: item name. */
 			echo '<button type="button" class="button-link adminstudio-sortable__up" data-adminstudio-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'admin-studio' ), $name ) ) . '">&uarr;</button>';
-			/* translators: %s: link label. */
+			/* translators: %s: item name. */
 			echo '<button type="button" class="button-link adminstudio-sortable__down" data-adminstudio-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'admin-studio' ), $name ) ) . '">&darr;</button>';
 			echo '<input type="text" name="data[links][' . (int) $n . '][label]" value="' . esc_attr( $link['label'] ) . '" placeholder="' . esc_attr__( 'Label', 'admin-studio' ) . '" aria-label="' . esc_attr__( 'Label', 'admin-studio' ) . '">';
 			echo '<input type="text" name="data[links][' . (int) $n . '][url]" value="' . esc_attr( $link['url'] ) . '" placeholder="' . esc_attr__( 'post-new.php or https://…', 'admin-studio' ) . '" aria-label="' . esc_attr__( 'Address', 'admin-studio' ) . '">';
