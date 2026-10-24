@@ -312,10 +312,6 @@ body.adminstudio-look .adminstudio-badge {
 }
 
 /* Roles. */
-.adminstudio-roles {
-	max-width: 900px;
-}
-
 .adminstudio-row-actions {
 	text-align: right;
 }
@@ -376,7 +372,9 @@ body.adminstudio-look .adminstudio-badge {
 }
 
 .adminstudio-cap[hidden],
-.adminstudio-cap-group[hidden] {
+.adminstudio-cap-group[hidden],
+.adminstudio-menu-group[hidden],
+.adminstudio-menu-group li[hidden] {
 	display: none;
 }
 
@@ -384,32 +382,91 @@ body.adminstudio-look .adminstudio-badge {
 	min-width: 320px;
 }
 
-.adminstudio-menu-tree {
-	max-width: 520px;
+/* Menu access: one small card per menu, flowing into columns. */
+.adminstudio-menu-groups {
+	columns: 260px auto;
+	column-gap: 16px;
 	margin: 16px 0;
-	padding: 8px 0;
-	background: #fff;
-	border: 1px solid #dcdcde;
+}
+
+.adminstudio-menu-group {
+	break-inside: avoid;
+	margin: 0 0 16px;
+	padding: 10px 0 8px;
+	background: var(--as-surface, #fff);
+	border: 1px solid var(--as-border, #dcdcde);
 	border-radius: 8px;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminstudio-menu-tree__item {
+.adminstudio-menu-group ul {
+	margin: 4px 0 0;
+}
+
+.adminstudio-menu-group li {
 	margin: 0;
-	padding: 6px 16px;
 }
 
-.adminstudio-menu-tree__item.is-sub {
-	padding-left: 44px;
+.adminstudio-menu-group label {
+	display: block;
+	padding: 4px 14px;
+}
+
+.adminstudio-menu-group__top {
+	font-weight: 600;
+}
+
+.adminstudio-menu-group ul label {
+	padding-left: 38px;
 	color: #50575e;
 }
 
-.adminstudio-menu-tree__item:not(.is-sub) {
-	font-weight: 600;
+.adminstudio-menu-tools {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+	margin: 16px 0 0;
+}
+
+.adminstudio-menu-tools input[type="search"] {
+	min-width: 240px;
+}
+
+/*
+ * Tables match the cards: same width, corners, border and shadow. A wide
+ * table scrolls sideways inside its frame, with the first column fixed.
+ */
+.adminstudio-wrap .adminstudio-tab table.widefat {
+	border-collapse: separate;
+	border-spacing: 0;
+	border: 1px solid var(--as-border, #dcdcde);
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .adminstudio-table-scroll {
 	max-width: 100%;
+	margin: 10px 0 8px;
 	overflow-x: auto;
+	border: 1px solid var(--as-border, #dcdcde);
+	border-radius: 8px;
+	background: var(--as-surface, #fff);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.adminstudio-table-scroll:focus-visible {
+	outline: 2px solid #2271b1;
+	outline-offset: 2px;
+}
+
+.adminstudio-wrap .adminstudio-tab .adminstudio-table-scroll > table.widefat {
+	min-width: 100%;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	overflow: visible;
 }
 
 .adminstudio-matrix th,
@@ -417,8 +474,73 @@ body.adminstudio-look .adminstudio-badge {
 	vertical-align: middle;
 }
 
+.adminstudio-matrix tbody td {
+	text-align: center;
+}
+
+.adminstudio-matrix tbody td input[type="checkbox"] {
+	margin: 0;
+}
+
 .adminstudio-matrix thead th {
+	min-width: 84px;
+	max-width: 140px;
+	padding: 10px 8px;
 	font-size: 12px;
+	line-height: 1.35;
+	text-align: center;
+	vertical-align: bottom;
+}
+
+.adminstudio-matrix thead th[scope="colgroup"] {
+	max-width: none;
+	padding: 12px 8px 10px 16px;
+	text-align: left;
+	vertical-align: middle;
+	color: var(--as-muted, #50575e);
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	font-size: 11px;
+}
+
+.adminstudio-matrix thead tr + tr th {
+	background: var(--as-surface-2, #f6f7f7);
+}
+
+/* The first column stays put while the rest scrolls. */
+.adminstudio-matrix > tbody > tr > :first-child,
+.adminstudio-matrix > thead > tr:first-child > :first-child {
+	position: sticky;
+	left: 0;
+	z-index: 1;
+	box-sizing: border-box;
+	width: 190px;
+	min-width: 190px;
+	max-width: 190px;
+	text-align: left;
+	background: var(--as-surface, #fff);
+	box-shadow: 8px 0 8px -8px rgba(0, 0, 0, 0.18);
+}
+
+/* Group labels stay readable just after the fixed column. */
+.adminstudio-matrix__group {
+	position: sticky;
+	left: 206px;
+}
+
+.adminstudio-matrix.striped > tbody > :nth-child(odd) > :first-child {
+	background: var(--as-surface-2, #f6f7f7);
+}
+
+.adminstudio-matrix > thead > tr:first-child > :first-child {
+	z-index: 2;
+	vertical-align: bottom;
+}
+
+/* Admin templates give table headers their own tint. */
+body.adminstudio-look .adminstudio-matrix > thead > tr > th {
+	background: var(--as-surface-2);
 }
 
 /* Emails tab. */
@@ -571,7 +693,6 @@ body.adminstudio-look .adminstudio-badge {
 }
 
 .adminstudio-log {
-	max-width: 900px;
 	margin-bottom: 8px;
 }
 
@@ -1153,11 +1274,6 @@ body.adminstudio-look .adminstudio-badge {
 	color: #646970;
 }
 
-.adminstudio-widget-matrix td,
-.adminstudio-widget-matrix thead th:not(:first-child) {
-	text-align: center;
-}
-
 .adminstudio-widget-types {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -1269,4 +1385,15 @@ body.adminstudio-look .adminstudio-badge {
 
 .adminstudio-widget-list .adminstudio-row-actions form {
 	display: inline-block;
+}
+
+.adminstudio-widget-matrix > tbody > tr > :first-child,
+.adminstudio-widget-matrix > thead > tr:first-child > :first-child {
+	width: 240px;
+	min-width: 240px;
+	max-width: 240px;
+}
+
+.adminstudio-widget-matrix .adminstudio-matrix__group {
+	left: 256px;
 }

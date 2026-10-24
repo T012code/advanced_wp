@@ -160,7 +160,8 @@ class Widgets_Tab {
 		) . '</p>';
 
 		self::form( 'widgets_visibility' );
-		echo '<div class="adminstudio-table-scroll"><table class="widefat striped adminstudio-rule-table adminstudio-widget-matrix"><thead><tr><th scope="col">' . esc_html__( 'Widget', 'admin-studio' ) . '</th>';
+		echo '<div class="adminstudio-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr__( 'Widgets per role', 'admin-studio' ) . '"><table class="widefat striped adminstudio-matrix adminstudio-widget-matrix"><thead>';
+		echo '<tr><th scope="col" rowspan="2">' . esc_html__( 'Widget', 'admin-studio' ) . '</th><th scope="colgroup" colspan="' . (int) count( $roles ) . '"><span class="adminstudio-matrix__group">' . esc_html__( 'Shown to', 'admin-studio' ) . '</span></th></tr><tr>';
 		foreach ( $roles as $name ) {
 			echo '<th scope="col">' . esc_html( $name ) . '</th>';
 		}
@@ -168,7 +169,8 @@ class Widgets_Tab {
 
 		foreach ( $known as $id => $title ) {
 			$hidden = isset( $config['hide'][ $id ] ) ? $config['hide'][ $id ] : array();
-			echo '<tr><th scope="row">' . esc_html( $title ) . '<small><code>' . esc_html( $id ) . '</code></small></th>';
+			// Long ids may break after an underscore or dash rather than mid-word.
+			echo '<tr><th scope="row">' . esc_html( $title ) . '<small><code>' . wp_kses( str_replace( array( '_', '-' ), array( '_<wbr>', '-<wbr>' ), esc_html( $id ) ), array( 'wbr' => array() ) ) . '</code></small></th>';
 			foreach ( $roles as $slug => $name ) {
 				printf(
 					'<td><input type="hidden" name="widgets[%1$s][%2$s]" value="0"><input type="checkbox" name="widgets[%1$s][%2$s]" value="1"%3$s aria-label="%4$s"></td>',

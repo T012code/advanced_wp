@@ -144,6 +144,25 @@
 		this.form.submit();
 	} );
 
+	// Menu access search: a matching menu shows all its items, otherwise only matching items show.
+	$( document ).on( 'input', '[data-adminstudio-menu-filter]', function () {
+		var term = this.value.toLowerCase().trim();
+
+		$( '.adminstudio-menu-group' ).each( function () {
+			var $group = $( this ),
+				topMatch = ! term || -1 !== $group.find( '.adminstudio-menu-group__top' ).text().toLowerCase().indexOf( term ),
+				subMatch = false;
+
+			$group.find( 'li' ).each( function () {
+				var match = topMatch || -1 !== $( this ).text().toLowerCase().indexOf( term );
+				this.hidden = ! match;
+				subMatch = subMatch || match;
+			} );
+
+			this.hidden = ! topMatch && ! subMatch;
+		} );
+	} );
+
 	// Capability search: hides capabilities and groups that do not match.
 	$( document ).on( 'input', '[data-adminstudio-cap-search]', function () {
 		var term = this.value.toLowerCase().trim();

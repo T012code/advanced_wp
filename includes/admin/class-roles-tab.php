@@ -308,22 +308,69 @@ class Roles_Tab {
 			)
 		);
 		echo '<input type="hidden" name="present" value="1">';
-		echo '<ul class="adminstudio-menu-tree">';
+		// Group each top-level item with the items under it.
+		$groups = array();
 		foreach ( Access::menu_items() as $id => $item ) {
 			if ( '' === $item[0] || false !== strpos( $id, 'admin-studio' ) ) {
 				continue;
 			}
-			printf(
-				'<li class="adminstudio-menu-tree__item%4$s"><input type="hidden" name="all[]" value="%1$s"><label><input type="checkbox" name="visible[]" value="%1$s" %2$s> %3$s</label></li>',
-				esc_attr( $id ),
-				checked( ! in_array( $id, $hide, true ), true, false ),
-				esc_html( $item[0] ),
-				$item[1] ? ' is-sub' : ''
-			);
+			if ( $item[1] && $groups ) {
+				$groups[ count( $groups ) - 1 ]['subs'][ $id ] = $item[0];
+			} else {
+				$groups[] = array(
+					'id'    => $id,
+					'label' => $item[0],
+					'subs'  => array(),
+				);
+			}
 		}
-		echo '</ul>';
+
+		echo '<div class="adminstudio-menu-tools"><label for="adminstudio-menu-filter" class="screen-reader-text">' . esc_html__( 'Find a menu item', 'admin-studio' ) . '</label><input type="search" id="adminstudio-menu-filter" placeholder="' . esc_attr__( 'Find a menu item', 'admin-studio' ) . '" data-adminstudio-menu-filter>';
+		echo '<span class="description">' . esc_html(
+			sprintf(
+				/* translators: %d: number of menus. */
+				_n( '%d menu. Untick an item to hide it.', '%d menus. Untick an item to hide it.', count( $groups ), 'admin-studio' ),
+				count( $groups )
+			)
+		) . '</span></div>';
+
+		echo '<div class="adminstudio-menu-groups">';
+		foreach ( $groups as $group ) {
+			echo '<div class="adminstudio-menu-group">';
+			self::menu_check( $group['id'], $group['label'], $hide, 'adminstudio-menu-group__top' );
+			if ( $group['subs'] ) {
+				echo '<ul>';
+				foreach ( $group['subs'] as $id => $label ) {
+					echo '<li>';
+					self::menu_check( $id, $label, $hide );
+					echo '</li>';
+				}
+				echo '</ul>';
+			}
+			echo '</div>';
+		}
+		echo '</div>';
 		submit_button( sprintf( /* translators: %s: role name. */ __( 'Save menu for %s', 'admin-studio' ), $roles[ $role ] ) );
 		echo '</form>';
+	}
+
+	/**
+	 * One menu item checkbox.
+	 *
+	 * @param string $id        Menu item id.
+	 * @param string $label     Menu item name.
+	 * @param array  $hide      Hidden item ids.
+	 * @param string $css_class Label class.
+	 * @return void
+	 */
+	private static function menu_check( $id, $label, array $hide, $css_class = '' ) {
+		printf(
+			'<input type="hidden" name="all[]" value="%1$s"><label%4$s><input type="checkbox" name="visible[]" value="%1$s" %2$s> %3$s</label>',
+			esc_attr( $id ),
+			checked( ! in_array( $id, $hide, true ), true, false ),
+			esc_html( $label ),
+			'' !== $css_class ? ' class="' . esc_attr( $css_class ) . '"' : ''
+		);
 	}
 
 	/**
@@ -340,9 +387,14 @@ class Roles_Tab {
 
 		self::form( 'access_save', array( 'group' => 'toolbar' ) );
 		echo '<input type="hidden" name="present" value="1">';
-		echo '<div class="adminstudio-table-scroll"><table class="widefat striped adminstudio-matrix"><thead><tr><th>' . esc_html__( 'Role', 'admin-studio' ) . '</th><th>' . esc_html__( 'Hide on the site', 'admin-studio' ) . '</th><th>' . esc_html__( 'Hide in the dashboard', 'admin-studio' ) . '</th>';
+		echo '<div class="adminstudio-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr__( 'Toolbar per role', 'admin-studio' ) . '"><table class="widefat striped adminstudio-matrix"><thead>';
+		echo '<tr><th scope="col" rowspan="2">' . esc_html__( 'Role', 'admin-studio' ) . '</th><th scope="colgroup" colspan="2"><span class="adminstudio-matrix__group">' . esc_html__( 'Hide the whole toolbar', 'admin-studio' ) . '</span></th>';
+		if ( $nodes ) {
+			echo '<th scope="colgroup" colspan="' . (int) count( $nodes ) . '"><span class="adminstudio-matrix__group">' . esc_html__( 'Hide one item', 'admin-studio' ) . '</span></th>';
+		}
+		echo '</tr><tr><th scope="col">' . esc_html__( 'On the site', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'In the dashboard', 'admin-studio' ) . '</th>';
 		foreach ( $nodes as $label ) {
-			echo '<th>' . esc_html( sprintf( /* translators: %s: toolbar item. */ __( 'Hide "%s"', 'admin-studio' ), $label ) ) . '</th>';
+			echo '<th scope="col">' . esc_html( $label ) . '</th>';
 		}
 		echo '</tr></thead><tbody>';
 
