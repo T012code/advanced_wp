@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name:       Admin Studio
- * Plugin URI:        https://www.layothedeveloper.com
  * Description:       Rebrand the login page, system emails, error pages, browser tab details and admin dashboard, using your theme's colours by default.
  * Version:           1.0.0
  * Requires at least: 6.4
