@@ -162,7 +162,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</ol>
 
 	<h2>3. Where each setting lives</h2>
-	<p>Anything visual that can be previewed lives in the Customizer. Everything else lives on the settings page, where each group of settings sits in its own card and the Overview tab shows every feature as a card with its switch. Every setting is always visible: switching a feature off does not hide its details, so you can read and fill them in before switching it on. Only a choice in a list (such as "Other address") reveals the box it needs.</p>
+	<p>Anything visual that can be previewed lives in the Customizer. Everything else lives on the settings page, where each group of settings sits in its own card and the Overview tab shows every feature as a card with its switch. Tables and cards share the same width, border and rounded corners. Every setting is always visible: switching a feature off does not hide its details, so you can read and fill them in before switching it on. Only a choice in a list (such as "Other address") reveals the box it needs.</p>
 	<table>
 		<tr><th>Customizer (Appearance → Customize → Admin Studio)</th><th>Settings page (Settings → Admin Studio)</th></tr>
 		<tr><td>Brand kit</td><td>Overview: switch features on or off; uninstall option</td></tr>
@@ -211,11 +211,28 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li><strong>Background:</strong> colour, gradient (two colours and an angle), image or video, with an overlay colour and strength. Videos are muted, looped and paused for visitors who prefer reduced motion.</li>
 		<li><strong>Logo:</strong> image (defaults to the brand logo), width, link (defaults to your home page instead of wordpress.org), text for screen readers, or hide it. With no logo image, the site title is shown as text.</li>
 		<li><strong>Form and button:</strong> width, padding, corner radius, background, shadow, field style (boxed, underline or filled), hidden labels with placeholders, text and link colours, button colour, button text colour (picked automatically for contrast when empty) and button corner radius.</li>
-		<li><strong>Text and links</strong> (Customizer → Admin Studio → Login: text and links): a message above the form, footer text, your own text for the "← Go to site" link (for example "Back to {site_name}"), and options to hide "Lost your password?", "Go to site", the language switcher and the privacy policy link.</li>
+		<li><strong>Text and links</strong> (Customizer → Admin Studio → Login: text and links): a message above the form, footer text, your own text for the "← Go to site" link (for example "Back to {site_name}"), options to hide the language switcher and the privacy policy link, and the layout and position of the links (below).</li>
 		<li><strong>One message for failed log ins:</strong> replace WordPress's "unknown username" and "incorrect password" messages with one message of your own. This also stops the screen revealing which usernames exist.</li>
 		<li><strong>Wording</strong> (Customizer → Admin Studio → Login: wording): replace any of 23 pieces of WordPress's text on the log in, lost password, reset password and registration screens: field labels, "Remember Me", the button text, every link, the screen names (which also become the browser tab title), the instructions and the confirmation messages. Each box shows WordPress's own wording in your site language; leave it empty to keep it. <code>{site_name}</code> works everywhere, and <code>{login_url}</code> in the two messages that link to the login page.</li>
 		<li><strong>Custom CSS</strong> for anything else.</li>
 	</ul>
+	<h3>Links under the form</h3>
+	<p>WordPress prints its links ("Register", "Lost your password?", "Log in" on the other screens, and "Go to site") in a plain row under the form. Choose how they are laid out:</p>
+	<table>
+		<tr><th>Layout</th><th>Result</th></tr>
+		<tr><td>Stacked</td><td>WordPress's default: the links under the form, "Go to site" on its own line.</td></tr>
+		<tr><td>Inline</td><td>All links side by side on one row, separated by a dot. A link that wraps onto a new line does not start with a dot.</td></tr>
+		<tr><td>Split</td><td>The links spread across the width of the form, the first on the left and the last on the right.</td></tr>
+		<tr><td>Inside the card</td><td>The links move into the bottom of the form card, in the link colour.</td></tr>
+		<tr><td>Full-width buttons</td><td>Each link becomes a full-width outlined button.</td></tr>
+	</table>
+	<p>Then place each link: <strong>below the form</strong> (in the layout above), <strong>next to the Password label</strong> (as most apps place "Forgot password?"), <strong>above the main button</strong>, or <strong>hidden</strong>. A link set to sit next to the Password label goes below the form on screens without a password field. "Register" only appears when anyone can register (Settings → General → Membership).</p>
+	<p>Hidden links stay hidden even in a browser without JavaScript. The other arrangements are made by a small script; without it, the links stay in WordPress's usual place. The "Hide Lost your password?" and "Hide Go to site" options from earlier versions became the "Hidden" position, and existing choices carry over.</p>
+	<figure>
+		<img src="images/login-link-layouts.png" alt="Six login screens showing the link layouts">
+		<figcaption>Top: stacked, inline and split. Bottom: inside the card, full-width buttons, and "Forgot password?" next to the Password label with "Register" above the button.</figcaption>
+	</figure>
+	<p>The Customizer preview has a screen picker: log in, register, lost password, reset password and the two-factor code screen.</p>
 	<p>The Customizer warns when the text and background colours you pick have a contrast ratio below 4.5:1.</p>
 	<figure>
 		<img src="images/customizer-login.png" alt="Login page settings in the Customizer">
@@ -373,7 +390,16 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</figure>
 
 	<h2>11. Coming soon and maintenance mode</h2>
-	<p>Turn the mode on under Settings → Admin Studio → Coming soon, and design the page in the Customizer (headline, message, countdown, logo, background colour or image, and text colour).</p>
+	<p>Turn the mode on under Settings → Admin Studio → Coming soon. Under <strong>Holding page</strong>, choose what visitors see:</p>
+	<ul>
+		<li><strong>The page designed in the Customizer:</strong> headline, message, countdown, logo, background colour or image, and text colour.</li>
+		<li><strong>A page I built:</strong> any page on the site, including drafts and private pages, or an Elementor page template (Templates → Saved Templates, type "Page"). Pages built with Elementor are marked in the list, and an "Edit with Elementor" button opens the chosen one. The page fills the whole screen without the theme's header and footer, so you can keep it as a draft that visitors never reach any other way. Elementor's styles and scripts load as usual. If the page is deleted or trashed, the Customizer design is shown instead.</li>
+	</ul>
+	<p>"View the holding page" opens it for you as visitors see it, because administrators otherwise see the real site.</p>
+	<figure>
+		<img src="images/coming-soon-page-choice.png" alt="Holding page settings with a page chosen">
+		<figcaption>Choosing an Elementor page as the holding page.</figcaption>
+	</figure>
 	<ul>
 		<li><strong>Coming soon</strong> is for a site that has not launched. Visitors see the page with status 200 and search engines are asked not to index it.</li>
 		<li><strong>Maintenance</strong> is for a site that is temporarily down. The page is sent with status 503 and Retry-After, which tells search engines to come back later.</li>
@@ -545,7 +571,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p class="part-title">Part 3</p>
 	<h2>25. Summary and status</h2>
 	<div class="note spec">
-		<p><strong>Status: in progress.</strong> Built and tested: roles and permissions (section 26), toolbar control (section 27) and admin templates (section 28). The editable wording from section 30 is built and documented in section 5. Dashboard widgets (section 29) are built and tested too. Still to come: the link layouts, link positions and Customizer screen picker from section 30. Once version 1.1 is finished, these sections move into Part 1 and Part 2.</p>
+		<p><strong>Status: in progress.</strong> Built and tested: roles and permissions (section 26), toolbar control (section 27) and admin templates (section 28). The editable wording from section 30 is built and documented in section 5. Dashboard widgets (section 29) and the login link layouts, link positions and Customizer screen picker from section 30 are built and tested too, and documented in section 5. Once version 1.1 is finished, these sections move into Part 1 and Part 2.</p>
 	</div>
 	<p>Version 1.1 extends Admin Studio from branding into running the dashboard: who can do what, how the dashboard looks for each person, and what they see first. It adds five areas:</p>
 	<ol>
@@ -577,7 +603,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</ul>
 	<h3>Menu access per role</h3>
 	<ul>
-		<li>Choose which dashboard menu and submenu items each role sees, including items added by other plugins.</li>
+		<li>Choose which dashboard menu and submenu items each role sees, including items added by other plugins. Each menu is a small card with its submenu items, and the cards flow into columns, so even a long menu fits on one screen. A search box narrows the cards to the items that match.</li>
 		<li>Hidden screens are also blocked when opened directly by URL; the visitor sees the branded notice screen.</li>
 	</ul>
 	<h3>Login redirect and dashboard access</h3>
@@ -607,6 +633,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li>Hide it inside the dashboard too. When it is hidden there, the account details, "View site", "Sign out" and the colour mode switch are in the sidebar footer, as in the portfolio admin panel. This option only takes effect for people who see an admin template other than "WordPress default". On phones the toolbar stays, because it holds the button that opens the menu.</li>
 		<li>A user with several roles loses the toolbar only when every one of their roles hides it. Administrators always keep it.</li>
 		<li>Hide individual toolbar items instead of the whole bar: comments, "+ New", updates, search, customize, and items added by other plugins (detected automatically). Per role.</li>
+		<li>The table groups its columns under "Hide the whole toolbar" and "Hide one item". With many items it scrolls sideways while the Role column stays in place, and so does the role table on the Dashboard widgets tab.</li>
 	</ul>
 
 	<h2>28. Admin templates</h2>
@@ -707,7 +734,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p>For each link ("Forgot password?", "Back to site", "Register", "Log in"), choose: next to the Password label (like most modern apps), above the main button, below the form, or hidden.</p>
 	<h3>Editable text</h3>
 	<ul>
-		<li>Link text, with the arrow in "← Go to site" removed by default.</li>
+		<li>Link text. The "Go to site" link can have your own text without the arrow, for example "Back to {site_name}".</li>
 		<li>Field labels and placeholders, "Remember Me", and button text (Log In, Get New Password, Save Password, Register).</li>
 		<li>The instruction message on each screen, for example the lost password instructions and the "check your email" confirmation.</li>
 		<li>A separate heading and message per screen.</li>

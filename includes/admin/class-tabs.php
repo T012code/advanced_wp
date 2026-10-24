@@ -12,6 +12,7 @@ use AdminStudio\Dropins;
 use AdminStudio\Files;
 use AdminStudio\Settings;
 use AdminStudio\Modules\Emails\Templates;
+use AdminStudio\Modules\Maintenance\Maintenance;
 use AdminStudio\Modules\Security\Admin_Url;
 use AdminStudio\Modules\Security\Attempts;
 use AdminStudio\Modules\Security\Login_Url;
@@ -694,7 +695,7 @@ class Tabs {
 		self::form_start( 'maintenance' );
 		self::section(
 			__( 'Coming soon and maintenance mode', 'admin-studio' ),
-			__( 'Visitors see a holding page while you work. Design it in the Customizer.', 'admin-studio' ) . ' ' . self::customize_link( 'adminstudio_maintenance', __( 'Design the page', 'admin-studio' ) )
+			__( 'Visitors see a holding page while you work: the design from the Customizer, or a page you built yourself, for example with Elementor.', 'admin-studio' )
 		);
 
 		echo '<table class="form-table" role="presentation">';
@@ -707,7 +708,56 @@ class Tabs {
 				'maintenance' => __( 'Maintenance (tells search engines to come back later)', 'admin-studio' ),
 			)
 		);
-		Fields::roles( 'maintenance.roles', __( 'Who can see the real site', 'admin-studio' ), __( 'Logged-in users with these roles.', 'admin-studio' ) );
+		echo '</table>';
+
+		self::section( __( 'Holding page', 'admin-studio' ) );
+		echo '<table class="form-table" role="presentation">';
+		Fields::select(
+			'maintenance.design',
+			__( 'Show', 'admin-studio' ),
+			array(
+				'customizer' => __( 'The page designed in the Customizer', 'admin-studio' ),
+				'page'       => __( 'A page I built', 'admin-studio' ),
+			)
+		);
+
+		Fields::row_start( __( 'Design', 'admin-studio' ), '', Fields::show_if( 'maintenance.design', 'customizer' ) );
+		echo wp_kses_post( self::customize_link( 'adminstudio_maintenance', __( 'Design the page', 'admin-studio' ) ) );
+		Fields::row_end( __( 'Headline, message, countdown, logo and background, with a live preview.', 'admin-studio' ) );
+
+		$choices = Maintenance::choices();
+		$current = (int) Settings::get( 'maintenance.page' );
+
+		Fields::row_start( __( 'Page', 'admin-studio' ), Fields::id( 'maintenance.page' ), Fields::show_if( 'maintenance.design', 'page' ) );
+		if ( $choices ) {
+			echo '<select id="' . esc_attr( Fields::id( 'maintenance.page' ) ) . '" name="' . esc_attr( Fields::name( 'maintenance.page' ) ) . '">';
+			echo '<option value="0">' . esc_html__( 'Choose a page', 'admin-studio' ) . '</option>';
+			foreach ( $choices as $group => $items ) {
+				echo '<optgroup label="' . esc_attr( $group ) . '">';
+				foreach ( $items as $id => $title ) {
+					echo '<option value="' . esc_attr( (string) $id ) . '"' . selected( $current, $id, false ) . '>' . esc_html( $title ) . '</option>';
+				}
+				echo '</optgroup>';
+			}
+			echo '</select>';
+			if ( Maintenance::page_id() ) {
+				echo ' <a class="button" href="' . esc_url( Maintenance::edit_url( Maintenance::page_id() ) ) . '">' . esc_html( Maintenance::is_elementor( Maintenance::page_id() ) || 'elementor_library' === get_post_type( Maintenance::page_id() ) ? __( 'Edit with Elementor', 'admin-studio' ) : __( 'Edit page', 'admin-studio' ) ) . '</a>';
+			}
+		} else {
+			echo '<p>' . esc_html__( 'No pages yet. Create one under Pages, or save a page template in Elementor.', 'admin-studio' ) . '</p>';
+		}
+		Fields::row_end( __( 'Any page, including drafts and private pages, or an Elementor page template. It fills the whole screen without your theme\'s header and footer, so it can be a draft that visitors never reach any other way. If the page is deleted, the Customizer design is shown instead.', 'admin-studio' ) );
+
+		if ( Settings::module_on( 'maintenance' ) ) {
+			Fields::row_start( __( 'Check it', 'admin-studio' ) );
+			echo '<a class="button" href="' . esc_url( add_query_arg( Maintenance::PREVIEW, '1', home_url( '/' ) ) ) . '" target="_blank" rel="noopener">' . esc_html__( 'View the holding page', 'admin-studio' ) . '</a>';
+			Fields::row_end( __( 'Opens the page visitors see. Save first if you changed anything.', 'admin-studio' ) );
+		}
+		echo '</table>';
+
+		self::section( __( 'Who can see the real site', 'admin-studio' ) );
+		echo '<table class="form-table" role="presentation">';
+		Fields::roles( 'maintenance.roles', __( 'Roles', 'admin-studio' ), __( 'Logged-in users with these roles.', 'admin-studio' ) );
 		Fields::textarea( 'maintenance.allowed_paths', __( 'Always open pages', 'admin-studio' ), __( 'One path per line, such as /contact or /privacy-policy.', 'admin-studio' ), 3 );
 
 		Fields::row_start( __( 'Bypass link', 'admin-studio' ) );

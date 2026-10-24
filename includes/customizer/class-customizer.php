@@ -12,6 +12,7 @@ use AdminStudio\Fonts;
 use AdminStudio\Preview;
 use AdminStudio\Settings;
 use AdminStudio\Modules\Emails\Templates;
+use AdminStudio\Modules\Login\Login;
 use AdminStudio\Modules\Login\Login_Text;
 
 defined( 'ABSPATH' ) || exit;
@@ -281,6 +282,18 @@ class Customizer {
 			Preview::url( 'page', array( 'adminstudio_page' => 'notfound' ) )    => __( 'Page not found (404)', 'admin-studio' ),
 		);
 
+		$login_choices = array();
+		foreach ( Login::preview_screens() as $key => $label ) {
+			$login_choices[ Preview::url( 'login', array( 'adminstudio_screen' => $key ) ) ] = $label;
+		}
+
+		$link_places = array(
+			'below'    => __( 'Below the form', 'admin-studio' ),
+			'password' => __( 'Next to the Password label', 'admin-studio' ),
+			'button'   => __( 'Above the main button', 'admin-studio' ),
+			'hidden'   => __( 'Hidden', 'admin-studio' ),
+		);
+
 		$words = array();
 		foreach ( Login_Text::labels() as $key => $label ) {
 			$original                       = Login_Text::original( $key );
@@ -444,12 +457,29 @@ class Customizer {
 				),
 			),
 			'adminstudio_login_text'         => array(
-				'title'    => __( 'Login: text and links', 'admin-studio' ),
-				'controls' => array(
+				'title'       => __( 'Login: text and links', 'admin-studio' ),
+				'description' => __( 'The "Register" link only appears on your site when anyone can register (Settings → General → Membership).', 'admin-studio' ),
+				'controls'    => array(
+					'picker:login'                 => array(
+						'label'   => __( 'Preview screen', 'admin-studio' ),
+						'choices' => $login_choices,
+					),
+					'login.links_layout'           => self::select(
+						__( 'Links under the form', 'admin-studio' ),
+						array(
+							'stacked' => __( 'Stacked, one per line (WordPress default)', 'admin-studio' ),
+							'inline'  => __( 'Inline, side by side', 'admin-studio' ),
+							'split'   => __( 'Split, spread across the width', 'admin-studio' ),
+							'card'    => __( 'Inside the card', 'admin-studio' ),
+							'buttons' => __( 'Full-width buttons', 'admin-studio' ),
+						)
+					),
+					'login.link_lost'              => self::select( __( '"Lost your password?"', 'admin-studio' ), $link_places, __( 'Next to the Password label is how most apps place it.', 'admin-studio' ) ),
+					'login.link_register'          => self::select( __( '"Register"', 'admin-studio' ), $link_places ),
+					'login.link_login'             => self::select( __( '"Log in" (on the other screens)', 'admin-studio' ), $link_places ),
+					'login.link_back'              => self::select( __( '"Go to site"', 'admin-studio' ), $link_places ),
 					'login.message'                => self::c( __( 'Message above the form', 'admin-studio' ), __( 'Basic HTML is allowed.', 'admin-studio' ) ),
 					'login.footer_text'            => self::c( __( 'Footer text', 'admin-studio' ) ),
-					'login.hide_lost_password'     => self::c( __( 'Hide "Lost your password?"', 'admin-studio' ) ),
-					'login.hide_back_to_site'      => self::c( __( 'Hide "Go to site"', 'admin-studio' ) ),
 					'login.hide_language_switcher' => self::c( __( 'Hide the language switcher', 'admin-studio' ) ),
 					'login.hide_privacy_link'      => self::c( __( 'Hide the privacy policy link', 'admin-studio' ) ),
 					'login.back_link_text'         => self::c( __( '"Go to site" link text', 'admin-studio' ), __( 'For example "Back to {site_name}". Leave empty for WordPress\'s "← Go to" text.', 'admin-studio' ) ),
@@ -587,7 +617,7 @@ class Customizer {
 				'title'       => __( 'Coming soon page', 'admin-studio' ),
 				'description' => sprintf(
 					/* translators: %s: settings page URL. */
-					__( 'Turn the mode on and choose who can see the site on the <a href="%s">settings page</a>.', 'admin-studio' ),
+					__( 'Turn the mode on and choose who can see the site on the <a href="%s">settings page</a>. This design is not used when the settings page is set to show a page you built.', 'admin-studio' ),
 					esc_url( admin_url( 'options-general.php?page=admin-studio&tab=maintenance' ) )
 				),
 				'controls'    => array(

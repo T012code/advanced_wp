@@ -21,11 +21,12 @@ It starts from your site. Brand colours come from your choice of source: your th
 * Four layouts: centered card, split screen with an image, full background, and a restyled WordPress default.
 * Background colour, gradient, image or video, with an overlay.
 * Logo, form, field style, button and link colours, message above the form, footer text.
-* Hide "Lost your password?", "Go to site", the language switcher or the privacy link, or rename the "Go to site" link.
+* Arrange the links under the form: stacked, inline, split, inside the card or as full-width buttons. Put "Lost your password?" next to the Password label or above the button, or hide any link.
+* Hide the language switcher or the privacy link, or rename the "Go to site" link.
 * Replace any wording on the log in, lost password, reset password and registration screens, including labels, buttons, links and messages.
 * One message of your own for every failed log in, so the screen does not reveal which usernames exist.
 * Custom CSS.
-* Live preview in the Customizer. Applies to log in, register, lost password, reset password and the "session expired" login.
+* Live preview in the Customizer, with a screen picker for log in, register, lost password, reset password and the two-factor code. Applies to every login screen, including the "session expired" login.
 
 = Emails =
 
@@ -96,7 +97,7 @@ It starts from your site. Brand colours come from your choice of source: your th
 
 = Coming soon and maintenance mode =
 
-* A branded holding page with an optional countdown.
+* A branded holding page with an optional countdown, or any page you built yourself, including Elementor pages and templates.
 * Choose which roles see the real site, allow-list pages, and share a bypass link with clients.
 * Maintenance mode sends a 503 status so search engines come back later.
 

@@ -2,8 +2,9 @@
 /**
  * Coming soon and maintenance mode.
  *
- * Visitors see a branded holding page. Chosen roles, allow-listed paths and
- * anyone with the bypass link see the real site.
+ * Visitors see a branded holding page, either the design from the Customizer
+ * or a page built in the editor or a page builder such as Elementor. Chosen
+ * roles, allow-listed paths and anyone with the bypass link see the real site.
  *
  * @package AdminStudio
  */
@@ -23,7 +24,15 @@ defined( 'ABSPATH' ) || exit;
  */
 class Maintenance {
 
-	const COOKIE = 'adminstudio_bypass';
+	const COOKIE  = 'adminstudio_bypass';
+	const PREVIEW = 'adminstudio_holding';
+
+	/**
+	 * Holding page being shown on this request.
+	 *
+	 * @var int
+	 */
+	private static $page = 0;
 
 	/**
 	 * Hooks.
@@ -102,11 +111,15 @@ class Maintenance {
 			return;
 		}
 
-		if ( self::can_bypass() ) {
+		// Administrators can open the holding page on purpose to check it.
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only view, limited to administrators.
+		$preview = isset( $_GET[ self::PREVIEW ] ) && current_user_can( 'manage_options' );
+
+		if ( ! $preview && self::can_bypass() ) {
 			return;
 		}
 
-		if ( self::is_maintenance() ) {
+		if ( self::is_maintenance() && ! $preview ) {
 			status_header( 503 );
 			header( 'Retry-After: 3600' );
 		} else {
@@ -114,10 +127,184 @@ class Maintenance {
 		}
 
 		nocache_headers();
+
+		$page = self::page_id();
+
+		if ( $page ) {
+			self::use_page( $page );
+			return;
+		}
+
 		header( 'Content-Type: text/html; charset=utf-8' );
 
 		self::render_page();
 		exit;
+	}
+
+	/**
+	 * The page chosen as the holding page, or 0 to use the Customizer design.
+	 *
+	 * @return int
+	 */
+	public static function page_id() {
+		if ( 'page' !== Settings::get( 'maintenance.design' ) ) {
+			return 0;
+		}
+
+		$id   = (int) Settings::get( 'maintenance.page' );
+		$post = $id ? get_post( $id ) : null;
+
+		if ( ! $post || ! isset( self::page_types()[ $post->post_type ] ) || in_array( $post->post_status, array( 'trash', 'auto-draft', 'inherit' ), true ) ) {
+			return 0;
+		}
+
+		return $id;
+	}
+
+	/**
+	 * Content types a holding page can come from: post type => label.
+	 *
+	 * @return array
+	 */
+	public static function page_types() {
+		$types = array( 'page' => __( 'Pages', 'admin-studio' ) );
+
+		if ( post_type_exists( 'elementor_library' ) ) {
+			$types['elementor_library'] = __( 'Elementor templates', 'admin-studio' );
+		}
+
+		return $types;
+	}
+
+	/**
+	 * Pages and page templates that can be chosen, grouped by type.
+	 *
+	 * Drafts and private pages are included, so the holding page does not
+	 * have to be published on the site.
+	 *
+	 * @return array Type label => [ id => title ].
+	 */
+	public static function choices() {
+		$groups = array();
+
+		foreach ( self::page_types() as $type => $label ) {
+			$args = array(
+				'post_type'      => $type,
+				'post_status'    => array( 'publish', 'private', 'draft', 'pending', 'future' ),
+				'posts_per_page' => 100,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'no_found_rows'  => true,
+			);
+
+			if ( 'elementor_library' === $type ) {
+				// Only whole-page templates, not sections or headers.
+				$args['meta_key']   = '_elementor_template_type'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Small admin-only list.
+				$args['meta_value'] = 'page'; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Small admin-only list.
+			}
+
+			$items = array();
+			foreach ( get_posts( $args ) as $post ) {
+				$title = '' !== $post->post_title ? $post->post_title : __( '(no title)', 'admin-studio' );
+				$notes = array();
+
+				if ( 'page' === $type && self::is_elementor( $post->ID ) ) {
+					$notes[] = __( 'Elementor', 'admin-studio' );
+				}
+				if ( 'publish' !== $post->post_status ) {
+					$notes[] = get_post_status_object( $post->post_status ) ? get_post_status_object( $post->post_status )->label : $post->post_status;
+				}
+
+				$items[ $post->ID ] = $title . ( $notes ? ' (' . implode( ', ', $notes ) . ')' : '' );
+			}
+
+			if ( $items ) {
+				$groups[ $label ] = $items;
+			}
+		}
+
+		return $groups;
+	}
+
+	/**
+	 * Whether a page was built with Elementor.
+	 *
+	 * @param int $id Post ID.
+	 * @return bool
+	 */
+	public static function is_elementor( $id ) {
+		return did_action( 'elementor/loaded' ) && 'builder' === get_post_meta( $id, '_elementor_edit_mode', true );
+	}
+
+	/**
+	 * Address that edits a holding page, in Elementor when it was built there.
+	 *
+	 * @param int $id Post ID.
+	 * @return string
+	 */
+	public static function edit_url( $id ) {
+		if ( 'elementor_library' === get_post_type( $id ) || self::is_elementor( $id ) ) {
+			return add_query_arg(
+				array(
+					'post'   => $id,
+					'action' => 'elementor',
+				),
+				admin_url( 'post.php' )
+			);
+		}
+
+		return (string) get_edit_post_link( $id, 'raw' );
+	}
+
+	/**
+	 * Shows the chosen page in place of whatever was requested.
+	 *
+	 * The page is printed full screen by our own template.
+	 *
+	 * @param int $id Post ID.
+	 * @return void
+	 */
+	private static function use_page( $id ) {
+		self::$page = $id;
+
+		// The address asked for is not the holding page's own address, so stop WordPress redirecting to it.
+		remove_action( 'template_redirect', 'redirect_canonical' );
+
+		// After Elementor's own checks, which turn visitors away from template addresses.
+		add_action( 'template_redirect', array( __CLASS__, 'swap_query' ), 11 );
+
+		if ( ! self::is_maintenance() ) {
+			add_filter( 'wp_robots', 'wp_robots_no_robots' );
+		}
+
+		add_filter( 'template_include', array( __CLASS__, 'page_template' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * Replaces the main query with the holding page.
+	 *
+	 * @return void
+	 */
+	public static function swap_query() {
+		global $wp_query;
+
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- The holding page replaces the page that was asked for.
+		$wp_query = new \WP_Query(
+			array(
+				'p'           => self::$page,
+				'post_type'   => get_post_type( self::$page ),
+				'post_status' => get_post_status( self::$page ),
+			)
+		);
+	}
+
+	/**
+	 * Template for a chosen holding page.
+	 *
+	 * @return string
+	 */
+	public static function page_template() {
+		return ADMINSTUDIO_DIR . 'templates/holding-page.php';
 	}
 
 	/**

@@ -37,13 +37,20 @@ class Login {
 		add_action( 'login_footer', array( __CLASS__, 'footer' ) );
 
 		Login_Text::init();
+		self::carry_over_hidden_links();
 
-		if ( Settings::get( 'login.hide_lost_password' ) ) {
+		$places = self::link_places();
+
+		if ( 'hidden' === $places['lost'] ) {
 			add_filter( 'lost_password_html_link', '__return_empty_string' );
 		}
 
-		if ( Settings::get( 'login.hide_back_to_site' ) ) {
+		if ( 'hidden' === $places['back'] ) {
 			add_filter( 'login_site_html_link', '__return_empty_string' );
+		}
+
+		if ( 'hidden' === $places['register'] ) {
+			add_filter( 'register', array( __CLASS__, 'hide_register_link' ) );
 		}
 
 		if ( Settings::get( 'login.hide_language_switcher' ) ) {
@@ -53,6 +60,73 @@ class Login {
 		if ( Settings::get( 'login.hide_privacy_link' ) ) {
 			add_filter( 'the_privacy_policy_link', array( __CLASS__, 'privacy_link' ) );
 		}
+	}
+
+	/**
+	 * Where each link under the form goes: link => below, password, button or hidden.
+	 *
+	 * @return array
+	 */
+	public static function link_places() {
+		$places = array();
+
+		foreach ( array( 'login', 'register', 'lost', 'back' ) as $link ) {
+			$places[ $link ] = (string) Settings::get( 'login.link_' . $link );
+		}
+
+		return $places;
+	}
+
+	/**
+	 * Earlier versions had two "hide" switches. They become link positions once.
+	 *
+	 * @return void
+	 */
+	private static function carry_over_hidden_links() {
+		$raw   = Settings::raw();
+		$login = isset( $raw['login'] ) && is_array( $raw['login'] ) ? $raw['login'] : array();
+
+		if ( empty( $login['hide_lost_password'] ) && empty( $login['hide_back_to_site'] ) ) {
+			return;
+		}
+
+		$changes = array(
+			'login.hide_lost_password' => false,
+			'login.hide_back_to_site'  => false,
+		);
+
+		if ( ! empty( $login['hide_lost_password'] ) ) {
+			$changes['login.link_lost'] = 'hidden';
+		}
+
+		if ( ! empty( $login['hide_back_to_site'] ) ) {
+			$changes['login.link_back'] = 'hidden';
+		}
+
+		Settings::update( $changes );
+	}
+
+	/**
+	 * Removes the "Register" link, on the login screens only.
+	 *
+	 * @param string $link Link HTML.
+	 * @return string
+	 */
+	public static function hide_register_link( $link ) {
+		return did_action( 'login_init' ) ? '' : $link;
+	}
+
+	/**
+	 * Settings for the script that arranges the links.
+	 *
+	 * @return array
+	 */
+	private static function script_data() {
+		return array(
+			'layout' => (string) Settings::get( 'login.links_layout' ),
+			'places' => self::link_places(),
+			'label'  => __( 'Account links', 'admin-studio' ),
+		);
 	}
 
 	/**
@@ -82,6 +156,7 @@ class Login {
 		wp_enqueue_style( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/css/login.css', array( 'login' ), \AdminStudio\Plugin::asset_version( 'assets/css/login.css' ) );
 		wp_add_inline_style( 'adminstudio-login', self::css() );
 		wp_enqueue_script( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/js/login.js', array(), \AdminStudio\Plugin::asset_version( 'assets/js/login.js' ), true );
+		wp_localize_script( 'adminstudio-login', 'adminstudioLogin', self::script_data() );
 	}
 
 	/**
@@ -146,9 +221,19 @@ class Login {
 			}
 		}
 
-		// WordPress keeps the empty wrapper when its link is removed.
-		if ( Settings::get( 'login.hide_back_to_site' ) ) {
-			$css .= '#backtoblog{display:none}';
+		// Hidden links stay hidden even without JavaScript. WordPress keeps the
+		// empty wrapper when the "Go to site" link is removed.
+		$places = self::link_places();
+		$hide   = array(
+			'login'    => '#nav .wp-login-log-in',
+			'register' => '#nav .wp-login-register',
+			'lost'     => '#nav .wp-login-lost-password',
+			'back'     => '#backtoblog',
+		);
+		foreach ( $hide as $link => $selector ) {
+			if ( 'hidden' === $places[ $link ] ) {
+				$css .= $selector . '{display:none}';
+			}
 		}
 
 		$css .= Settings::get( 'login.custom_css' );
@@ -297,6 +382,7 @@ class Login {
 			'adminstudio-split-' . Settings::get( 'login.split_side' ),
 			'adminstudio-fields-' . Settings::get( 'login.field_style' ),
 			'adminstudio-btn-' . Settings::get( 'brand.button_style' ),
+			'adminstudio-links-' . Settings::get( 'login.links_layout' ),
 		);
 
 		if ( Settings::get( 'login.hide_labels' ) ) {
@@ -365,16 +451,63 @@ class Login {
 	}
 
 	/**
+	 * Screens the Customizer preview can show: key => label.
+	 *
+	 * @return array
+	 */
+	public static function preview_screens() {
+		return array(
+			'login'        => __( 'Log in', 'admin-studio' ),
+			'register'     => __( 'Register', 'admin-studio' ),
+			'lostpassword' => __( 'Lost password', 'admin-studio' ),
+			'resetpass'    => __( 'Reset password', 'admin-studio' ),
+			'twofactor'    => __( 'Two-factor code', 'admin-studio' ),
+		);
+	}
+
+	/**
 	 * Renders a look-alike login screen inside the Customizer preview.
 	 *
 	 * The real wp-login.php cannot run inside the preview frame, so this prints the same
-	 * markup with the same styles applied.
+	 * markup with the same styles applied, for the screen chosen in the Customizer.
 	 *
 	 * @return void
 	 */
 	public static function render_preview() {
-		$classes = array_merge( array( 'login', 'no-js', 'login-action-login', 'wp-core-ui' ), self::classes() );
-		$message = self::message( '' );
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only preview inside the Customizer.
+		$screen = isset( $_GET['adminstudio_screen'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_screen'] ) ) : 'login';
+		$screen = array_key_exists( $screen, self::preview_screens() ) ? $screen : 'login';
+
+		$classes  = array_merge( array( 'login', 'no-js', 'login-action-' . $screen, 'wp-core-ui' ), self::classes() );
+		$messages = array(
+			'register'     => Login_Text::display( 'register_message' ),
+			'lostpassword' => Login_Text::display( 'lost_message' ),
+			'resetpass'    => Login_Text::display( 'reset_message' ),
+			'twofactor'    => __( 'Enter the 6-digit code from your authenticator app.', 'admin-studio' ),
+		);
+		$titles   = array(
+			'login'        => Login_Text::display( 'login_title' ),
+			'register'     => Login_Text::display( 'register_title' ),
+			'lostpassword' => Login_Text::display( 'lost_title' ),
+			'resetpass'    => Login_Text::display( 'reset_title' ),
+			'twofactor'    => __( 'Two-factor authentication', 'admin-studio' ),
+		);
+		$message  = self::message( isset( $messages[ $screen ] ) ? '<p class="message">' . wp_kses_post( $messages[ $screen ] ) . '</p>' : '' );
+
+		// The same links WordPress prints under each form.
+		$links  = array(
+			'login'        => array( 'register', 'lost' ),
+			'register'     => array( 'login', 'lost' ),
+			'lostpassword' => array( 'login', 'register' ),
+			'resetpass'    => array( 'login', 'register' ),
+			'twofactor'    => array(),
+		);
+		$names  = array(
+			'login'    => array( 'wp-login-log-in', Login_Text::display( 'login_link' ) ),
+			'register' => array( 'wp-login-register', Login_Text::display( 'register_link' ) ),
+			'lost'     => array( 'wp-login-lost-password', Login_Text::display( 'lost_link' ) ),
+		);
+		$places = self::link_places();
 
 		wp_enqueue_style( 'login' );
 		self::enqueue();
@@ -385,7 +518,7 @@ class Login {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title><?php echo esc_html( Login_Text::display( 'login_title' ) ); ?></title>
+	<title><?php echo esc_html( $titles[ $screen ] ); ?></title>
 		<?php
 		// Passing handles prints only these and skips the wp_print_styles action.
 		wp_print_styles( array( 'login', 'adminstudio-login' ) );
@@ -397,28 +530,76 @@ class Login {
 		<h1 role="presentation" class="wp-login-logo"><a href="<?php echo esc_url( self::header_url() ); ?>"><?php echo esc_html( self::header_text() ); ?></a></h1>
 		<?php echo wp_kses_post( $message ); ?>
 		<form name="loginform" id="loginform" action="#" method="post">
-			<p>
-				<label for="user_login"><?php echo esc_html( Login_Text::display( 'username_label' ) ); ?></label>
-				<input type="text" name="log" id="user_login" class="input" value="" size="20" autocapitalize="off" autocomplete="username">
-			</p>
-			<div class="user-pass-wrap">
-				<label for="user_pass"><?php echo esc_html( Login_Text::display( 'password_label' ) ); ?></label>
-				<div class="wp-pwd">
-					<input type="password" name="pwd" id="user_pass" class="input password-input" value="" size="20" autocomplete="current-password">
-					<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" aria-label="<?php esc_attr_e( 'Show password', 'admin-studio' ); ?>">
-						<span class="dashicons dashicons-visibility" aria-hidden="true"></span>
-					</button>
+			<?php if ( 'login' === $screen || 'register' === $screen || 'lostpassword' === $screen ) : ?>
+				<p>
+					<label for="user_login"><?php echo esc_html( 'login' === $screen || 'lostpassword' === $screen ? Login_Text::display( 'username_label' ) : __( 'Username', 'admin-studio' ) ); ?></label>
+					<input type="text" name="log" id="user_login" class="input" value="" size="20" autocapitalize="off" autocomplete="username">
+				</p>
+			<?php endif; ?>
+			<?php if ( 'register' === $screen ) : ?>
+				<p>
+					<label for="user_email"><?php esc_html_e( 'Email', 'admin-studio' ); ?></label>
+					<input type="email" name="user_email" id="user_email" class="input" value="" size="25" autocomplete="email">
+				</p>
+				<p id="reg_passmail"><?php echo esc_html( Login_Text::display( 'register_note' ) ); ?></p>
+			<?php endif; ?>
+			<?php if ( 'login' === $screen || 'resetpass' === $screen ) : ?>
+				<div class="user-pass-wrap">
+					<label for="user_pass"><?php echo esc_html( 'login' === $screen ? Login_Text::display( 'password_label' ) : Login_Text::display( 'new_password' ) ); ?></label>
+					<div class="wp-pwd">
+						<input type="password" name="pwd" id="user_pass" class="input password-input" value="" size="20" autocomplete="<?php echo 'login' === $screen ? 'current-password' : 'new-password'; ?>">
+						<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" aria-label="<?php esc_attr_e( 'Show password', 'admin-studio' ); ?>">
+							<span class="dashicons dashicons-visibility" aria-hidden="true"></span>
+						</button>
+					</div>
 				</div>
-			</div>
-			<p class="forgetmenot"><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <label for="rememberme"><?php echo esc_html( Login_Text::display( 'remember' ) ); ?></label></p>
+			<?php endif; ?>
+			<?php if ( 'twofactor' === $screen ) : ?>
+				<p>
+					<label for="adminstudio_code"><?php esc_html_e( 'Authentication code', 'admin-studio' ); ?></label>
+					<input type="text" name="adminstudio_code" id="adminstudio_code" class="input" value="" size="20" inputmode="numeric" autocomplete="one-time-code">
+				</p>
+			<?php endif; ?>
+			<?php if ( 'login' === $screen ) : ?>
+				<p class="forgetmenot"><input name="rememberme" type="checkbox" id="rememberme" value="forever"> <label for="rememberme"><?php echo esc_html( Login_Text::display( 'remember' ) ); ?></label></p>
+			<?php endif; ?>
 			<p class="submit">
-				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php echo esc_attr( Login_Text::display( 'login_title' ) ); ?>">
+				<?php
+				$buttons = array(
+					'login'        => Login_Text::display( 'login_title' ),
+					'register'     => Login_Text::display( 'register_link' ),
+					'lostpassword' => Login_Text::display( 'lost_button' ),
+					'resetpass'    => Login_Text::display( 'save_password' ),
+					'twofactor'    => __( 'Verify', 'admin-studio' ),
+				);
+				?>
+				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php echo esc_attr( $buttons[ $screen ] ); ?>">
 			</p>
 		</form>
-		<?php if ( ! Settings::get( 'login.hide_lost_password' ) ) : ?>
-			<p id="nav"><a href="#"><?php echo esc_html( Login_Text::display( 'lost_link' ) ); ?></a></p>
+		<?php
+		$shown = array();
+		foreach ( $links[ $screen ] as $link ) {
+			if ( 'hidden' !== $places[ $link ] ) {
+				$shown[] = '<a class="' . esc_attr( $names[ $link ][0] ) . '" href="#">' . esc_html( $names[ $link ][1] ) . '</a>';
+			}
+		}
+		?>
+		<?php if ( $shown ) : ?>
+			<p id="nav">
+				<?php
+				echo wp_kses(
+					implode( ' | ', $shown ),
+					array(
+						'a' => array(
+							'class' => true,
+							'href'  => true,
+						),
+					)
+				);
+				?>
+			</p>
 		<?php endif; ?>
-		<?php if ( ! Settings::get( 'login.hide_back_to_site' ) ) : ?>
+		<?php if ( 'hidden' !== $places['back'] ) : ?>
 			<p id="backtoblog"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<?php echo wp_kses( Login_Text::back_text(), array() ); ?>
 			</a></p>

@@ -99,7 +99,8 @@ body.login.adminstudio label {
 body.login.adminstudio.adminstudio-nolabels form > p > label[for="user_login"],
 body.login.adminstudio.adminstudio-nolabels form > p > label[for="user_email"],
 body.login.adminstudio.adminstudio-nolabels form > p > label[for="pass1"],
-body.login.adminstudio.adminstudio-nolabels .user-pass-wrap > label {
+body.login.adminstudio.adminstudio-nolabels .user-pass-wrap > label,
+body.login.adminstudio.adminstudio-nolabels .adminstudio-label-row > label {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -336,6 +337,123 @@ body.login.adminstudio #backtoblog a:hover,
 body.login.adminstudio .privacy-policy-link:hover {
 	color: var(--adminstudio-page-text);
 	opacity: 0.75;
+}
+
+/* Link layouts, arranged by login.js. */
+body.login.adminstudio .adminstudio-links {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	margin: 16px 0 0;
+	padding: 0;
+	font-size: 14px;
+	color: var(--adminstudio-page-text);
+}
+
+body.login.adminstudio .adminstudio-links a {
+	color: var(--adminstudio-page-text);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	transition: opacity 150ms var(--adminstudio-ease);
+}
+
+body.login.adminstudio .adminstudio-links a:hover {
+	opacity: 0.75;
+}
+
+body.login.adminstudio .adminstudio-links--inline,
+body.login.adminstudio .adminstudio-links--card {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 4px 0;
+}
+
+body.login.adminstudio .adminstudio-links--inline .adminstudio-links__item + .adminstudio-links__item::before,
+body.login.adminstudio .adminstudio-links--card .adminstudio-links__item + .adminstudio-links__item::before {
+	content: "\00b7";
+	display: inline-block;
+	width: 24px;
+	text-align: center;
+	opacity: 0.6;
+}
+
+/* Keeps the dot's width, so hiding it never pulls the link back up a line. */
+body.login.adminstudio .adminstudio-links .adminstudio-links__item.is-line-start {
+	transform: translateX(-12px);
+}
+
+body.login.adminstudio .adminstudio-links .adminstudio-links__item.is-line-start::before {
+	visibility: hidden;
+}
+
+body.login.adminstudio .adminstudio-links--split {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 8px 16px;
+}
+
+body.login.adminstudio .adminstudio-links--split:has(> :only-child) {
+	justify-content: center;
+}
+
+/* Inside the card the links sit on the card's own colours. */
+body.login.adminstudio .adminstudio-links--card {
+	margin: 20px 0 0;
+	color: var(--adminstudio-text);
+}
+
+body.login.adminstudio .adminstudio-links--card a,
+body.login.adminstudio .adminstudio-links--button a,
+body.login.adminstudio .adminstudio-label-row a {
+	color: var(--adminstudio-link);
+}
+
+body.login.adminstudio .adminstudio-links--buttons {
+	align-items: stretch;
+}
+
+body.login.adminstudio .adminstudio-links--buttons .adminstudio-links__item {
+	display: block;
+}
+
+body.login.adminstudio .adminstudio-links--buttons a {
+	display: block;
+	padding: 10px 16px;
+	border: 1px solid currentColor;
+	border-radius: var(--adminstudio-btn-radius);
+	text-align: center;
+	text-decoration: none;
+}
+
+/* Links above the main button, and next to the password label. */
+body.login.adminstudio .adminstudio-links--button {
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 4px 16px;
+	margin: 0 0 8px;
+	font-size: 13px;
+}
+
+body.login.adminstudio .adminstudio-label-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 4px 12px;
+}
+
+body.login.adminstudio .adminstudio-label-row a {
+	margin-bottom: 3px;
+	font-size: 13px;
+	text-underline-offset: 3px;
+}
+
+body.login.adminstudio.adminstudio-nolabels .adminstudio-label-row {
+	justify-content: flex-end;
 }
 
 body.login.adminstudio #nav .button-link {

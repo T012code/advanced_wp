@@ -40,37 +40,42 @@ class Settings {
 			return self::$fields;
 		}
 
-		$color  = array(
+		$color      = array(
 			'type'    => 'color',
 			'default' => '',
 		);
-		$text   = array(
+		$text       = array(
 			'type' => 'text',
 			'i18n' => true,
 		);
-		$html   = array(
+		$html       = array(
 			'type' => 'html',
 			'i18n' => true,
 		);
-		$on     = array(
+		$on         = array(
 			'type'    => 'bool',
 			'default' => true,
 		);
-		$off    = array(
+		$off        = array(
 			'type'    => 'bool',
 			'default' => false,
 		);
-		$url    = array(
+		$link_place = array(
+			'type'    => 'select',
+			'default' => 'below',
+			'choices' => array( 'below', 'password', 'button', 'hidden' ),
+		);
+		$url        = array(
 			'type'    => 'url',
 			'default' => '',
 		);
-		$px     = array(
+		$px         = array(
 			'type'    => 'int_optional',
 			'default' => '',
 			'min'     => 0,
 			'max'     => 2000,
 		);
-		$layout = array( 'centered', 'split', 'fullbg', 'minimal' );
+		$layout     = array( 'centered', 'split', 'fullbg', 'minimal' );
 
 		$fields = array(
 			// Modules.
@@ -211,6 +216,15 @@ class Settings {
 			'login.hide_back_to_site'          => $off,
 			'login.hide_language_switcher'     => $off,
 			'login.hide_privacy_link'          => $off,
+			'login.links_layout'               => array(
+				'type'    => 'select',
+				'default' => 'stacked',
+				'choices' => array( 'stacked', 'inline', 'split', 'card', 'buttons' ),
+			),
+			'login.link_login'                 => $link_place,
+			'login.link_register'              => $link_place,
+			'login.link_lost'                  => $link_place,
+			'login.link_back'                  => $link_place,
 			'login.back_link_text'             => array(
 				'type'    => 'text',
 				'default' => '',
@@ -444,6 +458,16 @@ class Settings {
 			'maintenance.bypass_key'           => array(
 				'type'    => 'slug',
 				'default' => '',
+			),
+			'maintenance.design'               => array(
+				'type'    => 'select',
+				'default' => 'customizer',
+				'choices' => array( 'customizer', 'page' ),
+			),
+			'maintenance.page'                 => array(
+				'type'    => 'int',
+				'default' => 0,
+				'min'     => 0,
 			),
 			'maintenance.headline'             => $text,
 			'maintenance.message'              => $html,

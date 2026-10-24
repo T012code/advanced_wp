@@ -337,7 +337,7 @@ class Admin {
 			'sessions'       => array( 'sessions.' ),
 			'admin_branding' => array( 'admin_branding.' ),
 			'security'       => array( 'security.' ),
-			'maintenance'    => array( 'modules.maintenance', 'maintenance.mode', 'maintenance.roles', 'maintenance.allowed_paths', 'maintenance.bypass_key' ),
+			'maintenance'    => array( 'modules.maintenance', 'maintenance.mode', 'maintenance.design', 'maintenance.page', 'maintenance.roles', 'maintenance.allowed_paths', 'maintenance.bypass_key' ),
 		);
 
 		if ( ! isset( $prefixes[ $tab ] ) ) {
