@@ -1,21 +1,21 @@
 <?php
 /**
- * Settings → Admin Studio: page, assets and form handlers.
+ * Settings → Adminora: page, assets and form handlers.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Admin;
+namespace Adminora\Admin;
 
-use AdminStudio\Brand_Kit;
-use AdminStudio\Plugin;
-use AdminStudio\Settings;
-use AdminStudio\Modules\Emails\Emails;
-use AdminStudio\Modules\Emails\Renderer;
-use AdminStudio\Modules\Emails\Templates;
-use AdminStudio\Modules\Security\Admin_Url;
-use AdminStudio\Modules\Security\Attempts;
-use AdminStudio\Modules\Security\Login_Url;
+use Adminora\Brand_Kit;
+use Adminora\Plugin;
+use Adminora\Settings;
+use Adminora\Modules\Emails\Emails;
+use Adminora\Modules\Emails\Renderer;
+use Adminora\Modules\Emails\Templates;
+use Adminora\Modules\Security\Admin_Url;
+use Adminora\Modules\Security\Attempts;
+use Adminora\Modules\Security\Login_Url;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -24,9 +24,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Admin {
 
-	const SLUG   = 'admin-studio';
-	const REPORT = 'adminstudio_import_';
-	const UPLOAD = 'adminstudio_import_file_';
+	const SLUG   = 'adminora';
+	const REPORT = 'adminora_import_';
+	const UPLOAD = 'adminora_import_file_';
 
 	/**
 	 * Hooks.
@@ -37,7 +37,7 @@ class Admin {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 		add_action( 'admin_init', array( __CLASS__, 'store_brand_source' ) );
-		add_action( 'wp_ajax_adminstudio_brand_capture', array( __CLASS__, 'ajax_brand_capture' ) );
+		add_action( 'wp_ajax_adminora_brand_capture', array( __CLASS__, 'ajax_brand_capture' ) );
 		Roles_Tab::init();
 		Look_Tab::init();
 		Sessions_Tab::init();
@@ -46,7 +46,7 @@ class Admin {
 		$actions = array( 'save', 'export', 'import', 'import_apply', 'import_cancel', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
 
 		foreach ( $actions as $action ) {
-			add_action( 'admin_post_adminstudio_' . $action, array( __CLASS__, 'handle_' . $action ) );
+			add_action( 'admin_post_adminora_' . $action, array( __CLASS__, 'handle_' . $action ) );
 		}
 	}
 
@@ -57,17 +57,17 @@ class Admin {
 	 */
 	public static function tabs() {
 		return array(
-			'overview'       => __( 'Overview', 'admin-studio' ),
-			'emails'         => __( 'Emails', 'admin-studio' ),
-			'tab_meta'       => __( 'Tab & page details', 'admin-studio' ),
-			'admin_branding' => __( 'Admin branding', 'admin-studio' ),
-			'look'           => __( 'Dashboard look', 'admin-studio' ),
-			'widgets'        => __( 'Dashboard widgets', 'admin-studio' ),
-			'roles'          => __( 'Roles & permissions', 'admin-studio' ),
-			'sessions'       => __( 'Sessions', 'admin-studio' ),
-			'security'       => __( 'Login protection', 'admin-studio' ),
-			'maintenance'    => __( 'Coming soon', 'admin-studio' ),
-			'tools'          => __( 'Tools', 'admin-studio' ),
+			'overview'       => __( 'Overview', 'adminora' ),
+			'emails'         => __( 'Emails', 'adminora' ),
+			'tab_meta'       => __( 'Tab & page details', 'adminora' ),
+			'admin_branding' => __( 'Admin branding', 'adminora' ),
+			'look'           => __( 'Dashboard look', 'adminora' ),
+			'widgets'        => __( 'Dashboard widgets', 'adminora' ),
+			'roles'          => __( 'Roles & permissions', 'adminora' ),
+			'sessions'       => __( 'Sessions', 'adminora' ),
+			'security'       => __( 'Login protection', 'adminora' ),
+			'maintenance'    => __( 'Coming soon', 'adminora' ),
+			'tools'          => __( 'Tools', 'adminora' ),
 		);
 	}
 
@@ -110,8 +110,8 @@ class Admin {
 	 */
 	public static function menu() {
 		add_options_page(
-			__( 'Admin Studio', 'admin-studio' ),
-			__( 'Admin Studio', 'admin-studio' ),
+			__( 'Adminora', 'adminora' ),
+			__( 'Adminora', 'adminora' ),
 			'manage_options',
 			self::SLUG,
 			array( __CLASS__, 'render' )
@@ -126,11 +126,11 @@ class Admin {
 	 */
 	public static function enqueue( $hook ) {
 		if ( in_array( $hook, array( 'profile.php', 'user-edit.php', 'users.php' ), true ) ) {
-			wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), \AdminStudio\Plugin::asset_version( 'assets/css/admin.css' ) );
+			wp_enqueue_style( 'adminora-admin', ADMINORA_URL . 'assets/css/admin.css', array(), \Adminora\Plugin::asset_version( 'assets/css/admin.css' ) );
 
 			// Shows the page or address box for the login destination picker.
 			if ( 'users.php' !== $hook ) {
-				wp_enqueue_script( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/js/admin.js', array( 'jquery' ), \AdminStudio\Plugin::asset_version( 'assets/js/admin.js' ), true );
+				wp_enqueue_script( 'adminora-admin', ADMINORA_URL . 'assets/js/admin.js', array( 'jquery' ), \Adminora\Plugin::asset_version( 'assets/js/admin.js' ), true );
 			}
 			return;
 		}
@@ -139,24 +139,24 @@ class Admin {
 			return;
 		}
 
-		wp_enqueue_style( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/css/admin.css', array(), \AdminStudio\Plugin::asset_version( 'assets/css/admin.css' ) );
+		wp_enqueue_style( 'adminora-admin', ADMINORA_URL . 'assets/css/admin.css', array(), \Adminora\Plugin::asset_version( 'assets/css/admin.css' ) );
 		wp_enqueue_media();
-		wp_enqueue_script( 'adminstudio-admin', ADMINSTUDIO_URL . 'assets/js/admin.js', array( 'jquery' ), \AdminStudio\Plugin::asset_version( 'assets/js/admin.js' ), true );
+		wp_enqueue_script( 'adminora-admin', ADMINORA_URL . 'assets/js/admin.js', array( 'jquery' ), \Adminora\Plugin::asset_version( 'assets/js/admin.js' ), true );
 		wp_localize_script(
-			'adminstudio-admin',
-			'adminstudioAdmin',
+			'adminora-admin',
+			'adminoraAdmin',
 			array(
-				'chooseImage' => __( 'Choose image', 'admin-studio' ),
-				'useImage'    => __( 'Use this image', 'admin-studio' ),
-				'confirm'     => __( 'Are you sure? This cannot be undone.', 'admin-studio' ),
+				'chooseImage' => __( 'Choose image', 'adminora' ),
+				'useImage'    => __( 'Use this image', 'adminora' ),
+				'confirm'     => __( 'Are you sure? This cannot be undone.', 'adminora' ),
 				'capture'     => array(
 					'url'     => home_url( '/' ),
 					'ajax'    => admin_url( 'admin-ajax.php' ),
-					'nonce'   => wp_create_nonce( 'adminstudio_brand_capture' ),
-					'reading' => __( 'Reading your site…', 'admin-studio' ),
-					'done'    => __( 'Colours read from your home page. Save to use them.', 'admin-studio' ),
-					'note'    => __( 'The colours visitors see on your home page, including page builders. Read just now.', 'admin-studio' ),
-					'failed'  => __( 'Your home page could not be read here, possibly because a security setting stops it opening inside the dashboard. Pick another option.', 'admin-studio' ),
+					'nonce'   => wp_create_nonce( 'adminora_brand_capture' ),
+					'reading' => __( 'Reading your site…', 'adminora' ),
+					'done'    => __( 'Colours read from your home page. Save to use them.', 'adminora' ),
+					'note'    => __( 'The colours visitors see on your home page, including page builders. Read just now.', 'adminora' ),
+					'failed'  => __( 'Your home page could not be read here, possibly because a security setting stops it opening inside the dashboard. Pick another option.', 'adminora' ),
 				),
 			)
 		);
@@ -174,25 +174,25 @@ class Admin {
 
 		$tab = self::current_tab();
 		?>
-		<div class="wrap adminstudio-wrap">
-			<h1 class="adminstudio-title">
-				<img src="<?php echo esc_url( ADMINSTUDIO_URL . 'assets/images/logo.svg' ); ?>" width="32" height="32" alt="">
-				<?php esc_html_e( 'Admin Studio', 'admin-studio' ); ?>
+		<div class="wrap adminora-wrap">
+			<h1 class="adminora-title">
+				<img src="<?php echo esc_url( ADMINORA_URL . 'assets/images/logo.svg' ); ?>" width="32" height="32" alt="">
+				<?php esc_html_e( 'Adminora', 'adminora' ); ?>
 			</h1>
 			<?php self::notices(); ?>
-			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Admin Studio sections', 'admin-studio' ); ?>">
+			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Adminora sections', 'adminora' ); ?>">
 				<?php foreach ( self::tabs() as $key => $label ) : ?>
 					<a href="<?php echo esc_url( self::url( $key ) ); ?>" class="nav-tab<?php echo $key === $tab ? ' nav-tab-active' : ''; ?>"<?php echo $key === $tab ? ' aria-current="page"' : ''; ?>><?php echo esc_html( $label ); ?></a>
 				<?php endforeach; ?>
 			</nav>
-			<div class="adminstudio-tab">
+			<div class="adminora-tab">
 				<?php Tabs::render( $tab ); ?>
 			</div>
-			<p class="adminstudio-credit">
+			<p class="adminora-credit">
 				<?php
 				printf(
 					/* translators: %s: author name linked to their website. */
-					esc_html__( 'Admin Studio by %s', 'admin-studio' ),
+					esc_html__( 'Adminora by %s', 'adminora' ),
 					'<a href="https://www.layothedeveloper.com" target="_blank" rel="noopener">Láyò</a>'
 				);
 				?>
@@ -221,7 +221,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function ajax_brand_capture() {
-		check_ajax_referer( 'adminstudio_brand_capture', 'nonce' );
+		check_ajax_referer( 'adminora_brand_capture', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( null, 403 );
@@ -249,43 +249,43 @@ class Admin {
 	 */
 	private static function notices() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Display only.
-		$notice = isset( $_GET['adminstudio_notice'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_notice'] ) ) : '';
+		$notice = isset( $_GET['adminora_notice'] ) ? sanitize_key( wp_unslash( $_GET['adminora_notice'] ) ) : '';
 
 		$messages = array(
-			'saved'                => array( 'success', __( 'Settings saved.', 'admin-studio' ) ),
-			'imported'             => array( 'success', __( 'Settings imported.', 'admin-studio' ) ),
-			'import_roles_failed'  => array( 'error', __( 'Nothing was imported. The roles in the file would have removed your own access.', 'admin-studio' ) ),
-			'import_nothing'       => array( 'error', __( 'Nothing was imported. Tick at least one part or role.', 'admin-studio' ) ),
-			'import_expired'       => array( 'error', __( 'The uploaded file is no longer waiting to be imported. Upload it again.', 'admin-studio' ) ),
-			'import_cancelled'     => array( 'success', __( 'Import cancelled. Nothing was changed.', 'admin-studio' ) ),
-			'import_failed'        => array( 'error', __( 'That file is not a valid Admin Studio export.', 'admin-studio' ) ),
-			'reset'                => array( 'success', __( 'Settings reset to their defaults.', 'admin-studio' ) ),
-			'reset_confirm'        => array( 'error', __( 'Tick the confirmation box to reset settings.', 'admin-studio' ) ),
-			'test_sent'            => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'admin-studio' ) ),
-			'test_failed'          => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'admin-studio' ) ),
-			'slug_invalid'         => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'admin-studio' ) ),
-			'unlocked'             => array( 'success', __( 'Lockout lifted.', 'admin-studio' ) ),
-			'log_cleared'          => array( 'success', __( 'Lockout log cleared.', 'admin-studio' ) ),
-			'role_saved'           => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'admin-studio' ) ),
-			'role_deleted'         => array( 'success', __( 'Role deleted and its users moved.', 'admin-studio' ) ),
-			'roles_restored'       => array( 'success', __( 'Roles restored.', 'admin-studio' ) ),
-			'look_stopped'         => array( 'success', __( 'Trial ended. Your dashboard is back to its usual template.', 'admin-studio' ) ),
-			'session_ended'        => array( 'success', __( 'That device has been signed out.', 'admin-studio' ) ),
-			'sessions_ended'       => array( 'success', __( 'Signed out everywhere.', 'admin-studio' ) ),
-			'user_blocked'         => array( 'success', __( 'Account blocked and signed out everywhere.', 'admin-studio' ) ),
-			'user_unblocked'       => array( 'success', __( 'Account unblocked. They can sign in again.', 'admin-studio' ) ),
-			'user_not_found'       => array( 'error', __( 'No user found with that username or email address.', 'admin-studio' ) ),
-			'widget_deleted'       => array( 'success', __( 'Widget deleted.', 'admin-studio' ) ),
-			'history_cleared'      => array( 'success', __( 'Sign-in history cleared.', 'admin-studio' ) ),
-			'admin_slug_invalid'   => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'admin-studio' ) ),
-			'admin_url_active'     => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'admin-studio' ) ),
-			'admin_url_pending'    => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'admin-studio' ) ),
-			'admin_url_unwritable' => array( 'warning', __( 'Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click "Test again".', 'admin-studio' ) ),
+			'saved'                => array( 'success', __( 'Settings saved.', 'adminora' ) ),
+			'imported'             => array( 'success', __( 'Settings imported.', 'adminora' ) ),
+			'import_roles_failed'  => array( 'error', __( 'Nothing was imported. The roles in the file would have removed your own access.', 'adminora' ) ),
+			'import_nothing'       => array( 'error', __( 'Nothing was imported. Tick at least one part or role.', 'adminora' ) ),
+			'import_expired'       => array( 'error', __( 'The uploaded file is no longer waiting to be imported. Upload it again.', 'adminora' ) ),
+			'import_cancelled'     => array( 'success', __( 'Import cancelled. Nothing was changed.', 'adminora' ) ),
+			'import_failed'        => array( 'error', __( 'That file is not a valid Adminora export.', 'adminora' ) ),
+			'reset'                => array( 'success', __( 'Settings reset to their defaults.', 'adminora' ) ),
+			'reset_confirm'        => array( 'error', __( 'Tick the confirmation box to reset settings.', 'adminora' ) ),
+			'test_sent'            => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'adminora' ) ),
+			'test_failed'          => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'adminora' ) ),
+			'slug_invalid'         => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'adminora' ) ),
+			'unlocked'             => array( 'success', __( 'Lockout lifted.', 'adminora' ) ),
+			'log_cleared'          => array( 'success', __( 'Lockout log cleared.', 'adminora' ) ),
+			'role_saved'           => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'adminora' ) ),
+			'role_deleted'         => array( 'success', __( 'Role deleted and its users moved.', 'adminora' ) ),
+			'roles_restored'       => array( 'success', __( 'Roles restored.', 'adminora' ) ),
+			'look_stopped'         => array( 'success', __( 'Trial ended. Your dashboard is back to its usual template.', 'adminora' ) ),
+			'session_ended'        => array( 'success', __( 'That device has been signed out.', 'adminora' ) ),
+			'sessions_ended'       => array( 'success', __( 'Signed out everywhere.', 'adminora' ) ),
+			'user_blocked'         => array( 'success', __( 'Account blocked and signed out everywhere.', 'adminora' ) ),
+			'user_unblocked'       => array( 'success', __( 'Account unblocked. They can sign in again.', 'adminora' ) ),
+			'user_not_found'       => array( 'error', __( 'No user found with that username or email address.', 'adminora' ) ),
+			'widget_deleted'       => array( 'success', __( 'Widget deleted.', 'adminora' ) ),
+			'history_cleared'      => array( 'success', __( 'Sign-in history cleared.', 'adminora' ) ),
+			'admin_slug_invalid'   => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'adminora' ) ),
+			'admin_url_active'     => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'adminora' ) ),
+			'admin_url_pending'    => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'adminora' ) ),
+			'admin_url_unwritable' => array( 'warning', __( 'Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click "Test again".', 'adminora' ) ),
 		);
 
 		if ( isset( $messages[ $notice ] ) ) {
 			printf(
-				'<div class="notice notice-%s is-dismissible adminstudio-notice"><p>%s</p></div>',
+				'<div class="notice notice-%s is-dismissible adminora-notice"><p>%s</p></div>',
 				esc_attr( $messages[ $notice ][0] ),
 				esc_html( $messages[ $notice ][1] )
 			);
@@ -297,8 +297,8 @@ class Admin {
 
 		if ( 'saved' === $notice && 'security' === self::current_tab() && Settings::get( 'security.login_url' ) && '' !== Login_Url::slug() ) {
 			printf(
-				'<div class="notice notice-warning adminstudio-notice"><p>%s <a href="%2$s"><strong>%2$s</strong></a></p></div>',
-				esc_html__( 'Your login page has moved. Bookmark the new address:', 'admin-studio' ),
+				'<div class="notice notice-warning adminora-notice"><p>%s <a href="%2$s"><strong>%2$s</strong></a></p></div>',
+				esc_html__( 'Your login page has moved. Bookmark the new address:', 'adminora' ),
 				esc_url( Login_Url::url() )
 			);
 		}
@@ -310,7 +310,7 @@ class Admin {
 	 * @return void
 	 */
 	private static function deny() {
-		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'adminora' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -322,7 +322,7 @@ class Admin {
 	 * @return void
 	 */
 	private static function back( $tab, $notice, array $args = array() ) {
-		wp_safe_redirect( self::url( $tab, array_merge( array( 'adminstudio_notice' => $notice ), $args ) ) );
+		wp_safe_redirect( self::url( $tab, array_merge( array( 'adminora_notice' => $notice ), $args ) ) );
 		exit;
 	}
 
@@ -390,7 +390,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_save() {
-		check_admin_referer( 'adminstudio_save' );
+		check_admin_referer( 'adminora_save' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -399,7 +399,7 @@ class Admin {
 		$tab = isset( $_POST['tab'] ) ? sanitize_key( wp_unslash( $_POST['tab'] ) ) : '';
 
 		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Every value is sanitized by Settings::update() against its field type.
-		$posted   = isset( $_POST['adminstudio'] ) && is_array( $_POST['adminstudio'] ) ? wp_unslash( $_POST['adminstudio'] ) : array();
+		$posted   = isset( $_POST['adminora'] ) && is_array( $_POST['adminora'] ) ? wp_unslash( $_POST['adminora'] ) : array();
 		$template = isset( $_POST['template'] ) ? sanitize_key( wp_unslash( $_POST['template'] ) ) : '';
 		// phpcs:enable
 
@@ -437,7 +437,7 @@ class Admin {
 			$values['modules.security'] = ! empty( $values['security.login_url'] ) || ! empty( $values['security.admin_url'] ) || ! empty( $values['security.limit'] ) || ! empty( $values['security.honeypot'] ) || ! empty( $values['security.twofa'] );
 		}
 
-		if ( 'maintenance' === $tab && ! empty( $_POST['adminstudio_new_bypass'] ) ) {
+		if ( 'maintenance' === $tab && ! empty( $_POST['adminora_new_bypass'] ) ) {
 			$values['maintenance.bypass_key'] = strtolower( wp_generate_password( 16, false ) );
 		}
 
@@ -464,7 +464,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_admin_url_test() {
-		check_admin_referer( 'adminstudio_admin_url_test' );
+		check_admin_referer( 'adminora_admin_url_test' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -480,7 +480,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_admin_url_force() {
-		check_admin_referer( 'adminstudio_admin_url_force' );
+		check_admin_referer( 'adminora_admin_url_force' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -497,18 +497,18 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_export() {
-		check_admin_referer( 'adminstudio_export' );
+		check_admin_referer( 'adminora_export' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
 		}
 
-		$parts = isset( $_POST['adminstudio_parts'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_parts'] ) ) : array();
+		$parts = isset( $_POST['adminora_parts'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminora_parts'] ) ) : array();
 		$data  = Transfer::export( self::known_parts( $parts ) );
 
 		nocache_headers();
 		header( 'Content-Type: application/json; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=admin-studio-settings-' . gmdate( 'Y-m-d' ) . '.json' );
+		header( 'Content-Disposition: attachment; filename=adminora-settings-' . gmdate( 'Y-m-d' ) . '.json' );
 		echo wp_json_encode( $data, JSON_PRETTY_PRINT );
 		exit;
 	}
@@ -519,14 +519,14 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_import() {
-		check_admin_referer( 'adminstudio_import' );
+		check_admin_referer( 'adminora_import' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
 		}
 
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- Only the temporary path is used, and checked with is_uploaded_file().
-		$file = isset( $_FILES['adminstudio_file']['tmp_name'] ) ? $_FILES['adminstudio_file']['tmp_name'] : '';
+		$file = isset( $_FILES['adminora_file']['tmp_name'] ) ? $_FILES['adminora_file']['tmp_name'] : '';
 
 		if ( ! $file || ! is_uploaded_file( $file ) ) {
 			self::back( 'tools', 'import_failed' );
@@ -561,7 +561,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_import_apply() {
-		check_admin_referer( 'adminstudio_import_apply' );
+		check_admin_referer( 'adminora_import_apply' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -573,8 +573,8 @@ class Admin {
 			self::back( 'tools', 'import_expired' );
 		}
 
-		$parts  = isset( $_POST['adminstudio_parts'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_parts'] ) ) : array();
-		$roles  = isset( $_POST['adminstudio_roles'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_roles'] ) ) : array();
+		$parts  = isset( $_POST['adminora_parts'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminora_parts'] ) ) : array();
+		$roles  = isset( $_POST['adminora_roles'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminora_roles'] ) ) : array();
 		$report = Transfer::import( $data, self::known_parts( $parts ), $roles );
 
 		delete_transient( self::UPLOAD . get_current_user_id() );
@@ -595,7 +595,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_import_cancel() {
-		check_admin_referer( 'adminstudio_import_cancel' );
+		check_admin_referer( 'adminora_import_cancel' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -619,11 +619,11 @@ class Admin {
 
 		delete_transient( $key );
 
-		$lines = array( array( 'success', __( 'Settings imported.', 'admin-studio' ) ) );
+		$lines = array( array( 'success', __( 'Settings imported.', 'adminora' ) ) );
 
 		if ( ! empty( $report['roles_added'] ) ) {
 			/* translators: %s: list of role names. */
-			$lines[] = array( 'success', sprintf( __( 'Roles added: %s.', 'admin-studio' ), implode( ', ', $report['roles_added'] ) ) );
+			$lines[] = array( 'success', sprintf( __( 'Roles added: %s.', 'adminora' ), implode( ', ', $report['roles_added'] ) ) );
 		}
 
 		if ( ! empty( $report['admin_caps'] ) ) {
@@ -631,7 +631,7 @@ class Admin {
 				'success',
 				sprintf(
 					/* translators: %d: number of capabilities. */
-					_n( 'The Administrator role was given %d capability from the imported roles, so administrators can still do everything.', 'The Administrator role was given %d capabilities from the imported roles, so administrators can still do everything.', (int) $report['admin_caps'], 'admin-studio' ),
+					_n( 'The Administrator role was given %d capability from the imported roles, so administrators can still do everything.', 'The Administrator role was given %d capabilities from the imported roles, so administrators can still do everything.', (int) $report['admin_caps'], 'adminora' ),
 					(int) $report['admin_caps']
 				),
 			);
@@ -639,11 +639,11 @@ class Admin {
 
 		if ( ! empty( $report['roles_updated'] ) ) {
 			/* translators: %s: list of role names. */
-			$lines[] = array( 'success', sprintf( __( 'Roles given the capabilities from the file: %s. A backup of the previous roles is under Roles & permissions → Backups.', 'admin-studio' ), implode( ', ', $report['roles_updated'] ) ) );
+			$lines[] = array( 'success', sprintf( __( 'Roles given the capabilities from the file: %s. A backup of the previous roles is under Roles & permissions → Backups.', 'adminora' ), implode( ', ', $report['roles_updated'] ) ) );
 		}
 
 		if ( ! empty( $report['roles_error'] ) ) {
-			$lines[] = array( 'warning', __( 'The roles were not imported, because they would have removed your own access. Everything else was imported.', 'admin-studio' ) );
+			$lines[] = array( 'warning', __( 'The roles were not imported, because they would have removed your own access. Everything else was imported.', 'adminora' ) );
 		}
 
 		if ( ! empty( $report['roles_missing'] ) ) {
@@ -651,7 +651,7 @@ class Admin {
 				'warning',
 				sprintf(
 					/* translators: %s: list of role names. */
-					__( 'This site does not have these roles, so the rules for them were skipped: %s. Import the file again and tick those roles, or create them under Roles & permissions first.', 'admin-studio' ),
+					__( 'This site does not have these roles, so the rules for them were skipped: %s. Import the file again and tick those roles, or create them under Roles & permissions first.', 'adminora' ),
 					implode( ', ', $report['roles_missing'] )
 				),
 			);
@@ -666,7 +666,7 @@ class Admin {
 						'%d page or category from the file does not exist on this site, so the setting that used it went back to its default: the Customizer design for coming soon, the next login destination rule, or all categories for a "What\'s new" widget. Create it with the same slug and import again, or choose another one.',
 						'%d pages or categories from the file do not exist on this site, so the settings that used them went back to their defaults: the Customizer design for coming soon, the next login destination rule, or all categories for a "What\'s new" widget. Create them with the same slugs and import again, or choose others.',
 						(int) $report['missing'],
-						'admin-studio'
+						'adminora'
 					),
 					(int) $report['missing']
 				),
@@ -674,10 +674,10 @@ class Admin {
 		}
 
 		$security = array(
-			'slug_invalid'         => __( 'The login address in the file cannot be used here, so the custom login address was left off.', 'admin-studio' ),
-			'admin_slug_invalid'   => __( 'The dashboard address in the file cannot be used here, so the custom dashboard address was left off.', 'admin-studio' ),
-			'admin_url_pending'    => __( 'The custom dashboard address is not working on this server yet, so the dashboard stays at /wp-admin. See Login protection for the server rules to add.', 'admin-studio' ),
-			'admin_url_unwritable' => __( 'The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection for the rules to add.', 'admin-studio' ),
+			'slug_invalid'         => __( 'The login address in the file cannot be used here, so the custom login address was left off.', 'adminora' ),
+			'admin_slug_invalid'   => __( 'The dashboard address in the file cannot be used here, so the custom dashboard address was left off.', 'adminora' ),
+			'admin_url_pending'    => __( 'The custom dashboard address is not working on this server yet, so the dashboard stays at /wp-admin. See Login protection for the server rules to add.', 'adminora' ),
+			'admin_url_unwritable' => __( 'The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection for the rules to add.', 'adminora' ),
 		);
 
 		if ( ! empty( $report['security'] ) && isset( $security[ $report['security'] ] ) ) {
@@ -686,7 +686,7 @@ class Admin {
 
 		foreach ( $lines as $line ) {
 			printf(
-				'<div class="notice notice-%s is-dismissible adminstudio-notice"><p>%s</p></div>',
+				'<div class="notice notice-%s is-dismissible adminora-notice"><p>%s</p></div>',
 				esc_attr( $line[0] ),
 				esc_html( $line[1] )
 			);
@@ -694,7 +694,7 @@ class Admin {
 	}
 
 	/**
-	 * Keeps only the parts Admin Studio knows from those ticked on the
+	 * Keeps only the parts Adminora knows from those ticked on the
 	 * export or import form.
 	 *
 	 * @param string[] $parts Ticked part keys.
@@ -710,17 +710,17 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_reset() {
-		check_admin_referer( 'adminstudio_reset' );
+		check_admin_referer( 'adminora_reset' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
 		}
 
-		if ( empty( $_POST['adminstudio_confirm'] ) ) {
+		if ( empty( $_POST['adminora_confirm'] ) ) {
 			self::back( 'tools', 'reset_confirm' );
 		}
 
-		$section = isset( $_POST['adminstudio_section'] ) ? sanitize_key( wp_unslash( $_POST['adminstudio_section'] ) ) : '';
+		$section = isset( $_POST['adminora_section'] ) ? sanitize_key( wp_unslash( $_POST['adminora_section'] ) ) : '';
 
 		$allowed = array( 'all', 'brand', 'login', 'emails', 'error_pages', 'tab_meta', 'admin_branding', 'security', 'maintenance' );
 
@@ -737,14 +737,14 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_test_email() {
-		check_admin_referer( 'adminstudio_test_email' );
+		check_admin_referer( 'adminora_test_email' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
 		}
 
 		$template = isset( $_POST['template'] ) ? sanitize_key( wp_unslash( $_POST['template'] ) ) : 'welcome';
-		$to       = isset( $_POST['adminstudio_to'] ) ? sanitize_email( wp_unslash( $_POST['adminstudio_to'] ) ) : '';
+		$to       = isset( $_POST['adminora_to'] ) ? sanitize_email( wp_unslash( $_POST['adminora_to'] ) ) : '';
 
 		$template = Templates::get( $template ) ? $template : 'welcome';
 		$sent     = is_email( $to ) && Emails::send_test( $template, $to );
@@ -758,7 +758,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_email_preview() {
-		check_admin_referer( 'adminstudio_email_preview' );
+		check_admin_referer( 'adminora_email_preview' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -777,7 +777,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_reset_template() {
-		check_admin_referer( 'adminstudio_reset_template' );
+		check_admin_referer( 'adminora_reset_template' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -800,7 +800,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_unlock() {
-		check_admin_referer( 'adminstudio_unlock' );
+		check_admin_referer( 'adminora_unlock' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -821,7 +821,7 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_clear_log() {
-		check_admin_referer( 'adminstudio_clear_log' );
+		check_admin_referer( 'adminora_clear_log' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -831,7 +831,7 @@ class Admin {
 	}
 
 	/**
-	 * Plugins whose features overlap with an Admin Studio module.
+	 * Plugins whose features overlap with an Adminora module.
 	 *
 	 * @return array Plugin name => module key.
 	 */
@@ -869,11 +869,11 @@ class Admin {
 	 */
 	public static function dropin_labels() {
 		return array(
-			'active'     => __( 'Active', 'admin-studio' ),
-			'conflict'   => __( 'Another plugin or your host already uses this file. Admin Studio leaves it alone.', 'admin-studio' ),
-			'off'        => __( 'Off', 'admin-studio' ),
-			'unwritable' => __( 'Cannot write to wp-content. Ask your host to make it writable, or turn this page off.', 'admin-studio' ),
-			'missing'    => __( 'Not written yet. Save any setting to create it.', 'admin-studio' ),
+			'active'     => __( 'Active', 'adminora' ),
+			'conflict'   => __( 'Another plugin or your host already uses this file. Adminora leaves it alone.', 'adminora' ),
+			'off'        => __( 'Off', 'adminora' ),
+			'unwritable' => __( 'Cannot write to wp-content. Ask your host to make it writable, or turn this page off.', 'adminora' ),
+			'missing'    => __( 'Not written yet. Save any setting to create it.', 'adminora' ),
 		);
 	}
 }

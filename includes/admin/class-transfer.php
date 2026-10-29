@@ -1,26 +1,26 @@
 <?php
 /**
- * Export and import of everything Admin Studio stores, in one JSON file.
+ * Export and import of everything Adminora stores, in one JSON file.
  *
  * Pages and categories are referred to by ID inside the settings. IDs differ
  * from site to site, so the file also carries each one's slug, and an import
  * links them to the page or category with the same slug on the new site.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Admin;
+namespace Adminora\Admin;
 
-use AdminStudio\Brand_Kit;
-use AdminStudio\Settings;
-use AdminStudio\Modules\Admin_Look\Admin_Look;
-use AdminStudio\Modules\Roles\Access;
-use AdminStudio\Modules\Roles\Audit;
-use AdminStudio\Modules\Roles\Redirects;
-use AdminStudio\Modules\Roles\Role_Manager;
-use AdminStudio\Modules\Security\Admin_Url;
-use AdminStudio\Modules\Security\Login_Url;
-use AdminStudio\Modules\Widgets\Widgets;
+use Adminora\Brand_Kit;
+use Adminora\Settings;
+use Adminora\Modules\Admin_Look\Admin_Look;
+use Adminora\Modules\Roles\Access;
+use Adminora\Modules\Roles\Audit;
+use Adminora\Modules\Roles\Redirects;
+use Adminora\Modules\Roles\Role_Manager;
+use Adminora\Modules\Security\Admin_Url;
+use Adminora\Modules\Security\Login_Url;
+use Adminora\Modules\Widgets\Widgets;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,12 +38,12 @@ class Transfer {
 	 */
 	public static function parts() {
 		return array(
-			'settings' => array( __( 'Settings and designs', 'admin-studio' ), __( 'Brand kit, login page, emails, system pages, tab details, admin branding, login protection, sessions and coming soon.', 'admin-studio' ) ),
-			'look'     => array( __( 'Dashboard look', 'admin-studio' ), __( 'Templates, colours, templates per role and the sidebar menu layout.', 'admin-studio' ) ),
-			'widgets'  => array( __( 'Dashboard widgets', 'admin-studio' ), __( 'Which roles see each widget, custom widgets and the default layout.', 'admin-studio' ) ),
-			'access'   => array( __( 'Menu, toolbar and login rules', 'admin-studio' ), __( 'Menu access, toolbar settings, login destinations and dashboard access per role.', 'admin-studio' ) ),
-			'roles'    => array( __( 'Roles and capabilities', 'admin-studio' ), __( 'Every role and what it can do.', 'admin-studio' ) ),
-			'users'    => array( __( 'Personal settings', 'admin-studio' ), __( 'Login destination, template and toolbar choice of each person, matched by username or email. Roles and permissions given to one person are not included.', 'admin-studio' ) ),
+			'settings' => array( __( 'Settings and designs', 'adminora' ), __( 'Brand kit, login page, emails, system pages, tab details, admin branding, login protection, sessions and coming soon.', 'adminora' ) ),
+			'look'     => array( __( 'Dashboard look', 'adminora' ), __( 'Templates, colours, templates per role and the sidebar menu layout.', 'adminora' ) ),
+			'widgets'  => array( __( 'Dashboard widgets', 'adminora' ), __( 'Which roles see each widget, custom widgets and the default layout.', 'adminora' ) ),
+			'access'   => array( __( 'Menu, toolbar and login rules', 'adminora' ), __( 'Menu access, toolbar settings, login destinations and dashboard access per role.', 'adminora' ) ),
+			'roles'    => array( __( 'Roles and capabilities', 'adminora' ), __( 'Every role and what it can do.', 'adminora' ) ),
+			'users'    => array( __( 'Personal settings', 'adminora' ), __( 'Login destination, template and toolbar choice of each person, matched by username or email. Roles and permissions given to one person are not included.', 'adminora' ) ),
 		);
 	}
 
@@ -152,8 +152,8 @@ class Transfer {
 	public static function export( array $parts ) {
 		$parts = array_intersect( $parts, array_keys( self::parts() ) );
 		$data  = array(
-			'plugin'   => 'admin-studio',
-			'version'  => ADMINSTUDIO_VERSION,
+			'plugin'   => 'adminora',
+			'version'  => ADMINORA_VERSION,
 			'format'   => self::FORMAT,
 			'exported' => gmdate( 'c' ),
 			'site'     => home_url(),
@@ -327,13 +327,13 @@ class Transfer {
 	// ------------------------------------------------------------------
 
 	/**
-	 * Whether decoded JSON is an Admin Studio export.
+	 * Whether decoded JSON is an Adminora export.
 	 *
 	 * @param mixed $data Decoded file.
 	 * @return bool
 	 */
 	public static function is_export( $data ) {
-		return is_array( $data ) && 'admin-studio' === ( isset( $data['plugin'] ) ? $data['plugin'] : '' ) && array_intersect( array_keys( $data ), array_keys( self::parts() ) );
+		return is_array( $data ) && 'adminora' === ( isset( $data['plugin'] ) ? $data['plugin'] : '' ) && array_intersect( array_keys( $data ), array_keys( self::parts() ) );
 	}
 
 	/**
@@ -436,7 +436,7 @@ class Transfer {
 		}
 
 		if ( $report['imported'] ) {
-			Audit::log( 'import', __( 'Settings imported from a file.', 'admin-studio' ) );
+			Audit::log( 'import', __( 'Settings imported from a file.', 'adminora' ) );
 		}
 
 		return $report;
@@ -558,7 +558,7 @@ class Transfer {
 			$exists = isset( $current[ $slug ] );
 
 			if ( $exists && ! Role_Manager::keeps_access( $slug, array_keys( array_filter( $role['capabilities'] ) ) ) ) {
-				return new \WP_Error( 'adminstudio_self_lockout', __( 'The roles were not imported, because they would remove your own access.', 'admin-studio' ) );
+				return new \WP_Error( 'adminora_self_lockout', __( 'The roles were not imported, because they would remove your own access.', 'adminora' ) );
 			}
 
 			$changes[ $slug ] = $role;

@@ -4,16 +4,16 @@
  *
  * Logged-out requests to wp-login.php and /wp-admin are blocked. Every login
  * link WordPress builds is rewritten to the new address. Add
- * `define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );` to wp-config.php to switch this
+ * `define( 'ADMINORA_DISABLE_LOGIN_URL', true );` to wp-config.php to switch this
  * off if you get locked out.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Security;
+namespace Adminora\Modules\Security;
 
-use AdminStudio\Settings;
-use AdminStudio\Modules\Error_Pages\Error_Pages;
+use Adminora\Settings;
+use Adminora\Modules\Error_Pages\Error_Pages;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -49,7 +49,7 @@ class Login_Url {
 	 * @return void
 	 */
 	public static function init() {
-		if ( defined( 'ADMINSTUDIO_DISABLE_LOGIN_URL' ) && ADMINSTUDIO_DISABLE_LOGIN_URL ) {
+		if ( defined( 'ADMINORA_DISABLE_LOGIN_URL' ) && ADMINORA_DISABLE_LOGIN_URL ) {
 			return;
 		}
 

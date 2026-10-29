@@ -2,10 +2,10 @@
 /**
  * Time-based one-time passwords (RFC 6238), as used by authenticator apps.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Security;
+namespace Adminora\Modules\Security;
 
 defined( 'ABSPATH' ) || exit;
 

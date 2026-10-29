@@ -3,10 +3,10 @@
  * Outline icons for the admin templates, drawn on a 24px grid in the style
  * of the Lucide icon set (ISC licence, https://lucide.dev).
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Admin_Look;
+namespace Adminora\Modules\Admin_Look;
 
 defined( 'ABSPATH' ) || exit;
 

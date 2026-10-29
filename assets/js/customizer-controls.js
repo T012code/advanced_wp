@@ -1,5 +1,5 @@
 /**
- * Admin Studio Customizer controls: preview routing and contrast warnings.
+ * Adminora Customizer controls: preview routing and contrast warnings.
  */
 ( function ( api, $, data ) {
 	'use strict';
@@ -64,7 +64,7 @@
 		}
 
 		var ratio = contrast( fg, bg ),
-			code = 'adminstudio_contrast';
+			code = 'adminora_contrast';
 
 		control.notifications.remove( code );
 
@@ -90,7 +90,7 @@
 			} );
 		} );
 
-		$( document ).on( 'change', '[data-adminstudio-picker]', function () {
+		$( document ).on( 'change', '[data-adminora-picker]', function () {
 			api.previewer.previewUrl.set( this.value );
 		} );
 
@@ -111,4 +111,4 @@
 			} );
 		} );
 	} );
-} )( window.wp && window.wp.customize, window.jQuery, window.adminstudioCustomizer );
+} )( window.wp && window.wp.customize, window.jQuery, window.adminoraCustomizer );

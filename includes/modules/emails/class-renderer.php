@@ -2,16 +2,16 @@
 /**
  * Builds branded HTML emails from templates and tags.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Emails;
+namespace Adminora\Modules\Emails;
 
-use AdminStudio\Brand_Kit;
-use AdminStudio\Color;
-use AdminStudio\Fonts;
-use AdminStudio\Preview;
-use AdminStudio\Settings;
+use Adminora\Brand_Kit;
+use Adminora\Color;
+use Adminora\Fonts;
+use Adminora\Preview;
+use Adminora\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -170,7 +170,7 @@ class Renderer {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="x-apple-disable-message-reformatting">
 <title><?php echo esc_html( $title ); ?></title>
-<!-- adminstudio-email -->
+<!-- adminora-email -->
 </head>
 <body style="margin:0;padding:0;background:<?php echo esc_attr( $s['body_bg'] ); ?>;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:<?php echo esc_attr( $s['body_bg'] ); ?>;">
@@ -197,7 +197,7 @@ class Renderer {
 					</td></tr>
 				</table>
 				<p style="margin:16px 0 0;font-size:13px;line-height:1.5;color:<?php echo esc_attr( $s['muted'] ); ?>;word-break:break-all;">
-					<?php esc_html_e( 'If the button does not work, copy this link into your browser:', 'admin-studio' ); ?><br>
+					<?php esc_html_e( 'If the button does not work, copy this link into your browser:', 'adminora' ); ?><br>
 					<a href="<?php echo esc_url( $button_url ); ?>" style="color:<?php echo esc_attr( $s['link'] ); ?>;"><?php echo esc_html( $button_url ); ?></a>
 				</p>
 			<?php endif; ?>
@@ -362,20 +362,20 @@ class Renderer {
 				'expiry_date'          => date_i18n( get_option( 'date_format' ), strtotime( '+3 days' ) ),
 				'privacy_policy_url'   => get_privacy_policy_url() ? get_privacy_policy_url() : $home,
 				'user_edit_link'       => admin_url( 'users.php' ),
-				'post_title'           => __( 'Hello world!', 'admin-studio' ),
+				'post_title'           => __( 'Hello world!', 'adminora' ),
 				'post_link'            => $home,
 				'comment_author'       => 'Ada Lovelace',
 				'comment_author_email' => 'ada@example.com',
-				'comment_content'      => esc_html__( 'Thanks for writing this. The second section answered exactly what I was looking for.', 'admin-studio' ),
+				'comment_content'      => esc_html__( 'Thanks for writing this. The second section answered exactly what I was looking for.', 'adminora' ),
 				'comment_link'         => admin_url( 'edit-comments.php' ),
 				'moderate_link'        => admin_url( 'edit-comments.php?comment_status=moderated' ),
 				'pending_count'        => '3',
 				/* translators: %s: site title. */
-				'update_subject'       => sprintf( __( '[%s] Some plugins were automatically updated', 'admin-studio' ), get_bloginfo( 'name' ) ),
-				'update_details'       => '<p>' . esc_html__( 'These plugins are now up to date: Example Plugin (from version 1.2 to 1.3).', 'admin-studio' ) . '</p>',
+				'update_subject'       => sprintf( __( '[%s] Some plugins were automatically updated', 'adminora' ), get_bloginfo( 'name' ) ),
+				'update_details'       => '<p>' . esc_html__( 'These plugins are now up to date: Example Plugin (from version 1.2 to 1.3).', 'adminora' ) . '</p>',
 				'updates_link'         => admin_url( 'update-core.php' ),
 				'recovery_link'        => wp_login_url() . '?action=enter_recovery_mode',
-				'technical_details'    => '<pre>' . esc_html__( 'An error of type E_ERROR was caused in line 12 of the file example-plugin.php.', 'admin-studio' ) . '</pre>',
+				'technical_details'    => '<pre>' . esc_html__( 'An error of type E_ERROR was caused in line 12 of the file example-plugin.php.', 'adminora' ) . '</pre>',
 			)
 		);
 	}

@@ -2,10 +2,10 @@
 /**
  * Capability catalogue: every capability on the site, grouped and labelled.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Roles;
+namespace Adminora\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -39,16 +39,16 @@ class Capabilities {
 	 */
 	public static function group_labels() {
 		return array(
-			'posts'       => __( 'Posts', 'admin-studio' ),
-			'pages'       => __( 'Pages', 'admin-studio' ),
-			'media'       => __( 'Media', 'admin-studio' ),
-			'comments'    => __( 'Comments', 'admin-studio' ),
-			'users'       => __( 'Users', 'admin-studio' ),
-			'appearance'  => __( 'Appearance', 'admin-studio' ),
-			'plugins'     => __( 'Plugins', 'admin-studio' ),
-			'settings'    => __( 'Settings and tools', 'admin-studio' ),
-			'woocommerce' => __( 'WooCommerce', 'admin-studio' ),
-			'other'       => __( 'Other', 'admin-studio' ),
+			'posts'       => __( 'Posts', 'adminora' ),
+			'pages'       => __( 'Pages', 'adminora' ),
+			'media'       => __( 'Media', 'adminora' ),
+			'comments'    => __( 'Comments', 'adminora' ),
+			'users'       => __( 'Users', 'adminora' ),
+			'appearance'  => __( 'Appearance', 'adminora' ),
+			'plugins'     => __( 'Plugins', 'adminora' ),
+			'settings'    => __( 'Settings and tools', 'adminora' ),
+			'woocommerce' => __( 'WooCommerce', 'adminora' ),
+			'other'       => __( 'Other', 'adminora' ),
 		);
 	}
 
@@ -59,47 +59,47 @@ class Capabilities {
 	 */
 	public static function descriptions() {
 		return array(
-			'read'                   => __( 'Open the dashboard and their own profile.', 'admin-studio' ),
-			'edit_posts'             => __( 'Write and edit their own posts.', 'admin-studio' ),
-			'edit_others_posts'      => __( 'Edit posts written by anyone.', 'admin-studio' ),
-			'edit_published_posts'   => __( 'Edit their posts after publishing.', 'admin-studio' ),
-			'edit_private_posts'     => __( 'Edit private posts.', 'admin-studio' ),
-			'publish_posts'          => __( 'Publish posts.', 'admin-studio' ),
-			'read_private_posts'     => __( 'Read private posts.', 'admin-studio' ),
-			'delete_posts'           => __( 'Delete their own posts.', 'admin-studio' ),
-			'delete_others_posts'    => __( 'Delete posts written by anyone.', 'admin-studio' ),
-			'delete_published_posts' => __( 'Delete their published posts.', 'admin-studio' ),
-			'delete_private_posts'   => __( 'Delete private posts.', 'admin-studio' ),
-			'manage_categories'      => __( 'Add, edit and delete categories and tags.', 'admin-studio' ),
-			'edit_pages'             => __( 'Write and edit their own pages.', 'admin-studio' ),
-			'edit_others_pages'      => __( 'Edit pages created by anyone.', 'admin-studio' ),
-			'publish_pages'          => __( 'Publish pages.', 'admin-studio' ),
-			'delete_pages'           => __( 'Delete their own pages.', 'admin-studio' ),
-			'delete_others_pages'    => __( 'Delete pages created by anyone.', 'admin-studio' ),
-			'upload_files'           => __( 'Upload images and other files to the media library.', 'admin-studio' ),
-			'unfiltered_upload'      => __( 'Upload any file type, including ones WordPress normally blocks.', 'admin-studio' ),
-			'moderate_comments'      => __( 'Approve, edit and delete comments.', 'admin-studio' ),
-			'list_users'             => __( 'See the list of users.', 'admin-studio' ),
-			'create_users'           => __( 'Create new users.', 'admin-studio' ),
-			'edit_users'             => __( 'Edit other users\' profiles.', 'admin-studio' ),
-			'promote_users'          => __( 'Change other users\' roles.', 'admin-studio' ),
-			'remove_users'           => __( 'Remove users from the site.', 'admin-studio' ),
-			'delete_users'           => __( 'Delete users.', 'admin-studio' ),
-			'switch_themes'          => __( 'Change the active theme.', 'admin-studio' ),
-			'edit_theme_options'     => __( 'Use the Customizer, menus and widgets.', 'admin-studio' ),
-			'install_themes'         => __( 'Install new themes.', 'admin-studio' ),
-			'edit_themes'            => __( 'Edit theme files in the code editor.', 'admin-studio' ),
-			'activate_plugins'       => __( 'Turn plugins on and off.', 'admin-studio' ),
-			'install_plugins'        => __( 'Install new plugins.', 'admin-studio' ),
-			'update_plugins'         => __( 'Update plugins.', 'admin-studio' ),
-			'edit_plugins'           => __( 'Edit plugin files in the code editor.', 'admin-studio' ),
-			'delete_plugins'         => __( 'Delete plugins.', 'admin-studio' ),
-			'manage_options'         => __( 'Change site settings, including Admin Studio.', 'admin-studio' ),
-			'edit_dashboard'         => __( 'Change dashboard widgets for everyone.', 'admin-studio' ),
-			'import'                 => __( 'Import content.', 'admin-studio' ),
-			'export'                 => __( 'Export content.', 'admin-studio' ),
-			'update_core'            => __( 'Update WordPress itself.', 'admin-studio' ),
-			'unfiltered_html'        => __( 'Add any HTML or scripts to content. Give this only to people you fully trust.', 'admin-studio' ),
+			'read'                   => __( 'Open the dashboard and their own profile.', 'adminora' ),
+			'edit_posts'             => __( 'Write and edit their own posts.', 'adminora' ),
+			'edit_others_posts'      => __( 'Edit posts written by anyone.', 'adminora' ),
+			'edit_published_posts'   => __( 'Edit their posts after publishing.', 'adminora' ),
+			'edit_private_posts'     => __( 'Edit private posts.', 'adminora' ),
+			'publish_posts'          => __( 'Publish posts.', 'adminora' ),
+			'read_private_posts'     => __( 'Read private posts.', 'adminora' ),
+			'delete_posts'           => __( 'Delete their own posts.', 'adminora' ),
+			'delete_others_posts'    => __( 'Delete posts written by anyone.', 'adminora' ),
+			'delete_published_posts' => __( 'Delete their published posts.', 'adminora' ),
+			'delete_private_posts'   => __( 'Delete private posts.', 'adminora' ),
+			'manage_categories'      => __( 'Add, edit and delete categories and tags.', 'adminora' ),
+			'edit_pages'             => __( 'Write and edit their own pages.', 'adminora' ),
+			'edit_others_pages'      => __( 'Edit pages created by anyone.', 'adminora' ),
+			'publish_pages'          => __( 'Publish pages.', 'adminora' ),
+			'delete_pages'           => __( 'Delete their own pages.', 'adminora' ),
+			'delete_others_pages'    => __( 'Delete pages created by anyone.', 'adminora' ),
+			'upload_files'           => __( 'Upload images and other files to the media library.', 'adminora' ),
+			'unfiltered_upload'      => __( 'Upload any file type, including ones WordPress normally blocks.', 'adminora' ),
+			'moderate_comments'      => __( 'Approve, edit and delete comments.', 'adminora' ),
+			'list_users'             => __( 'See the list of users.', 'adminora' ),
+			'create_users'           => __( 'Create new users.', 'adminora' ),
+			'edit_users'             => __( 'Edit other users\' profiles.', 'adminora' ),
+			'promote_users'          => __( 'Change other users\' roles.', 'adminora' ),
+			'remove_users'           => __( 'Remove users from the site.', 'adminora' ),
+			'delete_users'           => __( 'Delete users.', 'adminora' ),
+			'switch_themes'          => __( 'Change the active theme.', 'adminora' ),
+			'edit_theme_options'     => __( 'Use the Customizer, menus and widgets.', 'adminora' ),
+			'install_themes'         => __( 'Install new themes.', 'adminora' ),
+			'edit_themes'            => __( 'Edit theme files in the code editor.', 'adminora' ),
+			'activate_plugins'       => __( 'Turn plugins on and off.', 'adminora' ),
+			'install_plugins'        => __( 'Install new plugins.', 'adminora' ),
+			'update_plugins'         => __( 'Update plugins.', 'adminora' ),
+			'edit_plugins'           => __( 'Edit plugin files in the code editor.', 'adminora' ),
+			'delete_plugins'         => __( 'Delete plugins.', 'adminora' ),
+			'manage_options'         => __( 'Change site settings, including Adminora.', 'adminora' ),
+			'edit_dashboard'         => __( 'Change dashboard widgets for everyone.', 'adminora' ),
+			'import'                 => __( 'Import content.', 'adminora' ),
+			'export'                 => __( 'Export content.', 'adminora' ),
+			'update_core'            => __( 'Update WordPress itself.', 'adminora' ),
+			'unfiltered_html'        => __( 'Add any HTML or scripts to content. Give this only to people you fully trust.', 'adminora' ),
 		);
 	}
 

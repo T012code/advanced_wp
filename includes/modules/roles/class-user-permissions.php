@@ -6,10 +6,10 @@
  * capabilities use WordPress's own per-user capabilities, where a denied
  * capability overrides what the user's roles allow.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Roles;
+namespace Adminora\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class User_Permissions {
 
-	const NONCE = 'adminstudio_user_perms';
+	const NONCE = 'adminora_user_perms';
 
 	/**
 	 * Hooks.
@@ -85,59 +85,59 @@ class User_Permissions {
 
 		list( $granted, $denied ) = self::overrides( $user );
 		?>
-		<h2 id="adminstudio-permissions"><?php esc_html_e( 'Roles and permissions', 'admin-studio' ); ?></h2>
-		<?php wp_nonce_field( self::NONCE . '_' . $user->ID, '_adminstudio_perms', false ); ?>
-		<input type="hidden" name="adminstudio_perms_present" value="1">
+		<h2 id="adminora-permissions"><?php esc_html_e( 'Roles and permissions', 'adminora' ); ?></h2>
+		<?php wp_nonce_field( self::NONCE . '_' . $user->ID, '_adminora_perms', false ); ?>
+		<input type="hidden" name="adminora_perms_present" value="1">
 		<table class="form-table" role="presentation">
 			<tr>
-				<th scope="row"><?php esc_html_e( 'Additional roles', 'admin-studio' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'Additional roles', 'adminora' ); ?></th>
 				<td>
 					<fieldset>
-						<legend class="screen-reader-text"><?php esc_html_e( 'Additional roles', 'admin-studio' ); ?></legend>
+						<legend class="screen-reader-text"><?php esc_html_e( 'Additional roles', 'adminora' ); ?></legend>
 						<?php foreach ( $roles as $slug => $role ) : ?>
 							<?php
 							if ( $slug === $primary ) {
 								continue;
 							}
 							?>
-							<label class="adminstudio-check">
-								<input type="checkbox" name="adminstudio_extra_roles[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( in_array( $slug, $extra, true ) ); ?>>
+							<label class="adminora-check">
+								<input type="checkbox" name="adminora_extra_roles[]" value="<?php echo esc_attr( $slug ); ?>" <?php checked( in_array( $slug, $extra, true ) ); ?>>
 								<?php echo esc_html( $role['name'] ); ?>
 							</label>
 						<?php endforeach; ?>
 					</fieldset>
-					<p class="description"><?php esc_html_e( 'The main role is set with the Role field above. The user gets the capabilities of every role they have.', 'admin-studio' ); ?></p>
+					<p class="description"><?php esc_html_e( 'The main role is set with the Role field above. The user gets the capabilities of every role they have.', 'adminora' ); ?></p>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="adminstudio-grant"><?php esc_html_e( 'Extra capabilities', 'admin-studio' ); ?></label></th>
+				<th scope="row"><label for="adminora-grant"><?php esc_html_e( 'Extra capabilities', 'adminora' ); ?></label></th>
 				<td>
-					<select id="adminstudio-grant" name="adminstudio_grant[]" multiple size="8" class="adminstudio-caps-select">
+					<select id="adminora-grant" name="adminora_grant[]" multiple size="8" class="adminora-caps-select">
 						<?php foreach ( $caps as $cap ) : ?>
 							<option value="<?php echo esc_attr( $cap ); ?>" <?php selected( in_array( $cap, $granted, true ) ); ?>><?php echo esc_html( $cap ); ?></option>
 						<?php endforeach; ?>
 					</select>
-					<p class="description"><?php esc_html_e( 'Given to this user on top of their roles. Hold Ctrl (Cmd on Mac) to pick several.', 'admin-studio' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Given to this user on top of their roles. Hold Ctrl (Cmd on Mac) to pick several.', 'adminora' ); ?></p>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="adminstudio-deny"><?php esc_html_e( 'Denied capabilities', 'admin-studio' ); ?></label></th>
+				<th scope="row"><label for="adminora-deny"><?php esc_html_e( 'Denied capabilities', 'adminora' ); ?></label></th>
 				<td>
-					<select id="adminstudio-deny" name="adminstudio_deny[]" multiple size="8" class="adminstudio-caps-select">
+					<select id="adminora-deny" name="adminora_deny[]" multiple size="8" class="adminora-caps-select">
 						<?php foreach ( $caps as $cap ) : ?>
 							<option value="<?php echo esc_attr( $cap ); ?>" <?php selected( in_array( $cap, $denied, true ) ); ?>><?php echo esc_html( $cap ); ?></option>
 						<?php endforeach; ?>
 					</select>
-					<p class="description"><?php esc_html_e( 'Taken away from this user even if one of their roles allows it. Denials win over everything else.', 'admin-studio' ); ?></p>
+					<p class="description"><?php esc_html_e( 'Taken away from this user even if one of their roles allows it. Denials win over everything else.', 'adminora' ); ?></p>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="adminstudio-toolbar-choice"><?php esc_html_e( 'Toolbar on the site', 'admin-studio' ); ?></label></th>
+				<th scope="row"><label for="adminora-toolbar-choice"><?php esc_html_e( 'Toolbar on the site', 'adminora' ); ?></label></th>
 				<td>
-					<select id="adminstudio-toolbar-choice" name="adminstudio_toolbar">
-						<option value="" <?php selected( $choice, '' ); ?>><?php esc_html_e( 'Follow the role setting', 'admin-studio' ); ?></option>
-						<option value="show" <?php selected( $choice, 'show' ); ?>><?php esc_html_e( 'Always show', 'admin-studio' ); ?></option>
-						<option value="hide" <?php selected( $choice, 'hide' ); ?>><?php esc_html_e( 'Always hide', 'admin-studio' ); ?></option>
+					<select id="adminora-toolbar-choice" name="adminora_toolbar">
+						<option value="" <?php selected( $choice, '' ); ?>><?php esc_html_e( 'Follow the role setting', 'adminora' ); ?></option>
+						<option value="show" <?php selected( $choice, 'show' ); ?>><?php esc_html_e( 'Always show', 'adminora' ); ?></option>
+						<option value="hide" <?php selected( $choice, 'hide' ); ?>><?php esc_html_e( 'Always hide', 'adminora' ); ?></option>
 					</select>
 				</td>
 			</tr>
@@ -152,11 +152,11 @@ class User_Permissions {
 	 * @return void
 	 */
 	public static function save( $user_id ) {
-		if ( ! isset( $_POST['_adminstudio_perms'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_perms'] ) ), self::NONCE . '_' . $user_id ) ) {
+		if ( ! isset( $_POST['_adminora_perms'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminora_perms'] ) ), self::NONCE . '_' . $user_id ) ) {
 			return;
 		}
 
-		if ( ! current_user_can( 'promote_users' ) || ! current_user_can( 'edit_user', $user_id ) || empty( $_POST['adminstudio_perms_present'] ) ) {
+		if ( ! current_user_can( 'promote_users' ) || ! current_user_can( 'edit_user', $user_id ) || empty( $_POST['adminora_perms_present'] ) ) {
 			return;
 		}
 
@@ -166,10 +166,10 @@ class User_Permissions {
 			return;
 		}
 
-		$extra  = isset( $_POST['adminstudio_extra_roles'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_extra_roles'] ) ) : array();
-		$grant  = isset( $_POST['adminstudio_grant'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_grant'] ) ) : array();
-		$deny   = isset( $_POST['adminstudio_deny'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_deny'] ) ) : array();
-		$choice = isset( $_POST['adminstudio_toolbar'] ) ? sanitize_key( wp_unslash( $_POST['adminstudio_toolbar'] ) ) : '';
+		$extra  = isset( $_POST['adminora_extra_roles'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminora_extra_roles'] ) ) : array();
+		$grant  = isset( $_POST['adminora_grant'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminora_grant'] ) ) : array();
+		$deny   = isset( $_POST['adminora_deny'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminora_deny'] ) ) : array();
+		$choice = isset( $_POST['adminora_toolbar'] ) ? sanitize_key( wp_unslash( $_POST['adminora_toolbar'] ) ) : '';
 
 		$valid_roles = array_keys( wp_roles()->roles );
 		$valid_caps  = Capabilities::all();
@@ -229,7 +229,7 @@ class User_Permissions {
 				'user_perms',
 				sprintf(
 					/* translators: 1: username, 2: roles, 3: granted capabilities, 4: denied capabilities. */
-					__( '%1$s: roles %2$s; extra %3$s; denied %4$s.', 'admin-studio' ),
+					__( '%1$s: roles %2$s; extra %3$s; denied %4$s.', 'adminora' ),
 					$user->user_login,
 					implode( ', ', (array) $user->roles ),
 					$grant ? implode( ', ', $grant ) : '-',

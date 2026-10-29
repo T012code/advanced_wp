@@ -1,5 +1,5 @@
 /**
- * Builds docs/admin-studio-documentation.pdf from docs/documentation.html.
+ * Builds docs/adminora-documentation.pdf from docs/documentation.html.
  *
  * Usage: node docs/build-pdf.js
  * Needs Playwright with Chromium (npm install -g playwright).
@@ -19,7 +19,7 @@ function loadPlaywright() {
 ( async () => {
 	const { chromium } = loadPlaywright();
 	const source = path.join( __dirname, 'documentation.html' );
-	const output = path.join( __dirname, 'admin-studio-documentation.pdf' );
+	const output = path.join( __dirname, 'adminora-documentation.pdf' );
 
 	const browser = await chromium.launch();
 	const page = await browser.newPage();
@@ -34,7 +34,7 @@ function loadPlaywright() {
 		headerTemplate: '<span></span>',
 		footerTemplate:
 			'<div style="width:100%;font-size:8px;color:#6b7280;padding:0 18mm;display:flex;justify-content:space-between;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;">' +
-			'<span>Admin Studio documentation</span>' +
+			'<span>Adminora documentation</span>' +
 			'<span><span class="pageNumber"></span> / <span class="totalPages"></span></span>' +
 			'</div>',
 	} );

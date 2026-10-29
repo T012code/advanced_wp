@@ -6,10 +6,10 @@
  * "admin:edit.php", "page:12" or "url:https://…". Addresses saved by earlier
  * versions (a plain URL) still work.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Roles;
+namespace Adminora\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Redirects {
 
-	const META = 'adminstudio_login_redirect';
+	const META = 'adminora_login_redirect';
 
 	/**
 	 * Hooks for the per-person setting on the profile screen.
@@ -39,18 +39,18 @@ class Redirects {
 	 */
 	public static function choices() {
 		return array(
-			''                              => __( 'Default (the dashboard, or the page they asked for)', 'admin-studio' ),
-			'dashboard'                     => __( 'Dashboard home', 'admin-studio' ),
-			'profile'                       => __( 'Their profile', 'admin-studio' ),
-			'home'                          => __( 'Site home page', 'admin-studio' ),
-			'admin:edit.php'                => __( 'Posts', 'admin-studio' ),
-			'admin:post-new.php'            => __( 'Add a new post', 'admin-studio' ),
-			'admin:edit.php?post_type=page' => __( 'Pages', 'admin-studio' ),
-			'admin:upload.php'              => __( 'Media', 'admin-studio' ),
-			'admin:edit-comments.php'       => __( 'Comments', 'admin-studio' ),
-			'admin:users.php'               => __( 'Users', 'admin-studio' ),
-			'page'                          => __( 'A page on this site…', 'admin-studio' ),
-			'url'                           => __( 'Another address…', 'admin-studio' ),
+			''                              => __( 'Default (the dashboard, or the page they asked for)', 'adminora' ),
+			'dashboard'                     => __( 'Dashboard home', 'adminora' ),
+			'profile'                       => __( 'Their profile', 'adminora' ),
+			'home'                          => __( 'Site home page', 'adminora' ),
+			'admin:edit.php'                => __( 'Posts', 'adminora' ),
+			'admin:post-new.php'            => __( 'Add a new post', 'adminora' ),
+			'admin:edit.php?post_type=page' => __( 'Pages', 'adminora' ),
+			'admin:upload.php'              => __( 'Media', 'adminora' ),
+			'admin:edit-comments.php'       => __( 'Comments', 'adminora' ),
+			'admin:users.php'               => __( 'Users', 'adminora' ),
+			'page'                          => __( 'A page on this site…', 'adminora' ),
+			'url'                           => __( 'Another address…', 'adminora' ),
 		);
 	}
 
@@ -167,22 +167,22 @@ class Redirects {
 	 */
 	public static function field( $name, $token, $label ) {
 		$parts = self::parse( $token );
-		$id    = 'adminstudio-' . sanitize_html_class( str_replace( array( '[', ']' ), '-', $name ) );
+		$id    = 'adminora-' . sanitize_html_class( str_replace( array( '[', ']' ), '-', $name ) );
 
-		echo '<span class="adminstudio-destination">';
+		echo '<span class="adminora-destination">';
 		echo '<select id="' . esc_attr( $id ) . '" name="' . esc_attr( $name . '[type]' ) . '" aria-label="' . esc_attr( $label ) . '">';
 		foreach ( self::choices() as $value => $text ) {
 			echo '<option value="' . esc_attr( $value ) . '"' . selected( $parts['type'], $value, false ) . '>' . esc_html( $text ) . '</option>';
 		}
 		echo '</select>';
 
-		echo '<span data-adminstudio-show-if="' . esc_attr( $name . '[type]' ) . '" data-adminstudio-show-value="page"' . ( 'page' === $parts['type'] ? '' : ' hidden' ) . '>';
+		echo '<span data-adminora-show-if="' . esc_attr( $name . '[type]' ) . '" data-adminora-show-value="page"' . ( 'page' === $parts['type'] ? '' : ' hidden' ) . '>';
 		$pages = wp_dropdown_pages(
 			array(
 				'name'              => esc_attr( $name . '[page]' ),
 				'id'                => esc_attr( $id . '-page' ),
 				'selected'          => (int) $parts['page'],
-				'show_option_none'  => esc_html__( 'Choose a page', 'admin-studio' ),
+				'show_option_none'  => esc_html__( 'Choose a page', 'adminora' ),
 				'option_none_value' => '0',
 				'echo'              => 0,
 			)
@@ -204,8 +204,8 @@ class Redirects {
 		);
 		echo '</span>';
 
-		echo '<span data-adminstudio-show-if="' . esc_attr( $name . '[type]' ) . '" data-adminstudio-show-value="url"' . ( 'url' === $parts['type'] ? '' : ' hidden' ) . '>';
-		echo '<input type="url" class="regular-text" name="' . esc_attr( $name . '[url]' ) . '" value="' . esc_attr( $parts['url'] ) . '" placeholder="https://" aria-label="' . esc_attr( $label . ': ' . __( 'Address', 'admin-studio' ) ) . '">';
+		echo '<span data-adminora-show-if="' . esc_attr( $name . '[type]' ) . '" data-adminora-show-value="url"' . ( 'url' === $parts['type'] ? '' : ' hidden' ) . '>';
+		echo '<input type="url" class="regular-text" name="' . esc_attr( $name . '[url]' ) . '" value="' . esc_attr( $parts['url'] ) . '" placeholder="https://" aria-label="' . esc_attr( $label . ': ' . __( 'Address', 'adminora' ) ) . '">';
 		echo '</span></span>';
 	}
 
@@ -241,11 +241,11 @@ class Redirects {
 			return;
 		}
 
-		echo '<h2 id="adminstudio-login-redirect">' . esc_html__( 'After logging in', 'admin-studio' ) . '</h2>';
-		wp_nonce_field( 'adminstudio_redirect_' . $user->ID, '_adminstudio_redirect', false );
-		echo '<table class="form-table" role="presentation"><tr><th scope="row">' . esc_html__( 'Go to', 'admin-studio' ) . '</th><td>';
-		self::field( 'adminstudio_login_redirect', (string) get_user_meta( $user->ID, self::META, true ), __( 'After logging in, go to', 'admin-studio' ) );
-		echo '<p class="description">' . esc_html__( 'Overrides the destination set for their role under Settings → Admin Studio → Roles & permissions → Login and access. "Default" uses the role\'s setting.', 'admin-studio' ) . '</p>';
+		echo '<h2 id="adminora-login-redirect">' . esc_html__( 'After logging in', 'adminora' ) . '</h2>';
+		wp_nonce_field( 'adminora_redirect_' . $user->ID, '_adminora_redirect', false );
+		echo '<table class="form-table" role="presentation"><tr><th scope="row">' . esc_html__( 'Go to', 'adminora' ) . '</th><td>';
+		self::field( 'adminora_login_redirect', (string) get_user_meta( $user->ID, self::META, true ), __( 'After logging in, go to', 'adminora' ) );
+		echo '<p class="description">' . esc_html__( 'Overrides the destination set for their role under Settings → Adminora → Roles & permissions → Login and access. "Default" uses the role\'s setting.', 'adminora' ) . '</p>';
 		echo '</td></tr></table>';
 	}
 
@@ -256,7 +256,7 @@ class Redirects {
 	 * @return void
 	 */
 	public static function save_profile( $user_id ) {
-		if ( ! isset( $_POST['_adminstudio_redirect'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_redirect'] ) ), 'adminstudio_redirect_' . $user_id ) ) {
+		if ( ! isset( $_POST['_adminora_redirect'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminora_redirect'] ) ), 'adminora_redirect_' . $user_id ) ) {
 			return;
 		}
 
@@ -265,7 +265,7 @@ class Redirects {
 		}
 
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Cleaned by clean().
-		$token = self::clean( isset( $_POST['adminstudio_login_redirect'] ) ? (array) wp_unslash( $_POST['adminstudio_login_redirect'] ) : array() );
+		$token = self::clean( isset( $_POST['adminora_login_redirect'] ) ? (array) wp_unslash( $_POST['adminora_login_redirect'] ) : array() );
 
 		if ( '' === $token ) {
 			delete_user_meta( $user_id, self::META );

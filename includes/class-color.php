@@ -2,10 +2,10 @@
 /**
  * Small colour helpers: parsing, mixing and contrast.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio;
+namespace Adminora;
 
 defined( 'ABSPATH' ) || exit;
 

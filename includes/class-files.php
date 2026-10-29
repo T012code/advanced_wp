@@ -2,10 +2,10 @@
 /**
  * Thin wrapper around WP_Filesystem for the few files the plugin writes.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio;
+namespace Adminora;
 
 defined( 'ABSPATH' ) || exit;
 

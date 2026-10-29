@@ -1,20 +1,20 @@
 /**
- * Admin Studio login page styles.
+ * Adminora login page styles.
  *
  * Colours, sizes and fonts arrive as custom properties printed inline on
- * body.login.adminstudio. Layout variants switch on body classes.
+ * body.login.adminora. Layout variants switch on body classes.
  */
 
-body.login.adminstudio {
-	--adminstudio-ease: cubic-bezier(0.22, 1, 0.36, 1);
-	background: var(--adminstudio-page-bg);
-	color: var(--adminstudio-text);
-	font-family: var(--adminstudio-font-body);
+body.login.adminora {
+	--adminora-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	background: var(--adminora-page-bg);
+	color: var(--adminora-text);
+	font-family: var(--adminora-font-body);
 	overflow-x: clip;
 }
 
 /* Shared centring for every layout except minimal. */
-body.login.adminstudio:not(.adminstudio-layout-minimal) {
+body.login.adminora:not(.adminora-layout-minimal) {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -24,83 +24,83 @@ body.login.adminstudio:not(.adminstudio-layout-minimal) {
 	box-sizing: border-box;
 }
 
-body.login.adminstudio:not(.adminstudio-layout-minimal) #login {
+body.login.adminora:not(.adminora-layout-minimal) #login {
 	width: 100%;
-	max-width: var(--adminstudio-form-width);
+	max-width: var(--adminora-form-width);
 	padding: 0;
 	margin: 0;
 	position: relative;
 	z-index: 1;
 }
 
-body.login.adminstudio-layout-minimal #login {
-	width: var(--adminstudio-form-width);
+body.login.adminora-layout-minimal #login {
+	width: var(--adminora-form-width);
 	max-width: calc(100% - 32px);
 }
 
 /* Logo. */
-body.login.adminstudio h1.wp-login-logo a {
-	background-image: var(--adminstudio-logo-url);
+body.login.adminora h1.wp-login-logo a {
+	background-image: var(--adminora-logo-url);
 	background-size: contain;
 	background-position: center;
-	width: var(--adminstudio-logo-width);
+	width: var(--adminora-logo-width);
 	max-width: 100%;
-	height: var(--adminstudio-logo-h);
+	height: var(--adminora-logo-h);
 	margin: 0 auto 24px;
 }
 
-body.login.adminstudio.adminstudio-textlogo h1.wp-login-logo a {
+body.login.adminora.adminora-textlogo h1.wp-login-logo a {
 	background: none;
 	text-indent: 0;
 	width: auto;
 	height: auto;
 	overflow: visible;
-	font-family: var(--adminstudio-font-heading);
+	font-family: var(--adminora-font-heading);
 	font-size: 26px;
 	font-weight: 600;
 	line-height: 1.25;
-	color: var(--adminstudio-page-text);
+	color: var(--adminora-page-text);
 	text-decoration: none;
 }
 
-body.login.adminstudio.adminstudio-nologo h1.wp-login-logo {
+body.login.adminora.adminora-nologo h1.wp-login-logo {
 	display: none;
 }
 
 /* Form card. */
-body.login.adminstudio form {
-	background: var(--adminstudio-surface);
-	color: var(--adminstudio-text);
-	border: 1px solid var(--adminstudio-border);
-	border-radius: var(--adminstudio-form-radius);
-	padding: var(--adminstudio-form-padding);
+body.login.adminora form {
+	background: var(--adminora-surface);
+	color: var(--adminora-text);
+	border: 1px solid var(--adminora-border);
+	border-radius: var(--adminora-form-radius);
+	padding: var(--adminora-form-padding);
 	margin-top: 0;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 16px 40px -12px rgba(0, 0, 0, 0.2);
 	overflow: visible;
 }
 
-body.login.adminstudio.adminstudio-noshadow form {
+body.login.adminora.adminora-noshadow form {
 	box-shadow: none;
 }
 
-body.login.adminstudio.adminstudio-layout-fullbg form {
-	background: color-mix(in srgb, var(--adminstudio-surface) 90%, transparent);
+body.login.adminora.adminora-layout-fullbg form {
+	background: color-mix(in srgb, var(--adminora-surface) 90%, transparent);
 	-webkit-backdrop-filter: blur(12px);
 	backdrop-filter: blur(12px);
 }
 
-body.login.adminstudio label {
-	color: var(--adminstudio-text);
+body.login.adminora label {
+	color: var(--adminora-text);
 	font-size: 14px;
 	font-weight: 500;
 	line-height: 1.5;
 }
 
-body.login.adminstudio.adminstudio-nolabels form > p > label[for="user_login"],
-body.login.adminstudio.adminstudio-nolabels form > p > label[for="user_email"],
-body.login.adminstudio.adminstudio-nolabels form > p > label[for="pass1"],
-body.login.adminstudio.adminstudio-nolabels .user-pass-wrap > label,
-body.login.adminstudio.adminstudio-nolabels .adminstudio-label-row > label {
+body.login.adminora.adminora-nolabels form > p > label[for="user_login"],
+body.login.adminora.adminora-nolabels form > p > label[for="user_email"],
+body.login.adminora.adminora-nolabels form > p > label[for="pass1"],
+body.login.adminora.adminora-nolabels .user-pass-wrap > label,
+body.login.adminora.adminora-nolabels .adminora-label-row > label {
 	position: absolute;
 	width: 1px;
 	height: 1px;
@@ -111,72 +111,72 @@ body.login.adminstudio.adminstudio-nolabels .adminstudio-label-row > label {
 }
 
 /* Fields. */
-body.login.adminstudio input[type="text"],
-body.login.adminstudio input[type="email"],
-body.login.adminstudio input[type="password"],
-body.login.adminstudio input[type="number"] {
+body.login.adminora input[type="text"],
+body.login.adminora input[type="email"],
+body.login.adminora input[type="password"],
+body.login.adminora input[type="number"] {
 	font-family: inherit;
 	font-size: 16px;
 	line-height: 1.5;
 	min-height: 44px;
 	padding: 8px 12px;
 	margin: 6px 0 16px;
-	color: var(--adminstudio-text);
-	background: var(--adminstudio-surface);
-	border: 1px solid var(--adminstudio-border);
-	border-radius: calc(var(--adminstudio-radius) * 0.75);
+	color: var(--adminora-text);
+	background: var(--adminora-surface);
+	border: 1px solid var(--adminora-border);
+	border-radius: calc(var(--adminora-radius) * 0.75);
 	box-shadow: none;
-	transition: border-color 150ms var(--adminstudio-ease), box-shadow 150ms var(--adminstudio-ease);
+	transition: border-color 150ms var(--adminora-ease), box-shadow 150ms var(--adminora-ease);
 }
 
-body.login.adminstudio.adminstudio-fields-underline input[type="text"],
-body.login.adminstudio.adminstudio-fields-underline input[type="email"],
-body.login.adminstudio.adminstudio-fields-underline input[type="password"] {
+body.login.adminora.adminora-fields-underline input[type="text"],
+body.login.adminora.adminora-fields-underline input[type="email"],
+body.login.adminora.adminora-fields-underline input[type="password"] {
 	border-width: 0 0 2px;
 	border-radius: 0;
 	background: transparent;
 	padding-left: 0;
 }
 
-body.login.adminstudio.adminstudio-fields-filled input[type="text"],
-body.login.adminstudio.adminstudio-fields-filled input[type="email"],
-body.login.adminstudio.adminstudio-fields-filled input[type="password"] {
-	background: var(--adminstudio-field-fill);
+body.login.adminora.adminora-fields-filled input[type="text"],
+body.login.adminora.adminora-fields-filled input[type="email"],
+body.login.adminora.adminora-fields-filled input[type="password"] {
+	background: var(--adminora-field-fill);
 	border-color: transparent;
 }
 
-body.login.adminstudio input[type="text"]:focus,
-body.login.adminstudio input[type="email"]:focus,
-body.login.adminstudio input[type="password"]:focus {
-	border-color: var(--adminstudio-primary);
-	box-shadow: 0 0 0 1px var(--adminstudio-primary);
+body.login.adminora input[type="text"]:focus,
+body.login.adminora input[type="email"]:focus,
+body.login.adminora input[type="password"]:focus {
+	border-color: var(--adminora-primary);
+	box-shadow: 0 0 0 1px var(--adminora-primary);
 	outline: 2px solid transparent;
 }
 
-body.login.adminstudio input[type="checkbox"] {
-	border-color: var(--adminstudio-border);
+body.login.adminora input[type="checkbox"] {
+	border-color: var(--adminora-border);
 	border-radius: 4px;
 }
 
-body.login.adminstudio input[type="checkbox"]:checked::before {
+body.login.adminora input[type="checkbox"]:checked::before {
 	filter: none;
 }
 
-body.login.adminstudio input[type="checkbox"]:focus {
-	border-color: var(--adminstudio-primary);
-	box-shadow: 0 0 0 1px var(--adminstudio-primary);
+body.login.adminora input[type="checkbox"]:focus {
+	border-color: var(--adminora-primary);
+	box-shadow: 0 0 0 1px var(--adminora-primary);
 }
 
-body.login.adminstudio .wp-pwd {
+body.login.adminora .wp-pwd {
 	position: relative;
 }
 
-body.login.adminstudio .wp-pwd input {
+body.login.adminora .wp-pwd input {
 	margin-bottom: 16px;
 }
 
-body.login.adminstudio .button.wp-hide-pw {
-	color: var(--adminstudio-muted);
+body.login.adminora .button.wp-hide-pw {
+	color: var(--adminora-muted);
 	top: 6px;
 	height: 44px;
 	min-height: 44px;
@@ -185,23 +185,23 @@ body.login.adminstudio .button.wp-hide-pw {
 	box-shadow: none;
 }
 
-body.login.adminstudio .button.wp-hide-pw:hover,
-body.login.adminstudio .button.wp-hide-pw:focus {
-	color: var(--adminstudio-primary);
+body.login.adminora .button.wp-hide-pw:hover,
+body.login.adminora .button.wp-hide-pw:focus {
+	color: var(--adminora-primary);
 	background: transparent;
 }
 
-body.login.adminstudio .button.wp-hide-pw:focus-visible {
-	box-shadow: 0 0 0 2px var(--adminstudio-primary);
+body.login.adminora .button.wp-hide-pw:focus-visible {
+	box-shadow: 0 0 0 2px var(--adminora-primary);
 	outline: 2px solid transparent;
 }
 
 /* Primary button. */
-body.login.adminstudio .button-primary {
-	background: var(--adminstudio-btn-bg);
-	border: 2px solid var(--adminstudio-btn-bg);
-	color: var(--adminstudio-btn-text);
-	border-radius: var(--adminstudio-btn-radius);
+body.login.adminora .button-primary {
+	background: var(--adminora-btn-bg);
+	border: 2px solid var(--adminora-btn-bg);
+	color: var(--adminora-btn-text);
+	border-radius: var(--adminora-btn-radius);
 	min-height: 44px;
 	padding: 0 24px;
 	font-family: inherit;
@@ -210,137 +210,137 @@ body.login.adminstudio .button-primary {
 	line-height: 1;
 	text-shadow: none;
 	box-shadow: none;
-	transition: filter 150ms var(--adminstudio-ease), transform 150ms var(--adminstudio-ease);
+	transition: filter 150ms var(--adminora-ease), transform 150ms var(--adminora-ease);
 }
 
-body.login.adminstudio .button-primary:hover {
-	background: var(--adminstudio-btn-bg);
-	border-color: var(--adminstudio-btn-bg);
-	color: var(--adminstudio-btn-text);
+body.login.adminora .button-primary:hover {
+	background: var(--adminora-btn-bg);
+	border-color: var(--adminora-btn-bg);
+	color: var(--adminora-btn-text);
 	filter: brightness(0.92);
 }
 
-body.login.adminstudio .button-primary:active {
+body.login.adminora .button-primary:active {
 	transform: scale(0.98);
 }
 
-body.login.adminstudio .button-primary:focus,
-body.login.adminstudio .button-primary:focus-visible {
-	background: var(--adminstudio-btn-bg);
-	color: var(--adminstudio-btn-text);
-	box-shadow: 0 0 0 2px var(--adminstudio-surface), 0 0 0 4px var(--adminstudio-btn-bg);
+body.login.adminora .button-primary:focus,
+body.login.adminora .button-primary:focus-visible {
+	background: var(--adminora-btn-bg);
+	color: var(--adminora-btn-text);
+	box-shadow: 0 0 0 2px var(--adminora-surface), 0 0 0 4px var(--adminora-btn-bg);
 	outline: 2px solid transparent;
 }
 
-body.login.adminstudio .button-primary:disabled,
-body.login.adminstudio .button-primary[disabled] {
-	background: var(--adminstudio-btn-bg) !important;
-	color: var(--adminstudio-btn-text) !important;
-	border-color: var(--adminstudio-btn-bg) !important;
+body.login.adminora .button-primary:disabled,
+body.login.adminora .button-primary[disabled] {
+	background: var(--adminora-btn-bg) !important;
+	color: var(--adminora-btn-text) !important;
+	border-color: var(--adminora-btn-bg) !important;
 	opacity: 0.55;
 	cursor: not-allowed;
 }
 
-body.login.adminstudio.adminstudio-btn-outline .button-primary,
-body.login.adminstudio.adminstudio-btn-outline .button-primary:hover,
-body.login.adminstudio.adminstudio-btn-outline .button-primary:focus {
+body.login.adminora.adminora-btn-outline .button-primary,
+body.login.adminora.adminora-btn-outline .button-primary:hover,
+body.login.adminora.adminora-btn-outline .button-primary:focus {
 	background: transparent;
-	color: var(--adminstudio-btn-bg);
+	color: var(--adminora-btn-bg);
 }
 
-body.login.adminstudio.adminstudio-btn-outline .button-primary:hover {
-	background: var(--adminstudio-btn-bg);
-	color: var(--adminstudio-btn-text);
+body.login.adminora.adminora-btn-outline .button-primary:hover {
+	background: var(--adminora-btn-bg);
+	color: var(--adminora-btn-text);
 	filter: none;
 }
 
-body.login.adminstudio:not(.adminstudio-layout-minimal) .submit {
+body.login.adminora:not(.adminora-layout-minimal) .submit {
 	clear: both;
 }
 
-body.login.adminstudio:not(.adminstudio-layout-minimal) .submit .button-primary {
+body.login.adminora:not(.adminora-layout-minimal) .submit .button-primary {
 	float: none;
 	width: 100%;
 	margin-top: 8px;
 }
 
-body.login.adminstudio:not(.adminstudio-layout-minimal) .forgetmenot {
+body.login.adminora:not(.adminora-layout-minimal) .forgetmenot {
 	float: none;
 	margin-bottom: 8px;
 }
 
-body.login.adminstudio .reset-pass-submit .button {
+body.login.adminora .reset-pass-submit .button {
 	float: none;
 }
 
 /* Messages and errors. */
 /* Messages use an even border and a light tint, never a thick side stripe. */
-body.login.adminstudio .message,
-body.login.adminstudio .notice,
-body.login.adminstudio .success,
-body.login.adminstudio #login_error {
-	background: color-mix(in srgb, var(--adminstudio-primary) 6%, var(--adminstudio-surface));
-	color: var(--adminstudio-text);
-	border: 1px solid color-mix(in srgb, var(--adminstudio-primary) 30%, var(--adminstudio-border));
-	border-radius: calc(var(--adminstudio-radius) * 0.75);
+body.login.adminora .message,
+body.login.adminora .notice,
+body.login.adminora .success,
+body.login.adminora #login_error {
+	background: color-mix(in srgb, var(--adminora-primary) 6%, var(--adminora-surface));
+	color: var(--adminora-text);
+	border: 1px solid color-mix(in srgb, var(--adminora-primary) 30%, var(--adminora-border));
+	border-radius: calc(var(--adminora-radius) * 0.75);
 	box-shadow: none;
 	margin: 0 0 16px;
 	padding: 12px 14px;
 }
 
-body.login.adminstudio #login_error,
-body.login.adminstudio .notice-error {
-	background: color-mix(in srgb, var(--adminstudio-error) 7%, var(--adminstudio-surface));
-	border-color: color-mix(in srgb, var(--adminstudio-error) 45%, var(--adminstudio-border));
+body.login.adminora #login_error,
+body.login.adminora .notice-error {
+	background: color-mix(in srgb, var(--adminora-error) 7%, var(--adminora-surface));
+	border-color: color-mix(in srgb, var(--adminora-error) 45%, var(--adminora-border));
 }
 
-body.login.adminstudio .success,
-body.login.adminstudio .notice-success {
-	background: color-mix(in srgb, var(--adminstudio-success) 7%, var(--adminstudio-surface));
-	border-color: color-mix(in srgb, var(--adminstudio-success) 45%, var(--adminstudio-border));
+body.login.adminora .success,
+body.login.adminora .notice-success {
+	background: color-mix(in srgb, var(--adminora-success) 7%, var(--adminora-surface));
+	border-color: color-mix(in srgb, var(--adminora-success) 45%, var(--adminora-border));
 }
 
-body.login.adminstudio .adminstudio-message {
-	color: var(--adminstudio-page-text);
+body.login.adminora .adminora-message {
+	color: var(--adminora-page-text);
 	text-align: center;
 	margin: 0 0 20px;
 	font-size: 15px;
 	line-height: 1.6;
 }
 
-body.login.adminstudio .adminstudio-message p {
+body.login.adminora .adminora-message p {
 	margin: 0 0 8px;
 }
 
 /* Links under the form. */
-body.login.adminstudio #nav,
-body.login.adminstudio #backtoblog {
+body.login.adminora #nav,
+body.login.adminora #backtoblog {
 	margin: 16px 0 0;
 	padding: 0;
 	text-align: center;
 	font-size: 14px;
-	color: var(--adminstudio-page-text);
+	color: var(--adminora-page-text);
 }
 
-body.login.adminstudio #nav a,
-body.login.adminstudio #backtoblog a,
-body.login.adminstudio .privacy-policy-link,
-body.login.adminstudio .adminstudio-footer a {
-	color: var(--adminstudio-page-text);
+body.login.adminora #nav a,
+body.login.adminora #backtoblog a,
+body.login.adminora .privacy-policy-link,
+body.login.adminora .adminora-footer a {
+	color: var(--adminora-page-text);
 	text-decoration: underline;
 	text-underline-offset: 3px;
-	transition: opacity 150ms var(--adminstudio-ease);
+	transition: opacity 150ms var(--adminora-ease);
 }
 
-body.login.adminstudio #nav a:hover,
-body.login.adminstudio #backtoblog a:hover,
-body.login.adminstudio .privacy-policy-link:hover {
-	color: var(--adminstudio-page-text);
+body.login.adminora #nav a:hover,
+body.login.adminora #backtoblog a:hover,
+body.login.adminora .privacy-policy-link:hover {
+	color: var(--adminora-page-text);
 	opacity: 0.75;
 }
 
 /* Link layouts, arranged by login.js. */
-body.login.adminstudio .adminstudio-links {
+body.login.adminora .adminora-links {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -348,30 +348,30 @@ body.login.adminstudio .adminstudio-links {
 	margin: 16px 0 0;
 	padding: 0;
 	font-size: 14px;
-	color: var(--adminstudio-page-text);
+	color: var(--adminora-page-text);
 }
 
-body.login.adminstudio .adminstudio-links a {
-	color: var(--adminstudio-page-text);
+body.login.adminora .adminora-links a {
+	color: var(--adminora-page-text);
 	text-decoration: underline;
 	text-underline-offset: 3px;
-	transition: opacity 150ms var(--adminstudio-ease);
+	transition: opacity 150ms var(--adminora-ease);
 }
 
-body.login.adminstudio .adminstudio-links a:hover {
+body.login.adminora .adminora-links a:hover {
 	opacity: 0.75;
 }
 
-body.login.adminstudio .adminstudio-links--inline,
-body.login.adminstudio .adminstudio-links--card {
+body.login.adminora .adminora-links--inline,
+body.login.adminora .adminora-links--card {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 4px 0;
 }
 
-body.login.adminstudio .adminstudio-links--inline .adminstudio-links__item + .adminstudio-links__item::before,
-body.login.adminstudio .adminstudio-links--card .adminstudio-links__item + .adminstudio-links__item::before {
+body.login.adminora .adminora-links--inline .adminora-links__item + .adminora-links__item::before,
+body.login.adminora .adminora-links--card .adminora-links__item + .adminora-links__item::before {
 	content: "\00b7";
 	display: inline-block;
 	width: 24px;
@@ -380,56 +380,56 @@ body.login.adminstudio .adminstudio-links--card .adminstudio-links__item + .admi
 }
 
 /* Keeps the dot's width, so hiding it never pulls the link back up a line. */
-body.login.adminstudio .adminstudio-links .adminstudio-links__item.is-line-start {
+body.login.adminora .adminora-links .adminora-links__item.is-line-start {
 	transform: translateX(-12px);
 }
 
-body.login.adminstudio .adminstudio-links .adminstudio-links__item.is-line-start::before {
+body.login.adminora .adminora-links .adminora-links__item.is-line-start::before {
 	visibility: hidden;
 }
 
-body.login.adminstudio .adminstudio-links--split {
+body.login.adminora .adminora-links--split {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: space-between;
 	gap: 8px 16px;
 }
 
-body.login.adminstudio .adminstudio-links--split:has(> :only-child) {
+body.login.adminora .adminora-links--split:has(> :only-child) {
 	justify-content: center;
 }
 
 /* Inside the card the links sit on the card's own colours. */
-body.login.adminstudio .adminstudio-links--card {
+body.login.adminora .adminora-links--card {
 	margin: 20px 0 0;
-	color: var(--adminstudio-text);
+	color: var(--adminora-text);
 }
 
-body.login.adminstudio .adminstudio-links--card a,
-body.login.adminstudio .adminstudio-links--button a,
-body.login.adminstudio .adminstudio-label-row a {
-	color: var(--adminstudio-link);
+body.login.adminora .adminora-links--card a,
+body.login.adminora .adminora-links--button a,
+body.login.adminora .adminora-label-row a {
+	color: var(--adminora-link);
 }
 
-body.login.adminstudio .adminstudio-links--buttons {
+body.login.adminora .adminora-links--buttons {
 	align-items: stretch;
 }
 
-body.login.adminstudio .adminstudio-links--buttons .adminstudio-links__item {
+body.login.adminora .adminora-links--buttons .adminora-links__item {
 	display: block;
 }
 
-body.login.adminstudio .adminstudio-links--buttons a {
+body.login.adminora .adminora-links--buttons a {
 	display: block;
 	padding: 10px 16px;
 	border: 1px solid currentColor;
-	border-radius: var(--adminstudio-btn-radius);
+	border-radius: var(--adminora-btn-radius);
 	text-align: center;
 	text-decoration: none;
 }
 
 /* Links above the main button, and next to the password label. */
-body.login.adminstudio .adminstudio-links--button {
+body.login.adminora .adminora-links--button {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: flex-end;
@@ -438,7 +438,7 @@ body.login.adminstudio .adminstudio-links--button {
 	font-size: 13px;
 }
 
-body.login.adminstudio .adminstudio-label-row {
+body.login.adminora .adminora-label-row {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
@@ -446,78 +446,78 @@ body.login.adminstudio .adminstudio-label-row {
 	gap: 4px 12px;
 }
 
-body.login.adminstudio .adminstudio-label-row a {
+body.login.adminora .adminora-label-row a {
 	margin-bottom: 3px;
 	font-size: 13px;
 	text-underline-offset: 3px;
 }
 
-body.login.adminstudio.adminstudio-nolabels .adminstudio-label-row {
+body.login.adminora.adminora-nolabels .adminora-label-row {
 	justify-content: flex-end;
 }
 
-body.login.adminstudio #nav .button-link {
-	color: var(--adminstudio-page-text);
+body.login.adminora #nav .button-link {
+	color: var(--adminora-page-text);
 	font-size: 14px;
 	text-decoration: underline;
 	text-underline-offset: 3px;
 }
 
-body.login.adminstudio form a {
-	color: var(--adminstudio-link);
+body.login.adminora form a {
+	color: var(--adminora-link);
 }
 
-body.login.adminstudio a:focus-visible {
+body.login.adminora a:focus-visible {
 	color: inherit;
 	box-shadow: 0 0 0 2px currentColor;
 	border-radius: 2px;
 	outline: 2px solid transparent;
 }
 
-body.login.adminstudio .privacy-policy-page-link,
-body.login.adminstudio .language-switcher,
-body.login.adminstudio .adminstudio-footer {
+body.login.adminora .privacy-policy-page-link,
+body.login.adminora .language-switcher,
+body.login.adminora .adminora-footer {
 	position: relative;
 	z-index: 1;
 	margin: 24px auto 0;
 	text-align: center;
-	color: var(--adminstudio-page-text);
+	color: var(--adminora-page-text);
 	font-size: 13px;
 }
 
-body.login.adminstudio .language-switcher label .dashicons {
-	color: var(--adminstudio-page-text);
+body.login.adminora .language-switcher label .dashicons {
+	color: var(--adminora-page-text);
 }
 
 /* Split screen: the image fills one half, the form centres in the other. */
-body.login.adminstudio.adminstudio-layout-split {
+body.login.adminora.adminora-layout-split {
 	padding-left: calc(50% + 16px);
 	padding-right: 16px;
 }
 
-body.login.adminstudio.adminstudio-layout-split.adminstudio-split-right {
+body.login.adminora.adminora-layout-split.adminora-split-right {
 	padding-left: 16px;
 	padding-right: calc(50% + 16px);
 }
 
-body.login.adminstudio.adminstudio-layout-split::before {
+body.login.adminora.adminora-layout-split::before {
 	content: "";
 	position: fixed;
 	top: 0;
 	bottom: 0;
 	left: 0;
 	width: 50%;
-	background-color: var(--adminstudio-primary);
+	background-color: var(--adminora-primary);
 	background-size: cover;
 	background-position: center;
 }
 
-body.login.adminstudio.adminstudio-layout-split.adminstudio-split-right::before {
+body.login.adminora.adminora-layout-split.adminora-split-right::before {
 	left: auto;
 	right: 0;
 }
 
-body.login.adminstudio.adminstudio-layout-split form {
+body.login.adminora.adminora-layout-split form {
 	background: transparent;
 	border: 0;
 	box-shadow: none;
@@ -526,17 +526,17 @@ body.login.adminstudio.adminstudio-layout-split form {
 	backdrop-filter: none;
 }
 
-body.login.adminstudio.adminstudio-layout-split .adminstudio-bg-video {
+body.login.adminora.adminora-layout-split .adminora-bg-video {
 	width: 50%;
 }
 
-body.login.adminstudio.adminstudio-layout-split.adminstudio-split-right .adminstudio-bg-video {
+body.login.adminora.adminora-layout-split.adminora-split-right .adminora-bg-video {
 	left: auto;
 	right: 0;
 }
 
 /* Background video. */
-body.login.adminstudio .adminstudio-bg-video {
+body.login.adminora .adminora-bg-video {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -548,33 +548,33 @@ body.login.adminstudio .adminstudio-bg-video {
 }
 
 /* The interim login inside the admin keeps a simple card. */
-body.login.adminstudio.interim-login {
+body.login.adminora.interim-login {
 	padding: 24px 16px;
 }
 
-body.login.adminstudio.interim-login::before,
-body.login.adminstudio.interim-login .adminstudio-bg-video {
+body.login.adminora.interim-login::before,
+body.login.adminora.interim-login .adminora-bg-video {
 	display: none;
 }
 
 @media (max-width: 782px) {
-	body.login.adminstudio.adminstudio-layout-split,
-	body.login.adminstudio.adminstudio-layout-split.adminstudio-split-right {
+	body.login.adminora.adminora-layout-split,
+	body.login.adminora.adminora-layout-split.adminora-split-right {
 		padding: 32px 16px;
 	}
 
-	body.login.adminstudio.adminstudio-layout-split::before,
-	body.login.adminstudio.adminstudio-layout-split .adminstudio-bg-video {
+	body.login.adminora.adminora-layout-split::before,
+	body.login.adminora.adminora-layout-split .adminora-bg-video {
 		display: none;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	body.login.adminstudio * {
+	body.login.adminora * {
 		transition-duration: 1ms !important;
 	}
 
-	body.login.adminstudio .button-primary:active {
+	body.login.adminora .button-primary:active {
 		transform: none;
 	}
 }

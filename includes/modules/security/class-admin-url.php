@@ -8,17 +8,17 @@
  * address only switches on after a test request proves the rule works, so a
  * missing rule can never lock anyone out.
  *
- * Add `define( 'ADMINSTUDIO_DISABLE_ADMIN_URL', true );` to wp-config.php to
+ * Add `define( 'ADMINORA_DISABLE_ADMIN_URL', true );` to wp-config.php to
  * switch this off if something goes wrong.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Security;
+namespace Adminora\Modules\Security;
 
-use AdminStudio\Files;
-use AdminStudio\Settings;
-use AdminStudio\Modules\Error_Pages\Error_Pages;
+use Adminora\Files;
+use Adminora\Settings;
+use Adminora\Modules\Error_Pages\Error_Pages;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,9 +27,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Admin_Url {
 
-	const STATE  = 'adminstudio_admin_url';
-	const BACKUP = 'adminstudio_htaccess_backup';
-	const MARKER = 'Admin Studio';
+	const STATE  = 'adminora_admin_url';
+	const BACKUP = 'adminora_htaccess_backup';
+	const MARKER = 'Adminora';
 
 	/**
 	 * Files in wp-admin that front-end code calls directly; they stay at
@@ -49,8 +49,8 @@ class Admin_Url {
 			return;
 		}
 
-		add_action( 'wp_ajax_adminstudio_ping', array( __CLASS__, 'ping' ) );
-		add_action( 'wp_ajax_nopriv_adminstudio_ping', array( __CLASS__, 'ping' ) );
+		add_action( 'wp_ajax_adminora_ping', array( __CLASS__, 'ping' ) );
+		add_action( 'wp_ajax_nopriv_adminora_ping', array( __CLASS__, 'ping' ) );
 
 		if ( ! self::active() ) {
 			return;
@@ -70,7 +70,7 @@ class Admin_Url {
 	 * @return bool
 	 */
 	public static function disabled() {
-		return ( defined( 'ADMINSTUDIO_DISABLE_ADMIN_URL' ) && ADMINSTUDIO_DISABLE_ADMIN_URL ) || is_multisite();
+		return ( defined( 'ADMINORA_DISABLE_ADMIN_URL' ) && ADMINORA_DISABLE_ADMIN_URL ) || is_multisite();
 	}
 
 	/**
@@ -436,7 +436,7 @@ class Admin_Url {
 		}
 
 		$response = wp_remote_get(
-			untrailingslashit( site_url() ) . '/' . $slug . '/admin-ajax.php?action=adminstudio_ping',
+			untrailingslashit( site_url() ) . '/' . $slug . '/admin-ajax.php?action=adminora_ping',
 			array(
 				'timeout'     => 10,
 				'redirection' => 0,

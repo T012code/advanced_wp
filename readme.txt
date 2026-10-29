@@ -1,4 +1,4 @@
-=== Admin Studio ===
+=== Adminora ===
 Contributors: layothedeveloper
 Tags: login page, email templates, white label, maintenance mode, two-factor
 Requires at least: 6.4
@@ -12,7 +12,7 @@ Rebrand the login page, system emails, error pages, browser tab details and admi
 
 == Description ==
 
-WordPress shows a lot of screens and emails in its own default style: the login page, password reset emails, the "critical error" page, the "briefly unavailable" screen, the admin footer credit. Admin Studio lets you restyle all of them to match your brand, from one place.
+WordPress shows a lot of screens and emails in its own default style: the login page, password reset emails, the "critical error" page, the "briefly unavailable" screen, the admin footer credit. Adminora lets you restyle all of them to match your brand, from one place.
 
 It also helps you run the dashboard for the people who use it: what each role can do and see, how the dashboard looks, which widgets appear, who is signed in, and how the login is protected.
 
@@ -111,10 +111,10 @@ It starts from your site. Brand colours come from your choice of source: your th
 
 == Installation ==
 
-1. Upload the `admin-studio` folder to `/wp-content/plugins/`, or install it from Plugins → Add New.
+1. Upload the `adminora` folder to `/wp-content/plugins/`, or install it from Plugins → Add New.
 2. Activate the plugin.
-3. Go to Appearance → Customize → Admin Studio to set the brand kit and design the login page, emails, system pages and coming soon page, with a live preview.
-4. Go to Settings → Admin Studio for everything else: email wording, tab and page details, admin branding, dashboard look, dashboard widgets, roles and permissions, sessions, login protection, coming soon mode and tools. The Overview tab switches each feature on or off.
+3. Go to Appearance → Customize → Adminora to set the brand kit and design the login page, emails, system pages and coming soon page, with a live preview.
+4. Go to Settings → Adminora for everything else: email wording, tab and page details, admin branding, dashboard look, dashboard widgets, roles and permissions, sessions, login protection, coming soon mode and tools. The Overview tab switches each feature on or off.
 
 == Frequently Asked Questions ==
 
@@ -122,17 +122,17 @@ It starts from your site. Brand colours come from your choice of source: your th
 
 Add this line to wp-config.php, above "That's all, stop editing!":
 
-`define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );`
+`define( 'ADMINORA_DISABLE_LOGIN_URL', true );`
 
-Log in at /wp-login.php, check the address under Settings → Admin Studio → Login protection, then remove the line.
+Log in at /wp-login.php, check the address under Settings → Adminora → Login protection, then remove the line.
 
 = I moved the dashboard and cannot reach it. What do I do? =
 
 Add this line to wp-config.php:
 
-`define( 'ADMINSTUDIO_DISABLE_ADMIN_URL', true );`
+`define( 'ADMINORA_DISABLE_ADMIN_URL', true );`
 
-The dashboard is back at /wp-admin straight away. Fix the setting under Settings → Admin Studio → Login protection, then remove the line. On Apache, deactivating Admin Studio also removes its .htaccess rules.
+The dashboard is back at /wp-admin straight away. Fix the setting under Settings → Adminora → Login protection, then remove the line. On Apache, deactivating Adminora also removes its .htaccess rules.
 
 = Does moving the dashboard hide that the site runs WordPress? =
 
@@ -142,7 +142,7 @@ It hides the dashboard address, which stops most automated scans. WordPress's ow
 
 Ask another administrator to tick "Reset two-factor for this user" on your profile. If you are the only administrator, add this line to wp-config.php, sign in, and remove it again:
 
-`define( 'ADMINSTUDIO_DISABLE_2FA', true );`
+`define( 'ADMINORA_DISABLE_2FA', true );`
 
 = Does it change my emails' delivery? =
 
@@ -150,22 +150,22 @@ No. It only changes how core WordPress emails look. Delivery still goes through 
 
 = Why are some error pages saved as files? =
 
-When the database is down or WordPress hits a fatal error, plugins cannot run. WordPress looks for special files in wp-content (php-error.php, db-error.php and maintenance.php) in those moments. Admin Studio writes a static copy of your design to those files each time you save. It never touches a file of that name written by another plugin or your host, and it removes its own files when you deactivate it.
+When the database is down or WordPress hits a fatal error, plugins cannot run. WordPress looks for special files in wp-content (php-error.php, db-error.php and maintenance.php) in those moments. Adminora writes a static copy of your design to those files each time you save. It never touches a file of that name written by another plugin or your host, and it removes its own files when you deactivate it.
 
 = Does it contact outside services? =
 
 Only when you choose a Google font in the brand kit, or add a video widget to the dashboard. See External services below. No other external requests are made, and nothing is tracked.
 
-= Does Admin Studio store personal data? =
+= Does Adminora store personal data? =
 
-The Sessions feature keeps a sign-in history with IP addresses and browser details, and the login protection keeps a lockout log. Both stay in your own database. Recording sign-ins can be switched off under Settings → Admin Studio → Sessions, and suggested wording is added to WordPress's privacy policy guide (Settings → Privacy).
+The Sessions feature keeps a sign-in history with IP addresses and browser details, and the login protection keeps a lockout log. Both stay in your own database. Recording sign-ins can be switched off under Settings → Adminora → Sessions, and suggested wording is added to WordPress's privacy policy guide (Settings → Privacy).
 
 == External services ==
 
-This plugin can connect to Google Fonts, but only after a site administrator picks a Google font as the heading or body font in Appearance → Customize → Admin Studio → Brand kit and publishes the change.
+This plugin can connect to Google Fonts, but only after a site administrator picks a Google font as the heading or body font in Appearance → Customize → Adminora → Brand kit and publishes the change.
 
 * What is sent and when: when the change is published, your server requests the font's stylesheet from fonts.googleapis.com and the font files from fonts.gstatic.com, once per font. The request contains the font name and your server's IP address. No visitor or user data is sent.
-* What happens next: the files are saved in your uploads folder (`wp-content/uploads/admin-studio/fonts/`) and served from your own site. Visitors' browsers never contact Google.
+* What happens next: the files are saved in your uploads folder (`wp-content/uploads/adminora/fonts/`) and served from your own site. Visitors' browsers never contact Google.
 * Service provider: Google Fonts. Terms of service: https://developers.google.com/fonts/terms. Privacy policy: https://policies.google.com/privacy.
 
 The Video dashboard widget embeds a video from the site an administrator chooses, such as YouTube or Vimeo. Nothing is sent until an administrator adds a video widget with a video address.

@@ -1,17 +1,17 @@
 <?php
 /**
- * Settings → Admin Studio → Dashboard widgets.
+ * Settings → Adminora → Dashboard widgets.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Admin;
+namespace Adminora\Admin;
 
-use AdminStudio\Settings;
-use AdminStudio\Modules\Admin_Look\Icons;
-use AdminStudio\Modules\Roles\Audit;
-use AdminStudio\Modules\Roles\Role_Manager;
-use AdminStudio\Modules\Widgets\Widgets;
+use Adminora\Settings;
+use Adminora\Modules\Admin_Look\Icons;
+use Adminora\Modules\Roles\Audit;
+use Adminora\Modules\Roles\Role_Manager;
+use Adminora\Modules\Widgets\Widgets;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,7 +27,7 @@ class Widgets_Tab {
 	 */
 	public static function init() {
 		foreach ( array( 'widgets_visibility', 'widget_save', 'widget_delete', 'widgets_layout' ) as $action ) {
-			add_action( 'admin_post_adminstudio_' . $action, array( __CLASS__, 'handle_' . $action ) );
+			add_action( 'admin_post_adminora_' . $action, array( __CLASS__, 'handle_' . $action ) );
 		}
 	}
 
@@ -38,9 +38,9 @@ class Widgets_Tab {
 	 */
 	private static function sections() {
 		return array(
-			'visibility' => __( 'Show and hide', 'admin-studio' ),
-			'custom'     => __( 'Custom widgets', 'admin-studio' ),
-			'layout'     => __( 'Default layout', 'admin-studio' ),
+			'visibility' => __( 'Show and hide', 'adminora' ),
+			'custom'     => __( 'Custom widgets', 'adminora' ),
+			'layout'     => __( 'Default layout', 'adminora' ),
 		);
 	}
 
@@ -64,7 +64,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	private static function back( $section, $notice, array $args = array() ) {
-		wp_safe_redirect( self::url( $section, array_merge( array( 'adminstudio_notice' => $notice ), $args ) ) );
+		wp_safe_redirect( self::url( $section, array_merge( array( 'adminora_notice' => $notice ), $args ) ) );
 		exit;
 	}
 
@@ -74,7 +74,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	private static function deny() {
-		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'adminora' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -87,12 +87,12 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	private static function form( $action, array $extra = array(), $confirm = false, $css_class = '' ) {
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"' . ( $confirm ? ' data-adminstudio-confirm' : '' ) . ( '' !== $css_class ? ' class="' . esc_attr( $css_class ) . '"' : '' ) . '>';
-		echo '<input type="hidden" name="action" value="adminstudio_' . esc_attr( $action ) . '">';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"' . ( $confirm ? ' data-adminora-confirm' : '' ) . ( '' !== $css_class ? ' class="' . esc_attr( $css_class ) . '"' : '' ) . '>';
+		echo '<input type="hidden" name="action" value="adminora_' . esc_attr( $action ) . '">';
 		foreach ( $extra as $name => $value ) {
 			echo '<input type="hidden" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '">';
 		}
-		wp_nonce_field( 'adminstudio_' . $action );
+		wp_nonce_field( 'adminora_' . $action );
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Widgets_Tab {
 	 */
 	public static function render() {
 		if ( ! Settings::module_on( 'widgets' ) ) {
-			echo '<div class="notice notice-warning inline adminstudio-notice"><p>' . esc_html__( 'Dashboard widgets is switched off on the Overview tab.', 'admin-studio' ) . '</p></div>';
+			echo '<div class="notice notice-warning inline adminora-notice"><p>' . esc_html__( 'Dashboard widgets is switched off on the Overview tab.', 'adminora' ) . '</p></div>';
 			return;
 		}
 
@@ -124,7 +124,7 @@ class Widgets_Tab {
 		$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : 'visibility';
 		$section = array_key_exists( $section, self::sections() ) ? $section : 'visibility';
 
-		echo '<nav class="adminstudio-subnav" aria-label="' . esc_attr__( 'Dashboard widgets sections', 'admin-studio' ) . '"><ul>';
+		echo '<nav class="adminora-subnav" aria-label="' . esc_attr__( 'Dashboard widgets sections', 'adminora' ) . '"><ul>';
 		foreach ( self::sections() as $key => $label ) {
 			printf(
 				'<li><a href="%s"%s>%s</a></li>',
@@ -149,17 +149,17 @@ class Widgets_Tab {
 		$roles  = self::role_names();
 		$known  = Widgets::known();
 
-		echo '<p class="adminstudio-intro">' . wp_kses_post(
+		echo '<p class="adminora-intro">' . wp_kses_post(
 			sprintf(
 				/* translators: %s: dashboard URL. */
-				__( 'Untick a role to hide a widget from everyone in it. Widgets from other plugins appear here after an administrator opens <a href="%s">the dashboard</a> with those plugins active. Someone with several roles sees a widget if any of their roles does.', 'admin-studio' ),
+				__( 'Untick a role to hide a widget from everyone in it. Widgets from other plugins appear here after an administrator opens <a href="%s">the dashboard</a> with those plugins active. Someone with several roles sees a widget if any of their roles does.', 'adminora' ),
 				esc_url( admin_url( 'index.php' ) )
 			)
 		) . '</p>';
 
 		self::form( 'widgets_visibility' );
-		echo '<div class="adminstudio-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr__( 'Widgets per role', 'admin-studio' ) . '"><table class="widefat striped adminstudio-matrix adminstudio-widget-matrix"><thead>';
-		echo '<tr><th scope="col" rowspan="2">' . esc_html__( 'Widget', 'admin-studio' ) . '</th><th scope="colgroup" colspan="' . (int) count( $roles ) . '"><span class="adminstudio-matrix__group">' . esc_html__( 'Shown to', 'admin-studio' ) . '</span></th></tr><tr>';
+		echo '<div class="adminora-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr__( 'Widgets per role', 'adminora' ) . '"><table class="widefat striped adminora-matrix adminora-widget-matrix"><thead>';
+		echo '<tr><th scope="col" rowspan="2">' . esc_html__( 'Widget', 'adminora' ) . '</th><th scope="colgroup" colspan="' . (int) count( $roles ) . '"><span class="adminora-matrix__group">' . esc_html__( 'Shown to', 'adminora' ) . '</span></th></tr><tr>';
 		foreach ( $roles as $name ) {
 			echo '<th scope="col">' . esc_html( $name ) . '</th>';
 		}
@@ -176,14 +176,14 @@ class Widgets_Tab {
 					esc_attr( $slug ),
 					checked( ! in_array( $slug, $hidden, true ), true, false ),
 					/* translators: 1: widget title, 2: role name. */
-					esc_attr( sprintf( __( 'Show %1$s to %2$s', 'admin-studio' ), $title, $name ) )
+					esc_attr( sprintf( __( 'Show %1$s to %2$s', 'adminora' ), $title, $name ) )
 				);
 			}
 			echo '</tr>';
 		}
 		echo '</tbody></table></div>';
 
-		echo '<p class="description">' . esc_html__( 'Custom widgets choose their roles in their own settings, under Custom widgets.', 'admin-studio' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Custom widgets choose their roles in their own settings, under Custom widgets.', 'adminora' ) . '</p>';
 		submit_button();
 		echo '</form>';
 	}
@@ -215,29 +215,29 @@ class Widgets_Tab {
 		$roles   = self::role_names();
 		$columns = Widgets::columns();
 
-		echo '<p class="adminstudio-intro">' . esc_html__( 'Add your own widgets to the dashboard: a welcome message, links to the screens people use most, how to get help, a video, or live numbers from the site. Each one can be limited to chosen roles.', 'admin-studio' ) . '</p>';
+		echo '<p class="adminora-intro">' . esc_html__( 'Add your own widgets to the dashboard: a welcome message, links to the screens people use most, how to get help, a video, or live numbers from the site. Each one can be limited to chosen roles.', 'adminora' ) . '</p>';
 
 		if ( $config['custom'] ) {
-			echo '<table class="widefat striped adminstudio-rule-table adminstudio-widget-list"><thead><tr><th scope="col">' . esc_html__( 'Widget', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'Type', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'Shown to', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'Column', 'admin-studio' ) . '</th><th scope="col"><span class="screen-reader-text">' . esc_html__( 'Actions', 'admin-studio' ) . '</span></th></tr></thead><tbody>';
+			echo '<table class="widefat striped adminora-rule-table adminora-widget-list"><thead><tr><th scope="col">' . esc_html__( 'Widget', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Type', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Shown to', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Column', 'adminora' ) . '</th><th scope="col"><span class="screen-reader-text">' . esc_html__( 'Actions', 'adminora' ) . '</span></th></tr></thead><tbody>';
 			foreach ( $config['custom'] as $id => $widget ) {
-				$who = $widget['roles'] ? implode( ', ', array_intersect_key( $roles, array_flip( $widget['roles'] ) ) ) : __( 'Everyone', 'admin-studio' );
+				$who = $widget['roles'] ? implode( ', ', array_intersect_key( $roles, array_flip( $widget['roles'] ) ) ) : __( 'Everyone', 'adminora' );
 				echo '<tr><th scope="row"><a href="' . esc_url( self::url( 'custom', array( 'edit' => $id ) ) ) . '">' . esc_html( $widget['title'] ) . '</a></th>';
-				echo '<td>' . esc_html( $types[ $widget['type'] ][0] ) . '</td><td>' . esc_html( $who ) . '</td><td>' . esc_html( $columns[ $widget['column'] ] ) . '</td><td class="adminstudio-row-actions">';
-				echo '<a class="button button-small" href="' . esc_url( self::url( 'custom', array( 'edit' => $id ) ) ) . '">' . esc_html__( 'Edit', 'admin-studio' ) . '</a> ';
-				self::form( 'widget_delete', array( 'widget' => $id ), true, 'adminstudio-inline-form' );
-				echo '<button type="submit" class="button button-small button-link-delete">' . esc_html__( 'Delete', 'admin-studio' ) . '</button></form>';
+				echo '<td>' . esc_html( $types[ $widget['type'] ][0] ) . '</td><td>' . esc_html( $who ) . '</td><td>' . esc_html( $columns[ $widget['column'] ] ) . '</td><td class="adminora-row-actions">';
+				echo '<a class="button button-small" href="' . esc_url( self::url( 'custom', array( 'edit' => $id ) ) ) . '">' . esc_html__( 'Edit', 'adminora' ) . '</a> ';
+				self::form( 'widget_delete', array( 'widget' => $id ), true, 'adminora-inline-form' );
+				echo '<button type="submit" class="button button-small button-link-delete">' . esc_html__( 'Delete', 'adminora' ) . '</button></form>';
 				echo '</td></tr>';
 			}
 			echo '</tbody></table>';
 		} else {
-			echo '<p>' . esc_html__( 'No custom widgets yet.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'No custom widgets yet.', 'adminora' ) . '</p>';
 		}
 
-		echo '<h2 class="title">' . esc_html__( 'Add a widget', 'admin-studio' ) . '</h2>';
-		echo '<ul class="adminstudio-widget-types">';
+		echo '<h2 class="title">' . esc_html__( 'Add a widget', 'adminora' ) . '</h2>';
+		echo '<ul class="adminora-widget-types">';
 		foreach ( $types as $key => $info ) {
 			printf(
-				'<li><a href="%s"><span class="adminstudio-widget-types__icon" aria-hidden="true">%s</span><strong>%s</strong><small>%s</small></a></li>',
+				'<li><a href="%s"><span class="adminora-widget-types__icon" aria-hidden="true">%s</span><strong>%s</strong><small>%s</small></a></li>',
 				esc_url(
 					self::url(
 						'custom',
@@ -266,14 +266,14 @@ class Widgets_Tab {
 		$types = Widgets::types();
 		$type  = $widget['type'];
 
-		echo '<p><a href="' . esc_url( self::url( 'custom' ) ) . '">&larr; ' . esc_html__( 'All custom widgets', 'admin-studio' ) . '</a></p>';
+		echo '<p><a href="' . esc_url( self::url( 'custom' ) ) . '">&larr; ' . esc_html__( 'All custom widgets', 'adminora' ) . '</a></p>';
 		echo '<h2 class="title">' . esc_html(
 			'' === $id
 				/* translators: %s: widget type. */
-				? sprintf( __( 'New widget: %s', 'admin-studio' ), $types[ $type ][0] )
+				? sprintf( __( 'New widget: %s', 'adminora' ), $types[ $type ][0] )
 				: $widget['title']
 		) . '</h2>';
-		echo '<p class="adminstudio-intro">' . esc_html( $types[ $type ][1] ) . '</p>';
+		echo '<p class="adminora-intro">' . esc_html( $types[ $type ][1] ) . '</p>';
 
 		self::form(
 			'widget_save',
@@ -284,20 +284,20 @@ class Widgets_Tab {
 		);
 		echo '<table class="form-table" role="presentation">';
 
-		Fields::row_start( __( 'Title', 'admin-studio' ), 'adminstudio-widget-title' );
-		echo '<input type="text" id="adminstudio-widget-title" class="regular-text" name="data[title]" value="' . esc_attr( $widget['title'] ) . '">';
-		Fields::row_end( __( 'You can use {site_name}.', 'admin-studio' ) );
+		Fields::row_start( __( 'Title', 'adminora' ), 'adminora-widget-title' );
+		echo '<input type="text" id="adminora-widget-title" class="regular-text" name="data[title]" value="' . esc_attr( $widget['title'] ) . '">';
+		Fields::row_end( __( 'You can use {site_name}.', 'adminora' ) );
 
 		if ( in_array( $type, array( 'text', 'support', 'video' ), true ) ) {
 			$labels = array(
-				'text'    => __( 'Content', 'admin-studio' ),
-				'support' => __( 'Message', 'admin-studio' ),
-				'video'   => __( 'Text under the video', 'admin-studio' ),
+				'text'    => __( 'Content', 'adminora' ),
+				'support' => __( 'Message', 'adminora' ),
+				'video'   => __( 'Text under the video', 'adminora' ),
 			);
-			Fields::row_start( $labels[ $type ], 'adminstudio_widget_content' );
+			Fields::row_start( $labels[ $type ], 'adminora_widget_content' );
 			wp_editor(
 				$widget['content'],
-				'adminstudio_widget_content',
+				'adminora_widget_content',
 				array(
 					'textarea_name' => 'data[content]',
 					'textarea_rows' => 'text' === $type ? 10 : 5,
@@ -305,31 +305,31 @@ class Widgets_Tab {
 					'quicktags'     => true,
 				)
 			);
-			Fields::row_end( __( 'Switch between Visual and Code (HTML) with the tabs above the editor. {site_name}, {site_url} and {admin_email} are replaced.', 'admin-studio' ) );
+			Fields::row_end( __( 'Switch between Visual and Code (HTML) with the tabs above the editor. {site_name}, {site_url} and {admin_email} are replaced.', 'adminora' ) );
 		}
 
 		if ( 'support' === $type ) {
-			Fields::row_start( __( 'Email', 'admin-studio' ), 'adminstudio-widget-email' );
-			echo '<input type="email" id="adminstudio-widget-email" class="regular-text" name="data[email]" value="' . esc_attr( $widget['email'] ) . '">';
+			Fields::row_start( __( 'Email', 'adminora' ), 'adminora-widget-email' );
+			echo '<input type="email" id="adminora-widget-email" class="regular-text" name="data[email]" value="' . esc_attr( $widget['email'] ) . '">';
 			Fields::row_end();
-			Fields::row_start( __( 'Phone', 'admin-studio' ), 'adminstudio-widget-phone' );
-			echo '<input type="tel" id="adminstudio-widget-phone" class="regular-text" name="data[phone]" value="' . esc_attr( $widget['phone'] ) . '">';
+			Fields::row_start( __( 'Phone', 'adminora' ), 'adminora-widget-phone' );
+			echo '<input type="tel" id="adminora-widget-phone" class="regular-text" name="data[phone]" value="' . esc_attr( $widget['phone'] ) . '">';
 			Fields::row_end();
 		}
 
 		if ( in_array( $type, array( 'text', 'support' ), true ) ) {
-			Fields::row_start( __( 'Button text', 'admin-studio' ), 'adminstudio-widget-button' );
-			echo '<input type="text" id="adminstudio-widget-button" class="regular-text" name="data[button]" value="' . esc_attr( $widget['button'] ) . '">';
-			Fields::row_end( __( 'Leave empty for no button.', 'admin-studio' ) );
-			Fields::row_start( __( 'Button link', 'admin-studio' ), 'adminstudio-widget-button-url' );
-			echo '<input type="text" id="adminstudio-widget-button-url" class="regular-text" name="data[button_url]" value="' . esc_attr( $widget['button_url'] ) . '" placeholder="https://">';
-			Fields::row_end( __( 'An address, or an admin screen such as post-new.php.', 'admin-studio' ) );
+			Fields::row_start( __( 'Button text', 'adminora' ), 'adminora-widget-button' );
+			echo '<input type="text" id="adminora-widget-button" class="regular-text" name="data[button]" value="' . esc_attr( $widget['button'] ) . '">';
+			Fields::row_end( __( 'Leave empty for no button.', 'adminora' ) );
+			Fields::row_start( __( 'Button link', 'adminora' ), 'adminora-widget-button-url' );
+			echo '<input type="text" id="adminora-widget-button-url" class="regular-text" name="data[button_url]" value="' . esc_attr( $widget['button_url'] ) . '" placeholder="https://">';
+			Fields::row_end( __( 'An address, or an admin screen such as post-new.php.', 'adminora' ) );
 		}
 
 		if ( 'video' === $type ) {
-			Fields::row_start( __( 'Video address', 'admin-studio' ), 'adminstudio-widget-video' );
-			echo '<input type="url" id="adminstudio-widget-video" class="large-text" name="data[video]" value="' . esc_attr( $widget['video'] ) . '" placeholder="https://www.youtube.com/watch?v=…">';
-			Fields::row_end( __( 'The page address of a video on YouTube, Vimeo, or another site WordPress can embed. The player loads from that site when someone views the dashboard.', 'admin-studio' ) );
+			Fields::row_start( __( 'Video address', 'adminora' ), 'adminora-widget-video' );
+			echo '<input type="url" id="adminora-widget-video" class="large-text" name="data[video]" value="' . esc_attr( $widget['video'] ) . '" placeholder="https://www.youtube.com/watch?v=…">';
+			Fields::row_end( __( 'The page address of a video on YouTube, Vimeo, or another site WordPress can embed. The player loads from that site when someone views the dashboard.', 'adminora' ) );
 		}
 
 		if ( 'links' === $type ) {
@@ -337,13 +337,13 @@ class Widgets_Tab {
 		}
 
 		if ( 'posts' === $type ) {
-			Fields::row_start( __( 'Category', 'admin-studio' ), 'adminstudio-widget-category' );
+			Fields::row_start( __( 'Category', 'adminora' ), 'adminora-widget-category' );
 			wp_dropdown_categories(
 				array(
 					'name'            => 'data[category]',
-					'id'              => 'adminstudio-widget-category',
+					'id'              => 'adminora-widget-category',
 					'selected'        => $widget['category'],
-					'show_option_all' => __( 'All categories', 'admin-studio' ),
+					'show_option_all' => __( 'All categories', 'adminora' ),
 					'hide_empty'      => false,
 					'hierarchical'    => true,
 				)
@@ -352,35 +352,35 @@ class Widgets_Tab {
 		}
 
 		if ( in_array( $type, array( 'posts', 'signups', 'comments' ), true ) ) {
-			Fields::row_start( __( 'How many to show', 'admin-studio' ), 'adminstudio-widget-number' );
-			echo '<input type="number" id="adminstudio-widget-number" class="small-text" name="data[number]" min="1" max="20" value="' . esc_attr( (string) $widget['number'] ) . '">';
+			Fields::row_start( __( 'How many to show', 'adminora' ), 'adminora-widget-number' );
+			echo '<input type="number" id="adminora-widget-number" class="small-text" name="data[number]" min="1" max="20" value="' . esc_attr( (string) $widget['number'] ) . '">';
 			Fields::row_end();
 		}
 
-		Fields::row_start( __( 'Column', 'admin-studio' ), 'adminstudio-widget-column' );
-		echo '<select id="adminstudio-widget-column" name="data[column]">';
+		Fields::row_start( __( 'Column', 'adminora' ), 'adminora-widget-column' );
+		echo '<select id="adminora-widget-column" name="data[column]">';
 		foreach ( Widgets::columns() as $key => $label ) {
 			echo '<option value="' . esc_attr( $key ) . '"' . selected( $widget['column'], $key, false ) . '>' . esc_html( $label ) . '</option>';
 		}
 		echo '</select>';
-		Fields::row_end( __( 'Where it starts. People can still move it unless the default layout is locked. Columns 3 and 4 only show on wide screens.', 'admin-studio' ) );
+		Fields::row_end( __( 'Where it starts. People can still move it unless the default layout is locked. Columns 3 and 4 only show on wide screens.', 'adminora' ) );
 
-		Fields::row_start( __( 'Shown to', 'admin-studio' ) );
-		echo '<fieldset><legend class="screen-reader-text">' . esc_html__( 'Shown to', 'admin-studio' ) . '</legend>';
+		Fields::row_start( __( 'Shown to', 'adminora' ) );
+		echo '<fieldset><legend class="screen-reader-text">' . esc_html__( 'Shown to', 'adminora' ) . '</legend>';
 		foreach ( self::role_names() as $slug => $name ) {
-			echo '<label class="adminstudio-check"><input type="checkbox" name="data[roles][]" value="' . esc_attr( $slug ) . '"' . checked( in_array( $slug, $widget['roles'], true ), true, false ) . '> ' . esc_html( $name ) . '</label>';
+			echo '<label class="adminora-check"><input type="checkbox" name="data[roles][]" value="' . esc_attr( $slug ) . '"' . checked( in_array( $slug, $widget['roles'], true ), true, false ) . '> ' . esc_html( $name ) . '</label>';
 		}
 		echo '</fieldset>';
-		Fields::row_end( __( 'Tick none to show it to everyone who can open the dashboard.', 'admin-studio' ) );
+		Fields::row_end( __( 'Tick none to show it to everyone who can open the dashboard.', 'adminora' ) );
 
 		if ( in_array( $type, array( 'signups', 'counts', 'comments', 'health' ), true ) ) {
-			Fields::row_start( __( 'Privacy', 'admin-studio' ) );
-			echo '<p>' . esc_html__( 'This widget shows site data to everyone it is shown to. Links to edit screens only appear for people allowed to use them.', 'admin-studio' ) . '</p>';
+			Fields::row_start( __( 'Privacy', 'adminora' ) );
+			echo '<p>' . esc_html__( 'This widget shows site data to everyone it is shown to. Links to edit screens only appear for people allowed to use them.', 'adminora' ) . '</p>';
 			Fields::row_end();
 		}
 
 		echo '</table>';
-		submit_button( '' === $id ? __( 'Add widget', 'admin-studio' ) : __( 'Save widget', 'admin-studio' ) );
+		submit_button( '' === $id ? __( 'Add widget', 'adminora' ) : __( 'Save widget', 'adminora' ) );
 		echo '</form>';
 	}
 
@@ -391,7 +391,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	private static function links_field( array $links ) {
-		$icons = array( '' => __( 'Automatic', 'admin-studio' ) );
+		$icons = array( '' => __( 'Automatic', 'adminora' ) );
 		foreach ( array_keys( Icons::all() ) as $icon ) {
 			$icons[ $icon ] = ucfirst( str_replace( '-', ' ', $icon ) );
 		}
@@ -404,26 +404,26 @@ class Widgets_Tab {
 			);
 		}
 
-		Fields::row_start( __( 'Links', 'admin-studio' ) );
-		echo '<ol class="adminstudio-sortable adminstudio-link-list" data-adminstudio-sortable>';
+		Fields::row_start( __( 'Links', 'adminora' ) );
+		echo '<ol class="adminora-sortable adminora-link-list" data-adminora-sortable>';
 		foreach ( array_values( $links ) as $n => $link ) {
-			$name = '' !== $link['label'] ? $link['label'] : __( 'New link', 'admin-studio' );
-			echo '<li class="adminstudio-sortable__row" draggable="true">';
-			echo '<span class="adminstudio-sortable__handle" aria-hidden="true"></span>';
+			$name = '' !== $link['label'] ? $link['label'] : __( 'New link', 'adminora' );
+			echo '<li class="adminora-sortable__row" draggable="true">';
+			echo '<span class="adminora-sortable__handle" aria-hidden="true"></span>';
 			/* translators: %s: item name. */
-			echo '<button type="button" class="button-link adminstudio-sortable__up" data-adminstudio-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'admin-studio' ), $name ) ) . '">&uarr;</button>';
+			echo '<button type="button" class="button-link adminora-sortable__up" data-adminora-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'adminora' ), $name ) ) . '">&uarr;</button>';
 			/* translators: %s: item name. */
-			echo '<button type="button" class="button-link adminstudio-sortable__down" data-adminstudio-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'admin-studio' ), $name ) ) . '">&darr;</button>';
-			echo '<input type="text" name="data[links][' . (int) $n . '][label]" value="' . esc_attr( $link['label'] ) . '" placeholder="' . esc_attr__( 'Label', 'admin-studio' ) . '" aria-label="' . esc_attr__( 'Label', 'admin-studio' ) . '">';
-			echo '<input type="text" name="data[links][' . (int) $n . '][url]" value="' . esc_attr( $link['url'] ) . '" placeholder="' . esc_attr__( 'post-new.php or https://…', 'admin-studio' ) . '" aria-label="' . esc_attr__( 'Address', 'admin-studio' ) . '">';
-			echo '<select name="data[links][' . (int) $n . '][icon]" aria-label="' . esc_attr__( 'Icon', 'admin-studio' ) . '">';
+			echo '<button type="button" class="button-link adminora-sortable__down" data-adminora-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'adminora' ), $name ) ) . '">&darr;</button>';
+			echo '<input type="text" name="data[links][' . (int) $n . '][label]" value="' . esc_attr( $link['label'] ) . '" placeholder="' . esc_attr__( 'Label', 'adminora' ) . '" aria-label="' . esc_attr__( 'Label', 'adminora' ) . '">';
+			echo '<input type="text" name="data[links][' . (int) $n . '][url]" value="' . esc_attr( $link['url'] ) . '" placeholder="' . esc_attr__( 'post-new.php or https://…', 'adminora' ) . '" aria-label="' . esc_attr__( 'Address', 'adminora' ) . '">';
+			echo '<select name="data[links][' . (int) $n . '][icon]" aria-label="' . esc_attr__( 'Icon', 'adminora' ) . '">';
 			foreach ( $icons as $key => $label ) {
 				echo '<option value="' . esc_attr( $key ) . '"' . selected( $link['icon'], $key, false ) . '>' . esc_html( $label ) . '</option>';
 			}
 			echo '</select></li>';
 		}
 		echo '</ol>';
-		Fields::row_end( __( 'Drag to reorder. Leave a label empty to remove that link. Use an admin screen such as edit.php?post_type=page, or a full address. Save to get more empty rows.', 'admin-studio' ) );
+		Fields::row_end( __( 'Drag to reorder. Leave a label empty to remove that link. Use an admin screen such as edit.php?post_type=page, or a full address. Save to get more empty rows.', 'adminora' ) );
 	}
 
 	/**
@@ -436,73 +436,73 @@ class Widgets_Tab {
 		$titles  = Widgets::titles();
 		$columns = Widgets::columns();
 
-		echo '<p class="adminstudio-intro">' . wp_kses_post(
+		echo '<p class="adminora-intro">' . wp_kses_post(
 			sprintf(
 				/* translators: %s: dashboard URL. */
-				__( 'Arrange <a href="%s">your own dashboard</a> the way everyone should see it: drag widgets into place, collapse the ones that should start closed and hide any with Screen Options. Then come back here and save it as the default layout. People who have not arranged their own dashboard get it straight away.', 'admin-studio' ),
+				__( 'Arrange <a href="%s">your own dashboard</a> the way everyone should see it: drag widgets into place, collapse the ones that should start closed and hide any with Screen Options. Then come back here and save it as the default layout. People who have not arranged their own dashboard get it straight away.', 'adminora' ),
 				esc_url( admin_url( 'index.php' ) )
 			)
 		) . '</p>';
 
-		echo '<div class="adminstudio-card">';
-		echo '<h2 class="title">' . esc_html__( 'Saved layout', 'admin-studio' ) . '</h2>';
+		echo '<div class="adminora-card">';
+		echo '<h2 class="title">' . esc_html__( 'Saved layout', 'adminora' ) . '</h2>';
 		if ( empty( $layout['saved'] ) ) {
-			echo '<p>' . esc_html__( 'None yet. Everyone sees the WordPress arrangement until you save one.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'None yet. Everyone sees the WordPress arrangement until you save one.', 'adminora' ) . '</p>';
 		} else {
 			printf(
 				'<p>%s</p>',
 				esc_html(
 					sprintf(
 						/* translators: %s: date and time. */
-						__( 'Saved on %s.', 'admin-studio' ),
+						__( 'Saved on %s.', 'adminora' ),
 						wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $layout['saved'] )
 					)
 				)
 			);
-			echo '<div class="adminstudio-layout">';
+			echo '<div class="adminora-layout">';
 			foreach ( $columns as $key => $label ) {
 				$ids = isset( $layout['order'][ $key ] ) ? array_filter( explode( ',', $layout['order'][ $key ] ) ) : array();
-				echo '<div class="adminstudio-layout__col"><h3>' . esc_html( $label ) . '</h3><ul>';
+				echo '<div class="adminora-layout__col"><h3>' . esc_html( $label ) . '</h3><ul>';
 				foreach ( $ids as $box ) {
 					if ( ! isset( $titles[ $box ] ) ) {
 						continue;
 					}
 					$flags = array();
 					if ( in_array( $box, $layout['closed'], true ) ) {
-						$flags[] = __( 'collapsed', 'admin-studio' );
+						$flags[] = __( 'collapsed', 'adminora' );
 					}
 					if ( in_array( $box, $layout['hidden'], true ) ) {
-						$flags[] = __( 'hidden', 'admin-studio' );
+						$flags[] = __( 'hidden', 'adminora' );
 					}
 					echo '<li>' . esc_html( $titles[ $box ] ) . ( $flags ? ' <small>(' . esc_html( implode( ', ', $flags ) ) . ')</small>' : '' ) . '</li>';
 				}
 				if ( ! array_intersect( $ids, array_keys( $titles ) ) ) {
-					echo '<li class="adminstudio-layout__empty">' . esc_html__( 'Empty', 'admin-studio' ) . '</li>';
+					echo '<li class="adminora-layout__empty">' . esc_html__( 'Empty', 'adminora' ) . '</li>';
 				}
 				echo '</ul></div>';
 			}
 			echo '</div>';
-			echo '<p class="description">' . esc_html__( 'Widgets that are not listed, such as ones added by a plugin later, keep their usual place.', 'admin-studio' ) . '</p>';
+			echo '<p class="description">' . esc_html__( 'Widgets that are not listed, such as ones added by a plugin later, keep their usual place.', 'adminora' ) . '</p>';
 		}
 		echo '</div>';
 
 		self::form( 'widgets_layout' );
 		echo '<table class="form-table" role="presentation">';
-		Fields::row_start( __( 'Lock', 'admin-studio' ) );
-		echo '<label><input type="checkbox" name="lock" value="1"' . checked( $layout['lock'], true, false ) . '> ' . esc_html__( 'Stop people rearranging their dashboard', 'admin-studio' ) . '</label>';
-		Fields::row_end( __( 'Everyone gets the saved order and cannot drag widgets. They can still collapse widgets. Administrators are never locked, so they can change the default.', 'admin-studio' ) );
-		Fields::row_start( __( 'Everyone', 'admin-studio' ) );
-		echo '<label><input type="checkbox" name="reset_users" value="1"> ' . esc_html__( 'Also replace the arrangement people have already made', 'admin-studio' ) . '</label>';
-		Fields::row_end( __( 'Clears each person\'s own order, collapsed and hidden widgets, so the default applies to them too.', 'admin-studio' ) );
+		Fields::row_start( __( 'Lock', 'adminora' ) );
+		echo '<label><input type="checkbox" name="lock" value="1"' . checked( $layout['lock'], true, false ) . '> ' . esc_html__( 'Stop people rearranging their dashboard', 'adminora' ) . '</label>';
+		Fields::row_end( __( 'Everyone gets the saved order and cannot drag widgets. They can still collapse widgets. Administrators are never locked, so they can change the default.', 'adminora' ) );
+		Fields::row_start( __( 'Everyone', 'adminora' ) );
+		echo '<label><input type="checkbox" name="reset_users" value="1"> ' . esc_html__( 'Also replace the arrangement people have already made', 'adminora' ) . '</label>';
+		Fields::row_end( __( 'Clears each person\'s own order, collapsed and hidden widgets, so the default applies to them too.', 'adminora' ) );
 		echo '</table>';
 
 		echo '<p class="submit">';
-		submit_button( __( 'Save my dashboard as the default', 'admin-studio' ), 'primary', 'capture', false );
+		submit_button( __( 'Save my dashboard as the default', 'adminora' ), 'primary', 'capture', false );
 		if ( ! empty( $layout['saved'] ) ) {
 			echo ' ';
-			submit_button( __( 'Save lock setting only', 'admin-studio' ), 'secondary', 'lock_only', false );
+			submit_button( __( 'Save lock setting only', 'adminora' ), 'secondary', 'lock_only', false );
 			echo ' ';
-			submit_button( __( 'Remove the default layout', 'admin-studio' ), 'secondary', 'clear', false, array( 'data-adminstudio-confirm-click' => '1' ) );
+			submit_button( __( 'Remove the default layout', 'adminora' ), 'secondary', 'clear', false, array( 'data-adminora-confirm-click' => '1' ) );
 		}
 		echo '</p></form>';
 	}
@@ -513,7 +513,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widgets_visibility() {
-		check_admin_referer( 'adminstudio_widgets_visibility' );
+		check_admin_referer( 'adminora_widgets_visibility' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -532,7 +532,7 @@ class Widgets_Tab {
 		}
 
 		Widgets::save( array( 'hide' => $hide ) );
-		Audit::log( 'widgets', __( 'Dashboard widget visibility updated.', 'admin-studio' ) );
+		Audit::log( 'widgets', __( 'Dashboard widget visibility updated.', 'adminora' ) );
 		self::back( 'visibility', 'saved' );
 	}
 
@@ -542,7 +542,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widget_save() {
-		check_admin_referer( 'adminstudio_widget_save' );
+		check_admin_referer( 'adminora_widget_save' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -565,7 +565,7 @@ class Widgets_Tab {
 
 		Widgets::save( array( 'custom' => $config['custom'] ) );
 		/* translators: %s: widget title. */
-		Audit::log( 'widgets', sprintf( __( 'Dashboard widget "%s" saved.', 'admin-studio' ), $config['custom'][ $id ]['title'] ) );
+		Audit::log( 'widgets', sprintf( __( 'Dashboard widget "%s" saved.', 'adminora' ), $config['custom'][ $id ]['title'] ) );
 		self::back( 'custom', 'saved', array( 'edit' => $id ) );
 	}
 
@@ -575,7 +575,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widget_delete() {
-		check_admin_referer( 'adminstudio_widget_delete' );
+		check_admin_referer( 'adminora_widget_delete' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -589,7 +589,7 @@ class Widgets_Tab {
 			unset( $config['custom'][ $id ] );
 			Widgets::save( array( 'custom' => $config['custom'] ) );
 			/* translators: %s: widget title. */
-			Audit::log( 'widgets', sprintf( __( 'Dashboard widget "%s" deleted.', 'admin-studio' ), $title ) );
+			Audit::log( 'widgets', sprintf( __( 'Dashboard widget "%s" deleted.', 'adminora' ), $title ) );
 		}
 
 		self::back( 'custom', 'widget_deleted' );
@@ -601,7 +601,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widgets_layout() {
-		check_admin_referer( 'adminstudio_widgets_layout' );
+		check_admin_referer( 'adminora_widgets_layout' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -612,7 +612,7 @@ class Widgets_Tab {
 
 		if ( isset( $_POST['clear'] ) ) {
 			Widgets::save( array( 'layout' => array() ) );
-			Audit::log( 'widgets', __( 'Default dashboard layout removed.', 'admin-studio' ) );
+			Audit::log( 'widgets', __( 'Default dashboard layout removed.', 'adminora' ) );
 			self::back( 'layout', 'saved' );
 		}
 
@@ -627,7 +627,7 @@ class Widgets_Tab {
 			Widgets::reset_users();
 		}
 
-		Audit::log( 'widgets', $lock ? __( 'Default dashboard layout saved and locked.', 'admin-studio' ) : __( 'Default dashboard layout saved.', 'admin-studio' ) );
+		Audit::log( 'widgets', $lock ? __( 'Default dashboard layout saved and locked.', 'adminora' ) : __( 'Default dashboard layout saved.', 'adminora' ) );
 		self::back( 'layout', 'saved' );
 	}
 }

@@ -3,10 +3,10 @@
  * Roles and permissions module: role editor, per-user permissions, menu
  * access, login redirect, dashboard access and toolbar control.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Roles;
+namespace Adminora\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 

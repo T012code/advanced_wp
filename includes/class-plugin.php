@@ -2,10 +2,10 @@
 /**
  * Plugin bootstrap and module registry.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio;
+namespace Adminora;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -75,7 +75,7 @@ class Plugin {
 
 		add_action( 'add_option_' . Settings::OPTION, array( $this, 'settings_saved' ) );
 		add_action( 'update_option_' . Settings::OPTION, array( $this, 'settings_saved' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( ADMINSTUDIO_FILE ), array( $this, 'action_links' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( ADMINORA_FILE ), array( $this, 'action_links' ) );
 		add_action( 'login_enqueue_scripts', array( $this, 'login_notice_borders' ) );
 		add_action( 'admin_init', array( __CLASS__, 'reapply_admin_url' ) );
 	}
@@ -122,9 +122,9 @@ class Plugin {
 	 * @return string
 	 */
 	public static function asset_version( $path ) {
-		$file = ADMINSTUDIO_DIR . ltrim( $path, '/' );
+		$file = ADMINORA_DIR . ltrim( $path, '/' );
 
-		return file_exists( $file ) ? ADMINSTUDIO_VERSION . '.' . filemtime( $file ) : ADMINSTUDIO_VERSION;
+		return file_exists( $file ) ? ADMINORA_VERSION . '.' . filemtime( $file ) : ADMINORA_VERSION;
 	}
 
 	/**
@@ -135,8 +135,8 @@ class Plugin {
 	 */
 	public function action_links( $links ) {
 		$extra = array(
-			'<a href="' . esc_url( admin_url( 'options-general.php?page=admin-studio' ) ) . '">' . esc_html__( 'Settings', 'admin-studio' ) . '</a>',
-			'<a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=adminstudio' ) ) . '">' . esc_html__( 'Customize', 'admin-studio' ) . '</a>',
+			'<a href="' . esc_url( admin_url( 'options-general.php?page=adminora' ) ) . '">' . esc_html__( 'Settings', 'adminora' ) . '</a>',
+			'<a href="' . esc_url( admin_url( 'customize.php?autofocus[panel]=adminora' ) ) . '">' . esc_html__( 'Customize', 'adminora' ) . '</a>',
 		);
 
 		return array_merge( $extra, $links );
@@ -148,13 +148,13 @@ class Plugin {
 	 * @return void
 	 */
 	public static function activate() {
-		update_option( 'adminstudio_version', ADMINSTUDIO_VERSION, false );
+		update_option( 'adminora_version', ADMINORA_VERSION, false );
 		Dropins::sync();
 
 		// The plugin is not marked active until after this hook, so the dashboard
 		// address self-test would fail now. Run it on the next admin page load.
 		if ( Settings::module_on( 'security' ) && Settings::get( 'security.admin_url' ) ) {
-			update_option( 'adminstudio_reapply_admin_url', 1, false );
+			update_option( 'adminora_reapply_admin_url', 1, false );
 		}
 	}
 
@@ -164,8 +164,8 @@ class Plugin {
 	 * @return void
 	 */
 	public static function reapply_admin_url() {
-		if ( get_option( 'adminstudio_reapply_admin_url' ) && current_user_can( 'manage_options' ) ) {
-			delete_option( 'adminstudio_reapply_admin_url' );
+		if ( get_option( 'adminora_reapply_admin_url' ) && current_user_can( 'manage_options' ) ) {
+			delete_option( 'adminora_reapply_admin_url' );
 			Modules\Security\Admin_Url::apply();
 		}
 	}

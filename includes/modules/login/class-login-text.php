@@ -6,12 +6,12 @@
  * original English string so it works in every language. Replacements only
  * apply while a login screen is being built.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Login;
+namespace Adminora\Modules\Login;
 
-use AdminStudio\Settings;
+use Adminora\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -69,29 +69,29 @@ class Login_Text {
 	 */
 	public static function labels() {
 		return array(
-			'login_title'       => __( '"Log In" button and screen name', 'admin-studio' ),
-			'username_label'    => __( 'Username field label', 'admin-studio' ),
-			'password_label'    => __( 'Password field label', 'admin-studio' ),
-			'remember'          => __( '"Remember Me"', 'admin-studio' ),
-			'lost_link'         => __( '"Lost your password?" link', 'admin-studio' ),
-			'register_link'     => __( '"Register" link and button', 'admin-studio' ),
-			'login_link'        => __( '"Log in" link on the other screens', 'admin-studio' ),
-			'logged_out'        => __( 'Message after logging out', 'admin-studio' ),
-			'session_expired'   => __( 'Message when the session has expired', 'admin-studio' ),
-			'lost_title'        => __( 'Lost password: screen name', 'admin-studio' ),
-			'lost_message'      => __( 'Lost password: instructions', 'admin-studio' ),
-			'lost_button'       => __( 'Lost password: button', 'admin-studio' ),
-			'check_email_title' => __( 'Check your email: screen name', 'admin-studio' ),
-			'check_email'       => __( 'Check your email: message', 'admin-studio' ),
-			'reset_title'       => __( 'Reset password: screen name', 'admin-studio' ),
-			'reset_message'     => __( 'Reset password: instructions', 'admin-studio' ),
-			'new_password'      => __( 'Reset password: field label', 'admin-studio' ),
-			'save_password'     => __( 'Reset password: button', 'admin-studio' ),
-			'reset_done'        => __( 'Reset password: success message', 'admin-studio' ),
-			'register_title'    => __( 'Register: screen name', 'admin-studio' ),
-			'register_message'  => __( 'Register: message above the form', 'admin-studio' ),
-			'register_note'     => __( 'Register: note under the fields', 'admin-studio' ),
-			'register_done'     => __( 'Register: success message', 'admin-studio' ),
+			'login_title'       => __( '"Log In" button and screen name', 'adminora' ),
+			'username_label'    => __( 'Username field label', 'adminora' ),
+			'password_label'    => __( 'Password field label', 'adminora' ),
+			'remember'          => __( '"Remember Me"', 'adminora' ),
+			'lost_link'         => __( '"Lost your password?" link', 'adminora' ),
+			'register_link'     => __( '"Register" link and button', 'adminora' ),
+			'login_link'        => __( '"Log in" link on the other screens', 'adminora' ),
+			'logged_out'        => __( 'Message after logging out', 'adminora' ),
+			'session_expired'   => __( 'Message when the session has expired', 'adminora' ),
+			'lost_title'        => __( 'Lost password: screen name', 'adminora' ),
+			'lost_message'      => __( 'Lost password: instructions', 'adminora' ),
+			'lost_button'       => __( 'Lost password: button', 'adminora' ),
+			'check_email_title' => __( 'Check your email: screen name', 'adminora' ),
+			'check_email'       => __( 'Check your email: message', 'adminora' ),
+			'reset_title'       => __( 'Reset password: screen name', 'adminora' ),
+			'reset_message'     => __( 'Reset password: instructions', 'adminora' ),
+			'new_password'      => __( 'Reset password: field label', 'adminora' ),
+			'save_password'     => __( 'Reset password: button', 'adminora' ),
+			'reset_done'        => __( 'Reset password: success message', 'adminora' ),
+			'register_title'    => __( 'Register: screen name', 'adminora' ),
+			'register_message'  => __( 'Register: message above the form', 'adminora' ),
+			'register_note'     => __( 'Register: note under the fields', 'adminora' ),
+			'register_done'     => __( 'Register: success message', 'adminora' ),
 		);
 	}
 
@@ -145,7 +145,7 @@ class Login_Text {
 		$site = get_bloginfo( 'name', 'display' );
 
 		/* translators: %s: site title. */
-		return '' !== $text ? str_replace( '{site_name}', $site, $text ) : sprintf( __( '&larr; Go to %s', 'admin-studio' ), $site );
+		return '' !== $text ? str_replace( '{site_name}', $site, $text ) : sprintf( __( '&larr; Go to %s', 'adminora' ), $site );
 	}
 
 	/**
@@ -249,7 +249,7 @@ class Login_Text {
 		}
 
 		if ( $replaced ) {
-			$errors->add( 'adminstudio_failed', esc_html( $message ) );
+			$errors->add( 'adminora_failed', esc_html( $message ) );
 		}
 
 		return $errors;

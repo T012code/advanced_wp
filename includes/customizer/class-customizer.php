@@ -2,23 +2,23 @@
 /**
  * Customizer panel, sections and controls.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Customizer;
+namespace Adminora\Customizer;
 
-use AdminStudio\Brand_Kit;
-use AdminStudio\Fonts;
-use AdminStudio\Preview;
-use AdminStudio\Settings;
-use AdminStudio\Modules\Emails\Templates;
-use AdminStudio\Modules\Login\Login;
-use AdminStudio\Modules\Login\Login_Text;
+use Adminora\Brand_Kit;
+use Adminora\Fonts;
+use Adminora\Preview;
+use Adminora\Settings;
+use Adminora\Modules\Emails\Templates;
+use Adminora\Modules\Login\Login;
+use Adminora\Modules\Login\Login_Text;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Registers everything under Appearance → Customize → Admin Studio.
+ * Registers everything under Appearance → Customize → Adminora.
  */
 class Customizer {
 
@@ -39,20 +39,20 @@ class Customizer {
 	 */
 	private static function previews() {
 		return array(
-			'adminstudio_brand'              => Preview::url( 'login' ),
-			'adminstudio_login_layout'       => Preview::url( 'login' ),
-			'adminstudio_login_logo'         => Preview::url( 'login' ),
-			'adminstudio_login_form'         => Preview::url( 'login' ),
-			'adminstudio_login_text'         => Preview::url( 'login' ),
-			'adminstudio_login_words'        => Preview::url( 'login' ),
-			'adminstudio_emails'             => Preview::url( 'email', array( 'adminstudio_template' => 'welcome' ) ),
-			'adminstudio_errors_design'      => Preview::url( 'page', array( 'adminstudio_page' => 'critical' ) ),
-			'adminstudio_errors_critical'    => Preview::url( 'page', array( 'adminstudio_page' => 'critical' ) ),
-			'adminstudio_errors_db'          => Preview::url( 'page', array( 'adminstudio_page' => 'db' ) ),
-			'adminstudio_errors_maintenance' => Preview::url( 'page', array( 'adminstudio_page' => 'maintenance' ) ),
-			'adminstudio_errors_wp_die'      => Preview::url( 'page', array( 'adminstudio_page' => 'denied' ) ),
-			'adminstudio_errors_notfound'    => Preview::url( 'page', array( 'adminstudio_page' => 'notfound' ) ),
-			'adminstudio_maintenance'        => Preview::url( 'maintenance' ),
+			'adminora_brand'              => Preview::url( 'login' ),
+			'adminora_login_layout'       => Preview::url( 'login' ),
+			'adminora_login_logo'         => Preview::url( 'login' ),
+			'adminora_login_form'         => Preview::url( 'login' ),
+			'adminora_login_text'         => Preview::url( 'login' ),
+			'adminora_login_words'        => Preview::url( 'login' ),
+			'adminora_emails'             => Preview::url( 'email', array( 'adminora_template' => 'welcome' ) ),
+			'adminora_errors_design'      => Preview::url( 'page', array( 'adminora_page' => 'critical' ) ),
+			'adminora_errors_critical'    => Preview::url( 'page', array( 'adminora_page' => 'critical' ) ),
+			'adminora_errors_db'          => Preview::url( 'page', array( 'adminora_page' => 'db' ) ),
+			'adminora_errors_maintenance' => Preview::url( 'page', array( 'adminora_page' => 'maintenance' ) ),
+			'adminora_errors_wp_die'      => Preview::url( 'page', array( 'adminora_page' => 'denied' ) ),
+			'adminora_errors_notfound'    => Preview::url( 'page', array( 'adminora_page' => 'notfound' ) ),
+			'adminora_maintenance'        => Preview::url( 'maintenance' ),
 		);
 	}
 
@@ -64,13 +64,13 @@ class Customizer {
 	 */
 	public static function register( $wp ) {
 		$wp->add_panel(
-			'adminstudio',
+			'adminora',
 			array(
-				'title'       => __( 'Admin Studio', 'admin-studio' ),
+				'title'       => __( 'Adminora', 'adminora' ),
 				'description' => sprintf(
 					/* translators: %s: settings page URL. */
-					__( 'Design your login page, emails and system pages. Email wording, security and admin branding live on the <a href="%s">settings page</a>.', 'admin-studio' ),
-					esc_url( admin_url( 'options-general.php?page=admin-studio' ) )
+					__( 'Design your login page, emails and system pages. Email wording, security and admin branding live on the <a href="%s">settings page</a>.', 'adminora' ),
+					esc_url( admin_url( 'options-general.php?page=adminora' ) )
 				),
 				'priority'    => 160,
 			)
@@ -82,7 +82,7 @@ class Customizer {
 				array(
 					'title'       => $section['title'],
 					'description' => isset( $section['description'] ) ? $section['description'] : '',
-					'panel'       => 'adminstudio',
+					'panel'       => 'adminora',
 				)
 			);
 
@@ -91,7 +91,7 @@ class Customizer {
 					$wp->add_control(
 						new Preview_Picker_Control(
 							$wp,
-							'adminstudio_' . str_replace( ':', '_', $key ),
+							'adminora_' . str_replace( ':', '_', $key ),
 							array(
 								'section'  => $id,
 								'label'    => $control['label'],
@@ -231,24 +231,24 @@ class Customizer {
 	 * @return array
 	 */
 	private static function sections() {
-		$inherit  = __( 'Leave empty to use the brand kit.', 'admin-studio' );
+		$inherit  = __( 'Leave empty to use the brand kit.', 'adminora' );
 		$detected = Brand_Kit::detected();
 		$custom   = 'custom' === Brand_Kit::source();
 		$theme    = static function ( $key ) use ( $detected, $custom ) {
 			if ( ! $custom ) {
-				return __( 'Used when "Brand colours from" is set to Custom colours.', 'admin-studio' );
+				return __( 'Used when "Brand colours from" is set to Custom colours.', 'adminora' );
 			}
 
 			return '' !== $detected[ $key ]
 				/* translators: %s: colour value detected from the theme. */
-				? sprintf( __( 'Following theme: %s. Pick a colour to override, or clear it to follow the theme again.', 'admin-studio' ), $detected[ $key ] )
-				: __( 'Not set by the theme. Using the built-in default until you pick one.', 'admin-studio' );
+				? sprintf( __( 'Following theme: %s. Pick a colour to override, or clear it to follow the theme again.', 'adminora' ), $detected[ $key ] )
+				: __( 'Not set by the theme. Using the built-in default until you pick one.', 'adminora' );
 		};
 		$px       = array(
 			'input_attrs' => array(
 				'min'         => 0,
 				'max'         => 2000,
-				'placeholder' => __( 'Brand default', 'admin-studio' ),
+				'placeholder' => __( 'Brand default', 'adminora' ),
 			),
 		);
 		$range    = array(
@@ -262,29 +262,29 @@ class Customizer {
 
 		$email_choices = array();
 		foreach ( Templates::all() as $key => $template ) {
-			$email_choices[ Preview::url( 'email', array( 'adminstudio_template' => $key ) ) ] = $template['label'];
+			$email_choices[ Preview::url( 'email', array( 'adminora_template' => $key ) ) ] = $template['label'];
 		}
 
 		$page_choices = array(
-			Preview::url( 'page', array( 'adminstudio_page' => 'critical' ) )    => __( 'Critical error', 'admin-studio' ),
-			Preview::url( 'page', array( 'adminstudio_page' => 'db' ) )          => __( 'Database connection error', 'admin-studio' ),
-			Preview::url( 'page', array( 'adminstudio_page' => 'maintenance' ) ) => __( 'Update maintenance', 'admin-studio' ),
-			Preview::url( 'page', array( 'adminstudio_page' => 'denied' ) )      => __( 'No permission', 'admin-studio' ),
-			Preview::url( 'page', array( 'adminstudio_page' => 'expired' ) )     => __( 'Expired link', 'admin-studio' ),
-			Preview::url( 'page', array( 'adminstudio_page' => 'wp_die' ) )      => __( 'Other notice screens', 'admin-studio' ),
-			Preview::url( 'page', array( 'adminstudio_page' => 'notfound' ) )    => __( 'Page not found (404)', 'admin-studio' ),
+			Preview::url( 'page', array( 'adminora_page' => 'critical' ) )    => __( 'Critical error', 'adminora' ),
+			Preview::url( 'page', array( 'adminora_page' => 'db' ) )          => __( 'Database connection error', 'adminora' ),
+			Preview::url( 'page', array( 'adminora_page' => 'maintenance' ) ) => __( 'Update maintenance', 'adminora' ),
+			Preview::url( 'page', array( 'adminora_page' => 'denied' ) )      => __( 'No permission', 'adminora' ),
+			Preview::url( 'page', array( 'adminora_page' => 'expired' ) )     => __( 'Expired link', 'adminora' ),
+			Preview::url( 'page', array( 'adminora_page' => 'wp_die' ) )      => __( 'Other notice screens', 'adminora' ),
+			Preview::url( 'page', array( 'adminora_page' => 'notfound' ) )    => __( 'Page not found (404)', 'adminora' ),
 		);
 
 		$login_choices = array();
 		foreach ( Login::preview_screens() as $key => $label ) {
-			$login_choices[ Preview::url( 'login', array( 'adminstudio_screen' => $key ) ) ] = $label;
+			$login_choices[ Preview::url( 'login', array( 'adminora_screen' => $key ) ) ] = $label;
 		}
 
 		$link_places = array(
-			'below'    => __( 'Below the form', 'admin-studio' ),
-			'password' => __( 'Next to the Password label', 'admin-studio' ),
-			'button'   => __( 'Above the main button', 'admin-studio' ),
-			'hidden'   => __( 'Hidden', 'admin-studio' ),
+			'below'    => __( 'Below the form', 'adminora' ),
+			'password' => __( 'Next to the Password label', 'adminora' ),
+			'button'   => __( 'Above the main button', 'adminora' ),
+			'hidden'   => __( 'Hidden', 'adminora' ),
 		);
 
 		$words = array();
@@ -293,44 +293,44 @@ class Customizer {
 			$words[ 'login_words.' . $key ] = self::c(
 				$label,
 				/* translators: %s: WordPress's own wording. */
-				sprintf( __( 'WordPress says: "%s"', 'admin-studio' ), $original ),
+				sprintf( __( 'WordPress says: "%s"', 'adminora' ), $original ),
 				array( 'input_attrs' => array( 'placeholder' => $original ) )
 			);
 		}
 
 		return array(
-			'adminstudio_brand'              => array(
-				'title'       => __( 'Brand kit', 'admin-studio' ),
-				'description' => __( 'Set these once. The login page, emails and system pages all use them unless you override a value in that area.', 'admin-studio' ),
+			'adminora_brand'              => array(
+				'title'       => __( 'Brand kit', 'adminora' ),
+				'description' => __( 'Set these once. The login page, emails and system pages all use them unless you override a value in that area.', 'adminora' ),
 				'controls'    => array(
-					'brand.logo'         => self::c( __( 'Logo', 'admin-studio' ), __( 'Defaults to your theme logo, then your site icon.', 'admin-studio' ) ),
-					'brand.logo_width'   => self::c( __( 'Logo width (px)', 'admin-studio' ) ),
+					'brand.logo'         => self::c( __( 'Logo', 'adminora' ), __( 'Defaults to your theme logo, then your site icon.', 'adminora' ) ),
+					'brand.logo_width'   => self::c( __( 'Logo width (px)', 'adminora' ) ),
 					'brand.source'       => self::select(
-						__( 'Brand colours from', 'admin-studio' ),
+						__( 'Brand colours from', 'adminora' ),
 						array(
-							'theme'    => __( 'Theme', 'admin-studio' ),
-							'logo'     => __( 'Logo', 'admin-studio' ),
-							'frontend' => __( 'Front end (what visitors see)', 'admin-studio' ),
-							'custom'   => __( 'Custom colours (below)', 'admin-studio' ),
+							'theme'    => __( 'Theme', 'adminora' ),
+							'logo'     => __( 'Logo', 'adminora' ),
+							'frontend' => __( 'Front end (what visitors see)', 'adminora' ),
+							'custom'   => __( 'Custom colours (below)', 'adminora' ),
 						),
 						sprintf(
 							/* translators: %s: settings page URL. */
-							__( 'To read the front end colours again, use the Brand kit card on the <a href="%s">settings page</a>. Fonts, logo and corners are set here whichever you pick.', 'admin-studio' ),
-							esc_url( admin_url( 'options-general.php?page=admin-studio' ) )
+							__( 'To read the front end colours again, use the Brand kit card on the <a href="%s">settings page</a>. Fonts, logo and corners are set here whichever you pick.', 'adminora' ),
+							esc_url( admin_url( 'options-general.php?page=adminora' ) )
 						)
 					),
-					'brand.primary'      => self::c( __( 'Primary colour', 'admin-studio' ), $theme( 'primary' ) ),
-					'brand.secondary'    => self::c( __( 'Secondary colour', 'admin-studio' ), $theme( 'secondary' ) ),
-					'brand.text'         => self::c( __( 'Text colour', 'admin-studio' ), $theme( 'text' ) ),
-					'brand.background'   => self::c( __( 'Background colour', 'admin-studio' ), $theme( 'background' ) ),
-					'brand.surface'      => self::c( __( 'Surface colour', 'admin-studio' ), __( 'Cards, forms and email bodies.', 'admin-studio' ) ),
-					'brand.border'       => self::c( __( 'Border colour', 'admin-studio' ) ),
-					'brand.success'      => self::c( __( 'Success colour', 'admin-studio' ) ),
-					'brand.error'        => self::c( __( 'Error colour', 'admin-studio' ) ),
-					'brand.font_heading' => self::select( __( 'Heading font', 'admin-studio' ), Fonts::choices(), __( 'Google fonts are downloaded to your site when you publish, so visitors never load them from Google.', 'admin-studio' ) ),
-					'brand.font_body'    => self::select( __( 'Body font', 'admin-studio' ), Fonts::choices() ),
+					'brand.primary'      => self::c( __( 'Primary colour', 'adminora' ), $theme( 'primary' ) ),
+					'brand.secondary'    => self::c( __( 'Secondary colour', 'adminora' ), $theme( 'secondary' ) ),
+					'brand.text'         => self::c( __( 'Text colour', 'adminora' ), $theme( 'text' ) ),
+					'brand.background'   => self::c( __( 'Background colour', 'adminora' ), $theme( 'background' ) ),
+					'brand.surface'      => self::c( __( 'Surface colour', 'adminora' ), __( 'Cards, forms and email bodies.', 'adminora' ) ),
+					'brand.border'       => self::c( __( 'Border colour', 'adminora' ) ),
+					'brand.success'      => self::c( __( 'Success colour', 'adminora' ) ),
+					'brand.error'        => self::c( __( 'Error colour', 'adminora' ) ),
+					'brand.font_heading' => self::select( __( 'Heading font', 'adminora' ), Fonts::choices(), __( 'Google fonts are downloaded to your site when you publish, so visitors never load them from Google.', 'adminora' ) ),
+					'brand.font_body'    => self::select( __( 'Body font', 'adminora' ), Fonts::choices() ),
 					'brand.radius'       => self::c(
-						__( 'Corner radius (px)', 'admin-studio' ),
+						__( 'Corner radius (px)', 'adminora' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -340,49 +340,49 @@ class Customizer {
 						)
 					),
 					'brand.button_style' => self::select(
-						__( 'Button style', 'admin-studio' ),
+						__( 'Button style', 'adminora' ),
 						array(
-							'filled'  => __( 'Filled', 'admin-studio' ),
-							'outline' => __( 'Outline', 'admin-studio' ),
-							'pill'    => __( 'Pill', 'admin-studio' ),
+							'filled'  => __( 'Filled', 'adminora' ),
+							'outline' => __( 'Outline', 'adminora' ),
+							'pill'    => __( 'Pill', 'adminora' ),
 						)
 					),
 				),
 			),
-			'adminstudio_login_layout'       => array(
-				'title'    => __( 'Login: layout and background', 'admin-studio' ),
+			'adminora_login_layout'       => array(
+				'title'    => __( 'Login: layout and background', 'adminora' ),
 				'controls' => array(
 					'login.layout'            => self::select(
-						__( 'Layout', 'admin-studio' ),
+						__( 'Layout', 'adminora' ),
 						array(
-							'centered' => __( 'Centered card', 'admin-studio' ),
-							'split'    => __( 'Split screen', 'admin-studio' ),
-							'fullbg'   => __( 'Full background', 'admin-studio' ),
-							'minimal'  => __( 'Minimal (WordPress default, restyled)', 'admin-studio' ),
+							'centered' => __( 'Centered card', 'adminora' ),
+							'split'    => __( 'Split screen', 'adminora' ),
+							'fullbg'   => __( 'Full background', 'adminora' ),
+							'minimal'  => __( 'Minimal (WordPress default, restyled)', 'adminora' ),
 						)
 					),
 					'login.split_side'        => self::select(
-						__( 'Split screen: image side', 'admin-studio' ),
+						__( 'Split screen: image side', 'adminora' ),
 						array(
-							'left'  => __( 'Left', 'admin-studio' ),
-							'right' => __( 'Right', 'admin-studio' ),
+							'left'  => __( 'Left', 'adminora' ),
+							'right' => __( 'Right', 'adminora' ),
 						)
 					),
-					'login.side_image'        => self::c( __( 'Split screen: image', 'admin-studio' ) ),
+					'login.side_image'        => self::c( __( 'Split screen: image', 'adminora' ) ),
 					'login.bg_type'           => self::select(
-						__( 'Background type', 'admin-studio' ),
+						__( 'Background type', 'adminora' ),
 						array(
-							'color'    => __( 'Colour', 'admin-studio' ),
-							'gradient' => __( 'Gradient', 'admin-studio' ),
-							'image'    => __( 'Image', 'admin-studio' ),
-							'video'    => __( 'Video', 'admin-studio' ),
+							'color'    => __( 'Colour', 'adminora' ),
+							'gradient' => __( 'Gradient', 'adminora' ),
+							'image'    => __( 'Image', 'adminora' ),
+							'video'    => __( 'Video', 'adminora' ),
 						)
 					),
-					'login.bg_color'          => self::c( __( 'Background colour', 'admin-studio' ), $inherit ),
-					'login.bg_gradient_from'  => self::c( __( 'Gradient start', 'admin-studio' ) ),
-					'login.bg_gradient_to'    => self::c( __( 'Gradient end', 'admin-studio' ) ),
+					'login.bg_color'          => self::c( __( 'Background colour', 'adminora' ), $inherit ),
+					'login.bg_gradient_from'  => self::c( __( 'Gradient start', 'adminora' ) ),
+					'login.bg_gradient_to'    => self::c( __( 'Gradient end', 'adminora' ) ),
 					'login.bg_gradient_angle' => self::c(
-						__( 'Gradient angle (degrees)', 'admin-studio' ),
+						__( 'Gradient angle (degrees)', 'adminora' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -391,27 +391,27 @@ class Customizer {
 							),
 						)
 					),
-					'login.bg_image'          => self::c( __( 'Background image', 'admin-studio' ) ),
-					'login.bg_video'          => self::c( __( 'Background video (MP4)', 'admin-studio' ), __( 'Muted and looped. The background colour shows while it loads.', 'admin-studio' ), array( 'control' => 'video' ) ),
-					'login.overlay_color'     => self::c( __( 'Overlay colour', 'admin-studio' ) ),
-					'login.overlay_opacity'   => array_merge( self::c( __( 'Overlay opacity', 'admin-studio' ) ), $range ),
+					'login.bg_image'          => self::c( __( 'Background image', 'adminora' ) ),
+					'login.bg_video'          => self::c( __( 'Background video (MP4)', 'adminora' ), __( 'Muted and looped. The background colour shows while it loads.', 'adminora' ), array( 'control' => 'video' ) ),
+					'login.overlay_color'     => self::c( __( 'Overlay colour', 'adminora' ) ),
+					'login.overlay_opacity'   => array_merge( self::c( __( 'Overlay opacity', 'adminora' ) ), $range ),
 				),
 			),
-			'adminstudio_login_logo'         => array(
-				'title'    => __( 'Login: logo', 'admin-studio' ),
+			'adminora_login_logo'         => array(
+				'title'    => __( 'Login: logo', 'adminora' ),
 				'controls' => array(
-					'login.hide_logo'  => self::c( __( 'Hide the logo', 'admin-studio' ) ),
-					'login.logo'       => self::c( __( 'Logo', 'admin-studio' ), $inherit ),
-					'login.logo_width' => self::c( __( 'Logo width (px)', 'admin-studio' ), '', $px ),
-					'login.logo_url'   => self::c( __( 'Logo link', 'admin-studio' ), __( 'Defaults to your home page.', 'admin-studio' ), array( 'control' => 'url' ) ),
-					'login.logo_title' => self::c( __( 'Logo text for screen readers', 'admin-studio' ), __( 'Defaults to your site title.', 'admin-studio' ) ),
+					'login.hide_logo'  => self::c( __( 'Hide the logo', 'adminora' ) ),
+					'login.logo'       => self::c( __( 'Logo', 'adminora' ), $inherit ),
+					'login.logo_width' => self::c( __( 'Logo width (px)', 'adminora' ), '', $px ),
+					'login.logo_url'   => self::c( __( 'Logo link', 'adminora' ), __( 'Defaults to your home page.', 'adminora' ), array( 'control' => 'url' ) ),
+					'login.logo_title' => self::c( __( 'Logo text for screen readers', 'adminora' ), __( 'Defaults to your site title.', 'adminora' ) ),
 				),
 			),
-			'adminstudio_login_form'         => array(
-				'title'    => __( 'Login: form and button', 'admin-studio' ),
+			'adminora_login_form'         => array(
+				'title'    => __( 'Login: form and button', 'adminora' ),
 				'controls' => array(
 					'login.form_width'    => self::c(
-						__( 'Form width (px)', 'admin-studio' ),
+						__( 'Form width (px)', 'adminora' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -421,7 +421,7 @@ class Customizer {
 						)
 					),
 					'login.form_padding'  => self::c(
-						__( 'Form padding (px)', 'admin-studio' ),
+						__( 'Form padding (px)', 'adminora' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -430,87 +430,87 @@ class Customizer {
 							),
 						)
 					),
-					'login.form_radius'   => self::c( __( 'Form corner radius (px)', 'admin-studio' ), '', $px ),
-					'login.form_bg'       => self::c( __( 'Form background', 'admin-studio' ), $inherit ),
-					'login.form_shadow'   => self::c( __( 'Show a shadow under the form', 'admin-studio' ) ),
+					'login.form_radius'   => self::c( __( 'Form corner radius (px)', 'adminora' ), '', $px ),
+					'login.form_bg'       => self::c( __( 'Form background', 'adminora' ), $inherit ),
+					'login.form_shadow'   => self::c( __( 'Show a shadow under the form', 'adminora' ) ),
 					'login.field_style'   => self::select(
-						__( 'Field style', 'admin-studio' ),
+						__( 'Field style', 'adminora' ),
 						array(
-							'boxed'     => __( 'Boxed', 'admin-studio' ),
-							'underline' => __( 'Underline', 'admin-studio' ),
-							'filled'    => __( 'Filled', 'admin-studio' ),
+							'boxed'     => __( 'Boxed', 'adminora' ),
+							'underline' => __( 'Underline', 'adminora' ),
+							'filled'    => __( 'Filled', 'adminora' ),
 						)
 					),
-					'login.hide_labels'   => self::c( __( 'Hide field labels and use placeholders', 'admin-studio' ) ),
-					'login.text_color'    => self::c( __( 'Text colour', 'admin-studio' ), $inherit ),
-					'login.link_color'    => self::c( __( 'Link colour', 'admin-studio' ), $inherit ),
-					'login.button_bg'     => self::c( __( 'Button colour', 'admin-studio' ), $inherit ),
-					'login.button_text'   => self::c( __( 'Button text colour', 'admin-studio' ), __( 'Leave empty to pick black or white automatically.', 'admin-studio' ) ),
-					'login.button_radius' => self::c( __( 'Button corner radius (px)', 'admin-studio' ), '', $px ),
+					'login.hide_labels'   => self::c( __( 'Hide field labels and use placeholders', 'adminora' ) ),
+					'login.text_color'    => self::c( __( 'Text colour', 'adminora' ), $inherit ),
+					'login.link_color'    => self::c( __( 'Link colour', 'adminora' ), $inherit ),
+					'login.button_bg'     => self::c( __( 'Button colour', 'adminora' ), $inherit ),
+					'login.button_text'   => self::c( __( 'Button text colour', 'adminora' ), __( 'Leave empty to pick black or white automatically.', 'adminora' ) ),
+					'login.button_radius' => self::c( __( 'Button corner radius (px)', 'adminora' ), '', $px ),
 				),
 			),
-			'adminstudio_login_text'         => array(
-				'title'       => __( 'Login: text and links', 'admin-studio' ),
-				'description' => __( 'The "Register" link only appears on your site when anyone can register (Settings → General → Membership).', 'admin-studio' ),
+			'adminora_login_text'         => array(
+				'title'       => __( 'Login: text and links', 'adminora' ),
+				'description' => __( 'The "Register" link only appears on your site when anyone can register (Settings → General → Membership).', 'adminora' ),
 				'controls'    => array(
 					'picker:login'                 => array(
-						'label'   => __( 'Preview screen', 'admin-studio' ),
+						'label'   => __( 'Preview screen', 'adminora' ),
 						'choices' => $login_choices,
 					),
 					'login.links_layout'           => self::select(
-						__( 'Links under the form', 'admin-studio' ),
+						__( 'Links under the form', 'adminora' ),
 						array(
-							'stacked' => __( 'Stacked, one per line (WordPress default)', 'admin-studio' ),
-							'inline'  => __( 'Inline, side by side', 'admin-studio' ),
-							'split'   => __( 'Split, spread across the width', 'admin-studio' ),
-							'card'    => __( 'Inside the card', 'admin-studio' ),
-							'buttons' => __( 'Full-width buttons', 'admin-studio' ),
+							'stacked' => __( 'Stacked, one per line (WordPress default)', 'adminora' ),
+							'inline'  => __( 'Inline, side by side', 'adminora' ),
+							'split'   => __( 'Split, spread across the width', 'adminora' ),
+							'card'    => __( 'Inside the card', 'adminora' ),
+							'buttons' => __( 'Full-width buttons', 'adminora' ),
 						)
 					),
-					'login.link_lost'              => self::select( __( '"Lost your password?"', 'admin-studio' ), $link_places, __( 'Next to the Password label is how most apps place it.', 'admin-studio' ) ),
-					'login.link_register'          => self::select( __( '"Register"', 'admin-studio' ), $link_places ),
-					'login.link_login'             => self::select( __( '"Log in" (on the other screens)', 'admin-studio' ), $link_places ),
-					'login.link_back'              => self::select( __( '"Go to site"', 'admin-studio' ), $link_places ),
-					'login.message'                => self::c( __( 'Message above the form', 'admin-studio' ), __( 'Basic HTML is allowed.', 'admin-studio' ) ),
-					'login.footer_text'            => self::c( __( 'Footer text', 'admin-studio' ) ),
-					'login.hide_language_switcher' => self::c( __( 'Hide the language switcher', 'admin-studio' ) ),
-					'login.hide_privacy_link'      => self::c( __( 'Hide the privacy policy link', 'admin-studio' ) ),
-					'login.back_link_text'         => self::c( __( '"Go to site" link text', 'admin-studio' ), __( 'For example "Back to {site_name}". Leave empty for WordPress\'s "← Go to" text.', 'admin-studio' ) ),
-					'login.error_message'          => self::c( __( 'Message for a failed log in', 'admin-studio' ), __( 'One message for a wrong username, email or password, for example "Those details did not match. Try again." It also stops the screen revealing which usernames exist. Leave empty for WordPress\'s messages.', 'admin-studio' ) ),
+					'login.link_lost'              => self::select( __( '"Lost your password?"', 'adminora' ), $link_places, __( 'Next to the Password label is how most apps place it.', 'adminora' ) ),
+					'login.link_register'          => self::select( __( '"Register"', 'adminora' ), $link_places ),
+					'login.link_login'             => self::select( __( '"Log in" (on the other screens)', 'adminora' ), $link_places ),
+					'login.link_back'              => self::select( __( '"Go to site"', 'adminora' ), $link_places ),
+					'login.message'                => self::c( __( 'Message above the form', 'adminora' ), __( 'Basic HTML is allowed.', 'adminora' ) ),
+					'login.footer_text'            => self::c( __( 'Footer text', 'adminora' ) ),
+					'login.hide_language_switcher' => self::c( __( 'Hide the language switcher', 'adminora' ) ),
+					'login.hide_privacy_link'      => self::c( __( 'Hide the privacy policy link', 'adminora' ) ),
+					'login.back_link_text'         => self::c( __( '"Go to site" link text', 'adminora' ), __( 'For example "Back to {site_name}". Leave empty for WordPress\'s "← Go to" text.', 'adminora' ) ),
+					'login.error_message'          => self::c( __( 'Message for a failed log in', 'adminora' ), __( 'One message for a wrong username, email or password, for example "Those details did not match. Try again." It also stops the screen revealing which usernames exist. Leave empty for WordPress\'s messages.', 'adminora' ) ),
 				),
 			),
-			'adminstudio_login_words'        => array(
-				'title'       => __( 'Login: wording', 'admin-studio' ),
-				'description' => __( 'Replace any text on the log in, lost password, reset password and registration screens. Leave a box empty to keep WordPress\'s wording. You can use {site_name}; in the two messages with a link, use {login_url} for the login address.', 'admin-studio' ),
+			'adminora_login_words'        => array(
+				'title'       => __( 'Login: wording', 'adminora' ),
+				'description' => __( 'Replace any text on the log in, lost password, reset password and registration screens. Leave a box empty to keep WordPress\'s wording. You can use {site_name}; in the two messages with a link, use {login_url} for the login address.', 'adminora' ),
 				'controls'    => $words,
 			),
-			'adminstudio_emails'             => array(
-				'title'       => __( 'Emails: design', 'admin-studio' ),
+			'adminora_emails'             => array(
+				'title'       => __( 'Emails: design', 'adminora' ),
 				'description' => sprintf(
 					/* translators: %s: settings page URL. */
-					__( 'Edit the wording of each email on the <a href="%s">settings page</a>.', 'admin-studio' ),
-					esc_url( admin_url( 'options-general.php?page=admin-studio&tab=emails' ) )
+					__( 'Edit the wording of each email on the <a href="%s">settings page</a>.', 'adminora' ),
+					esc_url( admin_url( 'options-general.php?page=adminora&tab=emails' ) )
 				),
 				'controls'    => array(
 					'picker:email'       => array(
-						'label'   => __( 'Preview email', 'admin-studio' ),
+						'label'   => __( 'Preview email', 'adminora' ),
 						'choices' => $email_choices,
 					),
-					'emails.show_logo'   => self::c( __( 'Show the logo in the header', 'admin-studio' ) ),
-					'emails.logo'        => self::c( __( 'Logo', 'admin-studio' ), $inherit ),
-					'emails.logo_width'  => self::c( __( 'Logo width (px)', 'admin-studio' ), '', $px ),
-					'emails.header_bg'   => self::c( __( 'Header background', 'admin-studio' ), __( 'Leave empty to use the content background.', 'admin-studio' ) ),
-					'emails.header_text' => self::c( __( 'Header text colour', 'admin-studio' ) ),
-					'emails.body_bg'     => self::c( __( 'Outer background', 'admin-studio' ), $inherit ),
-					'emails.content_bg'  => self::c( __( 'Content background', 'admin-studio' ), $inherit ),
-					'emails.text_color'  => self::c( __( 'Text colour', 'admin-studio' ), $inherit ),
-					'emails.button_bg'   => self::c( __( 'Button colour', 'admin-studio' ), $inherit ),
-					'emails.button_text' => self::c( __( 'Button text colour', 'admin-studio' ) ),
+					'emails.show_logo'   => self::c( __( 'Show the logo in the header', 'adminora' ) ),
+					'emails.logo'        => self::c( __( 'Logo', 'adminora' ), $inherit ),
+					'emails.logo_width'  => self::c( __( 'Logo width (px)', 'adminora' ), '', $px ),
+					'emails.header_bg'   => self::c( __( 'Header background', 'adminora' ), __( 'Leave empty to use the content background.', 'adminora' ) ),
+					'emails.header_text' => self::c( __( 'Header text colour', 'adminora' ) ),
+					'emails.body_bg'     => self::c( __( 'Outer background', 'adminora' ), $inherit ),
+					'emails.content_bg'  => self::c( __( 'Content background', 'adminora' ), $inherit ),
+					'emails.text_color'  => self::c( __( 'Text colour', 'adminora' ), $inherit ),
+					'emails.button_bg'   => self::c( __( 'Button colour', 'adminora' ), $inherit ),
+					'emails.button_text' => self::c( __( 'Button text colour', 'adminora' ) ),
 					'emails.font'        => self::select(
-						__( 'Font', 'admin-studio' ),
+						__( 'Font', 'adminora' ),
 						array(
-							'brand'     => __( 'Brand body font (falls back to a safe font in most mail apps)', 'admin-studio' ),
-							'system'    => __( 'System font', 'admin-studio' ),
+							'brand'     => __( 'Brand body font (falls back to a safe font in most mail apps)', 'adminora' ),
+							'system'    => __( 'System font', 'adminora' ),
 							'arial'     => 'Arial',
 							'helvetica' => 'Helvetica',
 							'georgia'   => 'Georgia',
@@ -519,7 +519,7 @@ class Customizer {
 						)
 					),
 					'emails.width'       => self::c(
-						__( 'Content width (px)', 'admin-studio' ),
+						__( 'Content width (px)', 'adminora' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -528,94 +528,94 @@ class Customizer {
 							),
 						)
 					),
-					'emails.radius'      => self::c( __( 'Corner radius (px)', 'admin-studio' ), '', $px ),
-					'emails.footer_text' => self::c( __( 'Footer text', 'admin-studio' ), __( 'Tags: {site_name}, {site_url}, {year}.', 'admin-studio' ) ),
+					'emails.radius'      => self::c( __( 'Corner radius (px)', 'adminora' ), '', $px ),
+					'emails.footer_text' => self::c( __( 'Footer text', 'adminora' ), __( 'Tags: {site_name}, {site_url}, {year}.', 'adminora' ) ),
 				),
 			),
-			'adminstudio_errors_design'      => array(
-				'title'       => __( 'System pages: design', 'admin-studio' ),
-				'description' => __( 'Shared by the critical error, database error, update maintenance, permission and 404 pages.', 'admin-studio' ),
+			'adminora_errors_design'      => array(
+				'title'       => __( 'System pages: design', 'adminora' ),
+				'description' => __( 'Shared by the critical error, database error, update maintenance, permission and 404 pages.', 'adminora' ),
 				'controls'    => array(
 					'picker:page'            => array(
-						'label'   => __( 'Preview page', 'admin-studio' ),
+						'label'   => __( 'Preview page', 'adminora' ),
 						'choices' => $page_choices,
 					),
-					'error_pages.bg_color'   => self::c( __( 'Background colour', 'admin-studio' ), $inherit ),
-					'error_pages.surface'    => self::c( __( 'Card colour', 'admin-studio' ), $inherit ),
-					'error_pages.text_color' => self::c( __( 'Text colour', 'admin-studio' ), $inherit ),
-					'error_pages.primary'    => self::c( __( 'Button colour', 'admin-studio' ), $inherit ),
-					'error_pages.show_logo'  => self::c( __( 'Show the logo', 'admin-studio' ) ),
-					'error_pages.image'      => self::c( __( 'Illustration', 'admin-studio' ), __( 'Optional image shown above the title.', 'admin-studio' ) ),
+					'error_pages.bg_color'   => self::c( __( 'Background colour', 'adminora' ), $inherit ),
+					'error_pages.surface'    => self::c( __( 'Card colour', 'adminora' ), $inherit ),
+					'error_pages.text_color' => self::c( __( 'Text colour', 'adminora' ), $inherit ),
+					'error_pages.primary'    => self::c( __( 'Button colour', 'adminora' ), $inherit ),
+					'error_pages.show_logo'  => self::c( __( 'Show the logo', 'adminora' ) ),
+					'error_pages.image'      => self::c( __( 'Illustration', 'adminora' ), __( 'Optional image shown above the title.', 'adminora' ) ),
 				),
 			),
-			'adminstudio_errors_critical'    => array(
-				'title'    => __( 'System pages: critical error', 'admin-studio' ),
+			'adminora_errors_critical'    => array(
+				'title'    => __( 'System pages: critical error', 'adminora' ),
 				'controls' => array(
-					'error_pages.critical'            => self::c( __( 'Replace the critical error page', 'admin-studio' ), __( 'Shown when a plugin or theme causes a fatal PHP error.', 'admin-studio' ) ),
-					'error_pages.critical_title'      => self::c( __( 'Title', 'admin-studio' ) ),
-					'error_pages.critical_message'    => self::c( __( 'Message', 'admin-studio' ) ),
-					'error_pages.critical_button'     => self::c( __( 'Button text', 'admin-studio' ), __( 'Leave empty to hide the button.', 'admin-studio' ) ),
-					'error_pages.critical_button_url' => self::c( __( 'Button link', 'admin-studio' ), __( 'Defaults to your home page.', 'admin-studio' ), array( 'control' => 'url' ) ),
-					'error_pages.critical_admin_note' => self::c( __( 'Message for administrators', 'admin-studio' ), __( 'Shown under the message only to signed-in administrators, so they know how to recover. Visitors never see it. Use {admin_email} for the site\'s admin email. Leave empty to show nothing extra.', 'admin-studio' ), array( 'control' => 'textarea' ) ),
+					'error_pages.critical'            => self::c( __( 'Replace the critical error page', 'adminora' ), __( 'Shown when a plugin or theme causes a fatal PHP error.', 'adminora' ) ),
+					'error_pages.critical_title'      => self::c( __( 'Title', 'adminora' ) ),
+					'error_pages.critical_message'    => self::c( __( 'Message', 'adminora' ) ),
+					'error_pages.critical_button'     => self::c( __( 'Button text', 'adminora' ), __( 'Leave empty to hide the button.', 'adminora' ) ),
+					'error_pages.critical_button_url' => self::c( __( 'Button link', 'adminora' ), __( 'Defaults to your home page.', 'adminora' ), array( 'control' => 'url' ) ),
+					'error_pages.critical_admin_note' => self::c( __( 'Message for administrators', 'adminora' ), __( 'Shown under the message only to signed-in administrators, so they know how to recover. Visitors never see it. Use {admin_email} for the site\'s admin email. Leave empty to show nothing extra.', 'adminora' ), array( 'control' => 'textarea' ) ),
 				),
 			),
-			'adminstudio_errors_db'          => array(
-				'title'    => __( 'System pages: database error', 'admin-studio' ),
+			'adminora_errors_db'          => array(
+				'title'    => __( 'System pages: database error', 'adminora' ),
 				'controls' => array(
-					'error_pages.db'         => self::c( __( 'Replace the database connection error page', 'admin-studio' ), __( 'Saved as a static file, because the database is unavailable when this page shows.', 'admin-studio' ) ),
-					'error_pages.db_title'   => self::c( __( 'Title', 'admin-studio' ) ),
-					'error_pages.db_message' => self::c( __( 'Message', 'admin-studio' ) ),
+					'error_pages.db'         => self::c( __( 'Replace the database connection error page', 'adminora' ), __( 'Saved as a static file, because the database is unavailable when this page shows.', 'adminora' ) ),
+					'error_pages.db_title'   => self::c( __( 'Title', 'adminora' ) ),
+					'error_pages.db_message' => self::c( __( 'Message', 'adminora' ) ),
 				),
 			),
-			'adminstudio_errors_maintenance' => array(
-				'title'    => __( 'System pages: update maintenance', 'admin-studio' ),
+			'adminora_errors_maintenance' => array(
+				'title'    => __( 'System pages: update maintenance', 'adminora' ),
 				'controls' => array(
-					'error_pages.maintenance'         => self::c( __( 'Replace the "Briefly unavailable" screen', 'admin-studio' ), __( 'Shown for a few seconds while WordPress installs updates.', 'admin-studio' ) ),
-					'error_pages.maintenance_title'   => self::c( __( 'Title', 'admin-studio' ) ),
-					'error_pages.maintenance_message' => self::c( __( 'Message', 'admin-studio' ) ),
+					'error_pages.maintenance'         => self::c( __( 'Replace the "Briefly unavailable" screen', 'adminora' ), __( 'Shown for a few seconds while WordPress installs updates.', 'adminora' ) ),
+					'error_pages.maintenance_title'   => self::c( __( 'Title', 'adminora' ) ),
+					'error_pages.maintenance_message' => self::c( __( 'Message', 'adminora' ) ),
 				),
 			),
-			'adminstudio_errors_wp_die'      => array(
-				'title'    => __( 'System pages: no permission and notices', 'admin-studio' ),
+			'adminora_errors_wp_die'      => array(
+				'title'    => __( 'System pages: no permission and notices', 'adminora' ),
 				'controls' => array(
-					'error_pages.wp_die'            => self::c( __( 'Restyle WordPress notice screens', 'admin-studio' ), __( 'Every screen WordPress shows with a short message and a back link gets your design.', 'admin-studio' ) ),
-					'error_pages.denied'            => self::c( __( 'Use my own "no permission" page', 'admin-studio' ), __( 'Replaces "Sorry, you are not allowed to access this page." and similar messages with the text below.', 'admin-studio' ) ),
-					'error_pages.denied_title'      => self::c( __( 'No permission: title', 'admin-studio' ) ),
-					'error_pages.denied_message'    => self::c( __( 'No permission: message', 'admin-studio' ), __( 'Leave empty to show WordPress\'s own message.', 'admin-studio' ) ),
-					'error_pages.denied_button'     => self::c( __( 'No permission: button text', 'admin-studio' ), __( 'Leave empty to hide the button.', 'admin-studio' ) ),
-					'error_pages.denied_button_url' => self::c( __( 'No permission: button link', 'admin-studio' ), __( 'Defaults to the dashboard for people who can use it, otherwise the home page.', 'admin-studio' ), array( 'control' => 'url' ) ),
-					'error_pages.expired_title'     => self::c( __( 'Expired link: title', 'admin-studio' ), __( 'Shown instead of "The link you followed has expired."', 'admin-studio' ) ),
-					'error_pages.expired_message'   => self::c( __( 'Expired link: message', 'admin-studio' ) ),
-					'error_pages.wp_die_title'      => self::c( __( 'Other screens: fallback title', 'admin-studio' ), __( 'Used when WordPress does not give the screen a title.', 'admin-studio' ) ),
-					'error_pages.wp_die_button'     => self::c( __( 'Other screens: back button text', 'admin-studio' ) ),
+					'error_pages.wp_die'            => self::c( __( 'Restyle WordPress notice screens', 'adminora' ), __( 'Every screen WordPress shows with a short message and a back link gets your design.', 'adminora' ) ),
+					'error_pages.denied'            => self::c( __( 'Use my own "no permission" page', 'adminora' ), __( 'Replaces "Sorry, you are not allowed to access this page." and similar messages with the text below.', 'adminora' ) ),
+					'error_pages.denied_title'      => self::c( __( 'No permission: title', 'adminora' ) ),
+					'error_pages.denied_message'    => self::c( __( 'No permission: message', 'adminora' ), __( 'Leave empty to show WordPress\'s own message.', 'adminora' ) ),
+					'error_pages.denied_button'     => self::c( __( 'No permission: button text', 'adminora' ), __( 'Leave empty to hide the button.', 'adminora' ) ),
+					'error_pages.denied_button_url' => self::c( __( 'No permission: button link', 'adminora' ), __( 'Defaults to the dashboard for people who can use it, otherwise the home page.', 'adminora' ), array( 'control' => 'url' ) ),
+					'error_pages.expired_title'     => self::c( __( 'Expired link: title', 'adminora' ), __( 'Shown instead of "The link you followed has expired."', 'adminora' ) ),
+					'error_pages.expired_message'   => self::c( __( 'Expired link: message', 'adminora' ) ),
+					'error_pages.wp_die_title'      => self::c( __( 'Other screens: fallback title', 'adminora' ), __( 'Used when WordPress does not give the screen a title.', 'adminora' ) ),
+					'error_pages.wp_die_button'     => self::c( __( 'Other screens: back button text', 'adminora' ) ),
 				),
 			),
-			'adminstudio_errors_notfound'    => array(
-				'title'    => __( 'System pages: page not found (404)', 'admin-studio' ),
+			'adminora_errors_notfound'    => array(
+				'title'    => __( 'System pages: page not found (404)', 'adminora' ),
 				'controls' => array(
-					'error_pages.notfound'         => self::c( __( 'Replace the theme 404 page', 'admin-studio' ), __( 'Off by default, so your theme keeps its own 404 page.', 'admin-studio' ) ),
-					'error_pages.notfound_title'   => self::c( __( 'Title', 'admin-studio' ) ),
-					'error_pages.notfound_message' => self::c( __( 'Message', 'admin-studio' ) ),
-					'error_pages.notfound_button'  => self::c( __( 'Button text', 'admin-studio' ) ),
-					'error_pages.notfound_search'  => self::c( __( 'Show a search box', 'admin-studio' ) ),
+					'error_pages.notfound'         => self::c( __( 'Replace the theme 404 page', 'adminora' ), __( 'Off by default, so your theme keeps its own 404 page.', 'adminora' ) ),
+					'error_pages.notfound_title'   => self::c( __( 'Title', 'adminora' ) ),
+					'error_pages.notfound_message' => self::c( __( 'Message', 'adminora' ) ),
+					'error_pages.notfound_button'  => self::c( __( 'Button text', 'adminora' ) ),
+					'error_pages.notfound_search'  => self::c( __( 'Show a search box', 'adminora' ) ),
 				),
 			),
-			'adminstudio_maintenance'        => array(
-				'title'       => __( 'Coming soon page', 'admin-studio' ),
+			'adminora_maintenance'        => array(
+				'title'       => __( 'Coming soon page', 'adminora' ),
 				'description' => sprintf(
 					/* translators: %s: settings page URL. */
-					__( 'Turn the mode on and choose who can see the site on the <a href="%s">settings page</a>. This design is not used when the settings page is set to show a page you built.', 'admin-studio' ),
-					esc_url( admin_url( 'options-general.php?page=admin-studio&tab=maintenance' ) )
+					__( 'Turn the mode on and choose who can see the site on the <a href="%s">settings page</a>. This design is not used when the settings page is set to show a page you built.', 'adminora' ),
+					esc_url( admin_url( 'options-general.php?page=adminora&tab=maintenance' ) )
 				),
 				'controls'    => array(
-					'maintenance.headline'        => self::c( __( 'Headline', 'admin-studio' ) ),
-					'maintenance.message'         => self::c( __( 'Message', 'admin-studio' ) ),
-					'maintenance.countdown'       => self::c( __( 'Countdown to', 'admin-studio' ), __( 'Leave empty to hide the countdown. Uses your site time zone.', 'admin-studio' ) ),
-					'maintenance.show_logo'       => self::c( __( 'Show the logo', 'admin-studio' ) ),
-					'maintenance.bg_color'        => self::c( __( 'Background colour', 'admin-studio' ), $inherit ),
-					'maintenance.bg_image'        => self::c( __( 'Background image', 'admin-studio' ) ),
-					'maintenance.overlay_opacity' => array_merge( self::c( __( 'Image darkening', 'admin-studio' ) ), $range ),
-					'maintenance.text_color'      => self::c( __( 'Text colour', 'admin-studio' ), __( 'Leave empty to pick a readable colour automatically.', 'admin-studio' ) ),
+					'maintenance.headline'        => self::c( __( 'Headline', 'adminora' ) ),
+					'maintenance.message'         => self::c( __( 'Message', 'adminora' ) ),
+					'maintenance.countdown'       => self::c( __( 'Countdown to', 'adminora' ), __( 'Leave empty to hide the countdown. Uses your site time zone.', 'adminora' ) ),
+					'maintenance.show_logo'       => self::c( __( 'Show the logo', 'adminora' ) ),
+					'maintenance.bg_color'        => self::c( __( 'Background colour', 'adminora' ), $inherit ),
+					'maintenance.bg_image'        => self::c( __( 'Background image', 'adminora' ) ),
+					'maintenance.overlay_opacity' => array_merge( self::c( __( 'Image darkening', 'adminora' ) ), $range ),
+					'maintenance.text_color'      => self::c( __( 'Text colour', 'adminora' ), __( 'Leave empty to pick a readable colour automatically.', 'adminora' ) ),
 				),
 			),
 		);
@@ -627,13 +627,13 @@ class Customizer {
 	 * @return void
 	 */
 	public static function enqueue() {
-		wp_enqueue_script( 'adminstudio-customizer', ADMINSTUDIO_URL . 'assets/js/customizer-controls.js', array( 'customize-controls', 'jquery' ), \AdminStudio\Plugin::asset_version( 'assets/js/customizer-controls.js' ), true );
+		wp_enqueue_script( 'adminora-customizer', ADMINORA_URL . 'assets/js/customizer-controls.js', array( 'customize-controls', 'jquery' ), \Adminora\Plugin::asset_version( 'assets/js/customizer-controls.js' ), true );
 
 		$brand = Brand_Kit::get();
 
 		wp_localize_script(
-			'adminstudio-customizer',
-			'adminstudioCustomizer',
+			'adminora-customizer',
+			'adminoraCustomizer',
 			array(
 				'previews' => self::previews(),
 				'contrast' => array(
@@ -668,7 +668,7 @@ class Customizer {
 				),
 				'i18n'     => array(
 					/* translators: %s: contrast ratio such as 3.2. */
-					'lowContrast' => __( 'Low contrast (%s:1). Text may be hard to read. Aim for at least 4.5:1.', 'admin-studio' ),
+					'lowContrast' => __( 'Low contrast (%s:1). Text may be hard to read. Aim for at least 4.5:1.', 'adminora' ),
 				),
 			)
 		);

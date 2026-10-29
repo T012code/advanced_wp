@@ -2,10 +2,10 @@
 /**
  * A select box that switches the Customizer preview between pages.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Customizer;
+namespace Adminora\Customizer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,7 +19,7 @@ class Preview_Picker_Control extends \WP_Customize_Control {
 	 *
 	 * @var string
 	 */
-	public $type = 'adminstudio_picker';
+	public $type = 'adminora_picker';
 
 	/**
 	 * Renders the select box.
@@ -27,10 +27,10 @@ class Preview_Picker_Control extends \WP_Customize_Control {
 	 * @return void
 	 */
 	protected function render_content() {
-		$id = 'adminstudio-picker-' . $this->id;
+		$id = 'adminora-picker-' . $this->id;
 		?>
 		<label for="<?php echo esc_attr( $id ); ?>" class="customize-control-title"><?php echo esc_html( $this->label ); ?></label>
-		<select id="<?php echo esc_attr( $id ); ?>" data-adminstudio-picker>
+		<select id="<?php echo esc_attr( $id ); ?>" data-adminora-picker>
 			<?php foreach ( $this->choices as $url => $label ) : ?>
 				<option value="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $label ); ?></option>
 			<?php endforeach; ?>

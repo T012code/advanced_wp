@@ -2,10 +2,10 @@
 /**
  * Reads the browser, operating system and device type from a user agent.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Sessions;
+namespace Adminora\Modules\Sessions;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,15 +31,15 @@ class Device {
 		if ( 'app' === $type ) {
 			$label = sprintf(
 				/* translators: %s: operating system. */
-				__( 'WordPress app on %s', 'admin-studio' ),
+				__( 'WordPress app on %s', 'adminora' ),
 				$os
 			);
 		} elseif ( '' === $ua ) {
-			$label = __( 'Unknown device', 'admin-studio' );
+			$label = __( 'Unknown device', 'adminora' );
 		} else {
 			$label = sprintf(
 				/* translators: 1: browser, 2: operating system. */
-				__( '%1$s on %2$s', 'admin-studio' ),
+				__( '%1$s on %2$s', 'adminora' ),
 				$browser,
 				$os
 			);
@@ -61,11 +61,11 @@ class Device {
 	 */
 	public static function type_label( $type ) {
 		$labels = array(
-			'desktop' => __( 'Computer', 'admin-studio' ),
-			'phone'   => __( 'Phone', 'admin-studio' ),
-			'tablet'  => __( 'Tablet', 'admin-studio' ),
-			'app'     => __( 'Mobile app', 'admin-studio' ),
-			'other'   => __( 'Other', 'admin-studio' ),
+			'desktop' => __( 'Computer', 'adminora' ),
+			'phone'   => __( 'Phone', 'adminora' ),
+			'tablet'  => __( 'Tablet', 'adminora' ),
+			'app'     => __( 'Mobile app', 'adminora' ),
+			'other'   => __( 'Other', 'adminora' ),
 		);
 
 		return isset( $labels[ $type ] ) ? $labels[ $type ] : $labels['other'];
@@ -119,7 +119,7 @@ class Device {
 			}
 		}
 
-		return __( 'Unknown browser', 'admin-studio' );
+		return __( 'Unknown browser', 'adminora' );
 	}
 
 	/**
@@ -155,6 +155,6 @@ class Device {
 			}
 		}
 
-		return __( 'an unknown system', 'admin-studio' );
+		return __( 'an unknown system', 'adminora' );
 	}
 }

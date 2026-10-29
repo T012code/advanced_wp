@@ -2,13 +2,13 @@
 /**
  * Browser tab titles, favicon, theme colour and WordPress traces.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Tab_Meta;
+namespace Adminora\Modules\Tab_Meta;
 
-use AdminStudio\Brand_Kit;
-use AdminStudio\Settings;
+use Adminora\Brand_Kit;
+use Adminora\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -220,7 +220,7 @@ class Tab_Meta {
 				}
 			);
 
-			wp_safe_redirect( esc_url_raw( $icon ), 302, 'Admin Studio' );
+			wp_safe_redirect( esc_url_raw( $icon ), 302, 'Adminora' );
 			exit;
 		}
 
@@ -241,7 +241,7 @@ class Tab_Meta {
 
 		status_header( 403 );
 		header( 'Content-Type: text/plain; charset=utf-8' );
-		echo esc_html__( 'XML-RPC is turned off on this site.', 'admin-studio' );
+		echo esc_html__( 'XML-RPC is turned off on this site.', 'adminora' );
 		exit;
 	}
 

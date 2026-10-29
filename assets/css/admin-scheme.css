@@ -1,7 +1,7 @@
 /**
- * Admin Studio brand admin colour scheme.
+ * Adminora brand admin colour scheme.
  *
- * Colours come from --adminstudio-admin-* variables printed inline from the brand kit.
+ * Colours come from --adminora-admin-* variables printed inline from the brand kit.
  */
 
 /* Links and focus. */
@@ -10,14 +10,14 @@ a,
 #media-upload a.delete,
 .color-option.selected,
 .wp-core-ui .button-link {
-	color: var(--adminstudio-admin-link);
+	color: var(--adminora-admin-link);
 }
 
 a:hover,
 a:active,
 a:focus,
 .wp-core-ui .button-link:hover {
-	color: var(--adminstudio-admin-accent-dark);
+	color: var(--adminora-admin-accent-dark);
 }
 
 input[type="checkbox"]:checked::before {
@@ -25,7 +25,7 @@ input[type="checkbox"]:checked::before {
 }
 
 input[type="radio"]:checked::before {
-	background: var(--adminstudio-admin-accent);
+	background: var(--adminora-admin-accent);
 }
 
 input[type="text"]:focus,
@@ -38,74 +38,74 @@ input[type="checkbox"]:focus,
 input[type="radio"]:focus,
 select:focus,
 textarea:focus {
-	border-color: var(--adminstudio-admin-accent);
-	box-shadow: 0 0 0 1px var(--adminstudio-admin-accent);
+	border-color: var(--adminora-admin-accent);
+	box-shadow: 0 0 0 1px var(--adminora-admin-accent);
 }
 
 /* Buttons. */
 .wp-core-ui .button-primary {
-	background: var(--adminstudio-admin-accent);
-	border-color: var(--adminstudio-admin-accent);
-	color: var(--adminstudio-admin-on-accent);
+	background: var(--adminora-admin-accent);
+	border-color: var(--adminora-admin-accent);
+	color: var(--adminora-admin-on-accent);
 }
 
 .wp-core-ui .button-primary:hover,
 .wp-core-ui .button-primary:focus {
-	background: var(--adminstudio-admin-accent-dark);
-	border-color: var(--adminstudio-admin-accent-dark);
-	color: var(--adminstudio-admin-on-accent);
+	background: var(--adminora-admin-accent-dark);
+	border-color: var(--adminora-admin-accent-dark);
+	color: var(--adminora-admin-on-accent);
 }
 
 .wp-core-ui .button-primary:focus {
-	box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--adminstudio-admin-accent);
+	box-shadow: 0 0 0 1px #fff, 0 0 0 3px var(--adminora-admin-accent);
 }
 
 .wp-core-ui .button:not(.button-primary):not(.button-link):not(.button-link-delete) {
-	color: var(--adminstudio-admin-link);
-	border-color: var(--adminstudio-admin-link);
+	color: var(--adminora-admin-link);
+	border-color: var(--adminora-admin-link);
 }
 
 .wp-core-ui .button:not(.button-primary):not(.button-link):not(.button-link-delete):hover,
 .wp-core-ui .button:not(.button-primary):not(.button-link):not(.button-link-delete):focus {
-	color: var(--adminstudio-admin-accent-dark);
-	border-color: var(--adminstudio-admin-accent-dark);
+	color: var(--adminora-admin-accent-dark);
+	border-color: var(--adminora-admin-accent-dark);
 }
 
 .wp-core-ui .button-primary[disabled],
 .wp-core-ui .button-primary:disabled {
-	color: var(--adminstudio-admin-menu-muted) !important;
-	background: var(--adminstudio-admin-menu-hover) !important;
-	border-color: var(--adminstudio-admin-menu-hover) !important;
+	color: var(--adminora-admin-menu-muted) !important;
+	background: var(--adminora-admin-menu-hover) !important;
+	border-color: var(--adminora-admin-menu-hover) !important;
 }
 
 /* Admin menu. */
 #adminmenuback,
 #adminmenuwrap,
 #adminmenu {
-	background: var(--adminstudio-admin-menu-bg);
+	background: var(--adminora-admin-menu-bg);
 }
 
 #adminmenu a,
 #adminmenu div.wp-menu-image::before,
 #collapse-button {
-	color: var(--adminstudio-admin-menu-text);
+	color: var(--adminora-admin-menu-text);
 }
 
 #adminmenu div.wp-menu-image::before {
-	color: var(--adminstudio-admin-menu-muted);
+	color: var(--adminora-admin-menu-muted);
 }
 
 #adminmenu a:hover,
 #adminmenu li.menu-top:hover,
 #adminmenu li.opensub > a.menu-top,
 #adminmenu li > a.menu-top:focus {
-	color: var(--adminstudio-admin-menu-text);
-	background-color: var(--adminstudio-admin-menu-hover);
+	color: var(--adminora-admin-menu-text);
+	background-color: var(--adminora-admin-menu-hover);
 }
 
 #adminmenu li.menu-top:hover div.wp-menu-image::before,
 #adminmenu li.opensub > a.menu-top div.wp-menu-image::before {
-	color: var(--adminstudio-admin-menu-text);
+	color: var(--adminora-admin-menu-text);
 }
 
 #adminmenu .wp-submenu,
@@ -113,74 +113,74 @@ textarea:focus {
 #adminmenu .wp-has-current-submenu.opensub .wp-submenu,
 .folded #adminmenu .wp-has-current-submenu .wp-submenu,
 #adminmenu a.wp-has-current-submenu:focus + .wp-submenu {
-	background: var(--adminstudio-admin-menu-sub-bg);
+	background: var(--adminora-admin-menu-sub-bg);
 }
 
 #adminmenu .wp-submenu a {
-	color: var(--adminstudio-admin-menu-muted);
+	color: var(--adminora-admin-menu-muted);
 }
 
 #adminmenu .wp-submenu a:focus,
 #adminmenu .wp-submenu a:hover,
 #adminmenu .wp-submenu li.current a,
 #adminmenu .wp-submenu li.current a:hover {
-	color: var(--adminstudio-admin-menu-text);
+	color: var(--adminora-admin-menu-text);
 }
 
 #adminmenu li.wp-has-submenu.wp-not-current-submenu.opensub:hover::after,
 #adminmenu li.wp-has-submenu.wp-not-current-submenu:focus-within::after {
-	border-right-color: var(--adminstudio-admin-menu-sub-bg);
+	border-right-color: var(--adminora-admin-menu-sub-bg);
 }
 
 #adminmenu li.current a.menu-top,
 #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu,
 #adminmenu li.wp-has-current-submenu .wp-submenu .wp-submenu-head,
 .folded #adminmenu li.current.menu-top {
-	color: var(--adminstudio-admin-on-current);
-	background: var(--adminstudio-admin-current);
+	color: var(--adminora-admin-on-current);
+	background: var(--adminora-admin-current);
 }
 
 #adminmenu li.wp-has-current-submenu div.wp-menu-image::before,
 #adminmenu a.current:hover div.wp-menu-image::before,
 #adminmenu li.current div.wp-menu-image::before {
-	color: var(--adminstudio-admin-on-current);
+	color: var(--adminora-admin-on-current);
 }
 
 #adminmenu .awaiting-mod,
 #adminmenu .update-plugins {
 	color: #fff;
-	background: var(--adminstudio-admin-notification);
+	background: var(--adminora-admin-notification);
 }
 
 #collapse-button:hover,
 #collapse-button:focus {
-	color: var(--adminstudio-admin-menu-text);
+	color: var(--adminora-admin-menu-text);
 }
 
 /* Small details. */
 .wrap .page-title-action,
 .wrap .page-title-action:active {
-	color: var(--adminstudio-admin-link);
-	border-color: var(--adminstudio-admin-link);
+	color: var(--adminora-admin-link);
+	border-color: var(--adminora-admin-link);
 }
 
 .view-switch a.current::before,
 .nav-tab-active,
 .nav-tab-active:hover,
 .nav-tab-active:focus {
-	color: var(--adminstudio-admin-link);
+	color: var(--adminora-admin-link);
 }
 
 .wp-pointer .wp-pointer-content h3 {
-	background-color: var(--adminstudio-admin-accent);
-	border-color: var(--adminstudio-admin-accent-dark);
+	background-color: var(--adminora-admin-accent);
+	border-color: var(--adminora-admin-accent-dark);
 }
 
 .wp-pointer .wp-pointer-content h3::before {
-	color: var(--adminstudio-admin-accent);
+	color: var(--adminora-admin-accent);
 }
 
 #customize-controls .control-section .accordion-section-title:focus,
 #customize-controls .control-section .accordion-section-title:hover {
-	color: var(--adminstudio-admin-link);
+	color: var(--adminora-admin-link);
 }

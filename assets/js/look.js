@@ -1,5 +1,5 @@
 /**
- * Admin Studio templates: section headings, icons, the sidebar footer, the
+ * Adminora templates: section headings, icons, the sidebar footer, the
  * colour mode switch and the dashboard greeting.
  */
 ( function ( data ) {
@@ -41,7 +41,7 @@
 				return;
 			}
 
-			var heading = el( 'li', 'adminstudio-menu-heading', section.label );
+			var heading = el( 'li', 'adminora-menu-heading', section.label );
 			heading.setAttribute( 'aria-hidden', 'true' );
 			first.parentNode.insertBefore( heading, first );
 		} );
@@ -58,7 +58,7 @@
 				return;
 			}
 
-			image.className = image.className.replace( /\bdashicons-[\w-]+/g, '' ).replace( /\bsvg\b/, '' ) + ' adminstudio-icon';
+			image.className = image.className.replace( /\bdashicons-[\w-]+/g, '' ).replace( /\bsvg\b/, '' ) + ' adminora-icon';
 			image.removeAttribute( 'style' );
 			image.innerHTML = data.icons[ id ];
 		} );
@@ -66,10 +66,10 @@
 
 	function setMode( mode ) {
 		modes.forEach( function ( name ) {
-			body.classList.remove( 'adminstudio-mode-' + name );
+			body.classList.remove( 'adminora-mode-' + name );
 		} );
-		body.classList.add( 'adminstudio-mode-' + mode );
-		body.classList.toggle( 'adminstudio-dark', 'dark' === mode );
+		body.classList.add( 'adminora-mode-' + mode );
+		body.classList.toggle( 'adminora-dark', 'dark' === mode );
 		data.mode = mode;
 	}
 
@@ -84,7 +84,7 @@
 	function saveMode( mode ) {
 		var form = new window.FormData();
 
-		form.append( 'action', 'adminstudio_look_mode' );
+		form.append( 'action', 'adminora_look_mode' );
 		form.append( 'nonce', data.nonce );
 		form.append( 'mode', mode );
 
@@ -111,10 +111,10 @@
 			return;
 		}
 
-		var box = el( 'div', 'adminstudio-foot' ),
-			user = el( 'a', 'adminstudio-foot__user' ),
+		var box = el( 'div', 'adminora-foot' ),
+			user = el( 'a', 'adminora-foot__user' ),
 			names = el( 'span' ),
-			mode = el( 'button', 'adminstudio-foot__mode' );
+			mode = el( 'button', 'adminora-foot__mode' );
 
 		user.href = foot.profile;
 
@@ -142,9 +142,9 @@
 		} );
 
 		box.appendChild( user );
-		box.appendChild( link( 'adminstudio-foot__link', foot.site, foot.iconSite, data.i18n.viewSite ) );
+		box.appendChild( link( 'adminora-foot__link', foot.site, foot.iconSite, data.i18n.viewSite ) );
 		box.appendChild( mode );
-		box.appendChild( link( 'adminstudio-foot__link', foot.logout, foot.iconOut, data.i18n.signOut ) );
+		box.appendChild( link( 'adminora-foot__link', foot.logout, foot.iconOut, data.i18n.signOut ) );
 
 		wrap.appendChild( box );
 	}
@@ -161,7 +161,7 @@
 			return;
 		}
 
-		var box = el( 'div', 'adminstudio-greeting' );
+		var box = el( 'div', 'adminora-greeting' );
 
 		box.appendChild( el( 'h1', '', data.greeting.title ) );
 		box.appendChild( el( 'p', '', data.greeting.date ) );
@@ -176,7 +176,7 @@
 
 		addFooter();
 		addGreeting();
-		body.classList.add( 'adminstudio-ready' );
+		body.classList.add( 'adminora-ready' );
 	}
 
 	if ( 'loading' === document.readyState ) {
@@ -184,4 +184,4 @@
 	} else {
 		run();
 	}
-} )( window.adminstudioLook );
+} )( window.adminoraLook );

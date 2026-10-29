@@ -1,11 +1,11 @@
-# Admin Studio — project rules
+# Adminora — project rules
 
 These rules apply to every change in this repository, and to all of Láyò's projects.
 
 ## Design
 
 - **Never use a thick border on one side only.** No `border-left`, `border-right`, `border-top` or `border-bottom` stripes on notices, messages, cards, quotes, menu items or anything else, and no `border-inline-start` equivalents. Use an even border on all sides, a background tint, or both. This includes overriding WordPress core styles that add a side stripe (for example `.notice` and `.message`) wherever this plugin renders them.
-- Colours come from the brand kit (`--adminstudio-*` custom properties). Do not hardcode colours in front-end styles.
+- Colours come from the brand kit (`--adminora-*` custom properties). Do not hardcode colours in front-end styles.
 - Animate only `transform` and `opacity`. Respect `prefers-reduced-motion`.
 - Every interactive element needs visible `:focus-visible` styling.
 
@@ -42,5 +42,5 @@ The plugin must always pass the WordPress.org review rules (https://wordpress.or
 
 ## Documentation
 
-- `docs/admin-studio-documentation.pdf` is the user documentation, built from `docs/documentation.html`.
+- `docs/adminora-documentation.pdf` is the user documentation, built from `docs/documentation.html`.
 - Update the documentation in the same change as any feature or behaviour change, and rebuild the PDF. It must always match the code.

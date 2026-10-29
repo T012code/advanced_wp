@@ -5,7 +5,7 @@
  * The page fills the whole screen without the theme's header and footer.
  * Page builders such as Elementor print their content through the_content().
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php wp_head(); ?>
 </head>
-<body <?php body_class( 'adminstudio-holding-page' ); ?>>
+<body <?php body_class( 'adminora-holding-page' ); ?>>
 <?php
 wp_body_open();
 

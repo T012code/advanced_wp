@@ -1,5 +1,5 @@
 /**
- * Admin Studio login helpers: placeholders when labels are hidden, a paused
+ * Adminora login helpers: placeholders when labels are hidden, a paused
  * background video for visitors who prefer reduced motion, and the layout of
  * the links under the form.
  */
@@ -8,7 +8,7 @@
 
 	var body = document.body;
 
-	if ( body.classList.contains( 'adminstudio-nolabels' ) ) {
+	if ( body.classList.contains( 'adminora-nolabels' ) ) {
 		document.querySelectorAll( '#login form label[for]' ).forEach( function ( label ) {
 			var input = document.getElementById( label.getAttribute( 'for' ) );
 
@@ -18,14 +18,14 @@
 		} );
 	}
 
-	var video = document.querySelector( '.adminstudio-bg-video' );
+	var video = document.querySelector( '.adminora-bg-video' );
 
 	if ( video && window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
 		video.removeAttribute( 'autoplay' );
 		video.pause();
 	}
 
-	arrangeLinks( window.adminstudioLogin );
+	arrangeLinks( window.adminoraLogin );
 
 	/**
 	 * Moves the links WordPress prints under the form into the chosen layout
@@ -70,7 +70,7 @@
 			below = document.createElement( 'nav' ),
 			aboveButton = null;
 
-		below.className = 'adminstudio-links adminstudio-links--' + config.layout;
+		below.className = 'adminora-links adminora-links--' + config.layout;
 		below.setAttribute( 'aria-label', config.label );
 
 		links.forEach( function ( link ) {
@@ -83,7 +83,7 @@
 
 			if ( 'password' === place && passLabel ) {
 				var row = document.createElement( 'div' );
-				row.className = 'adminstudio-label-row';
+				row.className = 'adminora-label-row';
 				passLabel.parentNode.insertBefore( row, passLabel );
 				row.appendChild( passLabel );
 				row.appendChild( link.el );
@@ -94,7 +94,7 @@
 			if ( 'button' === place && submit ) {
 				if ( ! aboveButton ) {
 					aboveButton = document.createElement( 'p' );
-					aboveButton.className = 'adminstudio-links adminstudio-links--button';
+					aboveButton.className = 'adminora-links adminora-links--button';
 					submit.parentNode.insertBefore( aboveButton, submit );
 				}
 				aboveButton.appendChild( wrap( link.el ) );
@@ -133,11 +133,11 @@
 	function markLineStarts( container ) {
 		var top = null;
 
-		container.querySelectorAll( '.adminstudio-links__item' ).forEach( function ( item ) {
+		container.querySelectorAll( '.adminora-links__item' ).forEach( function ( item ) {
 			item.classList.remove( 'is-line-start' );
 		} );
 
-		container.querySelectorAll( '.adminstudio-links__item' ).forEach( function ( item ) {
+		container.querySelectorAll( '.adminora-links__item' ).forEach( function ( item ) {
 			if ( null !== top && item.offsetTop > top + 2 ) {
 				item.classList.add( 'is-line-start' );
 			}
@@ -147,7 +147,7 @@
 
 	function wrap( link ) {
 		var item = document.createElement( 'span' );
-		item.className = 'adminstudio-links__item';
+		item.className = 'adminora-links__item';
 		item.appendChild( link );
 		return item;
 	}

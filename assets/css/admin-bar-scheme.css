@@ -1,51 +1,51 @@
 /**
- * Admin Studio brand colours for the admin bar, in the admin and on the front end.
+ * Adminora brand colours for the admin bar, in the admin and on the front end.
  */
 
 #wpadminbar {
-	color: var(--adminstudio-admin-menu-text);
-	background: var(--adminstudio-admin-menu-bg);
+	color: var(--adminora-admin-menu-text);
+	background: var(--adminora-admin-menu-bg);
 }
 
 #wpadminbar .ab-item,
 #wpadminbar a.ab-item,
 #wpadminbar > #wp-toolbar span.ab-label,
 #wpadminbar > #wp-toolbar span.noticon {
-	color: var(--adminstudio-admin-menu-text);
+	color: var(--adminora-admin-menu-text);
 }
 
 #wpadminbar .ab-icon,
 #wpadminbar .ab-icon::before,
 #wpadminbar .ab-item::before,
 #wpadminbar .ab-item::after {
-	color: var(--adminstudio-admin-menu-muted);
+	color: var(--adminora-admin-menu-muted);
 }
 
 #wpadminbar:not(.mobile) .ab-top-menu > li:hover > .ab-item,
 #wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus,
 #wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
 #wpadminbar .ab-top-menu > li.hover > .ab-item {
-	color: var(--adminstudio-admin-menu-text);
-	background: var(--adminstudio-admin-menu-sub-bg);
+	color: var(--adminora-admin-menu-text);
+	background: var(--adminora-admin-menu-sub-bg);
 }
 
 #wpadminbar .menupop .ab-sub-wrapper,
 #wpadminbar .shortlink-input {
-	background: var(--adminstudio-admin-menu-sub-bg);
+	background: var(--adminora-admin-menu-sub-bg);
 }
 
 #wpadminbar .quicklinks .menupop ul li a,
 #wpadminbar .quicklinks .menupop.hover ul li a {
-	color: var(--adminstudio-admin-menu-muted);
+	color: var(--adminora-admin-menu-muted);
 }
 
 #wpadminbar .quicklinks .menupop ul li a:hover,
 #wpadminbar .quicklinks .menupop ul li a:focus,
 #wpadminbar .quicklinks .menupop.hover ul li a:hover {
-	color: var(--adminstudio-admin-menu-text);
+	color: var(--adminora-admin-menu-text);
 }
 
 #wpadminbar .ab-top-menu > li:hover > .ab-item .ab-icon::before,
 #wpadminbar .ab-top-menu > li > .ab-item:focus .ab-icon::before {
-	color: var(--adminstudio-admin-menu-text);
+	color: var(--adminora-admin-menu-text);
 }

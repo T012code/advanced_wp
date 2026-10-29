@@ -5,10 +5,10 @@
  * SVG logos are read for the colours they name. PNG, JPEG, GIF and WebP logos
  * are sampled with the GD image library when the server has it.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio;
+namespace Adminora;
 
 defined( 'ABSPATH' ) || exit;
 

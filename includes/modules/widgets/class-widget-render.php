@@ -2,13 +2,13 @@
 /**
  * Prints the content of custom dashboard widgets.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Widgets;
+namespace Adminora\Modules\Widgets;
 
-use AdminStudio\Modules\Admin_Look\Icons;
-use AdminStudio\Modules\Emails\Renderer;
+use Adminora\Modules\Admin_Look\Icons;
+use Adminora\Modules\Emails\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ class Widget_Render {
 		$widget = isset( $box['args'] ) ? (array) $box['args'] : array();
 		$method = 'type_' . ( isset( $widget['type'] ) ? $widget['type'] : 'text' );
 
-		echo '<div class="adminstudio-widget adminstudio-widget--' . esc_attr( $widget['type'] ) . '">';
+		echo '<div class="adminora-widget adminora-widget--' . esc_attr( $widget['type'] ) . '">';
 		if ( method_exists( __CLASS__, $method ) ) {
 			self::$method( $widget );
 		}
@@ -53,7 +53,7 @@ class Widget_Render {
 	 */
 	private static function button( array $widget ) {
 		if ( '' !== $widget['button'] && '' !== $widget['button_url'] ) {
-			printf( '<p class="adminstudio-widget__button"><a class="button button-primary" href="%s">%s</a></p>', esc_url( self::link( $widget['button_url'] ) ), esc_html( $widget['button'] ) );
+			printf( '<p class="adminora-widget__button"><a class="button button-primary" href="%s">%s</a></p>', esc_url( self::link( $widget['button_url'] ) ), esc_html( $widget['button'] ) );
 		}
 	}
 
@@ -86,18 +86,18 @@ class Widget_Render {
 	 */
 	private static function type_links( array $widget ) {
 		if ( ! $widget['links'] ) {
-			echo '<p>' . esc_html__( 'No links yet.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'No links yet.', 'adminora' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminstudio-qlinks">';
+		echo '<ul class="adminora-qlinks">';
 		foreach ( $widget['links'] as $link ) {
 			$url      = self::link( $link['url'] );
 			$external = 0 !== strpos( $url, home_url() ) && 0 !== strpos( $url, admin_url() ) && preg_match( '#^https?://#i', $url );
 			$icon     = '' !== $link['icon'] ? $link['icon'] : ( $external ? 'external' : 'link' );
 
 			printf(
-				'<li><a class="adminstudio-qlink" href="%s"%s><span class="adminstudio-qlink__icon" aria-hidden="true">%s</span><span>%s</span></a></li>',
+				'<li><a class="adminora-qlink" href="%s"%s><span class="adminora-qlink__icon" aria-hidden="true">%s</span><span>%s</span></a></li>',
 				esc_url( $url ),
 				$external ? ' target="_blank" rel="noopener"' : '',
 				wp_kses( Icons::svg( $icon, 20 ), Icons::kses() ),
@@ -119,7 +119,7 @@ class Widget_Render {
 		}
 
 		if ( '' !== $widget['email'] || '' !== $widget['phone'] ) {
-			echo '<ul class="adminstudio-contact">';
+			echo '<ul class="adminora-contact">';
 			if ( '' !== $widget['email'] ) {
 				printf( '<li><span aria-hidden="true">%s</span><a href="%s">%s</a></li>', wp_kses( Icons::svg( 'mail', 18 ), Icons::kses() ), esc_url( 'mailto:' . $widget['email'] ), esc_html( $widget['email'] ) );
 			}
@@ -140,11 +140,11 @@ class Widget_Render {
 	 */
 	private static function type_video( array $widget ) {
 		if ( '' === $widget['video'] ) {
-			echo '<p>' . esc_html__( 'No video address yet.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'No video address yet.', 'adminora' ) . '</p>';
 			return;
 		}
 
-		$key  = 'adminstudio_embed_' . md5( $widget['video'] );
+		$key  = 'adminora_embed_' . md5( $widget['video'] );
 		$html = get_transient( $key );
 
 		if ( false === $html ) {
@@ -154,9 +154,9 @@ class Widget_Render {
 		}
 
 		if ( '' === $html ) {
-			printf( '<p><a href="%s" target="_blank" rel="noopener">%s</a></p>', esc_url( $widget['video'] ), esc_html__( 'Watch the video', 'admin-studio' ) );
+			printf( '<p><a href="%s" target="_blank" rel="noopener">%s</a></p>', esc_url( $widget['video'] ), esc_html__( 'Watch the video', 'adminora' ) );
 		} else {
-			echo '<div class="adminstudio-video">' . wp_kses(
+			echo '<div class="adminora-video">' . wp_kses(
 				$html,
 				array(
 					'iframe' => array(
@@ -196,11 +196,11 @@ class Widget_Render {
 		);
 
 		if ( ! $posts ) {
-			echo '<p>' . esc_html__( 'Nothing published yet.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'Nothing published yet.', 'adminora' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminstudio-feed">';
+		echo '<ul class="adminora-feed">';
 		foreach ( $posts as $post ) {
 			printf(
 				'<li><a href="%s">%s</a><time datetime="%s">%s</time><p>%s</p></li>',
@@ -230,13 +230,13 @@ class Widget_Render {
 		);
 
 		if ( ! $users ) {
-			echo '<p>' . esc_html__( 'Nobody yet.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'Nobody yet.', 'adminora' ) . '</p>';
 			return;
 		}
 
 		$names = wp_roles()->get_names();
 
-		echo '<ul class="adminstudio-people">';
+		echo '<ul class="adminora-people">';
 		foreach ( $users as $user ) {
 			$role = $user->roles ? reset( $user->roles ) : '';
 			$name = esc_html( $user->display_name );
@@ -252,7 +252,7 @@ class Widget_Render {
 					trim(
 						( isset( $names[ $role ] ) ? translate_user_role( $names[ $role ] ) . ' · ' : '' ) .
 						/* translators: %s: time span such as "3 days". */
-						sprintf( __( 'joined %s ago', 'admin-studio' ), human_time_diff( strtotime( $user->user_registered . ' UTC' ), time() ) )
+						sprintf( __( 'joined %s ago', 'adminora' ), human_time_diff( strtotime( $user->user_registered . ' UTC' ), time() ) )
 					)
 				)
 			);
@@ -284,12 +284,12 @@ class Widget_Render {
 		}
 
 		$comments = wp_count_comments();
-		$tiles[]  = array( (int) $comments->approved, __( 'Comments', 'admin-studio' ), current_user_can( 'moderate_comments' ) ? admin_url( 'edit-comments.php' ) : '' );
+		$tiles[]  = array( (int) $comments->approved, __( 'Comments', 'adminora' ), current_user_can( 'moderate_comments' ) ? admin_url( 'edit-comments.php' ) : '' );
 
 		$users   = count_users();
-		$tiles[] = array( (int) $users['total_users'], __( 'Users', 'admin-studio' ), current_user_can( 'list_users' ) ? admin_url( 'users.php' ) : '' );
+		$tiles[] = array( (int) $users['total_users'], __( 'Users', 'adminora' ), current_user_can( 'list_users' ) ? admin_url( 'users.php' ) : '' );
 
-		echo '<ul class="adminstudio-tiles">';
+		echo '<ul class="adminora-tiles">';
 		foreach ( $tiles as $tile ) {
 			$inner = '<strong>' . esc_html( number_format_i18n( $tile[0] ) ) . '</strong><span>' . esc_html( $tile[1] ) . '</span>';
 			echo '<li>' . ( '' !== $tile[2] ? '<a href="' . esc_url( $tile[2] ) . '">' . wp_kses_post( $inner ) . '</a>' : wp_kses_post( $inner ) ) . '</li>';
@@ -314,31 +314,31 @@ class Widget_Render {
 		);
 
 		if ( ! $comments ) {
-			echo '<p>' . esc_html__( 'No comments yet.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'No comments yet.', 'adminora' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminstudio-feed">';
+		echo '<ul class="adminora-feed">';
 		foreach ( $comments as $comment ) {
 			$pending = '0' === $comment->comment_approved;
 
 			printf(
 				'<li><span><strong>%s</strong> %s <a href="%s">%s</a>%s</span><time datetime="%s">%s</time><p>%s</p></li>',
 				esc_html( $comment->comment_author ),
-				esc_html__( 'on', 'admin-studio' ),
+				esc_html__( 'on', 'adminora' ),
 				esc_url( $moderate ? admin_url( 'comment.php?action=editcomment&c=' . $comment->comment_ID ) : get_comment_link( $comment ) ),
 				esc_html( get_the_title( $comment->comment_post_ID ) ),
-				$pending ? ' <span class="adminstudio-pill">' . esc_html__( 'Waiting for approval', 'admin-studio' ) . '</span>' : '',
+				$pending ? ' <span class="adminora-pill">' . esc_html__( 'Waiting for approval', 'adminora' ) . '</span>' : '',
 				esc_attr( mysql2date( 'c', $comment->comment_date_gmt ) ),
 				/* translators: %s: time span such as "5 minutes". */
-				esc_html( sprintf( __( '%s ago', 'admin-studio' ), human_time_diff( strtotime( $comment->comment_date_gmt . ' UTC' ), time() ) ) ),
+				esc_html( sprintf( __( '%s ago', 'adminora' ), human_time_diff( strtotime( $comment->comment_date_gmt . ' UTC' ), time() ) ) ),
 				esc_html( wp_trim_words( wp_strip_all_tags( $comment->comment_content ), 20 ) )
 			);
 		}
 		echo '</ul>';
 
 		if ( $moderate ) {
-			echo '<p><a href="' . esc_url( admin_url( 'edit-comments.php' ) ) . '">' . esc_html__( 'All comments', 'admin-studio' ) . '</a></p>';
+			echo '<p><a href="' . esc_url( admin_url( 'edit-comments.php' ) ) . '">' . esc_html__( 'All comments', 'adminora' ) . '</a></p>';
 		}
 	}
 
@@ -353,27 +353,27 @@ class Widget_Render {
 		$link   = current_user_can( 'view_site_health_checks' ) ? admin_url( 'site-health.php' ) : '';
 
 		if ( ! is_array( $result ) ) {
-			echo '<p>' . esc_html__( 'No results yet. Site Health runs its checks when someone opens it.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'No results yet. Site Health runs its checks when someone opens it.', 'adminora' ) . '</p>';
 		} else {
 			$critical    = isset( $result['critical'] ) ? (int) $result['critical'] : 0;
 			$recommended = isset( $result['recommended'] ) ? (int) $result['recommended'] : 0;
 			$good        = isset( $result['good'] ) ? (int) $result['good'] : 0;
 
 			if ( $critical ) {
-				$state = array( 'bad', __( 'Needs attention', 'admin-studio' ) );
+				$state = array( 'bad', __( 'Needs attention', 'adminora' ) );
 			} elseif ( $recommended > 2 ) {
-				$state = array( 'fair', __( 'Could be better', 'admin-studio' ) );
+				$state = array( 'fair', __( 'Could be better', 'adminora' ) );
 			} else {
-				$state = array( 'good', __( 'Good', 'admin-studio' ) );
+				$state = array( 'good', __( 'Good', 'adminora' ) );
 			}
 
-			echo '<p class="adminstudio-health adminstudio-health--' . esc_attr( $state[0] ) . '"><strong>' . esc_html( $state[1] ) . '</strong></p>';
-			echo '<ul class="adminstudio-tiles">';
+			echo '<p class="adminora-health adminora-health--' . esc_attr( $state[0] ) . '"><strong>' . esc_html( $state[1] ) . '</strong></p>';
+			echo '<ul class="adminora-tiles">';
 			foreach (
 				array(
-					array( $critical, __( 'Critical issues', 'admin-studio' ) ),
-					array( $recommended, __( 'Recommended improvements', 'admin-studio' ) ),
-					array( $good, __( 'Passed checks', 'admin-studio' ) ),
+					array( $critical, __( 'Critical issues', 'adminora' ) ),
+					array( $recommended, __( 'Recommended improvements', 'adminora' ) ),
+					array( $good, __( 'Passed checks', 'adminora' ) ),
 				) as $tile
 			) {
 				echo '<li><strong>' . esc_html( number_format_i18n( $tile[0] ) ) . '</strong><span>' . esc_html( $tile[1] ) . '</span></li>';
@@ -382,7 +382,7 @@ class Widget_Render {
 		}
 
 		if ( '' !== $link ) {
-			echo '<p><a href="' . esc_url( $link ) . '">' . esc_html__( 'Open Site Health', 'admin-studio' ) . '</a></p>';
+			echo '<p><a href="' . esc_url( $link ) . '">' . esc_html__( 'Open Site Health', 'adminora' ) . '</a></p>';
 		}
 	}
 }

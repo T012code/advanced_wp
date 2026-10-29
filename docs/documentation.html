@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Admin Studio Documentation</title>
+<title>Adminora Documentation</title>
 <style>
-/* Print stylesheet for the Admin Studio documentation. Two typefaces: a serif for headings, a sans for text. */
+/* Print stylesheet for the Adminora documentation. Two typefaces: a serif for headings, a sans for text. */
 :root {
 	--paper: oklch(99% 0.003 250);
 	--ink: oklch(22% 0.03 262);
@@ -89,9 +89,9 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 
 <!-- Cover -->
 <section class="cover">
-	<img src="../assets/images/logo.svg" width="96" height="96" alt="Admin Studio logo" style="margin-bottom:24px">
+	<img src="../assets/images/logo.svg" width="96" height="96" alt="Adminora logo" style="margin-bottom:24px">
 	<p class="part-title">Documentation</p>
-	<h1>Admin Studio</h1>
+	<h1>Adminora</h1>
 	<p class="lead">Rebrand the login page, system emails, error pages, browser tab details and the admin dashboard of a WordPress site, starting from the colours and fonts of its theme, and run the dashboard for the people who use it.</p>
 	<dl>
 		<dt>Plugin version</dt><dd>1.0.0</dd>
@@ -107,8 +107,8 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 <section class="part toc">
 	<h2>Contents</h2>
 	<ol>
-		<li class="toc-part">Part 1. Using Admin Studio</li>
-		<li>1. What Admin Studio does</li>
+		<li class="toc-part">Part 1. Using Adminora</li>
+		<li>1. What Adminora does</li>
 		<li>2. Installing and first steps</li>
 		<li>3. Where each setting lives</li>
 		<li>4. Brand kit</li>
@@ -143,26 +143,26 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 <!-- ============================================================ -->
 <section class="part">
 	<p class="part-title">Part 1</p>
-	<h2>1. What Admin Studio does</h2>
-	<p>WordPress shows many screens and emails in its own default style: the login page, password reset emails, the "critical error" page, the "briefly unavailable" screen during updates, and the "Thank you for creating with WordPress" credit in the dashboard. Admin Studio restyles all of them to match a brand, from one place.</p>
+	<h2>1. What Adminora does</h2>
+	<p>WordPress shows many screens and emails in its own default style: the login page, password reset emails, the "critical error" page, the "briefly unavailable" screen during updates, and the "Thank you for creating with WordPress" credit in the dashboard. Adminora restyles all of them to match a brand, from one place.</p>
 	<p>It starts from the active theme. Colours and fonts are read from <code>theme.json</code> on block themes and from theme settings on classic themes. The logo comes from the theme logo, and the favicon is the site icon. Change any value once in the brand kit and every screen follows, or override it for one area only.</p>
 	<p>It also helps you run the dashboard for the people who use it: what each role can do and see (section 12), how the dashboard looks for each person (section 10), which widgets they see first (section 11), who is signed in and on which device (section 14), and how the login is protected (section 13).</p>
 	<p>Each feature can be switched off on the Overview tab. A switched-off feature loads no code.</p>
 
 	<h2>2. Installing and first steps</h2>
 	<ol>
-		<li>Upload the <code>admin-studio</code> folder to <code>wp-content/plugins/</code>, or install the zip from Plugins → Add New → Upload Plugin.</li>
+		<li>Upload the <code>adminora</code> folder to <code>wp-content/plugins/</code>, or install the zip from Plugins → Add New → Upload Plugin.</li>
 		<li>Activate the plugin. The login page, emails and error pages immediately take on your theme's colours and fonts.</li>
-		<li>Open <strong>Appearance → Customize → Admin Studio</strong> to adjust the brand kit and design the login page, emails and system pages with a live preview.</li>
-		<li>Open <strong>Settings → Admin Studio</strong> for everything else. The Overview tab shows every feature with its switch and the brand kit's colour source.</li>
+		<li>Open <strong>Appearance → Customize → Adminora</strong> to adjust the brand kit and design the login page, emails and system pages with a live preview.</li>
+		<li>Open <strong>Settings → Adminora</strong> for everything else. The Overview tab shows every feature with its switch and the brand kit's colour source.</li>
 	</ol>
 
 	<h2>3. Where each setting lives</h2>
 	<p>Anything visual that can be previewed lives in the Customizer. Everything else lives on the settings page, where each group of settings sits in its own card and the Overview tab shows every feature as a card with its switch. Tables and cards share the same width, border and rounded corners. Every setting is always visible: switching a feature off does not hide its details, so you can read and fill them in before switching it on. Only a choice in a list (such as "Other address") reveals the box it needs.</p>
 	<table>
 		<tr><th>Where</th><th>What you set there</th></tr>
-		<tr><td>Customizer (Appearance → Customize → Admin Studio)</td><td>Brand kit; login page layout, background, logo, form, text and links, and wording; email design; system page design and wording; the coming soon page design</td></tr>
-		<tr><td>Settings → Admin Studio → Overview</td><td>Feature switches, the brand kit's colour source, the uninstall option</td></tr>
+		<tr><td>Customizer (Appearance → Customize → Adminora)</td><td>Brand kit; login page layout, background, logo, form, text and links, and wording; email design; system page design and wording; the coming soon page design</td></tr>
+		<tr><td>Settings → Adminora → Overview</td><td>Feature switches, the brand kit's colour source, the uninstall option</td></tr>
 		<tr><td>Emails</td><td>Subject, heading, body and button of each email; preview; test send</td></tr>
 		<tr><td>Tab &amp; page details</td><td>Browser tab titles, favicon, address bar colour, WordPress traces</td></tr>
 		<tr><td>Admin branding</td><td>Admin bar logo, footer credit, Help and Screen Options tabs, brand colour scheme</td></tr>
@@ -177,7 +177,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</table>
 	<figure>
 		<img src="images/settings-overview.png" alt="The Overview tab of the settings page">
-		<figcaption>Settings → Admin Studio, Overview tab.</figcaption>
+		<figcaption>Settings → Adminora, Overview tab.</figcaption>
 	</figure>
 	<p>Tabs with several parts, such as Roles &amp; permissions and Dashboard look, list their sections under the tabs. With the WordPress default look they appear as WordPress's own sub-navigation (links separated by a bar, the current one in bold, as on the Posts screen). When you use an admin template, the tabs become one bar with only the current tab filled in, and the sections below it are plain text links with the current one in the accent colour, so the page never shows two rows of buttons.</p>
 
@@ -215,9 +215,9 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li><strong>Background:</strong> colour, gradient (two colours and an angle), image or video, with an overlay colour and strength. Videos are muted, looped and paused for visitors who prefer reduced motion.</li>
 		<li><strong>Logo:</strong> image (defaults to the brand logo), width, link (defaults to your home page instead of wordpress.org), text for screen readers, or hide it. With no logo image, the site title is shown as text.</li>
 		<li><strong>Form and button:</strong> width, padding, corner radius, background, shadow, field style (boxed, underline or filled), hidden labels with placeholders, text and link colours, button colour, button text colour (picked automatically for contrast when empty) and button corner radius.</li>
-		<li><strong>Text and links</strong> (Customizer → Admin Studio → Login: text and links): a message above the form, footer text, your own text for the "← Go to site" link (for example "Back to {site_name}"), options to hide the language switcher and the privacy policy link, and the layout and position of the links (below).</li>
+		<li><strong>Text and links</strong> (Customizer → Adminora → Login: text and links): a message above the form, footer text, your own text for the "← Go to site" link (for example "Back to {site_name}"), options to hide the language switcher and the privacy policy link, and the layout and position of the links (below).</li>
 		<li><strong>One message for failed log ins:</strong> replace WordPress's "unknown username" and "incorrect password" messages with one message of your own. This also stops the screen revealing which usernames exist.</li>
-		<li><strong>Wording</strong> (Customizer → Admin Studio → Login: wording): replace any of 23 pieces of WordPress's text on the log in, lost password, reset password and registration screens: field labels, "Remember Me", the button text, every link, the screen names (which also become the browser tab title), the instructions and the confirmation messages. Each box shows WordPress's own wording in your site language; leave it empty to keep it. <code>{site_name}</code> works everywhere, and <code>{login_url}</code> in the two messages that link to the login page.</li>
+		<li><strong>Wording</strong> (Customizer → Adminora → Login: wording): replace any of 23 pieces of WordPress's text on the log in, lost password, reset password and registration screens: field labels, "Remember Me", the button text, every link, the screen names (which also become the browser tab title), the instructions and the confirmation messages. Each box shows WordPress's own wording in your site language; leave it empty to keep it. <code>{site_name}</code> works everywhere, and <code>{login_url}</code> in the two messages that link to the login page.</li>
 	</ul>
 	<h3>Links under the form</h3>
 	<p>WordPress prints its links ("Register", "Lost your password?", "Log in" on the other screens, and "Go to site") in a plain row under the form. Choose how they are laid out:</p>
@@ -243,7 +243,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</figure>
 
 	<h2>6. Emails</h2>
-	<p>Admin Studio wraps 15 core WordPress emails in a branded HTML layout and lets you rewrite each one.</p>
+	<p>Adminora wraps 15 core WordPress emails in a branded HTML layout and lets you rewrite each one.</p>
 	<table>
 		<tr><th>Sent to users</th><th>Sent to administrators</th></tr>
 		<tr><td>New account / welcome</td><td>New user registered</td></tr>
@@ -255,7 +255,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Personal data erased</td><td>Automatic update results; Recovery mode (site error)</td></tr>
 	</table>
 	<h3>Editing an email</h3>
-	<p>Go to Settings → Admin Studio → Emails and pick an email from the list. Each email has an on/off switch, subject, heading, body and, where the email has a main link, button text. The body editor has a Visual tab and a Code (HTML) tab. Click a tag to insert it. Tags in braces, such as <code>{user_name}</code>, <code>{reset_link}</code> and <code>{site_name}</code>, are replaced when the email is sent. Unknown tags are left as they are, so nothing disappears silently.</p>
+	<p>Go to Settings → Adminora → Emails and pick an email from the list. Each email has an on/off switch, subject, heading, body and, where the email has a main link, button text. The body editor has a Visual tab and a Code (HTML) tab. Click a tag to insert it. Tags in braces, such as <code>{user_name}</code>, <code>{reset_link}</code> and <code>{site_name}</code>, are replaced when the email is sent. Unknown tags are left as they are, so nothing disappears silently.</p>
 	<p>Every email also gets an automatic plain-text version for mail apps that do not show HTML. "Preview saved version" opens the email in your browser, "Send test email" sends it to any address, and "Restore default text" brings back the original wording.</p>
 	<figure>
 		<img src="images/settings-emails.png" alt="Editing an email template">
@@ -270,7 +270,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 
 	<h2>7. Error and system pages</h2>
 	<table>
-		<tr><th>Page</th><th>When WordPress shows it</th><th>How Admin Studio handles it</th></tr>
+		<tr><th>Page</th><th>When WordPress shows it</th><th>How Adminora handles it</th></tr>
 		<tr><td>Critical error</td><td>A plugin or theme causes a fatal PHP error.</td><td>Writes <code>wp-content/php-error.php</code>. Returns status 500. API and AJAX requests get a JSON error instead. Signed-in administrators also see a "Message for administrators" (editable, empty to hide) explaining that WordPress emails a recovery link to the admin email address; visitors never see it. If the file cannot be written, the same page is shown through WordPress's own error handler, so "There has been a critical error on this website" never appears.</td></tr>
 		<tr><td>Database connection error</td><td>WordPress cannot reach its database.</td><td>Writes <code>wp-content/db-error.php</code> with a static copy of the design, because the database is unavailable. Status 500 with Retry-After.</td></tr>
 		<tr><td>Update maintenance</td><td>For a few seconds while updates install.</td><td>Writes <code>wp-content/maintenance.php</code>. Status 503 with Retry-After.</td></tr>
@@ -285,7 +285,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<figcaption>Update maintenance, a permission notice and the 404 page.</figcaption>
 	</figure>
 	<div class="note">
-		<p><strong>Safe with other plugins and hosts.</strong> Admin Studio never overwrites or deletes one of these files unless it wrote it. Each file it writes carries an "Admin Studio drop-in" line. If another plugin or your host already uses the file, the Tools tab says so and leaves it alone. Admin Studio removes its own files when you deactivate it.</p>
+		<p><strong>Safe with other plugins and hosts.</strong> Adminora never overwrites or deletes one of these files unless it wrote it. Each file it writes carries an "Adminora drop-in" line. If another plugin or your host already uses the file, the Tools tab says so and leaves it alone. Adminora removes its own files when you deactivate it.</p>
 	</div>
 
 	<h2>8. Tab and page details</h2>
@@ -299,7 +299,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<ul>
 		<li><strong>Favicon:</strong> upload your own icon, or leave it empty to use the site icon from Settings → General. Your icon replaces the site icon everywhere WordPress prints it.</li>
 		<li><strong>Icon everywhere:</strong> show it on login, admin and system pages too, and fall back to the brand logo when there is no icon.</li>
-		<li><strong>/favicon.ico:</strong> browsers ask every site for this address. Without a site icon, WordPress answers with its own logo; Admin Studio answers with your icon instead (or nothing, if you have no icon or logo). A real favicon.ico file in your site's main folder always wins.</li>
+		<li><strong>/favicon.ico:</strong> browsers ask every site for this address. Without a site icon, WordPress answers with its own logo; Adminora answers with your icon instead (or nothing, if you have no icon or logo). A real favicon.ico file in your site's main folder always wins.</li>
 		<li><strong>Address bar colour</strong> on mobile browsers, from the brand primary colour.</li>
 	</ul>
 	<h3>WordPress traces</h3>
@@ -327,7 +327,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</figure>
 
 	<h2>10. Dashboard look</h2>
-	<p>Settings → Admin Studio → <strong>Dashboard look</strong> has three sections: Templates, Roles and users, and Sidebar menu.</p>
+	<p>Settings → Adminora → <strong>Dashboard look</strong> has three sections: Templates, Roles and users, and Sidebar menu.</p>
 	<p>Templates change the look of the whole dashboard: sidebar, top bar, page headers, cards and meta boxes, tables, forms, buttons and notices. The block editor's canvas and panels keep WordPress's own design, because they change often between WordPress versions.</p>
 	<h3>Templates</h3>
 	<table>
@@ -351,7 +351,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</figure>
 	<figure>
 		<img src="images/settings-look.png" alt="The Templates section of the Dashboard look tab, with template cards, Try it on me buttons and palettes">
-		<figcaption>Settings → Admin Studio → Dashboard look → Templates.</figcaption>
+		<figcaption>Settings → Adminora → Dashboard look → Templates.</figcaption>
 	</figure>
 	<h3>Colours and dark mode</h3>
 	<ul>
@@ -383,12 +383,12 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<li>Per user, set by an administrator.</li>
 		<li>Users can choose their own template and palette on their profile, unless "Personal choice" is switched off or an administrator has locked their role or account.</li>
 	</ol>
-	<p>The most specific rule wins, in this order: a template an administrator is trying on themselves, the user's own choice, the administrator's per-user choice, the role, the site default. Settings → Admin Studio → Dashboard look → Roles and users sets the template per role and lists everyone with a template of their own.</p>
+	<p>The most specific rule wins, in this order: a template an administrator is trying on themselves, the user's own choice, the administrator's per-user choice, the role, the site default. Settings → Adminora → Dashboard look → Roles and users sets the template per role and lists everyone with a template of their own.</p>
 	<h3>Trying a template</h3>
 	<p>"Try it on me" on each template card applies that template, with the palette selected on the page, to your own account only, and opens the dashboard so you can look around. A banner at the top of every screen then offers "Apply to everyone" (makes it the site default), "Apply to roles" (opens the per-role table) and "Stop trying".</p>
 
 	<h2>11. Dashboard widgets</h2>
-	<p>Settings → Admin Studio → <strong>Dashboard widgets</strong> has three sections. The feature can be switched off on the Overview tab.</p>
+	<p>Settings → Adminora → <strong>Dashboard widgets</strong> has three sections. The feature can be switched off on the Overview tab.</p>
 	<h3>Show and hide</h3>
 	<p>A table lists every dashboard widget with a column per role. Untick a role to hide that widget from everyone in it. The list starts with the WordPress widgets, including the welcome panel. Widgets from other plugins, such as WooCommerce or Elementor, are added automatically the first time an administrator opens the dashboard with those plugins active, and stay listed if the plugin is switched off for a while. Someone with several roles sees a widget if any of their roles does.</p>
 	<h3>Custom widgets</h3>
@@ -411,7 +411,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p><strong>Lock</strong> stops people dragging widgets: they get the saved order and the move buttons disappear, though they can still collapse widgets. Administrators are never locked, so they can change the default. "Remove the default layout" goes back to the WordPress arrangement.</p>
 
 	<h2>12. Roles and permissions</h2>
-	<p>Settings → Admin Studio → <strong>Roles &amp; permissions</strong> has six sections: Roles, Menu access, Toolbar, Login and access, Backups and Activity log. A person's own roles and permissions are on their profile.</p>
+	<p>Settings → Adminora → <strong>Roles &amp; permissions</strong> has six sections: Roles, Menu access, Toolbar, Login and access, Backups and Activity log. A person's own roles and permissions are on their profile.</p>
 	<h3>Role manager</h3>
 	<ul>
 		<li>Create a role from scratch or by cloning an existing one (for example "Shop Manager" from Editor).</li>
@@ -465,7 +465,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</ul>
 
 	<h2>13. Login protection</h2>
-	<p>Switch on any of these features under Settings → Admin Studio → Login protection: a custom login URL, limits on failed logins, a honeypot field, a custom dashboard address and two-factor authentication.</p>
+	<p>Switch on any of these features under Settings → Adminora → Login protection: a custom login URL, limits on failed logins, a honeypot field, a custom dashboard address and two-factor authentication.</p>
 	<h3>Custom login URL</h3>
 	<p>Moves the login page to an address such as <code>/team-login</code>. Logged-out visitors who open <code>wp-login.php</code> or <code>/wp-admin</code> see a "page not found" page, are sent to the home page, or are sent to an address you choose. Every login, logout, registration and password link WordPress creates, including links in emails, uses the new address. The words "login", "admin", "dashboard" and WordPress folder names cannot be used.</p>
 	<h3>Limit login attempts</h3>
@@ -482,10 +482,10 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h4>How it is set up</h4>
 	<p>Because <code>wp-admin</code> is a real folder, the server has to send the new address to it.</p>
 	<ul>
-		<li><strong>Apache and LiteSpeed:</strong> Admin Studio adds two rules to the top of <code>.htaccess</code>, above WordPress's own rules, and keeps a copy of the original file. Deactivating the plugin removes the rules.</li>
+		<li><strong>Apache and LiteSpeed:</strong> Adminora adds two rules to the top of <code>.htaccess</code>, above WordPress's own rules, and keeps a copy of the original file. Deactivating the plugin removes the rules.</li>
 		<li><strong>Nginx and other servers:</strong> the settings page shows the exact lines to add. Your host can add them for you.</li>
 	</ul>
-	<p>After saving, Admin Studio requests a test page through the new address. The dashboard only moves once the test passes, so a missing rule never locks anyone out; until then it stays at <code>/wp-admin</code> and the settings page shows the rules, a "Test again" button and a link to the test page. Some servers cannot request their own pages. If the test page works in your browser but "Test again" fails, "Activate anyway" switches the address on.</p>
+	<p>After saving, Adminora requests a test page through the new address. The dashboard only moves once the test passes, so a missing rule never locks anyone out; until then it stays at <code>/wp-admin</code> and the settings page shows the rules, a "Test again" button and a link to the test page. Some servers cannot request their own pages. If the test page works in your browser but "Test again" fails, "Activate anyway" switches the address on.</p>
 	<figure>
 		<img src="images/settings-admin-url.png" alt="Custom dashboard address waiting for server rules">
 		<figcaption>Waiting for the server rules, with the lines to add and the test buttons.</figcaption>
@@ -511,7 +511,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p>Administrators can require two-factor for chosen roles, with a grace period in days. Users in those roles see a reminder, and once the grace period ends they are sent to their profile until they set it up. Administrators can reset another user's two-factor from that user's profile.</p>
 
 	<h2>14. Sessions</h2>
-	<p>Settings → Admin Studio → <strong>Sessions</strong> shows who is signed in and where. Each browser or app someone signs in on is one session; Admin Studio reads WordPress's own sessions, so ending one signs that device out on its next page load.</p>
+	<p>Settings → Adminora → <strong>Sessions</strong> shows who is signed in and where. Each browser or app someone signs in on is one session; Adminora reads WordPress's own sessions, so ending one signs that device out on its next page load.</p>
 	<ul>
 		<li><strong>Signed in now:</strong> everyone with an active session, grouped by person, with the device (browser, system and whether it is a computer, phone, tablet or the WordPress app), IP address, when they signed in, when they were last active (updated every five minutes) and when the session expires. Your own current session is marked "This device".</li>
 		<li><strong>Sign out</strong> one device, <strong>Sign out everywhere</strong> for a person (for yourself: "Sign out my other devices"), or <strong>Block</strong> the account.</li>
@@ -531,7 +531,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</figure>
 
 	<h2>15. Coming soon and maintenance mode</h2>
-	<p>Turn the mode on under Settings → Admin Studio → Coming soon. Under <strong>Holding page</strong>, choose what visitors see:</p>
+	<p>Turn the mode on under Settings → Adminora → Coming soon. Under <strong>Holding page</strong>, choose what visitors see:</p>
 	<ul>
 		<li><strong>The page designed in the Customizer:</strong> headline, message, countdown, logo, background colour or image, and text colour.</li>
 		<li><strong>A page I built:</strong> any page on the site, including drafts and private pages, or an Elementor page template (Templates → Saved Templates, type "Page"). Pages built with Elementor are marked in the list, and an "Edit with Elementor" button opens the chosen one. The page fills the whole screen without the theme's header and footer, so you can keep it as a draft that visitors never reach any other way. Elementor's styles and scripts load as usual. If the page is deleted or trashed, the Customizer design is shown instead.</li>
@@ -555,7 +555,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 
 	<h2>16. Tools</h2>
 	<ul>
-		<li><strong>Export</strong> downloads Admin Studio's settings as a JSON file. Tick the parts to include; all are ticked to start with:
+		<li><strong>Export</strong> downloads Adminora's settings as a JSON file. Tick the parts to include; all are ticked to start with:
 			<ul>
 				<li><strong>Settings and designs:</strong> brand kit (including colours read from the front end), login page, emails, system pages, tab details, admin branding, login protection, sessions and coming soon.</li>
 				<li><strong>Dashboard look:</strong> templates, colours, templates per role and the sidebar menu layout.</li>
@@ -579,11 +579,11 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 				<li><strong>Safety:</strong> a backup of your roles is saved first (Roles &amp; permissions → Backups), and nothing in the roles changes if it would remove your own access. Many settings name roles (menu access, the toolbar, login destinations, templates per role, widget visibility, who sees the real site during coming soon, and the roles that need two-factor or a session limit); a rule for a role this site still does not have is skipped, and the notice after the import names those roles.</li>
 				<li><strong>Personal settings</strong> go to the people with the same username, or else the same email address. Roles and permissions given to one person are not part of an export, so an import can never hand someone extra rights.</li>
 				<li><strong>Login and dashboard addresses</strong> are checked as when you save the Login protection tab: an address that cannot be used is switched off, and the dashboard only moves after the server test passes.</li>
-				<li>Files exported by Admin Studio 1.0 still import.</li>
+				<li>Files exported by Adminora 1.0 still import.</li>
 			</ul>
 		</li>
 		<li><strong>Reset</strong> restores the defaults for one section or for everything, after a confirmation.</li>
-		<li><strong>Status</strong> shows the state of each drop-in file, whether <code>wp-content</code> is writable, the colours detected from your theme, and any active plugins that do the same job as an Admin Studio feature.</li>
+		<li><strong>Status</strong> shows the state of each drop-in file, whether <code>wp-content</code> is writable, the colours detected from your theme, and any active plugins that do the same job as an Adminora feature.</li>
 	</ul>
 
 	<figure>
@@ -593,15 +593,15 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 
 	<h2>17. Troubleshooting</h2>
 	<h4>I moved the login page and forgot the address.</h4>
-	<p>Add <code>define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );</code> to <code>wp-config.php</code>, log in at <code>/wp-login.php</code>, check the address on the Login protection tab, then remove the line.</p>
+	<p>Add <code>define( 'ADMINORA_DISABLE_LOGIN_URL', true );</code> to <code>wp-config.php</code>, log in at <code>/wp-login.php</code>, check the address on the Login protection tab, then remove the line.</p>
 	<h4>I moved the dashboard and cannot reach it.</h4>
-	<p>Add <code>define( 'ADMINSTUDIO_DISABLE_ADMIN_URL', true );</code> to <code>wp-config.php</code>. The dashboard is back at <code>/wp-admin</code> straight away. Fix the setting on the Login protection tab, then remove the line.</p>
+	<p>Add <code>define( 'ADMINORA_DISABLE_ADMIN_URL', true );</code> to <code>wp-config.php</code>. The dashboard is back at <code>/wp-admin</code> straight away. Fix the setting on the Login protection tab, then remove the line.</p>
 	<h4>I lost my phone and my backup codes.</h4>
-	<p>Ask another administrator to tick "Reset two-factor for this user" on your profile. If you are the only administrator, add <code>define( 'ADMINSTUDIO_DISABLE_2FA', true );</code> to <code>wp-config.php</code>, sign in, set two-factor up again, and remove the line.</p>
+	<p>Ask another administrator to tick "Reset two-factor for this user" on your profile. If you are the only administrator, add <code>define( 'ADMINORA_DISABLE_2FA', true );</code> to <code>wp-config.php</code>, sign in, set two-factor up again, and remove the line.</p>
 	<h4>Test emails do not arrive.</h4>
-	<p>Admin Studio only changes how emails look; delivery goes through WordPress's <code>wp_mail()</code>. Many hosts do not send mail reliably. An SMTP plugin usually fixes this, and Admin Studio's designs keep working with it.</p>
+	<p>Adminora only changes how emails look; delivery goes through WordPress's <code>wp_mail()</code>. Many hosts do not send mail reliably. An SMTP plugin usually fixes this, and Adminora's designs keep working with it.</p>
 	<h4>The Tools tab says a drop-in is used by another plugin.</h4>
-	<p>Another plugin or your host already provides that page. Admin Studio leaves it in place. Remove the other file if you want Admin Studio's version, then save any setting.</p>
+	<p>Another plugin or your host already provides that page. Adminora leaves it in place. Remove the other file if you want Adminora's version, then save any setting.</p>
 	<h4>A Google font does not show.</h4>
 	<p>The font is downloaded when you publish in the Customizer. If your server cannot reach Google Fonts, a system font is used instead.</p>
 	<h4>An import says rules for some roles were skipped.</h4>
@@ -610,7 +610,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<p>Check Roles &amp; permissions → Menu access for their role, "Keep out of the dashboard" under Login and access, and the permissions on their profile. Administrators always see everything, so an administrator can put it right.</p>
 
 	<h2>18. Privacy and external services</h2>
-	<p>Admin Studio tracks nothing and contacts outside services only in two cases, both started by an administrator:</p>
+	<p>Adminora tracks nothing and contacts outside services only in two cases, both started by an administrator:</p>
 	<ul>
 		<li><strong>Google Fonts:</strong> when an administrator chooses a Google font and publishes, the server downloads that font once from fonts.googleapis.com and fonts.gstatic.com. The request contains only the font name and the server's IP address. The files are then served from the site's own uploads folder, so visitors never contact Google. Google's <a href="https://developers.google.com/fonts/terms">terms</a> and <a href="https://policies.google.com/privacy">privacy policy</a> apply.</li>
 		<li><strong>Video dashboard widget:</strong> when an administrator adds one, the server asks the video site (for example YouTube or Vimeo) for the embed code once a day, and the browsers of people who see the widget load the player from that site, which receives their IP address and browser details. That site's terms and privacy policy apply.</li>
@@ -631,13 +631,13 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<dt>Themes</dt><dd>Block themes (theme.json) and classic themes</dd>
 		<dt>Multisite</dt><dd>Works per site. The custom dashboard address is not available on multisite networks.</dd>
 		<dt>Build step</dt><dd>None. Plain PHP, CSS and JavaScript.</dd>
-		<dt>Text domain</dt><dd><code>admin-studio</code>; translation template in <code>languages/admin-studio.pot</code></dd>
+		<dt>Text domain</dt><dd><code>adminora</code>; translation template in <code>languages/adminora.pot</code></dd>
 	</dl>
 
 	<h2>20. File structure</h2>
 	<table>
 		<tr><th>Path</th><th>Contents</th></tr>
-		<tr><td><code>admin-studio.php</code></td><td>Plugin header, constants, autoloader, activation hooks</td></tr>
+		<tr><td><code>adminora.php</code></td><td>Plugin header, constants, autoloader, activation hooks</td></tr>
 		<tr><td><code>uninstall.php</code></td><td>Removes data when the owner opted in</td></tr>
 		<tr><td><code>includes/class-plugin.php</code></td><td>Module registry and save side effects</td></tr>
 		<tr><td><code>includes/class-settings.php</code></td><td>Field schema, storage and sanitizing</td></tr>
@@ -651,36 +651,36 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td><code>templates/notfound.php</code>, <code>templates/holding-page.php</code></td><td>404 template; full-screen template for a coming soon page built in the editor or Elementor</td></tr>
 		<tr><td><code>assets/css</code>, <code>assets/js</code>, <code>assets/vendor</code></td><td>Styles, scripts, QR code library</td></tr>
 	</table>
-	<p>Classes use the <code>AdminStudio</code> namespace and are autoloaded: <code>AdminStudio\Modules\Error_Pages\Error_Pages</code> loads <code>includes/modules/error-pages/class-error-pages.php</code>.</p>
+	<p>Classes use the <code>Adminora</code> namespace and are autoloaded: <code>Adminora\Modules\Error_Pages\Error_Pages</code> loads <code>includes/modules/error-pages/class-error-pages.php</code>.</p>
 
 	<h2>21. How settings are stored</h2>
-	<p>All settings are in one option, <code>adminstudio_settings</code>, as a nested array. Code addresses a setting by a dot path such as <code>login.layout</code>. The Customizer stores into the same option through setting ids such as <code>adminstudio_settings[login][layout]</code>, so both screens share one source of truth.</p>
-	<p>Larger features keep their own option, cleaned by their own class: <code>adminstudio_look</code> (Admin_Look), <code>adminstudio_widgets</code> (Widgets) and <code>adminstudio_access</code> (Access). Roles are WordPress's own roles, changed through its role API.</p>
+	<p>All settings are in one option, <code>adminora_settings</code>, as a nested array. Code addresses a setting by a dot path such as <code>login.layout</code>. The Customizer stores into the same option through setting ids such as <code>adminora_settings[login][layout]</code>, so both screens share one source of truth.</p>
+	<p>Larger features keep their own option, cleaned by their own class: <code>adminora_look</code> (Admin_Look), <code>adminora_widgets</code> (Widgets) and <code>adminora_access</code> (Access). Roles are WordPress's own roles, changed through its role API.</p>
 	<p><code>Settings::fields()</code> defines every setting with a type (bool, int, color, url, select, multi, roles, html, css, slug, lines, datetime or text), a default and any limits. Every save from the Customizer, the settings page or an import runs through <code>Settings::sanitize()</code> for that type. Translatable defaults are resolved only after <code>init</code>.</p>
 
 	<h2>22. Data the plugin stores</h2>
 	<table>
 		<tr><th>Where</th><th>Name</th><th>Purpose</th></tr>
-		<tr><td>Option (autoloaded)</td><td><code>adminstudio_settings</code></td><td>All settings</td></tr>
-		<tr><td>Option</td><td><code>adminstudio_version</code>, <code>adminstudio_fonts</code>, <code>adminstudio_lockouts</code></td><td>Installed version; downloaded font CSS; lockout log (last 100)</td></tr>
+		<tr><td>Option (autoloaded)</td><td><code>adminora_settings</code></td><td>All settings</td></tr>
+		<tr><td>Option</td><td><code>adminora_version</code>, <code>adminora_fonts</code>, <code>adminora_lockouts</code></td><td>Installed version; downloaded font CSS; lockout log (last 100)</td></tr>
 		<tr><td>Roles</td><td>WordPress's own roles option; capabilities in each user's own record</td><td>Roles you create or change, and permissions given to one person, are stored where WordPress keeps them, so other plugins see them</td></tr>
-		<tr><td>Transients</td><td><code>adminstudio_count_*</code>, <code>adminstudio_lock_*</code></td><td>Failed attempt counters and lockouts per IP hash</td></tr>
-		<tr><td>User meta</td><td><code>adminstudio_2fa_*</code></td><td>Two-factor method, secret, backup code hashes, last used time slice, pending login and email code</td></tr>
+		<tr><td>Transients</td><td><code>adminora_count_*</code>, <code>adminora_lock_*</code></td><td>Failed attempt counters and lockouts per IP hash</td></tr>
+		<tr><td>User meta</td><td><code>adminora_2fa_*</code></td><td>Two-factor method, secret, backup code hashes, last used time slice, pending login and email code</td></tr>
 		<tr><td>Files</td><td><code>wp-content/php-error.php</code>, <code>db-error.php</code>, <code>maintenance.php</code></td><td>Drop-in pages</td></tr>
-		<tr><td>Files</td><td><code>wp-content/uploads/admin-studio/fonts/</code></td><td>Downloaded Google fonts</td></tr>
-		<tr><td>Option</td><td><code>adminstudio_admin_url</code>, <code>adminstudio_htaccess_backup</code>, <code>adminstudio_reapply_admin_url</code></td><td>Which dashboard address passed its test; the original .htaccess; a flag to re-test after activation</td></tr>
-		<tr><td>Files</td><td><code>.htaccess</code> block between <code># BEGIN Admin Studio</code> and <code># END Admin Studio</code></td><td>Rewrite rules for the custom dashboard address (Apache and LiteSpeed only)</td></tr>
-		<tr><td>Option</td><td><code>adminstudio_access</code>, <code>adminstudio_toolbar_nodes</code></td><td>Menu, toolbar, login redirect and dashboard access rules per role; the toolbar items last seen, so the settings page can list them</td></tr>
-		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_role_backups</code>, <code>adminstudio_audit</code></td><td>The last 20 copies of all roles; the activity log</td></tr>
-		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_signins</code></td><td>Sign-in history, last 1,000 events: time, event, account, username tried, IP address, browser, and the administrator who acted</td></tr>
-		<tr><td>User meta</td><td><code>adminstudio_login_redirect</code></td><td>A person's own login destination, as a short token such as <code>profile</code>, <code>page:12</code> or <code>url:https://…</code></td></tr>
-		<tr><td>User meta</td><td><code>adminstudio_blocked</code>; <code>last_seen</code> added to WordPress's own <code>session_tokens</code></td><td>When and by whom an account was blocked; when each session was last active</td></tr>
-		<tr><td>Option (not autoloaded)</td><td><code>adminstudio_brand_palette</code></td><td>Colours read from the logo (with the logo address they came from) and from the front end (with the time they were read)</td></tr>
-		<tr><td>Option</td><td><code>adminstudio_look</code></td><td>Site template and palette, custom colours, templates per role, personal choice switch, sidebar sections and menu item labels, icons and order</td></tr>
-		<tr><td>User meta</td><td><code>adminstudio_toolbar</code>, <code>adminstudio_look_admin</code>, <code>adminstudio_look_self</code>, <code>adminstudio_look_try</code>, <code>adminstudio_look_mode</code></td><td>Per-user toolbar override; template set by an administrator; the user's own template; a template an administrator is trying; light, dark or system mode</td></tr>
-		<tr><td>Option</td><td><code>adminstudio_widgets</code>, <code>adminstudio_widgets_seen</code></td><td>Widget visibility per role, custom widgets and the default layout; the names of widgets other plugins add, so the settings page can list them</td></tr>
-		<tr><td>Transients</td><td><code>adminstudio_embed_*</code>, <code>adminstudio_import_file_*</code>, <code>adminstudio_import_*</code></td><td>Video widget embed code (a day); an uploaded settings file waiting on its review screen, per person (an hour, or until imported or cancelled); the result of an import, shown once to the person who ran it (ten minutes)</td></tr>
-		<tr><td>Cookie</td><td><code>adminstudio_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>
+		<tr><td>Files</td><td><code>wp-content/uploads/adminora/fonts/</code></td><td>Downloaded Google fonts</td></tr>
+		<tr><td>Option</td><td><code>adminora_admin_url</code>, <code>adminora_htaccess_backup</code>, <code>adminora_reapply_admin_url</code></td><td>Which dashboard address passed its test; the original .htaccess; a flag to re-test after activation</td></tr>
+		<tr><td>Files</td><td><code>.htaccess</code> block between <code># BEGIN Adminora</code> and <code># END Adminora</code></td><td>Rewrite rules for the custom dashboard address (Apache and LiteSpeed only)</td></tr>
+		<tr><td>Option</td><td><code>adminora_access</code>, <code>adminora_toolbar_nodes</code></td><td>Menu, toolbar, login redirect and dashboard access rules per role; the toolbar items last seen, so the settings page can list them</td></tr>
+		<tr><td>Option (not autoloaded)</td><td><code>adminora_role_backups</code>, <code>adminora_audit</code></td><td>The last 20 copies of all roles; the activity log</td></tr>
+		<tr><td>Option (not autoloaded)</td><td><code>adminora_signins</code></td><td>Sign-in history, last 1,000 events: time, event, account, username tried, IP address, browser, and the administrator who acted</td></tr>
+		<tr><td>User meta</td><td><code>adminora_login_redirect</code></td><td>A person's own login destination, as a short token such as <code>profile</code>, <code>page:12</code> or <code>url:https://…</code></td></tr>
+		<tr><td>User meta</td><td><code>adminora_blocked</code>; <code>last_seen</code> added to WordPress's own <code>session_tokens</code></td><td>When and by whom an account was blocked; when each session was last active</td></tr>
+		<tr><td>Option (not autoloaded)</td><td><code>adminora_brand_palette</code></td><td>Colours read from the logo (with the logo address they came from) and from the front end (with the time they were read)</td></tr>
+		<tr><td>Option</td><td><code>adminora_look</code></td><td>Site template and palette, custom colours, templates per role, personal choice switch, sidebar sections and menu item labels, icons and order</td></tr>
+		<tr><td>User meta</td><td><code>adminora_toolbar</code>, <code>adminora_look_admin</code>, <code>adminora_look_self</code>, <code>adminora_look_try</code>, <code>adminora_look_mode</code></td><td>Per-user toolbar override; template set by an administrator; the user's own template; a template an administrator is trying; light, dark or system mode</td></tr>
+		<tr><td>Option</td><td><code>adminora_widgets</code>, <code>adminora_widgets_seen</code></td><td>Widget visibility per role, custom widgets and the default layout; the names of widgets other plugins add, so the settings page can list them</td></tr>
+		<tr><td>Transients</td><td><code>adminora_embed_*</code>, <code>adminora_import_file_*</code>, <code>adminora_import_*</code></td><td>Video widget embed code (a day); an uploaded settings file waiting on its review screen, per person (an hour, or until imported or cancelled); the result of an import, shown once to the person who ran it (ten minutes)</td></tr>
+		<tr><td>Cookie</td><td><code>adminora_bypass</code></td><td>Lets a bypass-link visitor see the site during coming soon mode</td></tr>
 		<tr><td>Cookie</td><td>WordPress's dashboard login cookie, at the new address's path</td><td>A copy of the cookie WordPress scopes to <code>/wp-admin</code>, so the browser sends it to the custom dashboard address</td></tr>
 	</table>
 
@@ -694,24 +694,24 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Login wording</td><td><code>login_init</code>, then <code>gettext</code> (WordPress's own strings, on login screens only), <code>login_site_html_link</code>, <code>wp_login_errors</code></td></tr>
 		<tr><td>Tab and page details</td><td><code>admin_title</code>, <code>login_title</code>, <code>document_title_separator</code>, <code>document_title_parts</code>, <code>get_site_icon_url</code>, <code>do_faviconico</code>, <code>admin_head</code>, <code>wp_head</code>, <code>style_loader_src</code>, <code>script_loader_src</code>, <code>xmlrpc_enabled</code>, <code>xmlrpc_methods</code>, <code>wp_headers</code>, <code>rest_endpoints</code>, <code>wp_sitemaps_add_provider</code></td></tr>
 		<tr><td>Admin branding</td><td><code>admin_bar_menu</code>, <code>admin_footer_text</code>, <code>update_footer</code>, <code>admin_head</code>, <code>screen_options_show_screen</code>, <code>admin_init</code> (colour scheme), <code>user_register</code></td></tr>
-		<tr><td>Login protection</td><td><code>plugins_loaded</code>, <code>wp_loaded</code>, <code>site_url</code>, <code>network_site_url</code>, <code>wp_redirect</code>, <code>authenticate</code>, <code>wp_login</code>, <code>wp_login_failed</code>, <code>set_auth_cookie</code>, <code>send_auth_cookies</code>, <code>login_form_adminstudio_2fa</code>, profile and AJAX hooks; for the dashboard address <code>admin_url</code>, <code>site_url</code>, <code>wp_redirect</code>, <code>set_auth_cookie</code>, <code>clear_auth_cookie</code> and the <code>adminstudio_ping</code> AJAX action</td></tr>
+		<tr><td>Login protection</td><td><code>plugins_loaded</code>, <code>wp_loaded</code>, <code>site_url</code>, <code>network_site_url</code>, <code>wp_redirect</code>, <code>authenticate</code>, <code>wp_login</code>, <code>wp_login_failed</code>, <code>set_auth_cookie</code>, <code>send_auth_cookies</code>, <code>login_form_adminora_2fa</code>, profile and AJAX hooks; for the dashboard address <code>admin_url</code>, <code>site_url</code>, <code>wp_redirect</code>, <code>set_auth_cookie</code>, <code>clear_auth_cookie</code> and the <code>adminora_ping</code> AJAX action</td></tr>
 		<tr><td>Coming soon</td><td><code>template_redirect</code> (priority 1 to decide, 11 to show a built page after Elementor's own checks), <code>template_include</code>, <code>wp_robots</code>, <code>wp_before_admin_bar_render</code> and <code>wp_after_admin_bar_render</code> (to leave the toolbar's links alone), <code>admin_bar_menu</code></td></tr>
 		<tr><td>Roles and access</td><td><code>admin_menu</code> (menu access), <code>admin_init</code> (blocked screens and dashboard access), <code>login_redirect</code>, <code>show_admin_bar</code>, <code>wp_before_admin_bar_render</code> and <code>admin_bar_menu</code> (toolbar items), profile hooks</td></tr>
 		<tr><td>Dashboard widgets</td><td><code>wp_dashboard_setup</code> (priority 998 to record, 999 to hide and add), <code>get_user_option_meta-box-order_dashboard</code>, <code>get_user_option_closedpostboxes_dashboard</code>, <code>get_user_option_metaboxhidden_dashboard</code>, <code>wp_ajax_meta-box-order</code> (priority 0, for the lock)</td></tr>
-		<tr><td>Admin templates</td><td><code>admin_body_class</code>, <code>admin_enqueue_scripts</code>, <code>admin_menu</code> (labels), <code>custom_menu_order</code>, <code>menu_order</code>, <code>get_user_option_admin_color</code>, <code>admin_head-profile.php</code>, profile hooks, and the <code>adminstudio_look_mode</code> AJAX action</td></tr>
+		<tr><td>Admin templates</td><td><code>admin_body_class</code>, <code>admin_enqueue_scripts</code>, <code>admin_menu</code> (labels), <code>custom_menu_order</code>, <code>menu_order</code>, <code>get_user_option_admin_color</code>, <code>admin_head-profile.php</code>, profile hooks, and the <code>adminora_look_mode</code> AJAX action</td></tr>
 	</table>
 
 	<h2>24. Constants</h2>
 	<table>
 		<tr><th>Constant</th><th>Effect when set to true in wp-config.php</th></tr>
-		<tr><td><code>ADMINSTUDIO_DISABLE_LOGIN_URL</code></td><td>Turns off the custom login URL; wp-login.php works again</td></tr>
-		<tr><td><code>ADMINSTUDIO_DISABLE_2FA</code></td><td>Turns off two-factor checks at login</td></tr>
-		<tr><td><code>ADMINSTUDIO_DISABLE_ADMIN_URL</code></td><td>Turns off the custom dashboard address; /wp-admin works again</td></tr>
+		<tr><td><code>ADMINORA_DISABLE_LOGIN_URL</code></td><td>Turns off the custom login URL; wp-login.php works again</td></tr>
+		<tr><td><code>ADMINORA_DISABLE_2FA</code></td><td>Turns off two-factor checks at login</td></tr>
+		<tr><td><code>ADMINORA_DISABLE_ADMIN_URL</code></td><td>Turns off the custom dashboard address; /wp-admin works again</td></tr>
 	</table>
-	<p>Internal constants: <code>ADMINSTUDIO_VERSION</code>, <code>ADMINSTUDIO_FILE</code>, <code>ADMINSTUDIO_DIR</code>, <code>ADMINSTUDIO_URL</code>.</p>
+	<p>Internal constants: <code>ADMINORA_VERSION</code>, <code>ADMINORA_FILE</code>, <code>ADMINORA_DIR</code>, <code>ADMINORA_URL</code>.</p>
 
 	<h2>25. Drop-in files</h2>
-	<p>Drop-ins are regenerated at the end of any request that saves settings, and on activation. Each file contains a header with the signature "Admin Studio drop-in", sets the status code and headers, and prints a static copy of the page stored as a PHP string literal. Files are written through <code>WP_Filesystem</code> only when WordPress can write directly to disk. A file without the signature is never touched. All plugin-written drop-ins are deleted on deactivation.</p>
+	<p>Drop-ins are regenerated at the end of any request that saves settings, and on activation. Each file contains a header with the signature "Adminora drop-in", sets the status code and headers, and prints a static copy of the page stored as a PHP string literal. Files are written through <code>WP_Filesystem</code> only when WordPress can write directly to disk. A file without the signature is never touched. All plugin-written drop-ins are deleted on deactivation.</p>
 
 	<h2>26. Security model</h2>
 	<ul>
@@ -729,23 +729,23 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h2>27. WordPress.org compliance</h2>
 	<p>The release copy is checked with the official Plugin Check tool and with PHPCS (WordPress Coding Standards 3 and PHPCompatibility for PHP 7.4+). Current result: <span class="status">No errors, no warnings</span></p>
 	<table>
-		<tr><th>Rule</th><th>How Admin Studio meets it</th></tr>
+		<tr><th>Rule</th><th>How Adminora meets it</th></tr>
 		<tr><td>GPL compatible</td><td>GPLv2 or later; the QR code library is MIT</td></tr>
-		<tr><td>No restricted terms in name or slug</td><td>Renamed from "Advanced WP" to "Admin Studio" because "WP" is restricted</td></tr>
+		<tr><td>No restricted terms in name or slug</td><td>Renamed from "Advanced WP" to "Adminora" because "WP" is restricted</td></tr>
 		<tr><td>No trialware, no locked features</td><td>Everything is included</td></tr>
 		<tr><td>No tracking or calling home</td><td>Only the opt-in Google Fonts download and the video dashboard widget, both started by an administrator and documented in the readme's External services section with terms and privacy links</td></tr>
 		<tr><td>No front-end credit links</td><td>None. The author credit appears only on the plugin's settings page.</td></tr>
-		<tr><td>Don't hijack the dashboard</td><td>Admin Studio adds three notices outside its own page, each tied to something the person is doing: the two-factor reminder for required roles (gone once set up), the "you are trying a template" banner (gone with Stop trying) and a one-time result on the Users screen after signing someone out or blocking them (dismissible). No advertising.</td></tr>
+		<tr><td>Don't hijack the dashboard</td><td>Adminora adds three notices outside its own page, each tied to something the person is doing: the two-factor reminder for required roles (gone once set up), the "you are trying a template" banner (gone with Stop trying) and a one-time result on the Users screen after signing someone out or blocking them (dismissible). No advertising.</td></tr>
 		<tr><td>Human-readable code; no bundled core libraries</td><td>No minified or obfuscated code; uses WordPress's jQuery and PHPMailer</td></tr>
 		<tr><td>Escaping, sanitizing, nonces, no HEREDOC</td><td>Checked by PHPCS and by review; output is escaped where it is printed. Every form and AJAX handler checks a nonce and a capability; the few that do not need a capability only change the signed-in person's own choice (light or dark mode, two-factor setup) or only refuse a request.</td></tr>
-		<tr><td>Uninstall</td><td>Only when the owner ticks "Remove all Admin Studio data", <code>uninstall.php</code> deletes every option and user setting the plugin created, its fonts folder, and the brand colour scheme choice</td></tr>
+		<tr><td>Uninstall</td><td>Only when the owner ticks "Remove all Adminora data", <code>uninstall.php</code> deletes every option and user setting the plugin created, its fonts folder, and the brand colour scheme choice</td></tr>
 		<tr><td>Enqueue API for scripts and styles</td><td>All scripts and styles are enqueued or printed through core functions</td></tr>
 		<tr><td>Readme standard</td><td>Stable tag matches the version; tested up to 7.1; five tags; External services and Third-party libraries sections</td></tr>
 	</table>
 	<p>Last full pass: 24 October 2026. Plugin Check (all categories) and PHPCS report no errors; every form and AJAX handler was checked for a nonce and a capability, every remote request and admin notice was reviewed, and no style in the plugin draws a border on one side only.</p>
 
 	<h2>28. Release, brand assets and these documents</h2>
-	<p>The release zip contains everything except the files listed in <code>.distignore</code> (also marked <code>export-ignore</code> in <code>.gitattributes</code>): development notes, the <code>docs</code> folder and the <code>.wordpress-org</code> folder. The folder inside the zip must be named <code>admin-studio</code>.</p>
+	<p>The release zip contains everything except the files listed in <code>.distignore</code> (also marked <code>export-ignore</code> in <code>.gitattributes</code>): development notes, the <code>docs</code> folder and the <code>.wordpress-org</code> folder. The folder inside the zip must be named <code>adminora</code>.</p>
 	<h3>Logo and directory assets</h3>
 	<p>The logo is an abstract dashboard: a cobalt sidebar with a lime active item beside two cards, on a navy rounded square. The plugin uses <code>assets/images/logo.svg</code> on its settings page. The WordPress.org directory files live in <code>.wordpress-org/</code> and are uploaded to the SVN <code>assets</code> folder, not the plugin zip:</p>
 	<table>
@@ -757,7 +757,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h3>This document</h3>
 	<p>This PDF is built from <code>docs/documentation.html</code> by <code>docs/build-pdf.js</code>, which prints the page with the Chromium browser that Playwright provides: <code>node docs/build-pdf.js</code>. The documentation is updated in the same change as every feature change.</p>
 	<h3>Translation template</h3>
-	<p><code>languages/admin-studio.pot</code> is regenerated with <code>wp i18n make-pot . languages/admin-studio.pot --slug=admin-studio --domain=admin-studio --exclude=docs</code> whenever strings change.</p>
+	<p><code>languages/adminora.pot</code> is regenerated with <code>wp i18n make-pot . languages/adminora.pot --slug=adminora --domain=adminora --exclude=docs</code> whenever strings change.</p>
 
 </section>
 

@@ -2,40 +2,40 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Admin Studio 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/admin-studio\n"
+"Project-Id-Version: Adminora 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/adminora\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-29T09:03:23+00:00\n"
+"POT-Creation-Date: 2026-10-29T09:10:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
-"X-Domain: admin-studio\n"
+"X-Domain: adminora\n"
 
 #. Plugin Name of the plugin
-#: admin-studio.php
+#: adminora.php
 #: includes/admin/class-admin.php:113
 #: includes/admin/class-admin.php:114
 #: includes/admin/class-admin.php:180
 #: includes/customizer/class-customizer.php:69
 #: includes/modules/sessions/class-sessions.php:521
-msgid "Admin Studio"
+msgid "Adminora"
 msgstr ""
 
 #. Description of the plugin
-#: admin-studio.php
+#: adminora.php
 msgid "Rebrand the login page, system emails, error pages, browser tab details and admin dashboard, using your theme's colours by default."
 msgstr ""
 
 #. Author of the plugin
-#: admin-studio.php
+#: adminora.php
 msgid "Láyò"
 msgstr ""
 
 #. Author URI of the plugin
-#: admin-studio.php
+#: adminora.php
 msgid "https://www.layothedeveloper.com"
 msgstr ""
 
@@ -128,13 +128,13 @@ msgid "Your home page could not be read here, possibly because a security settin
 msgstr ""
 
 #: includes/admin/class-admin.php:183
-msgid "Admin Studio sections"
+msgid "Adminora sections"
 msgstr ""
 
 #. translators: %s: author name linked to their website.
 #: includes/admin/class-admin.php:195
 #, php-format
-msgid "Admin Studio by %s"
+msgid "Adminora by %s"
 msgstr ""
 
 #: includes/admin/class-admin.php:255
@@ -163,7 +163,7 @@ msgid "Import cancelled. Nothing was changed."
 msgstr ""
 
 #: includes/admin/class-admin.php:261
-msgid "That file is not a valid Admin Studio export."
+msgid "That file is not a valid Adminora export."
 msgstr ""
 
 #: includes/admin/class-admin.php:262
@@ -331,7 +331,7 @@ msgid "Active"
 msgstr ""
 
 #: includes/admin/class-admin.php:873
-msgid "Another plugin or your host already uses this file. Admin Studio leaves it alone."
+msgid "Another plugin or your host already uses this file. Adminora leaves it alone."
 msgstr ""
 
 #: includes/admin/class-admin.php:874
@@ -1370,7 +1370,7 @@ msgid "Uninstall"
 msgstr ""
 
 #: includes/admin/class-tabs.php:244
-msgid "Remove all Admin Studio data when the plugin is deleted"
+msgid "Remove all Adminora data when the plugin is deleted"
 msgstr ""
 
 #: includes/admin/class-tabs.php:244
@@ -1803,11 +1803,11 @@ msgid "Custom dashboard address"
 msgstr ""
 
 #: includes/admin/class-tabs.php:504
-msgid "Moves the dashboard from /wp-admin to an address you choose. Logged-out visitors who open /wp-admin get a \"page not found\" page; logged-in users are moved to the new address, so old links keep working. If you ever get locked out, add <code>define( 'ADMINSTUDIO_DISABLE_ADMIN_URL', true );</code> to wp-config.php."
+msgid "Moves the dashboard from /wp-admin to an address you choose. Logged-out visitors who open /wp-admin get a \"page not found\" page; logged-in users are moved to the new address, so old links keep working. If you ever get locked out, add <code>define( 'ADMINORA_DISABLE_ADMIN_URL', true );</code> to wp-config.php."
 msgstr ""
 
 #: includes/admin/class-tabs.php:508
-msgid "Not available: this needs a single site (not multisite), and the ADMINSTUDIO_DISABLE_ADMIN_URL constant must not be set."
+msgid "Not available: this needs a single site (not multisite), and the ADMINORA_DISABLE_ADMIN_URL constant must not be set."
 msgstr ""
 
 #: includes/admin/class-tabs.php:517
@@ -1856,7 +1856,7 @@ msgid "Custom login URL"
 msgstr ""
 
 #: includes/admin/class-tabs.php:583
-msgid "Moves the login page so bots stop hammering wp-login.php. If you ever get locked out, add <code>define( 'ADMINSTUDIO_DISABLE_LOGIN_URL', true );</code> to wp-config.php."
+msgid "Moves the login page so bots stop hammering wp-login.php. If you ever get locked out, add <code>define( 'ADMINORA_DISABLE_LOGIN_URL', true );</code> to wp-config.php."
 msgstr ""
 
 #: includes/admin/class-tabs.php:587
@@ -1959,7 +1959,7 @@ msgid "Two-factor authentication"
 msgstr ""
 
 #: includes/admin/class-tabs.php:642
-msgid "Users turn it on from their profile with an authenticator app or email codes, and get one-time backup codes. If you get locked out, add <code>define( 'ADMINSTUDIO_DISABLE_2FA', true );</code> to wp-config.php."
+msgid "Users turn it on from their profile with an authenticator app or email codes, and get one-time backup codes. If you get locked out, add <code>define( 'ADMINORA_DISABLE_2FA', true );</code> to wp-config.php."
 msgstr ""
 
 #: includes/admin/class-tabs.php:645
@@ -2251,7 +2251,7 @@ msgid "Export"
 msgstr ""
 
 #: includes/admin/class-tabs.php:926
-msgid "Download Admin Studio's settings as a JSON file to copy them to another site."
+msgid "Download Adminora's settings as a JSON file to copy them to another site."
 msgstr ""
 
 #: includes/admin/class-tabs.php:930
@@ -2327,7 +2327,7 @@ msgstr ""
 msgid "Overlapping plugins"
 msgstr ""
 
-#. translators: 1: plugin name, 2: Admin Studio feature name.
+#. translators: 1: plugin name, 2: Adminora feature name.
 #: includes/admin/class-tabs.php:1019
 #, php-format
 msgid "%1$s does similar things to the %2$s feature. Use one or the other to avoid surprises."
@@ -3729,7 +3729,7 @@ msgid "Low contrast (%s:1). Text may be hard to read. Aim for at least 4.5:1."
 msgstr ""
 
 #: includes/modules/admin-branding/class-admin-branding.php:160
-msgid "Brand (Admin Studio)"
+msgid "Brand (Adminora)"
 msgstr ""
 
 #: includes/modules/admin-look/class-admin-look.php:99
@@ -4405,7 +4405,7 @@ msgid "Delete plugins."
 msgstr ""
 
 #: includes/modules/roles/class-capabilities.php:97
-msgid "Change site settings, including Admin Studio."
+msgid "Change site settings, including Adminora."
 msgstr ""
 
 #: includes/modules/roles/class-capabilities.php:98
@@ -4465,7 +4465,7 @@ msgid "Go to"
 msgstr ""
 
 #: includes/modules/roles/class-redirects.php:248
-msgid "Overrides the destination set for their role under Settings → Admin Studio → Roles & permissions → Login and access. \"Default\" uses the role's setting."
+msgid "Overrides the destination set for their role under Settings → Adminora → Roles & permissions → Login and access. \"Default\" uses the role's setting."
 msgstr ""
 
 #: includes/modules/roles/class-role-manager.php:151

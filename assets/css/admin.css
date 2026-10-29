@@ -1,48 +1,48 @@
-/* Admin Studio settings page and profile screen. */
+/* Adminora settings page and profile screen. */
 
-.adminstudio-wrap .adminstudio-title {
+.adminora-wrap .adminora-title {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
 
-.adminstudio-wrap .adminstudio-title img {
+.adminora-wrap .adminora-title img {
 	display: block;
 	border-radius: 8px;
 }
 
-.adminstudio-wrap .adminstudio-tab {
+.adminora-wrap .adminora-tab {
 	max-width: 1100px;
 }
 
-.adminstudio-wrap .adminstudio-intro {
+.adminora-wrap .adminora-intro {
 	max-width: 720px;
 	color: #50575e;
 }
 
-.adminstudio-wrap .adminstudio-intro .button {
+.adminora-wrap .adminora-intro .button {
 	margin-left: 4px;
 	vertical-align: baseline;
 }
 
-.adminstudio-wrap h2.title {
+.adminora-wrap h2.title {
 	margin: 32px 0 4px;
 	font-size: 15px;
 }
 
-.adminstudio-wrap .adminstudio-tab > h2.title:first-child,
-.adminstudio-wrap .adminstudio-tab > form > h2.title:first-of-type,
-.adminstudio-wrap .adminstudio-subnav + h2.title,
-.adminstudio-wrap .adminstudio-subnav + form > h2.title:first-of-type {
+.adminora-wrap .adminora-tab > h2.title:first-child,
+.adminora-wrap .adminora-tab > form > h2.title:first-of-type,
+.adminora-wrap .adminora-subnav + h2.title,
+.adminora-wrap .adminora-subnav + form > h2.title:first-of-type {
 	margin-top: 20px;
 }
 
-.adminstudio-wrap h2.title + .adminstudio-intro {
+.adminora-wrap h2.title + .adminora-intro {
 	margin: 0 0 10px;
 }
 
 /* Each settings section is a card: heading and description above, fields inside. */
-.adminstudio-wrap .adminstudio-tab .form-table {
+.adminora-wrap .adminora-tab .form-table {
 	border-collapse: separate;
 	border-spacing: 0;
 	margin: 10px 0 8px;
@@ -52,29 +52,29 @@
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminstudio-wrap .adminstudio-tab .form-table th {
+.adminora-wrap .adminora-tab .form-table th {
 	width: 220px;
 	padding: 18px 12px 18px 24px;
 }
 
-.adminstudio-wrap .adminstudio-tab .form-table td {
+.adminora-wrap .adminora-tab .form-table td {
 	padding: 14px 24px 14px 12px;
 }
 
-.adminstudio-wrap .adminstudio-tab .form-table tr:first-child > * {
+.adminora-wrap .adminora-tab .form-table tr:first-child > * {
 	padding-top: 22px;
 }
 
-.adminstudio-wrap .adminstudio-tab .form-table tr:last-child > * {
+.adminora-wrap .adminora-tab .form-table tr:last-child > * {
 	padding-bottom: 22px;
 }
 
-.adminstudio-wrap .adminstudio-tab .submit {
+.adminora-wrap .adminora-tab .submit {
 	margin-top: 8px;
 }
 
 /* A panel with text on the left and an action on the right. */
-.adminstudio-panel {
+.adminora-panel {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -88,31 +88,31 @@
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminstudio-panel h2 {
+.adminora-panel h2 {
 	margin: 0 0 4px;
 	font-size: 15px;
 }
 
-.adminstudio-panel p {
+.adminora-panel p {
 	margin: 0;
 	max-width: 640px;
 	color: var(--as-muted, #50575e);
 }
 
 /* Overview: one small card per feature. */
-.adminstudio-wrap .adminstudio-tab .form-table.adminstudio-modules {
+.adminora-wrap .adminora-tab .form-table.adminora-modules {
 	border: 0;
 	background: transparent;
 	box-shadow: none;
 }
 
-.adminstudio-modules tbody {
+.adminora-modules tbody {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	gap: 12px;
 }
 
-.adminstudio-wrap .adminstudio-tab .adminstudio-modules tr {
+.adminora-wrap .adminora-tab .adminora-modules tr {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
@@ -123,99 +123,99 @@
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminstudio-wrap .adminstudio-tab .form-table.adminstudio-modules tr > th,
-.adminstudio-wrap .adminstudio-tab .form-table.adminstudio-modules tr > td {
+.adminora-wrap .adminora-tab .form-table.adminora-modules tr > th,
+.adminora-wrap .adminora-tab .form-table.adminora-modules tr > td {
 	display: block;
 	width: auto;
 	padding: 0;
 }
 
-.adminstudio-modules th {
+.adminora-modules th {
 	font-size: 14px;
 }
 
-.adminstudio-modules td .description {
+.adminora-modules td .description {
 	margin-top: 6px;
 }
 
-.adminstudio-wrap .adminstudio-modules .description .button {
+.adminora-wrap .adminora-modules .description .button {
 	display: table;
 	margin: 10px 0 0;
 }
 
 @media screen and (max-width: 782px) {
-	.adminstudio-wrap .adminstudio-tab .form-table th,
-	.adminstudio-wrap .adminstudio-tab .form-table td {
+	.adminora-wrap .adminora-tab .form-table th,
+	.adminora-wrap .adminora-tab .form-table td {
 		padding-left: 16px;
 		padding-right: 16px;
 	}
 
-	.adminstudio-wrap .adminstudio-tab .form-table td {
+	.adminora-wrap .adminora-tab .form-table td {
 		padding-top: 4px;
 	}
 }
 
-.adminstudio-wrap .form-table .description .button {
+.adminora-wrap .form-table .description .button {
 	margin-left: 4px;
 }
 
-.adminstudio-wrap .adminstudio-check {
+.adminora-wrap .adminora-check {
 	display: inline-block;
 	min-width: 200px;
 	margin: 0 16px 8px 0;
 }
 
-.adminstudio-wrap .adminstudio-prefix {
+.adminora-wrap .adminora-prefix {
 	padding: 6px 2px 6px 8px;
 	background: transparent;
 	color: #50575e;
 }
 
-.adminstudio-wrap .adminstudio-slug {
+.adminora-wrap .adminora-slug {
 	max-width: 16em;
 }
 
-.adminstudio-wrap [data-adminstudio-show-if][hidden] {
+.adminora-wrap [data-adminora-show-if][hidden] {
 	display: none;
 }
 
 /* Notices: an even border all round, no thick side stripe. */
-.adminstudio-wrap .notice,
-.adminstudio-notice {
+.adminora-wrap .notice,
+.adminora-notice {
 	border: 1px solid #c3c4c7;
 	border-radius: 4px;
 	box-shadow: none;
 }
 
-.adminstudio-wrap .notice-success,
-.adminstudio-notice.notice-success {
+.adminora-wrap .notice-success,
+.adminora-notice.notice-success {
 	background: #edfaef;
 	border-color: #68de7c;
 }
 
-.adminstudio-wrap .notice-warning,
-.adminstudio-notice.notice-warning {
+.adminora-wrap .notice-warning,
+.adminora-notice.notice-warning {
 	background: #fcf9e8;
 	border-color: #dba617;
 }
 
-.adminstudio-wrap .notice-error,
-.adminstudio-notice.notice-error {
+.adminora-wrap .notice-error,
+.adminora-notice.notice-error {
 	background: #fcf0f1;
 	border-color: #f86368;
 }
 
-.adminstudio-wrap .notice-info,
-.adminstudio-notice.notice-info {
+.adminora-wrap .notice-info,
+.adminora-notice.notice-info {
 	background: #f0f6fc;
 	border-color: #72aee6;
 }
 
-.adminstudio-wrap .notice.inline {
+.adminora-wrap .notice.inline {
 	margin: 16px 0;
 }
 
-.adminstudio-wrap .adminstudio-code {
+.adminora-wrap .adminora-code {
 	max-width: 760px;
 	margin: 8px 0 12px;
 	padding: 12px 14px;
@@ -228,7 +228,7 @@
 	white-space: pre;
 }
 
-.adminstudio-wrap .adminstudio-actions {
+.adminora-wrap .adminora-actions {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
@@ -237,7 +237,7 @@
 
 /* Sub-navigation inside a tab. With the WordPress default look it matches
    core's own sub-navigation (as on the Posts screen: All | Published). */
-.adminstudio-subnav ul {
+.adminora-subnav ul {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -246,29 +246,29 @@
 	color: #646970;
 }
 
-.adminstudio-subnav li {
+.adminora-subnav li {
 	margin: 0;
 }
 
-.adminstudio-subnav li + li::before {
+.adminora-subnav li + li::before {
 	content: "|";
 	padding: 0 6px;
 	color: #a7aaad;
 }
 
-.adminstudio-subnav a {
+.adminora-subnav a {
 	display: inline-block;
 	padding: 2px 0;
 	line-height: 2;
 	text-decoration: none;
 }
 
-.adminstudio-subnav a.is-current {
+.adminora-subnav a.is-current {
 	color: #000;
 	font-weight: 600;
 }
 
-.adminstudio-subnav a:focus-visible {
+.adminora-subnav a:focus-visible {
 	outline: 2px solid #2271b1;
 	outline-offset: 1px;
 	border-radius: 2px;
@@ -277,57 +277,57 @@
 
 /* With an admin template the tabs above are one segmented bar, so the
    sections stay plain text links: a quieter second level, not more pills. */
-body.adminstudio-look .adminstudio-subnav ul {
+body.adminora-look .adminora-subnav ul {
 	gap: 4px 20px;
 	margin: 18px 0 10px;
 }
 
-body.adminstudio-look .adminstudio-subnav li + li::before {
+body.adminora-look .adminora-subnav li + li::before {
 	content: none;
 }
 
-body.adminstudio-look .adminstudio-subnav a {
+body.adminora-look .adminora-subnav a {
 	color: var(--as-muted);
 	font-weight: 500;
 }
 
-body.adminstudio-look .adminstudio-subnav a:hover,
-body.adminstudio-look .adminstudio-subnav a:focus {
+body.adminora-look .adminora-subnav a:hover,
+body.adminora-look .adminora-subnav a:focus {
 	color: var(--as-text);
 }
 
-body.adminstudio-look .adminstudio-subnav a.is-current {
+body.adminora-look .adminora-subnav a.is-current {
 	color: var(--as-accent-text);
 	font-weight: 600;
 }
 
-body.adminstudio-look .adminstudio-subnav a:focus-visible {
+body.adminora-look .adminora-subnav a:focus-visible {
 	outline-color: var(--as-accent);
 	border-radius: 4px;
 }
 
-body.adminstudio-look .adminstudio-badge {
+body.adminora-look .adminora-badge {
 	background: var(--as-surface-2);
 	color: var(--as-muted);
 }
 
 /* Roles. */
-.adminstudio-row-actions {
+.adminora-row-actions {
 	text-align: right;
 }
 
-.adminstudio-caps-toolbar {
+.adminora-caps-toolbar {
 	margin: 16px 0;
 }
 
-.adminstudio-cap-groups {
+.adminora-cap-groups {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: 16px;
 	max-width: 1100px;
 }
 
-.adminstudio-cap-group {
+.adminora-cap-group {
 	background: #fff;
 	border: 1px solid #dcdcde;
 	border-radius: 8px;
@@ -335,61 +335,61 @@ body.adminstudio-look .adminstudio-badge {
 	margin: 0;
 }
 
-.adminstudio-cap-group legend {
+.adminora-cap-group legend {
 	padding: 0 6px;
 	font-weight: 600;
 	font-size: 14px;
 }
 
-.adminstudio-cap-all {
+.adminora-cap-all {
 	margin: 0 0 8px;
 	text-align: right;
 }
 
-.adminstudio-cap {
+.adminora-cap {
 	display: flex;
 	gap: 8px;
 	align-items: flex-start;
 	padding: 4px 0;
 }
 
-.adminstudio-cap input {
+.adminora-cap input {
 	margin-top: 2px;
 }
 
-.adminstudio-cap span {
+.adminora-cap span {
 	display: grid;
 }
 
-.adminstudio-cap code {
+.adminora-cap code {
 	background: none;
 	padding: 0;
 	font-size: 12px;
 }
 
-.adminstudio-cap small {
+.adminora-cap small {
 	color: #646970;
 }
 
-.adminstudio-cap[hidden],
-.adminstudio-cap-group[hidden],
-.adminstudio-menu-group[hidden],
-.adminstudio-menu-group li[hidden] {
+.adminora-cap[hidden],
+.adminora-cap-group[hidden],
+.adminora-menu-group[hidden],
+.adminora-menu-group li[hidden] {
 	display: none;
 }
 
-.adminstudio-caps-select {
+.adminora-caps-select {
 	min-width: 320px;
 }
 
 /* Menu access: one small card per menu, flowing into columns. */
-.adminstudio-menu-groups {
+.adminora-menu-groups {
 	columns: 260px auto;
 	column-gap: 16px;
 	margin: 16px 0;
 }
 
-.adminstudio-menu-group {
+.adminora-menu-group {
 	break-inside: avoid;
 	margin: 0 0 16px;
 	padding: 10px 0 8px;
@@ -399,29 +399,29 @@ body.adminstudio-look .adminstudio-badge {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminstudio-menu-group ul {
+.adminora-menu-group ul {
 	margin: 4px 0 0;
 }
 
-.adminstudio-menu-group li {
+.adminora-menu-group li {
 	margin: 0;
 }
 
-.adminstudio-menu-group label {
+.adminora-menu-group label {
 	display: block;
 	padding: 4px 14px;
 }
 
-.adminstudio-menu-group__top {
+.adminora-menu-group__top {
 	font-weight: 600;
 }
 
-.adminstudio-menu-group ul label {
+.adminora-menu-group ul label {
 	padding-left: 38px;
 	color: #50575e;
 }
 
-.adminstudio-menu-tools {
+.adminora-menu-tools {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -429,7 +429,7 @@ body.adminstudio-look .adminstudio-badge {
 	margin: 16px 0 0;
 }
 
-.adminstudio-menu-tools input[type="search"] {
+.adminora-menu-tools input[type="search"] {
 	min-width: 240px;
 }
 
@@ -437,7 +437,7 @@ body.adminstudio-look .adminstudio-badge {
  * Tables match the cards: same width, corners, border and shadow. A wide
  * table scrolls sideways inside its frame, with the first column fixed.
  */
-.adminstudio-wrap .adminstudio-tab table.widefat {
+.adminora-wrap .adminora-tab table.widefat {
 	border-collapse: separate;
 	border-spacing: 0;
 	border: 1px solid var(--as-border, #dcdcde);
@@ -446,7 +446,7 @@ body.adminstudio-look .adminstudio-badge {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminstudio-table-scroll {
+.adminora-table-scroll {
 	max-width: 100%;
 	margin: 10px 0 8px;
 	overflow-x: auto;
@@ -456,12 +456,12 @@ body.adminstudio-look .adminstudio-badge {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminstudio-table-scroll:focus-visible {
+.adminora-table-scroll:focus-visible {
 	outline: 2px solid #2271b1;
 	outline-offset: 2px;
 }
 
-.adminstudio-wrap .adminstudio-tab .adminstudio-table-scroll > table.widefat {
+.adminora-wrap .adminora-tab .adminora-table-scroll > table.widefat {
 	min-width: 100%;
 	border: 0;
 	border-radius: 0;
@@ -469,20 +469,20 @@ body.adminstudio-look .adminstudio-badge {
 	overflow: visible;
 }
 
-.adminstudio-matrix th,
-.adminstudio-matrix td {
+.adminora-matrix th,
+.adminora-matrix td {
 	vertical-align: middle;
 }
 
-.adminstudio-matrix tbody td {
+.adminora-matrix tbody td {
 	text-align: center;
 }
 
-.adminstudio-matrix tbody td input[type="checkbox"] {
+.adminora-matrix tbody td input[type="checkbox"] {
 	margin: 0;
 }
 
-.adminstudio-matrix thead th {
+.adminora-matrix thead th {
 	min-width: 84px;
 	max-width: 140px;
 	padding: 10px 8px;
@@ -492,7 +492,7 @@ body.adminstudio-look .adminstudio-badge {
 	vertical-align: bottom;
 }
 
-.adminstudio-matrix thead th[scope="colgroup"] {
+.adminora-matrix thead th[scope="colgroup"] {
 	max-width: none;
 	padding: 12px 8px 10px 16px;
 	text-align: left;
@@ -504,13 +504,13 @@ body.adminstudio-look .adminstudio-badge {
 	font-size: 11px;
 }
 
-.adminstudio-matrix thead tr + tr th {
+.adminora-matrix thead tr + tr th {
 	background: var(--as-surface-2, #f6f7f7);
 }
 
 /* The first column stays put while the rest scrolls. */
-.adminstudio-matrix > tbody > tr > :first-child,
-.adminstudio-matrix > thead > tr:first-child > :first-child {
+.adminora-matrix > tbody > tr > :first-child,
+.adminora-matrix > thead > tr:first-child > :first-child {
 	position: sticky;
 	left: 0;
 	z-index: 1;
@@ -524,27 +524,27 @@ body.adminstudio-look .adminstudio-badge {
 }
 
 /* Group labels stay readable just after the fixed column. */
-.adminstudio-matrix__group {
+.adminora-matrix__group {
 	position: sticky;
 	left: 206px;
 }
 
-.adminstudio-matrix.striped > tbody > :nth-child(odd) > :first-child {
+.adminora-matrix.striped > tbody > :nth-child(odd) > :first-child {
 	background: var(--as-surface-2, #f6f7f7);
 }
 
-.adminstudio-matrix > thead > tr:first-child > :first-child {
+.adminora-matrix > thead > tr:first-child > :first-child {
 	z-index: 2;
 	vertical-align: bottom;
 }
 
 /* Admin templates give table headers their own tint. */
-body.adminstudio-look .adminstudio-matrix > thead > tr > th {
+body.adminora-look .adminora-matrix > thead > tr > th {
 	background: var(--as-surface-2);
 }
 
 /* Emails tab. */
-.adminstudio-emails {
+.adminora-emails {
 	display: grid;
 	grid-template-columns: 240px minmax(0, 1fr);
 	gap: 24px;
@@ -552,7 +552,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin-top: 16px;
 }
 
-.adminstudio-emails__list {
+.adminora-emails__list {
 	background: #fff;
 	border: 1px solid #dcdcde;
 	border-radius: 4px;
@@ -561,7 +561,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	top: 48px;
 }
 
-.adminstudio-emails__list h3 {
+.adminora-emails__list h3 {
 	margin: 12px 16px 4px;
 	font-size: 11px;
 	font-weight: 600;
@@ -570,15 +570,15 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	color: #646970;
 }
 
-.adminstudio-emails__list ul {
+.adminora-emails__list ul {
 	margin: 0;
 }
 
-.adminstudio-emails__list li {
+.adminora-emails__list li {
 	margin: 0;
 }
 
-.adminstudio-emails__list a {
+.adminora-emails__list a {
 	display: block;
 	padding: 8px 16px;
 	text-decoration: none;
@@ -587,23 +587,23 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	border-radius: 4px;
 }
 
-.adminstudio-emails__list a:hover {
+.adminora-emails__list a:hover {
 	background: #f6f7f7;
 	color: #135e96;
 }
 
-.adminstudio-emails__list a.is-current {
+.adminora-emails__list a.is-current {
 	background: #f0f6fc;
 	color: #135e96;
 	font-weight: 600;
 }
 
-.adminstudio-emails__list a:focus {
+.adminora-emails__list a:focus {
 	box-shadow: inset 0 0 0 2px #2271b1;
 	outline: 2px solid transparent;
 }
 
-.adminstudio-emails__editor {
+.adminora-emails__editor {
 	background: #fff;
 	border: 1px solid #dcdcde;
 	border-radius: 4px;
@@ -611,11 +611,11 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	min-width: 0;
 }
 
-.adminstudio-emails__editor .form-table th {
+.adminora-emails__editor .form-table th {
 	width: 140px;
 }
 
-.adminstudio-badge {
+.adminora-badge {
 	display: inline-block;
 	margin-left: 4px;
 	padding: 0 6px;
@@ -627,17 +627,17 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	line-height: 18px;
 }
 
-.adminstudio-tags {
+.adminora-tags {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 6px;
 }
 
-.adminstudio-tags .button {
+.adminora-tags .button {
 	font-family: Consolas, Monaco, monospace;
 }
 
-.adminstudio-inline-forms {
+.adminora-inline-forms {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -646,7 +646,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin-top: 8px;
 }
 
-.adminstudio-inline-form {
+.adminora-inline-form {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -654,117 +654,117 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 }
 
 /* Tools and status. */
-.adminstudio-status th {
+.adminora-status th {
 	width: 320px;
 }
 
-.adminstudio-state--active {
+.adminora-state--active {
 	color: #00a32a;
 	font-weight: 600;
 }
 
-.adminstudio-state--conflict,
-.adminstudio-state--unwritable {
+.adminora-state--conflict,
+.adminora-state--unwritable {
 	color: #b32d2e;
 }
 
-.adminstudio-swatches {
+.adminora-swatches {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 12px;
 }
 
-.adminstudio-swatch {
+.adminora-swatch {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
 }
 
-.adminstudio-swatch__chip {
+.adminora-swatch__chip {
 	width: 18px;
 	height: 18px;
 	border-radius: 4px;
 	border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-.adminstudio-conflicts {
+.adminora-conflicts {
 	margin: 0;
 }
 
-.adminstudio-log {
+.adminora-log {
 	margin-bottom: 8px;
 }
 
-.adminstudio-log form {
+.adminora-log form {
 	margin: 0;
 }
 
-.adminstudio-copyable {
+.adminora-copyable {
 	display: inline-block;
 	padding: 6px 8px;
 	user-select: all;
 	word-break: break-all;
 }
 
-.adminstudio-credit {
+.adminora-credit {
 	margin-top: 32px;
 	color: #646970;
 }
 
 /* Two-factor on the profile screen. */
-.adminstudio-2fa-qr {
+.adminora-2fa-qr {
 	display: inline-block;
 	padding: 8px;
 	background: #fff;
 	border: 1px solid #dcdcde;
 }
 
-.adminstudio-2fa-qr svg {
+.adminora-2fa-qr svg {
 	display: block;
 }
 
-.adminstudio-2fa-secret {
+.adminora-2fa-secret {
 	user-select: all;
 	word-break: break-all;
 }
 
-.adminstudio-2fa-codes {
+.adminora-2fa-codes {
 	columns: 2;
 	max-width: 22em;
 	font-family: Consolas, Monaco, monospace;
 	font-size: 14px;
 }
 
-#adminstudio-2fa-code {
+#adminora-2fa-code {
 	max-width: 10em;
 }
 
-.adminstudio-2fa-panel {
+.adminora-2fa-panel {
 	margin: 16px 0;
 }
 
-.adminstudio-2fa-message:empty {
+.adminora-2fa-message:empty {
 	display: none;
 }
 
 @media (max-width: 960px) {
-	.adminstudio-emails {
+	.adminora-emails {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.adminstudio-emails__list {
+	.adminora-emails__list {
 		position: static;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.adminstudio-wrap * {
+	.adminora-wrap * {
 		transition-duration: 1ms !important;
 	}
 }
 
 /* Dashboard look: template cards. */
-.adminstudio-templates {
+.adminora-templates {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
 	gap: 14px;
@@ -772,7 +772,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin: 12px 0 8px;
 }
 
-.adminstudio-template {
+.adminora-template {
 	display: grid;
 	gap: 10px;
 	align-content: start;
@@ -782,37 +782,37 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	background: #fff;
 }
 
-.adminstudio-template.is-selected {
+.adminora-template.is-selected {
 	border-color: var(--as-accent, #2271b1);
 	box-shadow: 0 0 0 1px var(--as-accent, #2271b1);
 }
 
-.adminstudio-template .button {
+.adminora-template .button {
 	justify-self: start;
 }
 
-.adminstudio-template__pick {
+.adminora-template__pick {
 	display: grid;
 	gap: 4px;
 	cursor: pointer;
 }
 
-.adminstudio-template__pick input {
+.adminora-template__pick input {
 	position: absolute;
 	opacity: 0;
 }
 
-.adminstudio-template__pick:has(input:focus-visible) .adminstudio-thumb {
+.adminora-template__pick:has(input:focus-visible) .adminora-thumb {
 	outline: 2px solid var(--as-accent, #2271b1);
 	outline-offset: 2px;
 }
 
-.adminstudio-template__pick small {
+.adminora-template__pick small {
 	color: #646970;
 	line-height: 1.4;
 }
 
-.adminstudio-thumb {
+.adminora-thumb {
 	position: relative;
 	display: block;
 	height: 96px;
@@ -823,14 +823,14 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	background: var(--t-bg);
 }
 
-.adminstudio-thumb i {
+.adminora-thumb i {
 	position: absolute;
 	inset: 0 auto 0 0;
 	width: 30%;
 	background: var(--t-side) linear-gradient(var(--t-side-text), var(--t-side-text)) no-repeat 8px 12px / 50% 3px;
 }
 
-.adminstudio-thumb i::after {
+.adminora-thumb i::after {
 	content: "";
 	position: absolute;
 	left: 6px;
@@ -841,16 +841,16 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	background: var(--t-accent);
 }
 
-.adminstudio-thumb--minimal i::after,
-.adminstudio-thumb--default i::after {
+.adminora-thumb--minimal i::after,
+.adminora-thumb--default i::after {
 	border-radius: 2px;
 }
 
-.adminstudio-thumb--compact i {
+.adminora-thumb--compact i {
 	width: 14%;
 }
 
-.adminstudio-thumb b {
+.adminora-thumb b {
 	position: absolute;
 	left: 36%;
 	right: 8px;
@@ -860,28 +860,28 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	background: var(--t-card);
 }
 
-.adminstudio-thumb--compact b {
+.adminora-thumb--compact b {
 	left: 20%;
 }
 
-.adminstudio-thumb b:nth-of-type(1) { top: 12px; }
-.adminstudio-thumb b:nth-of-type(2) { top: 40px; }
-.adminstudio-thumb b:nth-of-type(3) { top: 68px; right: 40%; }
+.adminora-thumb b:nth-of-type(1) { top: 12px; }
+.adminora-thumb b:nth-of-type(2) { top: 40px; }
+.adminora-thumb b:nth-of-type(3) { top: 68px; right: 40%; }
 
-.adminstudio-palettes,
-.adminstudio-colors {
+.adminora-palettes,
+.adminora-colors {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px 16px;
 }
 
-.adminstudio-palette {
+.adminora-palette {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
 }
 
-.adminstudio-palette__dot {
+.adminora-palette__dot {
 	width: 16px;
 	height: 16px;
 	border-radius: 999px;
@@ -889,19 +889,19 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
-.adminstudio-colors .regular-text {
+.adminora-colors .regular-text {
 	width: 9em;
 }
 
 /* Sortable lists. */
-.adminstudio-sortable {
+.adminora-sortable {
 	max-width: 900px;
 	margin: 8px 0 16px;
 	padding: 0;
 	list-style: none;
 }
 
-.adminstudio-sortable__row {
+.adminora-sortable__row {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -913,56 +913,56 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	background: #fff;
 }
 
-.adminstudio-sortable__row.is-dragging {
+.adminora-sortable__row.is-dragging {
 	opacity: 0.5;
 }
 
-.adminstudio-sortable__handle {
+.adminora-sortable__handle {
 	width: 10px;
 	height: 16px;
 	cursor: grab;
 	background: radial-gradient(circle, #8c8f94 1.2px, transparent 1.6px) 0 0 / 5px 5px;
 }
 
-.adminstudio-sortable__up,
-.adminstudio-sortable__down {
+.adminora-sortable__up,
+.adminora-sortable__down {
 	width: 26px;
 	height: 26px;
 	border-radius: 6px;
 	text-decoration: none;
 }
 
-.adminstudio-sortable__up:focus-visible,
-.adminstudio-sortable__down:focus-visible {
+.adminora-sortable__up:focus-visible,
+.adminora-sortable__down:focus-visible {
 	outline: 2px solid #2271b1;
 	box-shadow: none;
 }
 
-.adminstudio-sortable__row:first-child .adminstudio-sortable__up,
-.adminstudio-sortable__row:last-child .adminstudio-sortable__down {
+.adminora-sortable__row:first-child .adminora-sortable__up,
+.adminora-sortable__row:last-child .adminora-sortable__down {
 	visibility: hidden;
 }
 
-.adminstudio-sortable__row input[type="text"] {
+.adminora-sortable__row input[type="text"] {
 	flex: 1 1 180px;
 }
 
-.adminstudio-sortable__remove {
+.adminora-sortable__remove {
 	margin-left: auto;
 }
 
-.adminstudio-item-icon {
+.adminora-item-icon {
 	display: inline-flex;
 	width: 20px;
 	color: #50575e;
 }
 
-.adminstudio-list li {
+.adminora-list li {
 	margin-bottom: 4px;
 }
 
 /* Sessions. */
-.adminstudio-filter {
+.adminora-filter {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -970,16 +970,16 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin: 12px 0;
 }
 
-.adminstudio-count {
+.adminora-count {
 	color: var(--as-muted, #646970);
 }
 
-.adminstudio-session-group {
+.adminora-session-group {
 	max-width: 1100px;
 	margin: 0 0 20px;
 }
 
-.adminstudio-session-group__head {
+.adminora-session-group__head {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -988,46 +988,46 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin-bottom: 8px;
 }
 
-.adminstudio-session-group .adminstudio-actions form,
-.adminstudio-history-actions form,
-.adminstudio-row-actions form {
+.adminora-session-group .adminora-actions form,
+.adminora-history-actions form,
+.adminora-row-actions form {
 	margin: 0;
 }
 
-.adminstudio-history-actions {
+.adminora-history-actions {
 	margin: 0 0 10px;
 }
 
-.adminstudio-person,
-.adminstudio-device {
+.adminora-person,
+.adminora-device {
 	display: inline-flex;
 	align-items: center;
 	gap: 10px;
 	vertical-align: middle;
 }
 
-.adminstudio-person img {
+.adminora-person img {
 	border-radius: 999px;
 }
 
-.adminstudio-person > span,
-.adminstudio-device > span:last-child {
+.adminora-person > span,
+.adminora-device > span:last-child {
 	display: grid;
 	line-height: 1.35;
 }
 
-.adminstudio-person small,
-.adminstudio-device small,
-.adminstudio-event + small {
+.adminora-person small,
+.adminora-device small,
+.adminora-event + small {
 	color: var(--as-muted, #646970);
 	font-size: 12px;
 }
 
-.adminstudio-event + small {
+.adminora-event + small {
 	display: block;
 }
 
-.adminstudio-device__icon {
+.adminora-device__icon {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -1040,28 +1040,28 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	flex: none;
 }
 
-.adminstudio-sessions td {
+.adminora-sessions td {
 	vertical-align: middle;
 }
 
-.adminstudio-sessions code {
+.adminora-sessions code {
 	background: transparent;
 	padding: 0;
 }
 
-.adminstudio-event--failed,
-.adminstudio-event--refused_limit,
-.adminstudio-event--refused_blocked,
-.adminstudio-event--blocked {
+.adminora-event--failed,
+.adminora-event--refused_limit,
+.adminora-event--refused_blocked,
+.adminora-event--blocked {
 	color: #b32d2e;
 	font-weight: 600;
 }
 
-.adminstudio-pagination {
+.adminora-pagination {
 	margin: 12px 0;
 }
 
-.adminstudio-pagination .page-numbers {
+.adminora-pagination .page-numbers {
 	display: inline-block;
 	min-width: 28px;
 	padding: 4px 6px;
@@ -1069,41 +1069,41 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	text-decoration: none;
 }
 
-.adminstudio-pagination .page-numbers.current {
+.adminora-pagination .page-numbers.current {
 	font-weight: 600;
 }
 
 @media screen and (max-width: 782px) {
-	.adminstudio-sessions thead {
+	.adminora-sessions thead {
 		display: none;
 	}
 
-	.adminstudio-sessions tr {
+	.adminora-sessions tr {
 		display: grid;
 		gap: 4px;
 		padding: 8px 0;
 	}
 
-	.adminstudio-sessions td {
+	.adminora-sessions td {
 		display: block;
 		padding: 2px 10px;
 	}
 }
 
 /* Login destination picker. */
-.adminstudio-destination {
+.adminora-destination {
 	display: inline-flex;
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 6px;
 }
 
-.adminstudio-destination [hidden] {
+.adminora-destination [hidden] {
 	display: none;
 }
 
 /* The email editor is already a card, so its fields stay flat inside it. */
-.adminstudio-wrap .adminstudio-tab .adminstudio-emails__editor .form-table {
+.adminora-wrap .adminora-tab .adminora-emails__editor .form-table {
 	border: 0;
 	border-radius: 0;
 	background: transparent;
@@ -1111,16 +1111,16 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin: 0;
 }
 
-.adminstudio-wrap .adminstudio-tab .adminstudio-emails__editor .form-table th {
+.adminora-wrap .adminora-tab .adminora-emails__editor .form-table th {
 	padding-left: 0;
 }
 
-.adminstudio-wrap .adminstudio-tab .adminstudio-emails__editor .form-table td {
+.adminora-wrap .adminora-tab .adminora-emails__editor .form-table td {
 	padding-right: 0;
 }
 
 /* Tools: side-by-side action cards. */
-.adminstudio-cards {
+.adminora-cards {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 	align-items: start;
@@ -1128,7 +1128,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin: 20px 0 8px;
 }
 
-.adminstudio-card {
+.adminora-card {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -1139,35 +1139,35 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminstudio-card h2 {
+.adminora-card h2 {
 	margin: 0;
 	font-size: 15px;
 }
 
-.adminstudio-card > p {
+.adminora-card > p {
 	margin: 0;
 	color: var(--as-muted, #50575e);
 }
 
-.adminstudio-card form p {
+.adminora-card form p {
 	margin: 8px 0;
 }
 
-.adminstudio-card input[type="file"] {
+.adminora-card input[type="file"] {
 	max-width: 100%;
 }
 
-.adminstudio-wrap .adminstudio-status {
+.adminora-wrap .adminora-status {
 	border-radius: 8px;
 	overflow: hidden;
 }
 
 /* Brand kit card on the Overview tab. */
-.adminstudio-brand {
+.adminora-brand {
 	display: block;
 }
 
-.adminstudio-brand__head {
+.adminora-brand__head {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
@@ -1176,7 +1176,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin-bottom: 14px;
 }
 
-.adminstudio-brand__options {
+.adminora-brand__options {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 	gap: 10px;
@@ -1185,7 +1185,7 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	border: 0;
 }
 
-.adminstudio-brand__option {
+.adminora-brand__option {
 	display: grid;
 	grid-template-columns: auto 1fr;
 	gap: 6px 10px;
@@ -1196,50 +1196,50 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	cursor: pointer;
 }
 
-.adminstudio-brand__option.is-selected {
+.adminora-brand__option.is-selected {
 	border-color: var(--as-accent, #2271b1);
 	box-shadow: 0 0 0 1px var(--as-accent, #2271b1);
 }
 
-.adminstudio-brand__option:has(input:focus-visible) {
+.adminora-brand__option:has(input:focus-visible) {
 	outline: 2px solid var(--as-accent, #2271b1);
 	outline-offset: 2px;
 }
 
-.adminstudio-brand__option input {
+.adminora-brand__option input {
 	margin-top: 2px;
 }
 
-.adminstudio-brand__option:has(input:disabled) {
+.adminora-brand__option:has(input:disabled) {
 	cursor: default;
 	opacity: 0.7;
 }
 
-.adminstudio-brand__text {
+.adminora-brand__text {
 	display: grid;
 	gap: 2px;
 }
 
-.adminstudio-brand__text small {
+.adminora-brand__text small {
 	color: var(--as-muted, #646970);
 	line-height: 1.4;
 }
 
-.adminstudio-brand__swatches {
+.adminora-brand__swatches {
 	grid-column: 2;
 	display: flex;
 	gap: 4px;
 	min-height: 18px;
 }
 
-.adminstudio-brand__swatches .adminstudio-swatch__chip {
+.adminora-brand__swatches .adminora-swatch__chip {
 	width: 18px;
 	height: 18px;
 	border-radius: 999px;
 	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
-.adminstudio-brand__actions {
+.adminora-brand__actions {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -1247,11 +1247,11 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	margin-top: 14px;
 }
 
-.adminstudio-brand__status {
+.adminora-brand__status {
 	color: var(--as-muted, #646970);
 }
 
-.adminstudio-capture-frame {
+.adminora-capture-frame {
 	position: fixed;
 	left: -10000px;
 	top: 0;
@@ -1263,25 +1263,25 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 
 /* Dashboard widgets tab. */
 
-.adminstudio-widget-matrix th[scope="row"] small {
+.adminora-widget-matrix th[scope="row"] small {
 	display: block;
 	margin-top: 2px;
 	font-weight: 400;
 	color: #646970;
 }
 
-.adminstudio-widget-types {
+.adminora-widget-types {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 	gap: 12px;
 	margin: 12px 0 0;
 }
 
-.adminstudio-widget-types li {
+.adminora-widget-types li {
 	margin: 0;
 }
 
-.adminstudio-widget-types a {
+.adminora-widget-types a {
 	display: grid;
 	grid-template-columns: auto 1fr;
 	column-gap: 12px;
@@ -1296,17 +1296,17 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	text-decoration: none;
 }
 
-.adminstudio-widget-types a:hover {
+.adminora-widget-types a:hover {
 	border-color: #2271b1;
 }
 
-.adminstudio-widget-types a:focus-visible {
+.adminora-widget-types a:focus-visible {
 	outline: 2px solid #2271b1;
 	outline-offset: 2px;
 	box-shadow: none;
 }
 
-.adminstudio-widget-types__icon {
+.adminora-widget-types__icon {
 	grid-row: span 2;
 	display: flex;
 	align-items: center;
@@ -1318,36 +1318,36 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	color: #2271b1;
 }
 
-.adminstudio-widget-types small {
+.adminora-widget-types small {
 	color: #646970;
 }
 
-.adminstudio-link-list .adminstudio-sortable__row input[type="text"] {
+.adminora-link-list .adminora-sortable__row input[type="text"] {
 	flex: 1 1 160px;
 }
 
-.adminstudio-layout {
+.adminora-layout {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 	gap: 12px;
 }
 
-.adminstudio-layout__col {
+.adminora-layout__col {
 	padding: 10px 12px;
 	border: 1px dashed #c3c4c7;
 	border-radius: 6px;
 }
 
-.adminstudio-layout__col h3 {
+.adminora-layout__col h3 {
 	margin: 0 0 8px;
 	font-size: 13px;
 }
 
-.adminstudio-layout__col ul {
+.adminora-layout__col ul {
 	margin: 0;
 }
 
-.adminstudio-layout__col li {
+.adminora-layout__col li {
 	padding: 6px 8px;
 	margin: 0 0 6px;
 	border: 1px solid #dcdcde;
@@ -1355,120 +1355,120 @@ body.adminstudio-look .adminstudio-matrix > thead > tr > th {
 	background: #f6f7f7;
 }
 
-.adminstudio-layout__col li small {
+.adminora-layout__col li small {
 	color: #646970;
 }
 
-.adminstudio-layout__col .adminstudio-layout__empty {
+.adminora-layout__col .adminora-layout__empty {
 	border-style: dashed;
 	background: none;
 	color: #646970;
 }
 
-.adminstudio-check {
+.adminora-check {
 	display: inline-block;
 	margin: 0 16px 6px 0;
 }
 
-.adminstudio-wrap .adminstudio-card h2.title {
+.adminora-wrap .adminora-card h2.title {
 	margin-top: 0;
 }
 
-.adminstudio-widget-list .adminstudio-row-actions {
+.adminora-widget-list .adminora-row-actions {
 	white-space: nowrap;
 	text-align: right;
 }
 
-.adminstudio-widget-list .adminstudio-row-actions form {
+.adminora-widget-list .adminora-row-actions form {
 	display: inline-block;
 }
 
-.adminstudio-widget-matrix > tbody > tr > :first-child,
-.adminstudio-widget-matrix > thead > tr:first-child > :first-child {
+.adminora-widget-matrix > tbody > tr > :first-child,
+.adminora-widget-matrix > thead > tr:first-child > :first-child {
 	width: 240px;
 	min-width: 240px;
 	max-width: 240px;
 }
 
-.adminstudio-widget-matrix .adminstudio-matrix__group {
+.adminora-widget-matrix .adminora-matrix__group {
 	left: 256px;
 }
 
 /* Parts to export or import. */
-.adminstudio-parts {
+.adminora-parts {
 	margin: 12px 0 14px;
 }
 
-.adminstudio-parts legend {
+.adminora-parts legend {
 	margin-bottom: 6px;
 	font-weight: 600;
 }
 
-.adminstudio-parts label {
+.adminora-parts label {
 	display: flex;
 	align-items: flex-start;
 	gap: 8px;
 	margin: 0 0 8px;
 }
 
-.adminstudio-parts input[type="checkbox"] {
+.adminora-parts input[type="checkbox"] {
 	margin-top: 2px;
 }
 
-.adminstudio-parts span {
+.adminora-parts span {
 	display: flex;
 	flex-direction: column;
 }
 
-.adminstudio-parts small {
+.adminora-parts small {
 	color: var(--as-muted, #646970);
 }
 
-.adminstudio-parts .adminstudio-parts__sub {
+.adminora-parts .adminora-parts__sub {
 	margin-left: 26px;
 }
 
 /* Import review. */
-.adminstudio-import-roles .check-column {
+.adminora-import-roles .check-column {
 	width: 2.6em;
 	padding: 12px 0 0 12px;
 	vertical-align: top;
 }
 
-.adminstudio-import-roles td,
-.adminstudio-import-roles th {
+.adminora-import-roles td,
+.adminora-import-roles th {
 	vertical-align: top;
 }
 
-.adminstudio-import-roles small {
+.adminora-import-roles small {
 	color: var(--as-muted, #646970);
 }
 
-.adminstudio-import-roles .adminstudio-badge {
+.adminora-import-roles .adminora-badge {
 	margin-left: 0;
 }
 
-.adminstudio-badge--new {
+.adminora-badge--new {
 	border: 1px solid #00a32a;
 	background: #edfaef;
 	color: #1d2327;
 }
 
-.adminstudio-diff summary {
+.adminora-diff summary {
 	cursor: pointer;
 	color: var(--as-muted, #50575e);
 }
 
-.adminstudio-diff summary:focus-visible {
+.adminora-diff summary:focus-visible {
 	outline: 2px solid #2271b1;
 	outline-offset: 2px;
 }
 
-.adminstudio-diff p {
+.adminora-diff p {
 	margin: 6px 0 0;
 }
 
-.adminstudio-diff code {
+.adminora-diff code {
 	display: inline-block;
 	margin: 0 4px 4px 0;
 }

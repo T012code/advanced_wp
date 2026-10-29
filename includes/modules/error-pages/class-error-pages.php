@@ -6,16 +6,16 @@
  * as drop-in files (see Dropins). Notice screens from wp_die() and the 404 page
  * are handled live through filters.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Error_Pages;
+namespace Adminora\Modules\Error_Pages;
 
-use AdminStudio\Brand_Kit;
-use AdminStudio\Preview;
-use AdminStudio\Settings;
-use AdminStudio\System_Page;
-use AdminStudio\Modules\Login\Login_Text;
+use Adminora\Brand_Kit;
+use Adminora\Preview;
+use Adminora\Settings;
+use Adminora\System_Page;
+use Adminora\Modules\Login\Login_Text;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -58,7 +58,7 @@ class Error_Pages {
 	/**
 	 * Placeholder in the critical error drop-in for the administrators' note.
 	 */
-	const NOTE_MARKER = 'ADMINSTUDIO_ADMIN_NOTE';
+	const NOTE_MARKER = 'ADMINORA_ADMIN_NOTE';
 
 	/**
 	 * The administrators' note on the critical error page, with tags filled in.
@@ -85,10 +85,10 @@ class Error_Pages {
 		}
 
 		if ( $for_dropin ) {
-			return '<p class="adminstudio-page__note">' . self::NOTE_MARKER . '</p>';
+			return '<p class="adminora-page__note">' . self::NOTE_MARKER . '</p>';
 		}
 
-		return current_user_can( 'manage_options' ) ? '<p class="adminstudio-page__note">' . esc_html( $text ) . '</p>' : '';
+		return current_user_can( 'manage_options' ) ? '<p class="adminora-page__note">' . esc_html( $text ) . '</p>' : '';
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Error_Pages {
 			case 'wp_die':
 				$args = array(
 					'heading' => Settings::get( $p . 'wp_die_title' ),
-					'message' => __( 'Sorry, you are not allowed to access this page.', 'admin-studio' ),
+					'message' => __( 'Sorry, you are not allowed to access this page.', 'adminora' ),
 					'buttons' => array( array( Settings::get( $p . 'wp_die_button' ), home_url( '/' ) ) ),
 				);
 				break;
@@ -259,10 +259,10 @@ class Error_Pages {
 	 */
 	private static function search_form() {
 		return sprintf(
-			'<form class="adminstudio-page__search" role="search" method="get" action="%1$s"><label class="screen-reader-text" for="adminstudio-s">%2$s</label><input type="search" id="adminstudio-s" name="s" placeholder="%2$s"><button type="submit">%3$s</button></form>',
+			'<form class="adminora-page__search" role="search" method="get" action="%1$s"><label class="screen-reader-text" for="adminora-s">%2$s</label><input type="search" id="adminora-s" name="s" placeholder="%2$s"><button type="submit">%3$s</button></form>',
 			esc_url( home_url( '/' ) ),
-			esc_attr__( 'Search this site', 'admin-studio' ),
-			esc_html__( 'Search', 'admin-studio' )
+			esc_attr__( 'Search this site', 'adminora' ),
+			esc_html__( 'Search', 'adminora' )
 		);
 	}
 
@@ -439,6 +439,6 @@ class Error_Pages {
 	 * @return string
 	 */
 	public static function notfound_template( $template ) {
-		return is_404() ? ADMINSTUDIO_DIR . 'templates/notfound.php' : $template;
+		return is_404() ? ADMINORA_DIR . 'templates/notfound.php' : $template;
 	}
 }

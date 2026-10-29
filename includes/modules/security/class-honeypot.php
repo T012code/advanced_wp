@@ -2,10 +2,10 @@
 /**
  * A hidden field that people never fill in but spam bots often do.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Security;
+namespace Adminora\Modules\Security;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Honeypot {
 
-	const FIELD = 'adminstudio_website';
+	const FIELD = 'adminora_website';
 
 	/**
 	 * Hooks.
@@ -40,7 +40,7 @@ class Honeypot {
 		printf(
 			'<p style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true"><label for="%1$s">%2$s</label><input type="text" name="%1$s" id="%1$s" value="" tabindex="-1" autocomplete="off"></p>',
 			esc_attr( self::FIELD ),
-			esc_html__( 'Leave this field empty', 'admin-studio' )
+			esc_html__( 'Leave this field empty', 'adminora' )
 		);
 	}
 
@@ -61,7 +61,7 @@ class Honeypot {
 	 * @return \WP_User|\WP_Error|null
 	 */
 	public static function check_login( $user ) {
-		return self::tripped() ? new \WP_Error( 'adminstudio_honeypot', __( '<strong>Error:</strong> Your request could not be processed.', 'admin-studio' ) ) : $user;
+		return self::tripped() ? new \WP_Error( 'adminora_honeypot', __( '<strong>Error:</strong> Your request could not be processed.', 'adminora' ) ) : $user;
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Honeypot {
 	 */
 	public static function check_errors( $errors ) {
 		if ( self::tripped() && $errors instanceof \WP_Error ) {
-			$errors->add( 'adminstudio_honeypot', __( '<strong>Error:</strong> Your request could not be processed.', 'admin-studio' ) );
+			$errors->add( 'adminora_honeypot', __( '<strong>Error:</strong> Your request could not be processed.', 'adminora' ) );
 		}
 
 		return $errors;

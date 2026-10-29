@@ -5,15 +5,15 @@
  * Restyles every screen on wp-login.php: log in, register, lost password,
  * reset password and the interim "session expired" login.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Login;
+namespace Adminora\Modules\Login;
 
-use AdminStudio\Brand_Kit;
-use AdminStudio\Color;
-use AdminStudio\Preview;
-use AdminStudio\Settings;
+use Adminora\Brand_Kit;
+use Adminora\Color;
+use Adminora\Preview;
+use Adminora\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -125,7 +125,7 @@ class Login {
 		return array(
 			'layout' => (string) Settings::get( 'login.links_layout' ),
 			'places' => self::link_places(),
-			'label'  => __( 'Account links', 'admin-studio' ),
+			'label'  => __( 'Account links', 'adminora' ),
 		);
 	}
 
@@ -153,10 +153,10 @@ class Login {
 	 * @return void
 	 */
 	public static function enqueue() {
-		wp_enqueue_style( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/css/login.css', array( 'login' ), \AdminStudio\Plugin::asset_version( 'assets/css/login.css' ) );
-		wp_add_inline_style( 'adminstudio-login', self::css() );
-		wp_enqueue_script( 'adminstudio-login', ADMINSTUDIO_URL . 'assets/js/login.js', array(), \AdminStudio\Plugin::asset_version( 'assets/js/login.js' ), true );
-		wp_localize_script( 'adminstudio-login', 'adminstudioLogin', self::script_data() );
+		wp_enqueue_style( 'adminora-login', ADMINORA_URL . 'assets/css/login.css', array( 'login' ), \Adminora\Plugin::asset_version( 'assets/css/login.css' ) );
+		wp_add_inline_style( 'adminora-login', self::css() );
+		wp_enqueue_script( 'adminora-login', ADMINORA_URL . 'assets/js/login.js', array(), \Adminora\Plugin::asset_version( 'assets/js/login.js' ), true );
+		wp_localize_script( 'adminora-login', 'adminoraLogin', self::script_data() );
 	}
 
 	/**
@@ -195,29 +195,29 @@ class Login {
 		$vars = Brand_Kit::css_vars( $b ) . implode(
 			'',
 			array(
-				'--adminstudio-page-bg:' . $page_bg . ';',
-				'--adminstudio-page-text:' . $page_text . ';',
-				'--adminstudio-link:' . $link . ';',
-				'--adminstudio-btn-bg:' . $btn_bg . ';',
-				'--adminstudio-btn-text:' . $btn_txt . ';',
-				'--adminstudio-btn-radius:' . $radius( 'login.button_radius', 'pill' === $b['button_style'] ? '999px' : $b['radius'] . 'px' ) . ';',
-				'--adminstudio-form-width:' . (int) Settings::get( 'login.form_width' ) . 'px;',
-				'--adminstudio-form-padding:' . (int) Settings::get( 'login.form_padding' ) . 'px;',
-				'--adminstudio-form-radius:' . $radius( 'login.form_radius', $b['radius'] . 'px' ) . ';',
-				'--adminstudio-field-fill:' . Color::mix( $b['surface'], $b['text'], 0.06 ) . ';',
-				'--adminstudio-logo-h:' . $logo_height . 'px;',
-				$logo ? '--adminstudio-logo-url:url("' . esc_url_raw( $logo ) . '");' : '',
+				'--adminora-page-bg:' . $page_bg . ';',
+				'--adminora-page-text:' . $page_text . ';',
+				'--adminora-link:' . $link . ';',
+				'--adminora-btn-bg:' . $btn_bg . ';',
+				'--adminora-btn-text:' . $btn_txt . ';',
+				'--adminora-btn-radius:' . $radius( 'login.button_radius', 'pill' === $b['button_style'] ? '999px' : $b['radius'] . 'px' ) . ';',
+				'--adminora-form-width:' . (int) Settings::get( 'login.form_width' ) . 'px;',
+				'--adminora-form-padding:' . (int) Settings::get( 'login.form_padding' ) . 'px;',
+				'--adminora-form-radius:' . $radius( 'login.form_radius', $b['radius'] . 'px' ) . ';',
+				'--adminora-field-fill:' . Color::mix( $b['surface'], $b['text'], 0.06 ) . ';',
+				'--adminora-logo-h:' . $logo_height . 'px;',
+				$logo ? '--adminora-logo-url:url("' . esc_url_raw( $logo ) . '");' : '',
 			)
 		);
 
 		$css  = Brand_Kit::font_faces( $b );
-		$css .= 'body.login.adminstudio{' . $vars . '}';
+		$css .= 'body.login.adminora{' . $vars . '}';
 
 		if ( 'split' === $layout ) {
 			$side = Settings::get( 'login.side_image' );
 			$side = '' !== $side ? $side : Settings::get( 'login.bg_image' );
 			if ( '' !== $side ) {
-				$css .= 'body.login.adminstudio-layout-split::before{background-image:' . self::overlay_layer() . 'url("' . esc_url_raw( $side ) . '");}';
+				$css .= 'body.login.adminora-layout-split::before{background-image:' . self::overlay_layer() . 'url("' . esc_url_raw( $side ) . '");}';
 			}
 		}
 
@@ -369,32 +369,32 @@ class Login {
 	}
 
 	/**
-	 * Admin Studio body classes.
+	 * Adminora body classes.
 	 *
 	 * @return string[]
 	 */
 	public static function classes() {
 		$classes = array(
-			'adminstudio',
-			'adminstudio-layout-' . Settings::get( 'login.layout' ),
-			'adminstudio-split-' . Settings::get( 'login.split_side' ),
-			'adminstudio-fields-' . Settings::get( 'login.field_style' ),
-			'adminstudio-btn-' . Settings::get( 'brand.button_style' ),
-			'adminstudio-links-' . Settings::get( 'login.links_layout' ),
+			'adminora',
+			'adminora-layout-' . Settings::get( 'login.layout' ),
+			'adminora-split-' . Settings::get( 'login.split_side' ),
+			'adminora-fields-' . Settings::get( 'login.field_style' ),
+			'adminora-btn-' . Settings::get( 'brand.button_style' ),
+			'adminora-links-' . Settings::get( 'login.links_layout' ),
 		);
 
 		if ( Settings::get( 'login.hide_labels' ) ) {
-			$classes[] = 'adminstudio-nolabels';
+			$classes[] = 'adminora-nolabels';
 		}
 
 		if ( Settings::get( 'login.hide_logo' ) ) {
-			$classes[] = 'adminstudio-nologo';
+			$classes[] = 'adminora-nologo';
 		} elseif ( '' === self::brand()['logo'] ) {
-			$classes[] = 'adminstudio-textlogo';
+			$classes[] = 'adminora-textlogo';
 		}
 
 		if ( ! Settings::get( 'login.form_shadow' ) ) {
-			$classes[] = 'adminstudio-noshadow';
+			$classes[] = 'adminora-noshadow';
 		}
 
 		return $classes;
@@ -413,7 +413,7 @@ class Login {
 			return $message;
 		}
 
-		return '<div class="adminstudio-message">' . wp_kses_post( wpautop( $custom ) ) . '</div>' . $message;
+		return '<div class="adminora-message">' . wp_kses_post( wpautop( $custom ) ) . '</div>' . $message;
 	}
 
 	/**
@@ -425,14 +425,14 @@ class Login {
 		$footer = Settings::get( 'login.footer_text' );
 
 		if ( '' !== trim( $footer ) ) {
-			echo '<div class="adminstudio-footer">' . wp_kses_post( $footer ) . '</div>';
+			echo '<div class="adminora-footer">' . wp_kses_post( $footer ) . '</div>';
 		}
 
 		$video = Settings::get( 'login.bg_video' );
 
 		if ( 'video' === Settings::get( 'login.bg_type' ) && '' !== $video ) {
 			printf(
-				'<video class="adminstudio-bg-video" src="%s" autoplay muted loop playsinline aria-hidden="true"></video>',
+				'<video class="adminora-bg-video" src="%s" autoplay muted loop playsinline aria-hidden="true"></video>',
 				esc_url( $video )
 			);
 		}
@@ -455,11 +455,11 @@ class Login {
 	 */
 	public static function preview_screens() {
 		return array(
-			'login'        => __( 'Log in', 'admin-studio' ),
-			'register'     => __( 'Register', 'admin-studio' ),
-			'lostpassword' => __( 'Lost password', 'admin-studio' ),
-			'resetpass'    => __( 'Reset password', 'admin-studio' ),
-			'twofactor'    => __( 'Two-factor code', 'admin-studio' ),
+			'login'        => __( 'Log in', 'adminora' ),
+			'register'     => __( 'Register', 'adminora' ),
+			'lostpassword' => __( 'Lost password', 'adminora' ),
+			'resetpass'    => __( 'Reset password', 'adminora' ),
+			'twofactor'    => __( 'Two-factor code', 'adminora' ),
 		);
 	}
 
@@ -473,7 +473,7 @@ class Login {
 	 */
 	public static function render_preview() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only preview inside the Customizer.
-		$screen = isset( $_GET['adminstudio_screen'] ) ? sanitize_key( wp_unslash( $_GET['adminstudio_screen'] ) ) : 'login';
+		$screen = isset( $_GET['adminora_screen'] ) ? sanitize_key( wp_unslash( $_GET['adminora_screen'] ) ) : 'login';
 		$screen = array_key_exists( $screen, self::preview_screens() ) ? $screen : 'login';
 
 		$classes  = array_merge( array( 'login', 'no-js', 'login-action-' . $screen, 'wp-core-ui' ), self::classes() );
@@ -481,14 +481,14 @@ class Login {
 			'register'     => Login_Text::display( 'register_message' ),
 			'lostpassword' => Login_Text::display( 'lost_message' ),
 			'resetpass'    => Login_Text::display( 'reset_message' ),
-			'twofactor'    => __( 'Enter the 6-digit code from your authenticator app.', 'admin-studio' ),
+			'twofactor'    => __( 'Enter the 6-digit code from your authenticator app.', 'adminora' ),
 		);
 		$titles   = array(
 			'login'        => Login_Text::display( 'login_title' ),
 			'register'     => Login_Text::display( 'register_title' ),
 			'lostpassword' => Login_Text::display( 'lost_title' ),
 			'resetpass'    => Login_Text::display( 'reset_title' ),
-			'twofactor'    => __( 'Two-factor authentication', 'admin-studio' ),
+			'twofactor'    => __( 'Two-factor authentication', 'adminora' ),
 		);
 		$message  = self::message( isset( $messages[ $screen ] ) ? '<p class="message">' . wp_kses_post( $messages[ $screen ] ) . '</p>' : '' );
 
@@ -519,7 +519,7 @@ class Login {
 	<title><?php echo esc_html( $titles[ $screen ] ); ?></title>
 		<?php
 		// Passing handles prints only these and skips the wp_print_styles action.
-		wp_print_styles( array( 'login', 'adminstudio-login' ) );
+		wp_print_styles( array( 'login', 'adminora-login' ) );
 		self::head();
 		?>
 </head>
@@ -530,13 +530,13 @@ class Login {
 		<form name="loginform" id="loginform" action="#" method="post">
 			<?php if ( 'login' === $screen || 'register' === $screen || 'lostpassword' === $screen ) : ?>
 				<p>
-					<label for="user_login"><?php echo esc_html( 'login' === $screen || 'lostpassword' === $screen ? Login_Text::display( 'username_label' ) : __( 'Username', 'admin-studio' ) ); ?></label>
+					<label for="user_login"><?php echo esc_html( 'login' === $screen || 'lostpassword' === $screen ? Login_Text::display( 'username_label' ) : __( 'Username', 'adminora' ) ); ?></label>
 					<input type="text" name="log" id="user_login" class="input" value="" size="20" autocapitalize="off" autocomplete="username">
 				</p>
 			<?php endif; ?>
 			<?php if ( 'register' === $screen ) : ?>
 				<p>
-					<label for="user_email"><?php esc_html_e( 'Email', 'admin-studio' ); ?></label>
+					<label for="user_email"><?php esc_html_e( 'Email', 'adminora' ); ?></label>
 					<input type="email" name="user_email" id="user_email" class="input" value="" size="25" autocomplete="email">
 				</p>
 				<p id="reg_passmail"><?php echo esc_html( Login_Text::display( 'register_note' ) ); ?></p>
@@ -546,7 +546,7 @@ class Login {
 					<label for="user_pass"><?php echo esc_html( 'login' === $screen ? Login_Text::display( 'password_label' ) : Login_Text::display( 'new_password' ) ); ?></label>
 					<div class="wp-pwd">
 						<input type="password" name="pwd" id="user_pass" class="input password-input" value="" size="20" autocomplete="<?php echo 'login' === $screen ? 'current-password' : 'new-password'; ?>">
-						<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" aria-label="<?php esc_attr_e( 'Show password', 'admin-studio' ); ?>">
+						<button type="button" class="button button-secondary wp-hide-pw hide-if-no-js" aria-label="<?php esc_attr_e( 'Show password', 'adminora' ); ?>">
 							<span class="dashicons dashicons-visibility" aria-hidden="true"></span>
 						</button>
 					</div>
@@ -554,8 +554,8 @@ class Login {
 			<?php endif; ?>
 			<?php if ( 'twofactor' === $screen ) : ?>
 				<p>
-					<label for="adminstudio_code"><?php esc_html_e( 'Authentication code', 'admin-studio' ); ?></label>
-					<input type="text" name="adminstudio_code" id="adminstudio_code" class="input" value="" size="20" inputmode="numeric" autocomplete="one-time-code">
+					<label for="adminora_code"><?php esc_html_e( 'Authentication code', 'adminora' ); ?></label>
+					<input type="text" name="adminora_code" id="adminora_code" class="input" value="" size="20" inputmode="numeric" autocomplete="one-time-code">
 				</p>
 			<?php endif; ?>
 			<?php if ( 'login' === $screen ) : ?>
@@ -568,7 +568,7 @@ class Login {
 					'register'     => Login_Text::display( 'register_link' ),
 					'lostpassword' => Login_Text::display( 'lost_button' ),
 					'resetpass'    => Login_Text::display( 'save_password' ),
-					'twofactor'    => __( 'Verify', 'admin-studio' ),
+					'twofactor'    => __( 'Verify', 'adminora' ),
 				);
 				?>
 				<input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="<?php echo esc_attr( $buttons[ $screen ] ); ?>">
@@ -605,7 +605,7 @@ class Login {
 	</div>
 		<?php
 		self::footer();
-		wp_print_scripts( array( 'adminstudio-login' ) );
+		wp_print_scripts( array( 'adminora-login' ) );
 		Preview::bridge();
 		?>
 </body>

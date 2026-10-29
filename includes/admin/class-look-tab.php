@@ -1,18 +1,18 @@
 <?php
 /**
- * Settings → Admin Studio → Dashboard look.
+ * Settings → Adminora → Dashboard look.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Admin;
+namespace Adminora\Admin;
 
-use AdminStudio\Color;
-use AdminStudio\Settings;
-use AdminStudio\Modules\Admin_Look\Admin_Look;
-use AdminStudio\Modules\Admin_Look\Icons;
-use AdminStudio\Modules\Roles\Audit;
-use AdminStudio\Modules\Roles\Role_Manager;
+use Adminora\Color;
+use Adminora\Settings;
+use Adminora\Modules\Admin_Look\Admin_Look;
+use Adminora\Modules\Admin_Look\Icons;
+use Adminora\Modules\Roles\Audit;
+use Adminora\Modules\Roles\Role_Manager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ class Look_Tab {
 	 */
 	public static function init() {
 		foreach ( array( 'look_save', 'look_apply', 'look_stop' ) as $action ) {
-			add_action( 'admin_post_adminstudio_' . $action, array( __CLASS__, 'handle_' . $action ) );
+			add_action( 'admin_post_adminora_' . $action, array( __CLASS__, 'handle_' . $action ) );
 		}
 	}
 
@@ -39,9 +39,9 @@ class Look_Tab {
 	 */
 	private static function sections() {
 		return array(
-			'templates' => __( 'Templates', 'admin-studio' ),
-			'roles'     => __( 'Roles and users', 'admin-studio' ),
-			'menu'      => __( 'Sidebar menu', 'admin-studio' ),
+			'templates' => __( 'Templates', 'adminora' ),
+			'roles'     => __( 'Roles and users', 'adminora' ),
+			'menu'      => __( 'Sidebar menu', 'adminora' ),
 		);
 	}
 
@@ -64,7 +64,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	private static function back( $section, $notice ) {
-		wp_safe_redirect( self::url( $section, array( 'adminstudio_notice' => $notice ) ) );
+		wp_safe_redirect( self::url( $section, array( 'adminora_notice' => $notice ) ) );
 		exit;
 	}
 
@@ -74,7 +74,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	private static function deny() {
-		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'adminora' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -85,9 +85,9 @@ class Look_Tab {
 	 */
 	private static function form( $group ) {
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		echo '<input type="hidden" name="action" value="adminstudio_look_save">';
+		echo '<input type="hidden" name="action" value="adminora_look_save">';
 		echo '<input type="hidden" name="group" value="' . esc_attr( $group ) . '">';
-		wp_nonce_field( 'adminstudio_look_save' );
+		wp_nonce_field( 'adminora_look_save' );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Look_Tab {
 	 */
 	public static function render() {
 		if ( ! Settings::module_on( 'admin_look' ) ) {
-			echo '<div class="notice notice-warning inline adminstudio-notice"><p>' . esc_html__( 'Dashboard look is switched off on the Overview tab.', 'admin-studio' ) . '</p></div>';
+			echo '<div class="notice notice-warning inline adminora-notice"><p>' . esc_html__( 'Dashboard look is switched off on the Overview tab.', 'adminora' ) . '</p></div>';
 			return;
 		}
 
@@ -126,7 +126,7 @@ class Look_Tab {
 		$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : 'templates';
 		$section = array_key_exists( $section, self::sections() ) ? $section : 'templates';
 
-		echo '<nav class="adminstudio-subnav" aria-label="' . esc_attr__( 'Dashboard look sections', 'admin-studio' ) . '"><ul>';
+		echo '<nav class="adminora-subnav" aria-label="' . esc_attr__( 'Dashboard look sections', 'adminora' ) . '"><ul>';
 		foreach ( self::sections() as $key => $label ) {
 			printf(
 				'<li><a href="%s"%s>%s</a></li>',
@@ -186,24 +186,24 @@ class Look_Tab {
 		$config  = Admin_Look::config();
 		$current = Admin_Look::resolve( wp_get_current_user() );
 
-		echo '<p class="adminstudio-intro">' . esc_html__( 'Pick the look everyone gets unless their role or profile says otherwise. "Try it on me" switches only your own dashboard so you can look around first.', 'admin-studio' ) . '</p>';
+		echo '<p class="adminora-intro">' . esc_html__( 'Pick the look everyone gets unless their role or profile says otherwise. "Try it on me" switches only your own dashboard so you can look around first.', 'adminora' ) . '</p>';
 
 		self::form( 'templates' );
 
-		echo '<h2 class="title">' . esc_html__( 'Template', 'admin-studio' ) . '</h2>';
-		echo '<div class="adminstudio-templates" role="radiogroup" aria-label="' . esc_attr__( 'Site template', 'admin-studio' ) . '">';
+		echo '<h2 class="title">' . esc_html__( 'Template', 'adminora' ) . '</h2>';
+		echo '<div class="adminora-templates" role="radiogroup" aria-label="' . esc_attr__( 'Site template', 'adminora' ) . '">';
 		foreach ( Admin_Look::templates() as $key => $template ) {
 			$is_on = $config['default']['template'] === $key;
-			echo '<div class="adminstudio-template' . ( $is_on ? ' is-selected' : '' ) . '">';
-			echo '<label class="adminstudio-template__pick">';
+			echo '<div class="adminora-template' . ( $is_on ? ' is-selected' : '' ) . '">';
+			echo '<label class="adminora-template__pick">';
 			echo '<input type="radio" name="default[template]" value="' . esc_attr( $key ) . '"' . checked( $is_on, true, false ) . '>';
-			echo '<span class="adminstudio-thumb adminstudio-thumb--' . esc_attr( $key ) . '" style="' . esc_attr( self::thumb_style( $key, $config['default']['palette'] ) ) . '" aria-hidden="true"><i></i><b></b><b></b><b></b></span>';
+			echo '<span class="adminora-thumb adminora-thumb--' . esc_attr( $key ) . '" style="' . esc_attr( self::thumb_style( $key, $config['default']['palette'] ) ) . '" aria-hidden="true"><i></i><b></b><b></b><b></b></span>';
 			echo '<strong>' . esc_html( $template[0] ) . '</strong>';
 			echo '<small>' . esc_html( $template[1] ) . '</small>';
 			echo '</label>';
 			if ( 'default' !== $key ) {
 				$trying = 'try' === $current['source'] && $current['template'] === $key;
-				echo '<button type="submit" class="button button-small" name="try" value="' . esc_attr( $key ) . '"' . disabled( $trying, true, false ) . '>' . esc_html( $trying ? __( 'Trying now', 'admin-studio' ) : __( 'Try it on me', 'admin-studio' ) ) . '</button>';
+				echo '<button type="submit" class="button button-small" name="try" value="' . esc_attr( $key ) . '"' . disabled( $trying, true, false ) . '>' . esc_html( $trying ? __( 'Trying now', 'adminora' ) : __( 'Try it on me', 'adminora' ) ) . '</button>';
 			}
 			echo '</div>';
 		}
@@ -211,7 +211,7 @@ class Look_Tab {
 
 		echo '<table class="form-table" role="presentation">';
 
-		echo '<tr><th scope="row">' . esc_html__( 'Colour palette', 'admin-studio' ) . '</th><td><div class="adminstudio-palettes">';
+		echo '<tr><th scope="row">' . esc_html__( 'Colour palette', 'adminora' ) . '</th><td><div class="adminora-palettes">';
 		foreach ( Admin_Look::palettes() as $key => $palette ) {
 			$swatch = '' !== $palette[1] ? $palette[1] : Admin_Look::colors(
 				array(
@@ -219,24 +219,24 @@ class Look_Tab {
 					'palette'  => $key,
 				)
 			)[0]['accent'];
-			echo '<label class="adminstudio-palette"><input type="radio" name="default[palette]" value="' . esc_attr( $key ) . '"' . checked( $config['default']['palette'], $key, false ) . '>';
-			echo '<span class="adminstudio-palette__dot" style="' . esc_attr( '--dot:' . Color::to_hex( $swatch ) ) . '" aria-hidden="true"></span> ' . esc_html( $palette[0] ) . '</label>';
+			echo '<label class="adminora-palette"><input type="radio" name="default[palette]" value="' . esc_attr( $key ) . '"' . checked( $config['default']['palette'], $key, false ) . '>';
+			echo '<span class="adminora-palette__dot" style="' . esc_attr( '--dot:' . Color::to_hex( $swatch ) ) . '" aria-hidden="true"></span> ' . esc_html( $palette[0] ) . '</label>';
 		}
-		echo '</div><p class="description">' . esc_html__( 'Brand kit uses your theme\'s main colour. Dark mode adjusts every palette automatically.', 'admin-studio' ) . '</p></td></tr>';
+		echo '</div><p class="description">' . esc_html__( 'Brand kit uses your theme\'s main colour. Dark mode adjusts every palette automatically.', 'adminora' ) . '</p></td></tr>';
 
-		echo '<tr data-adminstudio-show-if="default[palette]" data-adminstudio-show-value="custom"><th scope="row">' . esc_html__( 'Custom colours', 'admin-studio' ) . '</th><td><div class="adminstudio-colors">';
+		echo '<tr data-adminora-show-if="default[palette]" data-adminora-show-value="custom"><th scope="row">' . esc_html__( 'Custom colours', 'adminora' ) . '</th><td><div class="adminora-colors">';
 		$labels = array(
-			'accent'     => __( 'Accent', 'admin-studio' ),
-			'sidebar'    => __( 'Sidebar', 'admin-studio' ),
-			'background' => __( 'Page background', 'admin-studio' ),
-			'text'       => __( 'Text', 'admin-studio' ),
+			'accent'     => __( 'Accent', 'adminora' ),
+			'sidebar'    => __( 'Sidebar', 'adminora' ),
+			'background' => __( 'Page background', 'adminora' ),
+			'text'       => __( 'Text', 'adminora' ),
 		);
 		foreach ( $labels as $key => $label ) {
-			echo '<label>' . esc_html( $label ) . '<br><input type="text" class="regular-text adminstudio-hex" name="custom[' . esc_attr( $key ) . ']" value="' . esc_attr( $config['custom'][ $key ] ) . '" placeholder="#2a5bea" pattern="#[0-9a-fA-F]{3,6}"></label>';
+			echo '<label>' . esc_html( $label ) . '<br><input type="text" class="regular-text adminora-hex" name="custom[' . esc_attr( $key ) . ']" value="' . esc_attr( $config['custom'][ $key ] ) . '" placeholder="#2a5bea" pattern="#[0-9a-fA-F]{3,6}"></label>';
 		}
-		echo '</div><p class="description">' . esc_html__( 'Leave a colour empty to have it worked out from the accent. Text colours are checked for contrast automatically.', 'admin-studio' ) . '</p></td></tr>';
+		echo '</div><p class="description">' . esc_html__( 'Leave a colour empty to have it worked out from the accent. Text colours are checked for contrast automatically.', 'adminora' ) . '</p></td></tr>';
 
-		echo '<tr><th scope="row">' . esc_html__( 'Personal choice', 'admin-studio' ) . '</th><td><label><input type="checkbox" name="self_choice" value="1"' . checked( $config['self_choice'], true, false ) . '> ' . esc_html__( 'Let users pick their own template on their profile', 'admin-studio' ) . '</label><p class="description">' . esc_html__( 'You can still lock a role or a single user to a template.', 'admin-studio' ) . '</p></td></tr>';
+		echo '<tr><th scope="row">' . esc_html__( 'Personal choice', 'adminora' ) . '</th><td><label><input type="checkbox" name="self_choice" value="1"' . checked( $config['self_choice'], true, false ) . '> ' . esc_html__( 'Let users pick their own template on their profile', 'adminora' ) . '</label><p class="description">' . esc_html__( 'You can still lock a role or a single user to a template.', 'adminora' ) . '</p></td></tr>';
 
 		echo '</table>';
 
@@ -254,10 +254,10 @@ class Look_Tab {
 		$templates = Admin_Look::templates();
 		$palettes  = Admin_Look::palettes();
 
-		echo '<p class="adminstudio-intro">' . esc_html__( 'Give each role its own template. Locking stops people in that role from choosing a different one on their profile. To set a template for one person, open their profile under Users.', 'admin-studio' ) . '</p>';
+		echo '<p class="adminora-intro">' . esc_html__( 'Give each role its own template. Locking stops people in that role from choosing a different one on their profile. To set a template for one person, open their profile under Users.', 'adminora' ) . '</p>';
 
 		self::form( 'roles' );
-		echo '<table class="widefat striped adminstudio-rule-table"><thead><tr><th scope="col">' . esc_html__( 'Role', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'Template', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'Palette', 'admin-studio' ) . '</th><th scope="col">' . esc_html__( 'Lock', 'admin-studio' ) . '</th></tr></thead><tbody>';
+		echo '<table class="widefat striped adminora-rule-table"><thead><tr><th scope="col">' . esc_html__( 'Role', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Template', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Palette', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Lock', 'adminora' ) . '</th></tr></thead><tbody>';
 		foreach ( Role_Manager::roles() as $slug => $role ) {
 			$choice = isset( $config['roles'][ $slug ] ) ? $config['roles'][ $slug ] : array(
 				'template' => '',
@@ -265,10 +265,10 @@ class Look_Tab {
 				'lock'     => false,
 			);
 			echo '<tr><th scope="row">' . esc_html( $role['name'] ) . '</th><td>';
-			self::select( 'roles[' . $slug . '][template]', $templates, $choice['template'], __( 'Site default', 'admin-studio' ), $role['name'] . ': ' . __( 'Template', 'admin-studio' ) );
+			self::select( 'roles[' . $slug . '][template]', $templates, $choice['template'], __( 'Site default', 'adminora' ), $role['name'] . ': ' . __( 'Template', 'adminora' ) );
 			echo '</td><td>';
-			self::select( 'roles[' . $slug . '][palette]', $palettes, $choice['palette'], null, $role['name'] . ': ' . __( 'Palette', 'admin-studio' ) );
-			echo '</td><td><input type="checkbox" name="roles[' . esc_attr( $slug ) . '][lock]" value="1"' . checked( ! empty( $choice['lock'] ), true, false ) . ' aria-label="' . esc_attr( $role['name'] . ': ' . __( 'Lock', 'admin-studio' ) ) . '"></td></tr>';
+			self::select( 'roles[' . $slug . '][palette]', $palettes, $choice['palette'], null, $role['name'] . ': ' . __( 'Palette', 'adminora' ) );
+			echo '</td><td><input type="checkbox" name="roles[' . esc_attr( $slug ) . '][lock]" value="1"' . checked( ! empty( $choice['lock'] ), true, false ) . ' aria-label="' . esc_attr( $role['name'] . ': ' . __( 'Lock', 'adminora' ) ) . '"></td></tr>';
 		}
 		echo '</tbody></table>';
 		submit_button();
@@ -282,21 +282,21 @@ class Look_Tab {
 			)
 		);
 
-		echo '<h2 class="title">' . esc_html__( 'People with their own setting', 'admin-studio' ) . '</h2>';
+		echo '<h2 class="title">' . esc_html__( 'People with their own setting', 'adminora' ) . '</h2>';
 		if ( ! $users ) {
-			echo '<p>' . esc_html__( 'Nobody yet. Open a user\'s profile to give them a template of their own.', 'admin-studio' ) . '</p>';
+			echo '<p>' . esc_html__( 'Nobody yet. Open a user\'s profile to give them a template of their own.', 'adminora' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminstudio-list">';
+		echo '<ul class="adminora-list">';
 		foreach ( $users as $user ) {
 			$resolved = Admin_Look::resolve( get_userdata( $user->ID ) );
 			printf(
 				'<li><a href="%s">%s</a>: %s%s</li>',
-				esc_url( get_edit_user_link( $user->ID ) . '#adminstudio-look' ),
+				esc_url( get_edit_user_link( $user->ID ) . '#adminora-look' ),
 				esc_html( $user->display_name ),
 				esc_html( $templates[ $resolved['template'] ][0] ),
-				$resolved['locked'] ? ' (' . esc_html__( 'locked', 'admin-studio' ) . ')' : ''
+				$resolved['locked'] ? ' (' . esc_html__( 'locked', 'adminora' ) . ')' : ''
 			);
 		}
 		echo '</ul>';
@@ -315,27 +315,27 @@ class Look_Tab {
 		$icons    = array_keys( Icons::all() );
 
 		$icon_options = array(
-			''    => __( 'Automatic', 'admin-studio' ),
-			'own' => __( 'Keep the plugin\'s own icon', 'admin-studio' ),
+			''    => __( 'Automatic', 'adminora' ),
+			'own' => __( 'Keep the plugin\'s own icon', 'adminora' ),
 		);
 		foreach ( $icons as $icon ) {
 			$icon_options[ $icon ] = ucfirst( str_replace( '-', ' ', $icon ) );
 		}
 
-		echo '<p class="adminstudio-intro">' . esc_html__( 'Group the sidebar into sections, rename items, change their icons and drag them into order. This applies to every admin template; "WordPress default" keeps the standard menu. Which items each role can see is set under Roles & permissions → Menu access.', 'admin-studio' ) . '</p>';
+		echo '<p class="adminora-intro">' . esc_html__( 'Group the sidebar into sections, rename items, change their icons and drag them into order. This applies to every admin template; "WordPress default" keeps the standard menu. Which items each role can see is set under Roles & permissions → Menu access.', 'adminora' ) . '</p>';
 
 		self::form( 'menu' );
 
-		echo '<h2 class="title">' . esc_html__( 'Sections', 'admin-studio' ) . '</h2>';
-		echo '<ol class="adminstudio-sortable adminstudio-section-list" data-adminstudio-sortable>';
+		echo '<h2 class="title">' . esc_html__( 'Sections', 'adminora' ) . '</h2>';
+		echo '<ol class="adminora-sortable adminora-section-list" data-adminora-sortable>';
 		foreach ( $sections as $id => $label ) {
 			self::section_row( $id, $label );
 		}
 		echo '</ol>';
-		echo '<p><label for="adminstudio-new-section">' . esc_html__( 'Add a section', 'admin-studio' ) . '</label><br><input type="text" id="adminstudio-new-section" class="regular-text" name="new_section" placeholder="' . esc_attr__( 'For example: Marketing', 'admin-studio' ) . '"></p>';
+		echo '<p><label for="adminora-new-section">' . esc_html__( 'Add a section', 'adminora' ) . '</label><br><input type="text" id="adminora-new-section" class="regular-text" name="new_section" placeholder="' . esc_attr__( 'For example: Marketing', 'adminora' ) . '"></p>';
 
-		echo '<h2 class="title">' . esc_html__( 'Menu items', 'admin-studio' ) . '</h2>';
-		echo '<ol class="adminstudio-sortable adminstudio-item-list" data-adminstudio-sortable>';
+		echo '<h2 class="title">' . esc_html__( 'Menu items', 'adminora' ) . '</h2>';
+		echo '<ol class="adminora-sortable adminora-item-list" data-adminora-sortable>';
 		foreach ( $slugs as $slug ) {
 			if ( ! isset( $top[ $slug ] ) || '' === $top[ $slug ][0] ) {
 				continue;
@@ -346,21 +346,21 @@ class Look_Tab {
 			$icon = isset( $item['icon'] ) ? $item['icon'] : '';
 			$auto = '' !== $icon && 'own' !== $icon ? $icon : Icons::default_for( $slug );
 
-			echo '<li class="adminstudio-sortable__row" draggable="true">';
+			echo '<li class="adminora-sortable__row" draggable="true">';
 			echo '<input type="hidden" name="order[]" value="' . esc_attr( $slug ) . '">';
 			self::move_buttons( $name );
-			echo '<span class="adminstudio-item-icon" aria-hidden="true">' . wp_kses( '' !== $auto ? Icons::svg( $auto, 18 ) : '', Icons::kses() ) . '</span>';
-			echo '<input type="text" name="items[' . esc_attr( $slug ) . '][label]" value="' . esc_attr( isset( $item['label'] ) ? $item['label'] : '' ) . '" placeholder="' . esc_attr( $name ) . '" aria-label="' . esc_attr( $name . ': ' . __( 'Label', 'admin-studio' ) ) . '">';
-			self::select( 'items[' . $slug . '][section]', $sections, Admin_Look::section_of( $slug ), null, $name . ': ' . __( 'Section', 'admin-studio' ) );
-			self::select( 'items[' . $slug . '][icon]', $icon_options, $icon, null, $name . ': ' . __( 'Icon', 'admin-studio' ) );
+			echo '<span class="adminora-item-icon" aria-hidden="true">' . wp_kses( '' !== $auto ? Icons::svg( $auto, 18 ) : '', Icons::kses() ) . '</span>';
+			echo '<input type="text" name="items[' . esc_attr( $slug ) . '][label]" value="' . esc_attr( isset( $item['label'] ) ? $item['label'] : '' ) . '" placeholder="' . esc_attr( $name ) . '" aria-label="' . esc_attr( $name . ': ' . __( 'Label', 'adminora' ) ) . '">';
+			self::select( 'items[' . $slug . '][section]', $sections, Admin_Look::section_of( $slug ), null, $name . ': ' . __( 'Section', 'adminora' ) );
+			self::select( 'items[' . $slug . '][icon]', $icon_options, $icon, null, $name . ': ' . __( 'Icon', 'adminora' ) );
 			echo '</li>';
 		}
 		echo '</ol>';
 
 		echo '<p class="submit">';
-		submit_button( __( 'Save menu', 'admin-studio' ), 'primary', 'submit', false );
+		submit_button( __( 'Save menu', 'adminora' ), 'primary', 'submit', false );
 		echo ' ';
-		submit_button( __( 'Reset to the standard layout', 'admin-studio' ), 'secondary', 'reset_menu', false, array( 'data-adminstudio-confirm-click' => '1' ) );
+		submit_button( __( 'Reset to the standard layout', 'adminora' ), 'secondary', 'reset_menu', false, array( 'data-adminora-confirm-click' => '1' ) );
 		echo '</p></form>';
 	}
 
@@ -372,10 +372,10 @@ class Look_Tab {
 	 * @return void
 	 */
 	private static function section_row( $id, $label ) {
-		echo '<li class="adminstudio-sortable__row" draggable="true">';
+		echo '<li class="adminora-sortable__row" draggable="true">';
 		self::move_buttons( $label );
-		echo '<input type="text" name="sections[' . esc_attr( $id ) . ']" value="' . esc_attr( $label ) . '" aria-label="' . esc_attr__( 'Section name', 'admin-studio' ) . '">';
-		echo '<label class="adminstudio-sortable__remove"><input type="checkbox" name="remove_sections[]" value="' . esc_attr( $id ) . '"> ' . esc_html__( 'Remove', 'admin-studio' ) . '</label>';
+		echo '<input type="text" name="sections[' . esc_attr( $id ) . ']" value="' . esc_attr( $label ) . '" aria-label="' . esc_attr__( 'Section name', 'adminora' ) . '">';
+		echo '<label class="adminora-sortable__remove"><input type="checkbox" name="remove_sections[]" value="' . esc_attr( $id ) . '"> ' . esc_html__( 'Remove', 'adminora' ) . '</label>';
 		echo '</li>';
 	}
 
@@ -386,11 +386,11 @@ class Look_Tab {
 	 * @return void
 	 */
 	private static function move_buttons( $name ) {
-		echo '<span class="adminstudio-sortable__handle" aria-hidden="true"></span>';
+		echo '<span class="adminora-sortable__handle" aria-hidden="true"></span>';
 		/* translators: %s: item name. */
-		echo '<button type="button" class="button-link adminstudio-sortable__up" data-adminstudio-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'admin-studio' ), $name ) ) . '">&uarr;</button>';
+		echo '<button type="button" class="button-link adminora-sortable__up" data-adminora-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'adminora' ), $name ) ) . '">&uarr;</button>';
 		/* translators: %s: item name. */
-		echo '<button type="button" class="button-link adminstudio-sortable__down" data-adminstudio-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'admin-studio' ), $name ) ) . '">&darr;</button>';
+		echo '<button type="button" class="button-link adminora-sortable__down" data-adminora-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'adminora' ), $name ) ) . '">&darr;</button>';
 	}
 
 	/**
@@ -399,7 +399,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_save() {
-		check_admin_referer( 'adminstudio_look_save' );
+		check_admin_referer( 'adminora_look_save' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -436,7 +436,7 @@ class Look_Tab {
 			$templates = Admin_Look::templates();
 			$saved     = Admin_Look::config()['default']['template'];
 			/* translators: %s: template name. */
-			Audit::log( 'look', sprintf( __( 'Site template set to %s.', 'admin-studio' ), $templates[ $saved ][0] ) );
+			Audit::log( 'look', sprintf( __( 'Site template set to %s.', 'adminora' ), $templates[ $saved ][0] ) );
 			self::back( 'templates', 'saved' );
 		}
 
@@ -450,7 +450,7 @@ class Look_Tab {
 			}
 
 			Admin_Look::save( array( 'roles' => $roles ) );
-			Audit::log( 'look', __( 'Templates per role updated.', 'admin-studio' ) );
+			Audit::log( 'look', __( 'Templates per role updated.', 'adminora' ) );
 			self::back( 'roles', 'saved' );
 		}
 
@@ -462,7 +462,7 @@ class Look_Tab {
 						'items'    => array(),
 					)
 				);
-				Audit::log( 'look', __( 'Sidebar menu reset to the standard layout.', 'admin-studio' ) );
+				Audit::log( 'look', __( 'Sidebar menu reset to the standard layout.', 'adminora' ) );
 				self::back( 'menu', 'saved' );
 			}
 
@@ -509,7 +509,7 @@ class Look_Tab {
 					'items'    => $items,
 				)
 			);
-			Audit::log( 'look', __( 'Sidebar menu layout updated.', 'admin-studio' ) );
+			Audit::log( 'look', __( 'Sidebar menu layout updated.', 'adminora' ) );
 			self::back( 'menu', 'saved' );
 		}
 
@@ -522,7 +522,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_apply() {
-		check_admin_referer( 'adminstudio_look_apply' );
+		check_admin_referer( 'adminora_look_apply' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -543,7 +543,7 @@ class Look_Tab {
 
 			$templates = Admin_Look::templates();
 			/* translators: %s: template name. */
-			Audit::log( 'look', sprintf( __( 'Site template set to %s.', 'admin-studio' ), $templates[ $try['template'] ][0] ) );
+			Audit::log( 'look', sprintf( __( 'Site template set to %s.', 'adminora' ), $templates[ $try['template'] ][0] ) );
 		}
 
 		delete_user_meta( get_current_user_id(), Admin_Look::META_TRY );
@@ -556,7 +556,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_stop() {
-		check_admin_referer( 'adminstudio_look_stop' );
+		check_admin_referer( 'adminora_look_stop' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();

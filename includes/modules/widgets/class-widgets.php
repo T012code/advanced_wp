@@ -7,15 +7,15 @@
  * recorded when an administrator opens the dashboard, so they can be listed
  * on the settings page.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Widgets;
+namespace Adminora\Modules\Widgets;
 
-use AdminStudio\Plugin;
-use AdminStudio\Settings;
-use AdminStudio\Defaults;
-use AdminStudio\Modules\Emails\Renderer;
+use Adminora\Plugin;
+use Adminora\Settings;
+use Adminora\Defaults;
+use Adminora\Modules\Emails\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -24,9 +24,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Widgets {
 
-	const OPTION = 'adminstudio_widgets';
-	const SEEN   = 'adminstudio_widgets_seen';
-	const PREFIX = 'adminstudio_';
+	const OPTION = 'adminora_widgets';
+	const SEEN   = 'adminora_widgets_seen';
+	const PREFIX = 'adminora_';
 
 	/**
 	 * Dashboard columns: context => label.
@@ -35,10 +35,10 @@ class Widgets {
 	 */
 	public static function columns() {
 		return array(
-			'normal'  => __( 'Column 1', 'admin-studio' ),
-			'side'    => __( 'Column 2', 'admin-studio' ),
-			'column3' => __( 'Column 3', 'admin-studio' ),
-			'column4' => __( 'Column 4', 'admin-studio' ),
+			'normal'  => __( 'Column 1', 'adminora' ),
+			'side'    => __( 'Column 2', 'adminora' ),
+			'column3' => __( 'Column 3', 'adminora' ),
+			'column4' => __( 'Column 4', 'adminora' ),
 		);
 	}
 
@@ -206,15 +206,15 @@ class Widgets {
 	 */
 	public static function types() {
 		return array(
-			'text'     => array( __( 'Text', 'admin-studio' ), __( 'Rich text or HTML, with an optional button.', 'admin-studio' ), 'file-text' ),
-			'links'    => array( __( 'Quick links', 'admin-studio' ), __( 'Buttons to admin screens or any address, with icons.', 'admin-studio' ), 'link' ),
-			'support'  => array( __( 'Support card', 'admin-studio' ), __( 'Contact details, a message and a button.', 'admin-studio' ), 'heart' ),
-			'video'    => array( __( 'Video', 'admin-studio' ), __( 'A video from YouTube, Vimeo or another provider WordPress can embed.', 'admin-studio' ), 'monitor' ),
-			'posts'    => array( __( 'What\'s new', 'admin-studio' ), __( 'The latest posts from a category on this site.', 'admin-studio' ), 'bell' ),
-			'signups'  => array( __( 'Recent sign-ups', 'admin-studio' ), __( 'The newest user accounts.', 'admin-studio' ), 'users' ),
-			'counts'   => array( __( 'Content counts', 'admin-studio' ), __( 'How many posts, pages, products, comments and users there are.', 'admin-studio' ), 'chart' ),
-			'comments' => array( __( 'Recent comments', 'admin-studio' ), __( 'The latest comments, with links to moderate them.', 'admin-studio' ), 'message' ),
-			'health'   => array( __( 'Site health summary', 'admin-studio' ), __( 'The result of the last Site Health check.', 'admin-studio' ), 'shield' ),
+			'text'     => array( __( 'Text', 'adminora' ), __( 'Rich text or HTML, with an optional button.', 'adminora' ), 'file-text' ),
+			'links'    => array( __( 'Quick links', 'adminora' ), __( 'Buttons to admin screens or any address, with icons.', 'adminora' ), 'link' ),
+			'support'  => array( __( 'Support card', 'adminora' ), __( 'Contact details, a message and a button.', 'adminora' ), 'heart' ),
+			'video'    => array( __( 'Video', 'adminora' ), __( 'A video from YouTube, Vimeo or another provider WordPress can embed.', 'adminora' ), 'monitor' ),
+			'posts'    => array( __( 'What\'s new', 'adminora' ), __( 'The latest posts from a category on this site.', 'adminora' ), 'bell' ),
+			'signups'  => array( __( 'Recent sign-ups', 'adminora' ), __( 'The newest user accounts.', 'adminora' ), 'users' ),
+			'counts'   => array( __( 'Content counts', 'adminora' ), __( 'How many posts, pages, products, comments and users there are.', 'adminora' ), 'chart' ),
+			'comments' => array( __( 'Recent comments', 'adminora' ), __( 'The latest comments, with links to moderate them.', 'adminora' ), 'message' ),
+			'health'   => array( __( 'Site health summary', 'adminora' ), __( 'The result of the last Site Health check.', 'adminora' ), 'shield' ),
 		);
 	}
 
@@ -269,12 +269,12 @@ class Widgets {
 	 */
 	public static function core_widgets() {
 		return array(
-			'welcome_panel'         => __( 'Welcome panel', 'admin-studio' ),
-			'dashboard_right_now'   => __( 'At a Glance', 'admin-studio' ),
-			'dashboard_activity'    => __( 'Activity', 'admin-studio' ),
-			'dashboard_quick_press' => __( 'Quick Draft', 'admin-studio' ),
-			'dashboard_primary'     => __( 'WordPress Events and News', 'admin-studio' ),
-			'dashboard_site_health' => __( 'Site Health Status', 'admin-studio' ),
+			'welcome_panel'         => __( 'Welcome panel', 'adminora' ),
+			'dashboard_right_now'   => __( 'At a Glance', 'adminora' ),
+			'dashboard_activity'    => __( 'Activity', 'adminora' ),
+			'dashboard_quick_press' => __( 'Quick Draft', 'adminora' ),
+			'dashboard_primary'     => __( 'WordPress Events and News', 'adminora' ),
+			'dashboard_site_health' => __( 'Site Health Status', 'adminora' ),
 		);
 	}
 
@@ -463,10 +463,10 @@ class Widgets {
 			return;
 		}
 
-		wp_enqueue_style( 'adminstudio-widgets', ADMINSTUDIO_URL . 'assets/css/widgets.css', array(), Plugin::asset_version( 'assets/css/widgets.css' ) );
+		wp_enqueue_style( 'adminora-widgets', ADMINORA_URL . 'assets/css/widgets.css', array(), Plugin::asset_version( 'assets/css/widgets.css' ) );
 
 		if ( self::locked() ) {
-			wp_add_inline_script( 'dashboard', 'jQuery(function($){document.body.classList.add("adminstudio-widgets-locked");$(window).on("load",function(){$("#dashboard-widgets .meta-box-sortables").each(function(){if($(this).sortable("instance")){$(this).sortable("disable");}});});});' );
+			wp_add_inline_script( 'dashboard', 'jQuery(function($){document.body.classList.add("adminora-widgets-locked");$(window).on("load",function(){$("#dashboard-widgets .meta-box-sortables").each(function(){if($(this).sortable("instance")){$(this).sortable("disable");}});});});' );
 		}
 	}
 

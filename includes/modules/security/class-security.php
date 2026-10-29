@@ -2,12 +2,12 @@
 /**
  * Login protection: custom login URL, attempt limits, honeypot and 2FA.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Security;
+namespace Adminora\Modules\Security;
 
-use AdminStudio\Settings;
+use Adminora\Settings;
 
 defined( 'ABSPATH' ) || exit;
 

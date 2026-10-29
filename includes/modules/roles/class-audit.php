@@ -2,10 +2,10 @@
 /**
  * Activity log for role, permission, menu and access changes.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Roles;
+namespace Adminora\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Audit {
 
-	const OPTION = 'adminstudio_audit';
+	const OPTION = 'adminora_audit';
 	const SIZE   = 500;
 
 	/**
@@ -59,18 +59,18 @@ class Audit {
 	 */
 	public static function labels() {
 		return array(
-			'role_created'   => __( 'Role created', 'admin-studio' ),
-			'role_renamed'   => __( 'Role renamed', 'admin-studio' ),
-			'role_deleted'   => __( 'Role deleted', 'admin-studio' ),
-			'role_caps'      => __( 'Capabilities changed', 'admin-studio' ),
-			'roles_restored' => __( 'Roles restored', 'admin-studio' ),
-			'user_perms'     => __( 'User permissions changed', 'admin-studio' ),
-			'menu_access'    => __( 'Menu access changed', 'admin-studio' ),
-			'access'         => __( 'Login and access changed', 'admin-studio' ),
-			'toolbar'        => __( 'Toolbar changed', 'admin-studio' ),
-			'look'           => __( 'Dashboard look changed', 'admin-studio' ),
-			'widgets'        => __( 'Dashboard widgets changed', 'admin-studio' ),
-			'import'         => __( 'Settings imported', 'admin-studio' ),
+			'role_created'   => __( 'Role created', 'adminora' ),
+			'role_renamed'   => __( 'Role renamed', 'adminora' ),
+			'role_deleted'   => __( 'Role deleted', 'adminora' ),
+			'role_caps'      => __( 'Capabilities changed', 'adminora' ),
+			'roles_restored' => __( 'Roles restored', 'adminora' ),
+			'user_perms'     => __( 'User permissions changed', 'adminora' ),
+			'menu_access'    => __( 'Menu access changed', 'adminora' ),
+			'access'         => __( 'Login and access changed', 'adminora' ),
+			'toolbar'        => __( 'Toolbar changed', 'adminora' ),
+			'look'           => __( 'Dashboard look changed', 'adminora' ),
+			'widgets'        => __( 'Dashboard widgets changed', 'adminora' ),
+			'import'         => __( 'Settings imported', 'adminora' ),
 		);
 	}
 
@@ -84,7 +84,7 @@ class Audit {
 
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=admin-studio-activity-' . gmdate( 'Y-m-d' ) . '.csv' );
+		header( 'Content-Disposition: attachment; filename=adminora-activity-' . gmdate( 'Y-m-d' ) . '.csv' );
 
 		$rows   = array( array( 'time', 'user', 'action', 'summary' ) );
 		$format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );

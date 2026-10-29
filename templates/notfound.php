@@ -2,9 +2,9 @@
 /**
  * Branded 404 page.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
 defined( 'ABSPATH' ) || exit;
 
-AdminStudio\Modules\Error_Pages\Error_Pages::output( 'notfound' );
+Adminora\Modules\Error_Pages\Error_Pages::output( 'notfound' );

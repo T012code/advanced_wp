@@ -7,10 +7,10 @@
  * only hidden or blocked if every one of their roles hides or blocks it.
  * Administrators are never restricted.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Roles;
+namespace Adminora\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,9 +19,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Access {
 
-	const OPTION       = 'adminstudio_access';
-	const NODES        = 'adminstudio_toolbar_nodes';
-	const USER_TOOLBAR = 'adminstudio_toolbar';
+	const OPTION       = 'adminora_access';
+	const NODES        = 'adminora_toolbar_nodes';
+	const USER_TOOLBAR = 'adminora_toolbar';
 
 	/**
 	 * Screens that always stay reachable.
@@ -285,7 +285,7 @@ class Access {
 			$slug = false !== strpos( $id, '>' ) ? explode( '>', $id, 2 )[1] : $id;
 
 			if ( in_array( $slug, $requested, true ) ) {
-				wp_die( esc_html__( 'Sorry, you are not allowed to access this page.', 'admin-studio' ), 403 );
+				wp_die( esc_html__( 'Sorry, you are not allowed to access this page.', 'adminora' ), 403 );
 			}
 		}
 	}
@@ -383,7 +383,7 @@ class Access {
 			return false;
 		}
 
-		return class_exists( '\AdminStudio\Modules\Admin_Look\Admin_Look' ) && \AdminStudio\Modules\Admin_Look\Admin_Look::active_for( $user );
+		return class_exists( '\Adminora\Modules\Admin_Look\Admin_Look' ) && \Adminora\Modules\Admin_Look\Admin_Look::active_for( $user );
 	}
 
 	/**
@@ -454,15 +454,15 @@ class Access {
 	 */
 	public static function toolbar_nodes() {
 		$defaults = array(
-			'wp-logo'     => __( 'WordPress logo menu', 'admin-studio' ),
-			'site-name'   => __( 'Site name', 'admin-studio' ),
-			'updates'     => __( 'Updates', 'admin-studio' ),
-			'comments'    => __( 'Comments', 'admin-studio' ),
-			'new-content' => __( '+ New', 'admin-studio' ),
-			'edit'        => __( 'Edit link', 'admin-studio' ),
-			'customize'   => __( 'Customize', 'admin-studio' ),
-			'search'      => __( 'Search', 'admin-studio' ),
-			'my-account'  => __( 'Account menu', 'admin-studio' ),
+			'wp-logo'     => __( 'WordPress logo menu', 'adminora' ),
+			'site-name'   => __( 'Site name', 'adminora' ),
+			'updates'     => __( 'Updates', 'adminora' ),
+			'comments'    => __( 'Comments', 'adminora' ),
+			'new-content' => __( '+ New', 'adminora' ),
+			'edit'        => __( 'Edit link', 'adminora' ),
+			'customize'   => __( 'Customize', 'adminora' ),
+			'search'      => __( 'Search', 'adminora' ),
+			'my-account'  => __( 'Account menu', 'adminora' ),
 		);
 
 		$saved = get_option( self::NODES, array() );

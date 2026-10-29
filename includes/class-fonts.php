@@ -6,10 +6,10 @@
  * and then served from the uploads folder. Visitors' browsers never contact
  * Google.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio;
+namespace Adminora;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Fonts {
 
-	const OPTION = 'adminstudio_fonts';
+	const OPTION = 'adminora_fonts';
 
 	/**
 	 * Google fonts offered: key => [family, generic fallback].
@@ -62,9 +62,9 @@ class Fonts {
 	 */
 	public static function choices() {
 		$choices = array(
-			'theme'  => __( 'Same as theme', 'admin-studio' ),
-			'system' => __( 'System sans-serif', 'admin-studio' ),
-			'serif'  => __( 'System serif', 'admin-studio' ),
+			'theme'  => __( 'Same as theme', 'adminora' ),
+			'system' => __( 'System sans-serif', 'adminora' ),
+			'serif'  => __( 'System serif', 'adminora' ),
 		);
 
 		foreach ( self::google() as $key => $font ) {
@@ -231,7 +231,7 @@ class Fonts {
 	private static function base_dir() {
 		$uploads = wp_upload_dir( null, false );
 
-		return trailingslashit( $uploads['basedir'] ) . 'admin-studio/fonts/';
+		return trailingslashit( $uploads['basedir'] ) . 'adminora/fonts/';
 	}
 
 	/**
@@ -242,6 +242,6 @@ class Fonts {
 	private static function base_url() {
 		$uploads = wp_upload_dir( null, false );
 
-		return set_url_scheme( trailingslashit( $uploads['baseurl'] ) . 'admin-studio/fonts/' );
+		return set_url_scheme( trailingslashit( $uploads['baseurl'] ) . 'adminora/fonts/' );
 	}
 }

@@ -1,17 +1,17 @@
 /**
- * Admin Studio two-factor setup on the profile screen.
+ * Adminora two-factor setup on the profile screen.
  */
 ( function ( $, data ) {
 	'use strict';
 
-	var $app = $( '#adminstudio-2fa-app' );
+	var $app = $( '#adminora-2fa-app' );
 
 	if ( ! $app.length || ! data ) {
 		return;
 	}
 
 	var mode = 'totp',
-		$message = $app.find( '.adminstudio-2fa-message' ),
+		$message = $app.find( '.adminora-2fa-message' ),
 		codes = [];
 
 	function panel( name, show ) {
@@ -23,7 +23,7 @@
 	}
 
 	function post( action, extra ) {
-		return wp.ajax.post( 'adminstudio_2fa_' + action, $.extend( { nonce: data.nonce }, extra || {} ) );
+		return wp.ajax.post( 'adminora_2fa_' + action, $.extend( { nonce: data.nonce }, extra || {} ) );
 	}
 
 	function busy( $button, on ) {
@@ -32,7 +32,7 @@
 
 	function showCodes( list ) {
 		codes = list || [];
-		var $list = $app.find( '.adminstudio-2fa-codes' ).empty();
+		var $list = $app.find( '.adminora-2fa-codes' ).empty();
 		codes.forEach( function ( code ) {
 			$( '<li>' ).text( code ).appendTo( $list );
 		} );
@@ -43,12 +43,12 @@
 		var qr = window.qrcode( 0, 'M' );
 		qr.addData( uri );
 		qr.make();
-		$app.find( '.adminstudio-2fa-qr' ).html( qr.createSvgTag( { cellSize: 4, margin: 2, scalable: false } ) );
+		$app.find( '.adminora-2fa-qr' ).html( qr.createSvgTag( { cellSize: 4, margin: 2, scalable: false } ) );
 	}
 
-	$app.on( 'click', '[data-adminstudio-2fa]', function () {
+	$app.on( 'click', '[data-adminora-2fa]', function () {
 		var $button = $( this ),
-			action = $button.data( 'adminstudio-2fa' );
+			action = $button.data( 'adminora-2fa' );
 
 		say( '' );
 
@@ -58,10 +58,10 @@
 			post( 'setup' )
 				.done( function ( res ) {
 					drawQr( res.uri );
-					$app.find( '.adminstudio-2fa-secret' ).text( res.secret );
+					$app.find( '.adminora-2fa-secret' ).text( res.secret );
 					panel( 'setup', true );
 					panel( 'verify', true );
-					$( '#adminstudio-2fa-code' ).trigger( 'focus' );
+					$( '#adminora-2fa-code' ).trigger( 'focus' );
 				} )
 				.fail( function () {
 					say( data.i18n.error );
@@ -79,7 +79,7 @@
 					panel( 'setup', false );
 					panel( 'verify', true );
 					say( data.i18n.sent );
-					$( '#adminstudio-2fa-code' ).trigger( 'focus' );
+					$( '#adminora-2fa-code' ).trigger( 'focus' );
 				} )
 				.fail( function () {
 					say( data.i18n.error );
@@ -91,17 +91,17 @@
 
 		if ( 'confirm' === action ) {
 			busy( $button, true );
-			post( 'totp' === mode ? 'verify' : 'email_verify', { code: $( '#adminstudio-2fa-code' ).val() } )
+			post( 'totp' === mode ? 'verify' : 'email_verify', { code: $( '#adminora-2fa-code' ).val() } )
 				.done( function ( res ) {
 					panel( 'setup', false );
 					panel( 'verify', false );
-					$app.find( '.adminstudio-2fa-actions' ).prop( 'hidden', true );
+					$app.find( '.adminora-2fa-actions' ).prop( 'hidden', true );
 					showCodes( res.codes );
 					say( data.i18n.enabled );
 				} )
 				.fail( function () {
 					say( data.i18n.invalid );
-					$( '#adminstudio-2fa-code' ).trigger( 'focus' ).trigger( 'select' );
+					$( '#adminora-2fa-code' ).trigger( 'focus' ).trigger( 'select' );
 				} )
 				.always( function () {
 					busy( $button, false );
@@ -146,10 +146,10 @@
 	} );
 
 	// Submit the code with Enter without submitting the whole profile form.
-	$( '#adminstudio-2fa-code' ).on( 'keydown', function ( event ) {
+	$( '#adminora-2fa-code' ).on( 'keydown', function ( event ) {
 		if ( 'Enter' === event.key ) {
 			event.preventDefault();
-			$app.find( '[data-adminstudio-2fa="confirm"]' ).trigger( 'click' );
+			$app.find( '[data-adminora-2fa="confirm"]' ).trigger( 'click' );
 		}
 	} );
-} )( window.jQuery, window.adminstudio2fa );
+} )( window.jQuery, window.adminora2fa );

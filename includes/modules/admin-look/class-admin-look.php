@@ -10,13 +10,13 @@
  * template on themselves, the user's own choice (unless locked), a template
  * an administrator set for that user, their role's template, the site default.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio\Modules\Admin_Look;
+namespace Adminora\Modules\Admin_Look;
 
-use AdminStudio\Brand_Kit;
-use AdminStudio\Color;
+use Adminora\Brand_Kit;
+use Adminora\Color;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,11 +25,11 @@ defined( 'ABSPATH' ) || exit;
  */
 class Admin_Look {
 
-	const OPTION     = 'adminstudio_look';
-	const META_ADMIN = 'adminstudio_look_admin';
-	const META_SELF  = 'adminstudio_look_self';
-	const META_TRY   = 'adminstudio_look_try';
-	const META_MODE  = 'adminstudio_look_mode';
+	const OPTION     = 'adminora_look';
+	const META_ADMIN = 'adminora_look_admin';
+	const META_SELF  = 'adminora_look_self';
+	const META_TRY   = 'adminora_look_try';
+	const META_MODE  = 'adminora_look_mode';
 
 	/**
 	 * Hooks.
@@ -46,7 +46,7 @@ class Admin_Look {
 		add_action( 'admin_menu', array( __CLASS__, 'relabel_menu' ), PHP_INT_MAX - 1 );
 		add_filter( 'custom_menu_order', array( __CLASS__, 'custom_order' ) );
 		add_filter( 'menu_order', array( __CLASS__, 'menu_order' ), 99 );
-		add_action( 'wp_ajax_adminstudio_look_mode', array( __CLASS__, 'ajax_mode' ) );
+		add_action( 'wp_ajax_adminora_look_mode', array( __CLASS__, 'ajax_mode' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'try_notice' ) );
 		add_action( 'show_user_profile', array( __CLASS__, 'profile' ), 25 );
 		add_action( 'edit_user_profile', array( __CLASS__, 'profile' ), 25 );
@@ -96,11 +96,11 @@ class Admin_Look {
 	 */
 	public static function templates() {
 		return array(
-			'default'  => array( __( 'WordPress default', 'admin-studio' ), __( 'The standard WordPress dashboard.', 'admin-studio' ) ),
-			'studio'   => array( __( 'Studio', 'admin-studio' ), __( 'Soft tinted sidebar with section headings and outline icons, the active item as a filled pill, rounded cards with soft shadows.', 'admin-studio' ) ),
-			'midnight' => array( __( 'Midnight', 'admin-studio' ), __( 'Dark sidebar and top bar, light content area, bright accent.', 'admin-studio' ) ),
-			'minimal'  => array( __( 'Minimal', 'admin-studio' ), __( 'White sidebar, no shadows, the accent only on text and icons.', 'admin-studio' ) ),
-			'compact'  => array( __( 'Compact', 'admin-studio' ), __( 'An icon rail that expands when you point at it, and denser tables.', 'admin-studio' ) ),
+			'default'  => array( __( 'WordPress default', 'adminora' ), __( 'The standard WordPress dashboard.', 'adminora' ) ),
+			'studio'   => array( __( 'Studio', 'adminora' ), __( 'Soft tinted sidebar with section headings and outline icons, the active item as a filled pill, rounded cards with soft shadows.', 'adminora' ) ),
+			'midnight' => array( __( 'Midnight', 'adminora' ), __( 'Dark sidebar and top bar, light content area, bright accent.', 'adminora' ) ),
+			'minimal'  => array( __( 'Minimal', 'adminora' ), __( 'White sidebar, no shadows, the accent only on text and icons.', 'adminora' ) ),
+			'compact'  => array( __( 'Compact', 'adminora' ), __( 'An icon rail that expands when you point at it, and denser tables.', 'adminora' ) ),
 		);
 	}
 
@@ -112,13 +112,13 @@ class Admin_Look {
 	 */
 	public static function palettes() {
 		return array(
-			'brand'    => array( __( 'Brand kit', 'admin-studio' ), '' ),
-			'cobalt'   => array( __( 'Cobalt', 'admin-studio' ), '#2a5bea' ),
-			'forest'   => array( __( 'Forest', 'admin-studio' ), '#1f7a4d' ),
-			'plum'     => array( __( 'Plum', 'admin-studio' ), '#7c3aed' ),
-			'graphite' => array( __( 'Graphite', 'admin-studio' ), '#3f4654' ),
-			'sunset'   => array( __( 'Sunset', 'admin-studio' ), '#c2410c' ),
-			'custom'   => array( __( 'Custom', 'admin-studio' ), '' ),
+			'brand'    => array( __( 'Brand kit', 'adminora' ), '' ),
+			'cobalt'   => array( __( 'Cobalt', 'adminora' ), '#2a5bea' ),
+			'forest'   => array( __( 'Forest', 'adminora' ), '#1f7a4d' ),
+			'plum'     => array( __( 'Plum', 'adminora' ), '#7c3aed' ),
+			'graphite' => array( __( 'Graphite', 'adminora' ), '#3f4654' ),
+			'sunset'   => array( __( 'Sunset', 'adminora' ), '#c2410c' ),
+			'custom'   => array( __( 'Custom', 'adminora' ), '' ),
 		);
 	}
 
@@ -129,12 +129,12 @@ class Admin_Look {
 	 */
 	public static function default_sections() {
 		return array(
-			'overview'   => __( 'Overview', 'admin-studio' ),
-			'content'    => __( 'Content', 'admin-studio' ),
-			'store'      => __( 'Store', 'admin-studio' ),
-			'design'     => __( 'Design', 'admin-studio' ),
-			'extensions' => __( 'Extensions', 'admin-studio' ),
-			'system'     => __( 'System', 'admin-studio' ),
+			'overview'   => __( 'Overview', 'adminora' ),
+			'content'    => __( 'Content', 'adminora' ),
+			'store'      => __( 'Store', 'adminora' ),
+			'design'     => __( 'Design', 'adminora' ),
+			'extensions' => __( 'Extensions', 'adminora' ),
+			'system'     => __( 'System', 'adminora' ),
 		);
 	}
 
@@ -389,7 +389,7 @@ class Admin_Look {
 
 		$mode = self::mode( get_current_user_id() );
 
-		return $classes . ' adminstudio-look adminstudio-t-' . $current['template'] . ' adminstudio-mode-' . $mode . ( 'dark' === $mode ? ' adminstudio-dark' : '' );
+		return $classes . ' adminora-look adminora-t-' . $current['template'] . ' adminora-mode-' . $mode . ( 'dark' === $mode ? ' adminora-dark' : '' );
 	}
 
 	/**
@@ -511,26 +511,26 @@ class Admin_Look {
 
 		list( $light, $dark ) = self::colors( $current );
 
-		wp_enqueue_style( 'adminstudio-look', ADMINSTUDIO_URL . 'assets/css/look.css', array( 'common' ), \AdminStudio\Plugin::asset_version( 'assets/css/look.css' ) );
+		wp_enqueue_style( 'adminora-look', ADMINORA_URL . 'assets/css/look.css', array( 'common' ), \Adminora\Plugin::asset_version( 'assets/css/look.css' ) );
 		wp_add_inline_style(
-			'adminstudio-look',
-			'body.adminstudio-look{' . self::css_vars( $light ) . '}'
-			. 'body.adminstudio-look.adminstudio-dark{' . self::css_vars( $dark ) . 'color-scheme:dark}'
-			. '@media (prefers-color-scheme:dark){body.adminstudio-look.adminstudio-mode-system{' . self::css_vars( $dark ) . 'color-scheme:dark}}'
+			'adminora-look',
+			'body.adminora-look{' . self::css_vars( $light ) . '}'
+			. 'body.adminora-look.adminora-dark{' . self::css_vars( $dark ) . 'color-scheme:dark}'
+			. '@media (prefers-color-scheme:dark){body.adminora-look.adminora-mode-system{' . self::css_vars( $dark ) . 'color-scheme:dark}}'
 		);
 
 		$user = wp_get_current_user();
 
-		wp_enqueue_script( 'adminstudio-look', ADMINSTUDIO_URL . 'assets/js/look.js', array(), \AdminStudio\Plugin::asset_version( 'assets/js/look.js' ), true );
+		wp_enqueue_script( 'adminora-look', ADMINORA_URL . 'assets/js/look.js', array(), \Adminora\Plugin::asset_version( 'assets/js/look.js' ), true );
 		wp_localize_script(
-			'adminstudio-look',
-			'adminstudioLook',
+			'adminora-look',
+			'adminoraLook',
 			array(
 				'sections' => self::sidebar_sections(),
 				'icons'    => self::sidebar_icons(),
 				'mode'     => self::mode( $user->ID ),
 				'ajax'     => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'adminstudio_look_mode' ),
+				'nonce'    => wp_create_nonce( 'adminora_look_mode' ),
 				'foot'     => array(
 					'name'     => $user->display_name,
 					'email'    => $user->user_email,
@@ -548,15 +548,15 @@ class Admin_Look {
 				),
 				'greeting' => self::greeting( $user ),
 				'i18n'     => array(
-					'viewSite'  => __( 'View site', 'admin-studio' ),
-					'signOut'   => __( 'Sign out', 'admin-studio' ),
+					'viewSite'  => __( 'View site', 'adminora' ),
+					'signOut'   => __( 'Sign out', 'adminora' ),
 					'modes'     => array(
-						'light'  => __( 'Light', 'admin-studio' ),
-						'dark'   => __( 'Dark', 'admin-studio' ),
-						'system' => __( 'System', 'admin-studio' ),
+						'light'  => __( 'Light', 'adminora' ),
+						'dark'   => __( 'Dark', 'adminora' ),
+						'system' => __( 'System', 'adminora' ),
 					),
 					/* translators: %s: current colour mode. */
-					'modeLabel' => __( 'Colour mode: %s. Click to change.', 'admin-studio' ),
+					'modeLabel' => __( 'Colour mode: %s. Click to change.', 'adminora' ),
 				),
 			)
 		);
@@ -572,11 +572,11 @@ class Admin_Look {
 		$hour = (int) wp_date( 'G' );
 
 		if ( $hour < 12 ) {
-			$hello = __( 'Good morning', 'admin-studio' );
+			$hello = __( 'Good morning', 'adminora' );
 		} elseif ( $hour < 18 ) {
-			$hello = __( 'Good afternoon', 'admin-studio' );
+			$hello = __( 'Good afternoon', 'adminora' );
 		} else {
-			$hello = __( 'Good evening', 'admin-studio' );
+			$hello = __( 'Good evening', 'adminora' );
 		}
 
 		$first = $user->first_name ? $user->first_name : $user->display_name;
@@ -670,7 +670,7 @@ class Admin_Look {
 			}
 
 			$items[ $entry[2] ] = array(
-				\AdminStudio\Modules\Roles\Access::clean_label( $entry[0] ),
+				\Adminora\Modules\Roles\Access::clean_label( $entry[0] ),
 				isset( $entry[5] ) ? $entry[5] : '',
 				isset( $entry[6] ) ? $entry[6] : '',
 			);
@@ -828,7 +828,7 @@ class Admin_Look {
 	 * @return void
 	 */
 	public static function ajax_mode() {
-		check_ajax_referer( 'adminstudio_look_mode', 'nonce' );
+		check_ajax_referer( 'adminora_look_mode', 'nonce' );
 
 		if ( ! current_user_can( 'read' ) ) {
 			wp_send_json_error( null, 403 );
@@ -858,18 +858,18 @@ class Admin_Look {
 
 		$templates = self::templates();
 
-		echo '<div class="notice notice-info adminstudio-notice adminstudio-try"><p>';
+		echo '<div class="notice notice-info adminora-notice adminora-try"><p>';
 		echo esc_html(
 			sprintf(
 				/* translators: %s: template name. */
-				__( 'You are trying the %s template. Only you can see it.', 'admin-studio' ),
+				__( 'You are trying the %s template. Only you can see it.', 'adminora' ),
 				$templates[ $current['template'] ][0]
 			)
 		);
-		echo '</p><div class="adminstudio-try__actions">';
-		self::try_form( 'look_apply', __( 'Apply to everyone', 'admin-studio' ), 'button-primary', $current );
-		echo '<a class="button" href="' . esc_url( admin_url( 'options-general.php?page=admin-studio&tab=look&section=roles' ) ) . '">' . esc_html__( 'Apply to roles', 'admin-studio' ) . '</a>';
-		self::try_form( 'look_stop', __( 'Stop trying', 'admin-studio' ), '', $current );
+		echo '</p><div class="adminora-try__actions">';
+		self::try_form( 'look_apply', __( 'Apply to everyone', 'adminora' ), 'button-primary', $current );
+		echo '<a class="button" href="' . esc_url( admin_url( 'options-general.php?page=adminora&tab=look&section=roles' ) ) . '">' . esc_html__( 'Apply to roles', 'adminora' ) . '</a>';
+		self::try_form( 'look_stop', __( 'Stop trying', 'adminora' ), '', $current );
 		echo '</div></div>';
 	}
 
@@ -884,10 +884,10 @@ class Admin_Look {
 	 */
 	private static function try_form( $action, $label, $button_class, array $current ) {
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		echo '<input type="hidden" name="action" value="adminstudio_' . esc_attr( $action ) . '">';
+		echo '<input type="hidden" name="action" value="adminora_' . esc_attr( $action ) . '">';
 		echo '<input type="hidden" name="template" value="' . esc_attr( $current['template'] ) . '">';
 		echo '<input type="hidden" name="palette" value="' . esc_attr( $current['palette'] ) . '">';
-		wp_nonce_field( 'adminstudio_' . $action );
+		wp_nonce_field( 'adminora_' . $action );
 		echo '<button type="submit" class="button ' . esc_attr( $button_class ) . '">' . esc_html( $label ) . '</button></form>';
 	}
 
@@ -940,38 +940,38 @@ class Admin_Look {
 			),
 		);
 
-		echo '<h2 id="adminstudio-look">' . esc_html__( 'Dashboard look', 'admin-studio' ) . '</h2>';
-		wp_nonce_field( 'adminstudio_look_profile_' . $user->ID, '_adminstudio_look', false );
+		echo '<h2 id="adminora-look">' . esc_html__( 'Dashboard look', 'adminora' ) . '</h2>';
+		wp_nonce_field( 'adminora_look_profile_' . $user->ID, '_adminora_look', false );
 		echo '<table class="form-table" role="presentation">';
 
 		if ( $own ) {
-			echo '<tr><th scope="row">' . esc_html__( 'Colour mode', 'admin-studio' ) . '</th><td><select name="adminstudio_look_mode">';
+			echo '<tr><th scope="row">' . esc_html__( 'Colour mode', 'adminora' ) . '</th><td><select name="adminora_look_mode">';
 			foreach ( array(
-				'light'  => __( 'Light', 'admin-studio' ),
-				'dark'   => __( 'Dark', 'admin-studio' ),
-				'system' => __( 'Follow my device', 'admin-studio' ),
+				'light'  => __( 'Light', 'adminora' ),
+				'dark'   => __( 'Dark', 'adminora' ),
+				'system' => __( 'Follow my device', 'adminora' ),
 			) as $key => $label ) {
 				echo '<option value="' . esc_attr( $key ) . '"' . selected( self::mode( $user->ID ), $key, false ) . '>' . esc_html( $label ) . '</option>';
 			}
-			echo '</select><p class="description">' . esc_html__( 'Applies when an admin template is in use.', 'admin-studio' ) . '</p></td></tr>';
+			echo '</select><p class="description">' . esc_html__( 'Applies when an admin template is in use.', 'adminora' ) . '</p></td></tr>';
 		}
 
 		if ( $can_self ) {
-			echo '<tr><th scope="row">' . esc_html__( 'My template', 'admin-studio' ) . '</th><td>';
-			echo wp_kses( $select( 'adminstudio_look_self[template]', $templates, $self['template'], __( 'Use the site setting', 'admin-studio' ) ), $allowed );
+			echo '<tr><th scope="row">' . esc_html__( 'My template', 'adminora' ) . '</th><td>';
+			echo wp_kses( $select( 'adminora_look_self[template]', $templates, $self['template'], __( 'Use the site setting', 'adminora' ) ), $allowed );
 			echo ' ';
-			echo wp_kses( $select( 'adminstudio_look_self[palette]', $palettes, $self['palette'], null ), $allowed );
+			echo wp_kses( $select( 'adminora_look_self[palette]', $palettes, $self['palette'], null ), $allowed );
 			echo '</td></tr>';
 		} elseif ( $own && $resolved['locked'] ) {
-			echo '<tr><th scope="row">' . esc_html__( 'My template', 'admin-studio' ) . '</th><td>' . esc_html__( 'Set by your administrator.', 'admin-studio' ) . '</td></tr>';
+			echo '<tr><th scope="row">' . esc_html__( 'My template', 'adminora' ) . '</th><td>' . esc_html__( 'Set by your administrator.', 'adminora' ) . '</td></tr>';
 		}
 
 		if ( $is_admin && ! $own ) {
-			echo '<tr><th scope="row">' . esc_html__( 'Template for this user', 'admin-studio' ) . '</th><td>';
-			echo wp_kses( $select( 'adminstudio_look_admin[template]', $templates, $admin['template'], __( 'Use their role\'s setting', 'admin-studio' ) ), $allowed );
+			echo '<tr><th scope="row">' . esc_html__( 'Template for this user', 'adminora' ) . '</th><td>';
+			echo wp_kses( $select( 'adminora_look_admin[template]', $templates, $admin['template'], __( 'Use their role\'s setting', 'adminora' ) ), $allowed );
 			echo ' ';
-			echo wp_kses( $select( 'adminstudio_look_admin[palette]', $palettes, $admin['palette'], null ), $allowed );
-			echo '<p><label><input type="checkbox" name="adminstudio_look_admin[lock]" value="1"' . checked( $admin['lock'], true, false ) . '> ' . esc_html__( 'Do not let this user change it', 'admin-studio' ) . '</label></p></td></tr>';
+			echo wp_kses( $select( 'adminora_look_admin[palette]', $palettes, $admin['palette'], null ), $allowed );
+			echo '<p><label><input type="checkbox" name="adminora_look_admin[lock]" value="1"' . checked( $admin['lock'], true, false ) . '> ' . esc_html__( 'Do not let this user change it', 'adminora' ) . '</label></p></td></tr>';
 		}
 
 		echo '</table>';
@@ -984,7 +984,7 @@ class Admin_Look {
 	 * @return void
 	 */
 	public static function save_profile( $user_id ) {
-		if ( ! isset( $_POST['_adminstudio_look'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_look'] ) ), 'adminstudio_look_profile_' . $user_id ) ) {
+		if ( ! isset( $_POST['_adminora_look'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminora_look'] ) ), 'adminora_look_profile_' . $user_id ) ) {
 			return;
 		}
 
@@ -994,15 +994,15 @@ class Admin_Look {
 
 		$own = get_current_user_id() === $user_id;
 
-		if ( $own && isset( $_POST['adminstudio_look_mode'] ) ) {
-			$mode = sanitize_key( wp_unslash( $_POST['adminstudio_look_mode'] ) );
+		if ( $own && isset( $_POST['adminora_look_mode'] ) ) {
+			$mode = sanitize_key( wp_unslash( $_POST['adminora_look_mode'] ) );
 			if ( in_array( $mode, array( 'light', 'dark', 'system' ), true ) ) {
 				update_user_meta( $user_id, self::META_MODE, $mode );
 			}
 		}
 
-		if ( $own && isset( $_POST['adminstudio_look_self'] ) && is_array( $_POST['adminstudio_look_self'] ) ) {
-			$self = self::clean_choice( array_map( 'sanitize_key', wp_unslash( $_POST['adminstudio_look_self'] ) ), true );
+		if ( $own && isset( $_POST['adminora_look_self'] ) && is_array( $_POST['adminora_look_self'] ) ) {
+			$self = self::clean_choice( array_map( 'sanitize_key', wp_unslash( $_POST['adminora_look_self'] ) ), true );
 			if ( '' === $self['template'] ) {
 				delete_user_meta( $user_id, self::META_SELF );
 			} else {
@@ -1010,8 +1010,8 @@ class Admin_Look {
 			}
 		}
 
-		if ( ! $own && current_user_can( 'manage_options' ) && current_user_can( 'edit_user', $user_id ) && isset( $_POST['adminstudio_look_admin'] ) && is_array( $_POST['adminstudio_look_admin'] ) ) {
-			$admin = self::clean_choice( array_map( 'sanitize_key', wp_unslash( $_POST['adminstudio_look_admin'] ) ), true );
+		if ( ! $own && current_user_can( 'manage_options' ) && current_user_can( 'edit_user', $user_id ) && isset( $_POST['adminora_look_admin'] ) && is_array( $_POST['adminora_look_admin'] ) ) {
+			$admin = self::clean_choice( array_map( 'sanitize_key', wp_unslash( $_POST['adminora_look_admin'] ) ), true );
 			if ( '' === $admin['template'] && ! $admin['lock'] ) {
 				delete_user_meta( $user_id, self::META_ADMIN );
 			} else {

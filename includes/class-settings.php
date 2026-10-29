@@ -2,14 +2,14 @@
 /**
  * Settings storage, field schema and sanitizing.
  *
- * Every setting lives in one nested option, `adminstudio_settings`, and is addressed
+ * Every setting lives in one nested option, `adminora_settings`, and is addressed
  * with a dot path such as `login.layout`. The Customizer stores into the same
- * option through ids like `adminstudio_settings[login][layout]`.
+ * option through ids like `adminora_settings[login][layout]`.
  *
- * @package AdminStudio
+ * @package Adminora
  */
 
-namespace AdminStudio;
+namespace Adminora;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Settings {
 
-	const OPTION = 'adminstudio_settings';
+	const OPTION = 'adminora_settings';
 
 	/**
 	 * Field schema, built once per request.
