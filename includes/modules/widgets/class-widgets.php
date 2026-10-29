@@ -443,7 +443,8 @@ class Widgets {
 	 * @return void
 	 */
 	public static function block_reorder() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Only refuses the request; core checks the nonce when it goes ahead.
+		check_ajax_referer( 'meta-box-order' );
+
 		$page = isset( $_POST['page'] ) ? sanitize_key( wp_unslash( $_POST['page'] ) ) : '';
 
 		if ( 'dashboard' === $page && self::locked() ) {

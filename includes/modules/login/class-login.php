@@ -236,8 +236,6 @@ class Login {
 			}
 		}
 
-		$css .= Settings::get( 'login.custom_css' );
-
 		return $css;
 	}
 

@@ -830,7 +830,10 @@ class Admin_Look {
 	public static function ajax_mode() {
 		check_ajax_referer( 'adminstudio_look_mode', 'nonce' );
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Checked above.
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
 		$mode = isset( $_POST['mode'] ) ? sanitize_key( wp_unslash( $_POST['mode'] ) ) : '';
 
 		if ( ! in_array( $mode, array( 'light', 'dark', 'system' ), true ) ) {
@@ -982,6 +985,10 @@ class Admin_Look {
 	 */
 	public static function save_profile( $user_id ) {
 		if ( ! isset( $_POST['_adminstudio_look'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_look'] ) ), 'adminstudio_look_profile_' . $user_id ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'edit_user', $user_id ) ) {
 			return;
 		}
 

@@ -27,7 +27,6 @@ It starts from your site. Brand colours come from your choice of source: your th
 * Hide the language switcher or the privacy link, or rename the "Go to site" link.
 * Replace any wording on the log in, lost password, reset password and registration screens, including labels, buttons, links and messages.
 * One message of your own for every failed log in, so the screen does not reveal which usernames exist.
-* Custom CSS.
 * Live preview in the Customizer, with a screen picker for log in, register, lost password, reset password and the two-factor code. Applies to every login screen, including the "session expired" login.
 
 = Emails =

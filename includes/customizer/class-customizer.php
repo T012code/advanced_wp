@@ -45,7 +45,6 @@ class Customizer {
 			'adminstudio_login_form'         => Preview::url( 'login' ),
 			'adminstudio_login_text'         => Preview::url( 'login' ),
 			'adminstudio_login_words'        => Preview::url( 'login' ),
-			'adminstudio_login_css'          => Preview::url( 'login' ),
 			'adminstudio_emails'             => Preview::url( 'email', array( 'adminstudio_template' => 'welcome' ) ),
 			'adminstudio_errors_design'      => Preview::url( 'page', array( 'adminstudio_page' => 'critical' ) ),
 			'adminstudio_errors_critical'    => Preview::url( 'page', array( 'adminstudio_page' => 'critical' ) ),
@@ -165,11 +164,6 @@ class Customizer {
 				$wp->add_control( new \WP_Customize_Upload_Control( $wp, $id, $args ) );
 				break;
 
-			case 'css':
-				$args['code_type'] = 'text/css';
-				$wp->add_control( new \WP_Customize_Code_Editor_Control( $wp, $id, $args ) );
-				break;
-
 			default:
 				$args['type'] = $type;
 				$wp->add_control( $id, $args );
@@ -190,7 +184,6 @@ class Customizer {
 			'int'          => 'number',
 			'int_optional' => 'number',
 			'html'         => 'textarea',
-			'css'          => 'css',
 			'datetime'     => 'datetime-local',
 		);
 
@@ -490,12 +483,6 @@ class Customizer {
 				'title'       => __( 'Login: wording', 'admin-studio' ),
 				'description' => __( 'Replace any text on the log in, lost password, reset password and registration screens. Leave a box empty to keep WordPress\'s wording. You can use {site_name}; in the two messages with a link, use {login_url} for the login address.', 'admin-studio' ),
 				'controls'    => $words,
-			),
-			'adminstudio_login_css'          => array(
-				'title'    => __( 'Login: custom CSS', 'admin-studio' ),
-				'controls' => array(
-					'login.custom_css' => self::c( __( 'Custom CSS', 'admin-studio' ), __( 'Applied to every login, registration and password screen.', 'admin-studio' ) ),
-				),
 			),
 			'adminstudio_emails'             => array(
 				'title'       => __( 'Emails: design', 'admin-studio' ),

@@ -233,10 +233,6 @@ class Settings {
 				'type'    => 'text',
 				'default' => '',
 			),
-			'login.custom_css'                 => array(
-				'type'    => 'css',
-				'default' => '',
-			),
 
 			// Email design.
 			'emails.show_logo'                 => $on,
@@ -705,9 +701,6 @@ class Settings {
 
 			case 'html':
 				return wp_kses_post( is_string( $value ) ? $value : '' );
-
-			case 'css':
-				return trim( wp_strip_all_tags( is_string( $value ) ? $value : '' ) );
 
 			case 'slug':
 				return sanitize_title( is_string( $value ) ? $value : '' );

@@ -69,17 +69,12 @@ class Look_Tab {
 	}
 
 	/**
-	 * Checks capability and nonce.
+	 * Stops the request with a "not allowed" message.
 	 *
-	 * @param string $action Nonce action.
 	 * @return void
 	 */
-	private static function guard( $action ) {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
-		}
-
-		check_admin_referer( $action );
+	private static function deny() {
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -404,9 +399,13 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_save() {
-		self::guard( 'adminstudio_look_save' );
+		check_admin_referer( 'adminstudio_look_save' );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce checked in guard(); values are cleaned here and in Admin_Look::save().
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Values are cleaned here and in Admin_Look::save().
 		$group = isset( $_POST['group'] ) ? sanitize_key( wp_unslash( $_POST['group'] ) ) : '';
 
 		if ( 'templates' === $group ) {
@@ -523,7 +522,11 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_apply() {
-		self::guard( 'adminstudio_look_apply' );
+		check_admin_referer( 'adminstudio_look_apply' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 
 		$try = get_user_meta( get_current_user_id(), Admin_Look::META_TRY, true );
 
@@ -553,7 +556,11 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_stop() {
-		self::guard( 'adminstudio_look_stop' );
+		check_admin_referer( 'adminstudio_look_stop' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 		delete_user_meta( get_current_user_id(), Admin_Look::META_TRY );
 		self::back( 'templates', 'look_stopped' );
 	}

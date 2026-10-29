@@ -305,17 +305,12 @@ class Admin {
 	}
 
 	/**
-	 * Stops unless the user can manage options and the nonce is valid.
+	 * Stops the request with a "not allowed" message.
 	 *
-	 * @param string $action Nonce action.
 	 * @return void
 	 */
-	private static function guard( $action ) {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
-		}
-
-		check_admin_referer( $action );
+	private static function deny() {
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -395,11 +390,15 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_save() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
-		$tab = isset( $_POST['tab'] ) ? sanitize_key( wp_unslash( $_POST['tab'] ) ) : '';
-		self::guard( 'adminstudio_save_' . $tab );
+		check_admin_referer( 'adminstudio_save' );
 
-		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Nonce checked in guard(); every value is sanitized by Settings::update() against its field type.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		$tab = isset( $_POST['tab'] ) ? sanitize_key( wp_unslash( $_POST['tab'] ) ) : '';
+
+		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Every value is sanitized by Settings::update() against its field type.
 		$posted   = isset( $_POST['adminstudio'] ) && is_array( $_POST['adminstudio'] ) ? wp_unslash( $_POST['adminstudio'] ) : array();
 		$template = isset( $_POST['template'] ) ? sanitize_key( wp_unslash( $_POST['template'] ) ) : '';
 		// phpcs:enable
@@ -438,7 +437,6 @@ class Admin {
 			$values['modules.security'] = ! empty( $values['security.login_url'] ) || ! empty( $values['security.admin_url'] ) || ! empty( $values['security.limit'] ) || ! empty( $values['security.honeypot'] ) || ! empty( $values['security.twofa'] );
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
 		if ( 'maintenance' === $tab && ! empty( $_POST['adminstudio_new_bypass'] ) ) {
 			$values['maintenance.bypass_key'] = strtolower( wp_generate_password( 16, false ) );
 		}
@@ -466,7 +464,11 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_admin_url_test() {
-		self::guard( 'adminstudio_admin_url_test' );
+		check_admin_referer( 'adminstudio_admin_url_test' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 
 		self::back( 'security', 'admin_url_' . Admin_Url::apply() );
 	}
@@ -478,7 +480,11 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_admin_url_force() {
-		self::guard( 'adminstudio_admin_url_force' );
+		check_admin_referer( 'adminstudio_admin_url_force' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 
 		Admin_Url::force();
 
@@ -491,9 +497,14 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_export() {
-		self::guard( 'adminstudio_export' );
+		check_admin_referer( 'adminstudio_export' );
 
-		$data = Transfer::export( self::posted_parts() );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		$parts = isset( $_POST['adminstudio_parts'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_parts'] ) ) : array();
+		$data  = Transfer::export( self::known_parts( $parts ) );
 
 		nocache_headers();
 		header( 'Content-Type: application/json; charset=utf-8' );
@@ -508,9 +519,13 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_import() {
-		self::guard( 'adminstudio_import' );
+		check_admin_referer( 'adminstudio_import' );
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput, WordPress.Security.NonceVerification.Missing -- Nonce checked in guard(); only the temporary path is used, and checked with is_uploaded_file().
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- Only the temporary path is used, and checked with is_uploaded_file().
 		$file = isset( $_FILES['adminstudio_file']['tmp_name'] ) ? $_FILES['adminstudio_file']['tmp_name'] : '';
 
 		if ( ! $file || ! is_uploaded_file( $file ) ) {
@@ -546,7 +561,11 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_import_apply() {
-		self::guard( 'adminstudio_import_apply' );
+		check_admin_referer( 'adminstudio_import_apply' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 
 		$data = self::pending_import();
 
@@ -554,9 +573,9 @@ class Admin {
 			self::back( 'tools', 'import_expired' );
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
+		$parts  = isset( $_POST['adminstudio_parts'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_parts'] ) ) : array();
 		$roles  = isset( $_POST['adminstudio_roles'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_roles'] ) ) : array();
-		$report = Transfer::import( $data, self::posted_parts(), $roles );
+		$report = Transfer::import( $data, self::known_parts( $parts ), $roles );
 
 		delete_transient( self::UPLOAD . get_current_user_id() );
 
@@ -576,7 +595,11 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_import_cancel() {
-		self::guard( 'adminstudio_import_cancel' );
+		check_admin_referer( 'adminstudio_import_cancel' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 		delete_transient( self::UPLOAD . get_current_user_id() );
 		self::back( 'tools', 'import_cancelled' );
 	}
@@ -671,14 +694,13 @@ class Admin {
 	}
 
 	/**
-	 * Parts ticked on the export or import form.
+	 * Keeps only the parts Admin Studio knows from those ticked on the
+	 * export or import form.
 	 *
+	 * @param string[] $parts Ticked part keys.
 	 * @return string[]
 	 */
-	private static function posted_parts() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Called from handlers that verify the nonce first.
-		$parts = isset( $_POST['adminstudio_parts'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_parts'] ) ) : array();
-
+	private static function known_parts( array $parts ) {
 		return array_values( array_intersect( $parts, array_keys( Transfer::parts() ) ) );
 	}
 
@@ -688,15 +710,17 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_reset() {
-		self::guard( 'adminstudio_reset' );
+		check_admin_referer( 'adminstudio_reset' );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Verified in guard().
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
 		if ( empty( $_POST['adminstudio_confirm'] ) ) {
 			self::back( 'tools', 'reset_confirm' );
 		}
 
 		$section = isset( $_POST['adminstudio_section'] ) ? sanitize_key( wp_unslash( $_POST['adminstudio_section'] ) ) : '';
-		// phpcs:enable
 
 		$allowed = array( 'all', 'brand', 'login', 'emails', 'error_pages', 'tab_meta', 'admin_branding', 'security', 'maintenance' );
 
@@ -713,12 +737,14 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_test_email() {
-		self::guard( 'adminstudio_test_email' );
+		check_admin_referer( 'adminstudio_test_email' );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Verified in guard().
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
 		$template = isset( $_POST['template'] ) ? sanitize_key( wp_unslash( $_POST['template'] ) ) : 'welcome';
 		$to       = isset( $_POST['adminstudio_to'] ) ? sanitize_email( wp_unslash( $_POST['adminstudio_to'] ) ) : '';
-		// phpcs:enable
 
 		$template = Templates::get( $template ) ? $template : 'welcome';
 		$sent     = is_email( $to ) && Emails::send_test( $template, $to );
@@ -732,9 +758,12 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_email_preview() {
-		self::guard( 'adminstudio_email_preview' );
+		check_admin_referer( 'adminstudio_email_preview' );
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Verified in guard().
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
 		$template = isset( $_GET['template'] ) ? sanitize_key( wp_unslash( $_GET['template'] ) ) : 'welcome';
 
 		header( 'Content-Type: text/html; charset=utf-8' );
@@ -748,9 +777,12 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_reset_template() {
-		self::guard( 'adminstudio_reset_template' );
+		check_admin_referer( 'adminstudio_reset_template' );
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
 		$template = isset( $_POST['template'] ) ? sanitize_key( wp_unslash( $_POST['template'] ) ) : '';
 
 		if ( Templates::get( $template ) ) {
@@ -768,9 +800,12 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_unlock() {
-		self::guard( 'adminstudio_unlock' );
+		check_admin_referer( 'adminstudio_unlock' );
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified in guard().
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
 		$ip = isset( $_POST['ip'] ) ? sanitize_text_field( wp_unslash( $_POST['ip'] ) ) : '';
 
 		if ( filter_var( $ip, FILTER_VALIDATE_IP ) ) {
@@ -786,7 +821,11 @@ class Admin {
 	 * @return void
 	 */
 	public static function handle_clear_log() {
-		self::guard( 'adminstudio_clear_log' );
+		check_admin_referer( 'adminstudio_clear_log' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 		Attempts::clear_log();
 		self::back( 'security', 'log_cleared' );
 	}

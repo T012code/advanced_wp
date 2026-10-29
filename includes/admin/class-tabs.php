@@ -52,7 +52,7 @@ class Tabs {
 		foreach ( $extra as $name => $value ) {
 			echo '<input type="hidden" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '">';
 		}
-		wp_nonce_field( 'adminstudio_save_' . $tab );
+		wp_nonce_field( 'adminstudio_save' );
 	}
 
 	/**
@@ -170,7 +170,7 @@ class Tabs {
 
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" class="adminstudio-panel adminstudio-brand">';
 		echo '<input type="hidden" name="action" value="adminstudio_save"><input type="hidden" name="tab" value="brand">';
-		wp_nonce_field( 'adminstudio_save_brand' );
+		wp_nonce_field( 'adminstudio_save' );
 
 		echo '<div class="adminstudio-brand__head"><div><h2>' . esc_html__( 'Brand kit', 'admin-studio' ) . '</h2><p>' . esc_html__( 'Choose where your brand colours come from. The login page, emails, system pages and dashboard templates all use them. Logo, fonts and corners are set in the Customizer.', 'admin-studio' ) . '</p></div>';
 		echo wp_kses_post( self::customize_link( 'adminstudio_brand', __( 'Edit logo and fonts', 'admin-studio' ) ) );

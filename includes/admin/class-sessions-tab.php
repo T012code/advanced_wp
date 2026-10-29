@@ -451,7 +451,7 @@ class Sessions_Tab {
 	private static function section_settings() {
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
 		echo '<input type="hidden" name="action" value="adminstudio_save"><input type="hidden" name="tab" value="sessions">';
-		wp_nonce_field( 'adminstudio_save_sessions' );
+		wp_nonce_field( 'adminstudio_save' );
 
 		echo '<h2 class="title">' . esc_html__( 'Session limit', 'admin-studio' ) . '</h2>';
 		echo '<p class="adminstudio-intro">' . esc_html__( 'Each browser or app someone signs in on is one session. A limit stops one account being shared across many devices.', 'admin-studio' ) . '</p>';
@@ -485,23 +485,27 @@ class Sessions_Tab {
 	// ------------------------------------------------------------------
 
 	/**
-	 * Checks the nonce and capability, and returns the target user.
+	 * Stops the request with a "not allowed" message.
 	 *
-	 * @param string $action Nonce action.
+	 * @return void
+	 */
+	private static function deny() {
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
+	}
+
+	/**
+	 * Finds the account an action is for, by ID or by username or email, and
+	 * stops unless the current user may edit it.
+	 *
+	 * @param int    $id  User ID, or 0.
+	 * @param string $who Username or email, used when there is no ID.
 	 * @return \WP_User
 	 */
-	private static function guard( $action ) {
-		check_admin_referer( $action );
-
-		// phpcs:disable WordPress.Security.NonceVerification -- Checked above.
-		$id  = isset( $_REQUEST['user'] ) ? absint( $_REQUEST['user'] ) : 0;
-		$who = isset( $_REQUEST['who'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['who'] ) ) : '';
-		// phpcs:enable
-
+	private static function target_user( $id, $who ) {
 		$user = $id ? get_userdata( $id ) : ( '' !== $who ? get_user_by( is_email( $who ) ? 'email' : 'login', $who ) : false );
 
-		if ( ! current_user_can( 'manage_options' ) || ( $user && ! current_user_can( 'edit_user', $user->ID ) ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
+		if ( $user && ! current_user_can( 'edit_user', $user->ID ) ) {
+			self::deny();
 		}
 
 		if ( ! $user ) {
@@ -535,8 +539,17 @@ class Sessions_Tab {
 	 * @return void
 	 */
 	public static function handle_session_end() {
-		$user = self::guard( 'adminstudio_session_end' );
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Checked in guard().
+		check_admin_referer( 'adminstudio_session_end' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		$user = self::target_user(
+			isset( $_REQUEST['user'] ) ? absint( $_REQUEST['user'] ) : 0,
+			isset( $_REQUEST['who'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['who'] ) ) : ''
+		);
+
 		$verifier = isset( $_POST['session'] ) ? sanitize_key( wp_unslash( $_POST['session'] ) ) : '';
 		$sessions = Sessions::of( $user->ID );
 
@@ -553,7 +566,16 @@ class Sessions_Tab {
 	 * @return void
 	 */
 	public static function handle_session_end_all() {
-		$user = self::guard( 'adminstudio_session_end_all' );
+		check_admin_referer( 'adminstudio_session_end_all' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		$user = self::target_user(
+			isset( $_REQUEST['user'] ) ? absint( $_REQUEST['user'] ) : 0,
+			isset( $_REQUEST['who'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['who'] ) ) : ''
+		);
 
 		if ( get_current_user_id() === $user->ID ) {
 			\WP_Session_Tokens::get_instance( $user->ID )->destroy_others( wp_get_session_token() );
@@ -571,7 +593,16 @@ class Sessions_Tab {
 	 * @return void
 	 */
 	public static function handle_user_block() {
-		$user = self::guard( 'adminstudio_user_block' );
+		check_admin_referer( 'adminstudio_user_block' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		$user = self::target_user(
+			isset( $_REQUEST['user'] ) ? absint( $_REQUEST['user'] ) : 0,
+			isset( $_REQUEST['who'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['who'] ) ) : ''
+		);
 
 		if ( get_current_user_id() === $user->ID ) {
 			wp_die( esc_html__( 'You cannot block your own account.', 'admin-studio' ), '', array( 'response' => 400 ) );
@@ -587,7 +618,16 @@ class Sessions_Tab {
 	 * @return void
 	 */
 	public static function handle_user_unblock() {
-		$user = self::guard( 'adminstudio_user_unblock' );
+		check_admin_referer( 'adminstudio_user_unblock' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		$user = self::target_user(
+			isset( $_REQUEST['user'] ) ? absint( $_REQUEST['user'] ) : 0,
+			isset( $_REQUEST['who'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['who'] ) ) : ''
+		);
 
 		Sessions::unblock( $user->ID );
 		self::back( 'blocked', 'user_unblocked' );

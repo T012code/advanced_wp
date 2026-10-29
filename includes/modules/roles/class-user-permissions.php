@@ -152,12 +152,11 @@ class User_Permissions {
 	 * @return void
 	 */
 	public static function save( $user_id ) {
-		// phpcs:disable WordPress.Security.NonceVerification.Missing -- The nonce is checked just below, before anything is read.
-		if ( empty( $_POST['adminstudio_perms_present'] ) || ! isset( $_POST['_adminstudio_perms'] ) ) {
+		if ( ! isset( $_POST['_adminstudio_perms'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_perms'] ) ), self::NONCE . '_' . $user_id ) ) {
 			return;
 		}
 
-		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_perms'] ) ), self::NONCE . '_' . $user_id ) || ! self::can_edit( $user_id ) ) {
+		if ( ! current_user_can( 'promote_users' ) || ! current_user_can( 'edit_user', $user_id ) || empty( $_POST['adminstudio_perms_present'] ) ) {
 			return;
 		}
 
@@ -171,7 +170,6 @@ class User_Permissions {
 		$grant  = isset( $_POST['adminstudio_grant'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_grant'] ) ) : array();
 		$deny   = isset( $_POST['adminstudio_deny'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['adminstudio_deny'] ) ) : array();
 		$choice = isset( $_POST['adminstudio_toolbar'] ) ? sanitize_key( wp_unslash( $_POST['adminstudio_toolbar'] ) ) : '';
-		// phpcs:enable
 
 		$valid_roles = array_keys( wp_roles()->roles );
 		$valid_caps  = Capabilities::all();

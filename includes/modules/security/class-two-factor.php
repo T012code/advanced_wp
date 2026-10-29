@@ -596,11 +596,11 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function admin_reset( $user_id ) {
-		if ( empty( $_POST['adminstudio_2fa_reset'] ) || ! current_user_can( 'edit_users' ) || ! current_user_can( 'edit_user', $user_id ) ) {
+		if ( ! isset( $_POST['_adminstudio_2fa_reset'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_2fa_reset'] ) ), 'adminstudio_2fa_reset_' . $user_id ) ) {
 			return;
 		}
 
-		if ( ! isset( $_POST['_adminstudio_2fa_reset'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminstudio_2fa_reset'] ) ), 'adminstudio_2fa_reset_' . $user_id ) ) {
+		if ( empty( $_POST['adminstudio_2fa_reset'] ) || ! current_user_can( 'edit_users' ) || ! current_user_can( 'edit_user', $user_id ) ) {
 			return;
 		}
 
@@ -624,39 +624,18 @@ class Two_Factor {
 	// ---------------------------------------------------------------------
 
 	/**
-	 * Checks the nonce and returns the current user.
-	 *
-	 * @return \WP_User
-	 */
-	private static function ajax_user() {
-		check_ajax_referer( 'adminstudio_2fa', 'nonce' );
-
-		$user = wp_get_current_user();
-
-		if ( ! $user->exists() ) {
-			wp_send_json_error( null, 403 );
-		}
-
-		return $user;
-	}
-
-	/**
-	 * Code from the request.
-	 *
-	 * @return string
-	 */
-	private static function ajax_code() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Checked in ajax_user().
-		return isset( $_POST['code'] ) ? preg_replace( '/\D/', '', sanitize_text_field( wp_unslash( $_POST['code'] ) ) ) : '';
-	}
-
-	/**
 	 * Starts authenticator setup with a new secret.
 	 *
 	 * @return void
 	 */
 	public static function ajax_setup() {
-		$user   = self::ajax_user();
+		check_ajax_referer( 'adminstudio_2fa', 'nonce' );
+
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
+		$user   = wp_get_current_user();
 		$secret = Totp::generate_secret();
 
 		update_user_meta( $user->ID, self::META_PEND, $secret );
@@ -675,9 +654,16 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_verify() {
-		$user   = self::ajax_user();
+		check_ajax_referer( 'adminstudio_2fa', 'nonce' );
+
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
+		$user   = wp_get_current_user();
 		$secret = get_user_meta( $user->ID, self::META_PEND, true );
-		$slice  = $secret ? Totp::verify( $secret, self::ajax_code() ) : false;
+		$code   = isset( $_POST['code'] ) ? preg_replace( '/\D/', '', sanitize_text_field( wp_unslash( $_POST['code'] ) ) ) : '';
+		$slice  = $secret ? Totp::verify( $secret, $code ) : false;
 
 		if ( false === $slice ) {
 			wp_send_json_error();
@@ -698,7 +684,13 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_email_start() {
-		$user = self::ajax_user();
+		check_ajax_referer( 'adminstudio_2fa', 'nonce' );
+
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
+		$user = wp_get_current_user();
 
 		if ( ! Settings::get( 'security.twofa_email' ) ) {
 			wp_send_json_error( null, 403 );
@@ -713,9 +705,15 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_email_verify() {
-		$user  = self::ajax_user();
+		check_ajax_referer( 'adminstudio_2fa', 'nonce' );
+
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
+		$user  = wp_get_current_user();
 		$email = get_user_meta( $user->ID, self::META_EMAIL, true );
-		$code  = self::ajax_code();
+		$code  = isset( $_POST['code'] ) ? preg_replace( '/\D/', '', sanitize_text_field( wp_unslash( $_POST['code'] ) ) ) : '';
 
 		if ( ! is_array( $email ) || $email['expires'] < time() || ! hash_equals( $email['hash'], wp_hash( $code ) ) ) {
 			wp_send_json_error();
@@ -734,7 +732,13 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_backup() {
-		$user = self::ajax_user();
+		check_ajax_referer( 'adminstudio_2fa', 'nonce' );
+
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
+		$user = wp_get_current_user();
 
 		if ( '' === self::method( $user->ID ) ) {
 			wp_send_json_error();
@@ -749,7 +753,13 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_disable() {
-		$user = self::ajax_user();
+		check_ajax_referer( 'adminstudio_2fa', 'nonce' );
+
+		if ( ! current_user_can( 'read' ) ) {
+			wp_send_json_error( null, 403 );
+		}
+
+		$user = wp_get_current_user();
 
 		if ( self::required( $user ) ) {
 			wp_send_json_error( null, 403 );

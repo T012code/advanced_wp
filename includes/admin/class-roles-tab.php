@@ -78,17 +78,12 @@ class Roles_Tab {
 	}
 
 	/**
-	 * Checks capability and nonce.
+	 * Stops the request with a "not allowed" message.
 	 *
-	 * @param string $action Nonce action.
 	 * @return void
 	 */
-	private static function guard( $action ) {
-		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
-		}
-
-		check_admin_referer( $action );
+	private static function deny() {
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -536,12 +531,14 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_create() {
-		self::guard( 'adminstudio_role_create' );
+		check_admin_referer( 'adminstudio_role_create' );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Checked in guard().
+		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
+			self::deny();
+		}
+
 		$name = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
 		$copy = isset( $_POST['copy'] ) ? sanitize_key( wp_unslash( $_POST['copy'] ) ) : '';
-		// phpcs:enable
 
 		$result = Role_Manager::create( $name, '', $copy );
 
@@ -558,14 +555,16 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_save() {
-		self::guard( 'adminstudio_role_save' );
+		check_admin_referer( 'adminstudio_role_save' );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Checked in guard().
+		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
+			self::deny();
+		}
+
 		$slug   = isset( $_POST['role'] ) ? sanitize_key( wp_unslash( $_POST['role'] ) ) : '';
 		$name   = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
 		$caps   = isset( $_POST['caps'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['caps'] ) ) : array();
 		$custom = isset( $_POST['custom_cap'] ) ? sanitize_key( wp_unslash( $_POST['custom_cap'] ) ) : '';
-		// phpcs:enable
 
 		if ( '' !== $custom ) {
 			$caps[] = $custom;
@@ -592,12 +591,14 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_delete() {
-		self::guard( 'adminstudio_role_delete' );
+		check_admin_referer( 'adminstudio_role_delete' );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing -- Checked in guard().
+		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
+			self::deny();
+		}
+
 		$slug     = isset( $_POST['role'] ) ? sanitize_key( wp_unslash( $_POST['role'] ) ) : '';
 		$reassign = isset( $_POST['reassign'] ) ? sanitize_key( wp_unslash( $_POST['reassign'] ) ) : '';
-		// phpcs:enable
 
 		$result = Role_Manager::delete( $slug, $reassign );
 
@@ -614,9 +615,12 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_restore() {
-		self::guard( 'adminstudio_role_restore' );
+		check_admin_referer( 'adminstudio_role_restore' );
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Checked in guard().
+		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
+			self::deny();
+		}
+
 		$index  = isset( $_POST['index'] ) ? absint( $_POST['index'] ) : -1;
 		$result = Role_Manager::restore( $index );
 
@@ -629,7 +633,11 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_defaults() {
-		self::guard( 'adminstudio_role_defaults' );
+		check_admin_referer( 'adminstudio_role_defaults' );
+
+		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
+			self::deny();
+		}
 		Role_Manager::restore_defaults();
 		self::back( 'backups', 'roles_restored' );
 	}
@@ -640,9 +648,13 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_access_save() {
-		self::guard( 'adminstudio_access_save' );
+		check_admin_referer( 'adminstudio_access_save' );
 
-		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce checked in guard(); values are cleaned by Access::save().
+		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
+			self::deny();
+		}
+
+		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Values are cleaned by Access::save().
 		$group = isset( $_POST['group'] ) ? sanitize_key( wp_unslash( $_POST['group'] ) ) : '';
 		$rules = Access::rules();
 
@@ -688,7 +700,11 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_audit_csv() {
-		self::guard( 'adminstudio_audit_csv' );
+		check_admin_referer( 'adminstudio_audit_csv' );
+
+		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
+			self::deny();
+		}
 		Audit::download_csv();
 		exit;
 	}

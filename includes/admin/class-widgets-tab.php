@@ -69,14 +69,12 @@ class Widgets_Tab {
 	}
 
 	/**
-	 * Stops anyone who cannot manage options.
+	 * Stops the request with a "not allowed" message.
 	 *
 	 * @return void
 	 */
-	private static function guard() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
-		}
+	private static function deny() {
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'admin-studio' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -515,8 +513,11 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widgets_visibility() {
-		self::guard();
 		check_admin_referer( 'adminstudio_widgets_visibility' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Keys and values cleaned below and in Widgets::save().
 		$posted = isset( $_POST['widgets'] ) ? (array) wp_unslash( $_POST['widgets'] ) : array();
@@ -541,8 +542,11 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widget_save() {
-		self::guard();
 		check_admin_referer( 'adminstudio_widget_save' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 
 		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Cleaned in Widgets::clean_widget().
 		$id   = isset( $_POST['widget'] ) ? sanitize_key( wp_unslash( $_POST['widget'] ) ) : '';
@@ -571,8 +575,11 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widget_delete() {
-		self::guard();
 		check_admin_referer( 'adminstudio_widget_delete' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 
 		$id     = isset( $_POST['widget'] ) ? sanitize_key( wp_unslash( $_POST['widget'] ) ) : '';
 		$config = Widgets::config();
@@ -594,8 +601,11 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widgets_layout() {
-		self::guard();
 		check_admin_referer( 'adminstudio_widgets_layout' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
 
 		$lock   = ! empty( $_POST['lock'] );
 		$config = Widgets::config();
