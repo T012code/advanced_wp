@@ -3,10 +3,10 @@
  * Roles and permissions module: role editor, per-user permissions, menu
  * access, login redirect, dashboard access and toolbar control.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Roles;
+namespace LayoDT\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 

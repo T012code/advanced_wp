@@ -2,10 +2,10 @@
 /**
  * Small colour helpers: parsing, mixing and contrast.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora;
+namespace LayoDT;
 
 defined( 'ABSPATH' ) || exit;
 

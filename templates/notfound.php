@@ -2,9 +2,9 @@
 /**
  * Branded 404 page.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
 defined( 'ABSPATH' ) || exit;
 
-Adminora\Modules\Error_Pages\Error_Pages::output( 'notfound' );
+LayoDT\Modules\Error_Pages\Error_Pages::output( 'notfound' );

@@ -1,48 +1,48 @@
-/* Adminora settings page and profile screen. */
+/* Layò Dashboard Toolkit settings page and profile screen. */
 
-.adminora-wrap .adminora-title {
+.layodt-wrap .layodt-title {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 }
 
-.adminora-wrap .adminora-title img {
+.layodt-wrap .layodt-title img {
 	display: block;
 	border-radius: 8px;
 }
 
-.adminora-wrap .adminora-tab {
+.layodt-wrap .layodt-tab {
 	max-width: 1100px;
 }
 
-.adminora-wrap .adminora-intro {
+.layodt-wrap .layodt-intro {
 	max-width: 720px;
 	color: #50575e;
 }
 
-.adminora-wrap .adminora-intro .button {
+.layodt-wrap .layodt-intro .button {
 	margin-left: 4px;
 	vertical-align: baseline;
 }
 
-.adminora-wrap h2.title {
+.layodt-wrap h2.title {
 	margin: 32px 0 4px;
 	font-size: 15px;
 }
 
-.adminora-wrap .adminora-tab > h2.title:first-child,
-.adminora-wrap .adminora-tab > form > h2.title:first-of-type,
-.adminora-wrap .adminora-subnav + h2.title,
-.adminora-wrap .adminora-subnav + form > h2.title:first-of-type {
+.layodt-wrap .layodt-tab > h2.title:first-child,
+.layodt-wrap .layodt-tab > form > h2.title:first-of-type,
+.layodt-wrap .layodt-subnav + h2.title,
+.layodt-wrap .layodt-subnav + form > h2.title:first-of-type {
 	margin-top: 20px;
 }
 
-.adminora-wrap h2.title + .adminora-intro {
+.layodt-wrap h2.title + .layodt-intro {
 	margin: 0 0 10px;
 }
 
 /* Each settings section is a card: heading and description above, fields inside. */
-.adminora-wrap .adminora-tab .form-table {
+.layodt-wrap .layodt-tab .form-table {
 	border-collapse: separate;
 	border-spacing: 0;
 	margin: 10px 0 8px;
@@ -52,29 +52,29 @@
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminora-wrap .adminora-tab .form-table th {
+.layodt-wrap .layodt-tab .form-table th {
 	width: 220px;
 	padding: 18px 12px 18px 24px;
 }
 
-.adminora-wrap .adminora-tab .form-table td {
+.layodt-wrap .layodt-tab .form-table td {
 	padding: 14px 24px 14px 12px;
 }
 
-.adminora-wrap .adminora-tab .form-table tr:first-child > * {
+.layodt-wrap .layodt-tab .form-table tr:first-child > * {
 	padding-top: 22px;
 }
 
-.adminora-wrap .adminora-tab .form-table tr:last-child > * {
+.layodt-wrap .layodt-tab .form-table tr:last-child > * {
 	padding-bottom: 22px;
 }
 
-.adminora-wrap .adminora-tab .submit {
+.layodt-wrap .layodt-tab .submit {
 	margin-top: 8px;
 }
 
 /* A panel with text on the left and an action on the right. */
-.adminora-panel {
+.layodt-panel {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -88,31 +88,31 @@
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminora-panel h2 {
+.layodt-panel h2 {
 	margin: 0 0 4px;
 	font-size: 15px;
 }
 
-.adminora-panel p {
+.layodt-panel p {
 	margin: 0;
 	max-width: 640px;
 	color: var(--as-muted, #50575e);
 }
 
 /* Overview: one small card per feature. */
-.adminora-wrap .adminora-tab .form-table.adminora-modules {
+.layodt-wrap .layodt-tab .form-table.layodt-modules {
 	border: 0;
 	background: transparent;
 	box-shadow: none;
 }
 
-.adminora-modules tbody {
+.layodt-modules tbody {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	gap: 12px;
 }
 
-.adminora-wrap .adminora-tab .adminora-modules tr {
+.layodt-wrap .layodt-tab .layodt-modules tr {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
@@ -123,99 +123,99 @@
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminora-wrap .adminora-tab .form-table.adminora-modules tr > th,
-.adminora-wrap .adminora-tab .form-table.adminora-modules tr > td {
+.layodt-wrap .layodt-tab .form-table.layodt-modules tr > th,
+.layodt-wrap .layodt-tab .form-table.layodt-modules tr > td {
 	display: block;
 	width: auto;
 	padding: 0;
 }
 
-.adminora-modules th {
+.layodt-modules th {
 	font-size: 14px;
 }
 
-.adminora-modules td .description {
+.layodt-modules td .description {
 	margin-top: 6px;
 }
 
-.adminora-wrap .adminora-modules .description .button {
+.layodt-wrap .layodt-modules .description .button {
 	display: table;
 	margin: 10px 0 0;
 }
 
 @media screen and (max-width: 782px) {
-	.adminora-wrap .adminora-tab .form-table th,
-	.adminora-wrap .adminora-tab .form-table td {
+	.layodt-wrap .layodt-tab .form-table th,
+	.layodt-wrap .layodt-tab .form-table td {
 		padding-left: 16px;
 		padding-right: 16px;
 	}
 
-	.adminora-wrap .adminora-tab .form-table td {
+	.layodt-wrap .layodt-tab .form-table td {
 		padding-top: 4px;
 	}
 }
 
-.adminora-wrap .form-table .description .button {
+.layodt-wrap .form-table .description .button {
 	margin-left: 4px;
 }
 
-.adminora-wrap .adminora-check {
+.layodt-wrap .layodt-check {
 	display: inline-block;
 	min-width: 200px;
 	margin: 0 16px 8px 0;
 }
 
-.adminora-wrap .adminora-prefix {
+.layodt-wrap .layodt-prefix {
 	padding: 6px 2px 6px 8px;
 	background: transparent;
 	color: #50575e;
 }
 
-.adminora-wrap .adminora-slug {
+.layodt-wrap .layodt-slug {
 	max-width: 16em;
 }
 
-.adminora-wrap [data-adminora-show-if][hidden] {
+.layodt-wrap [data-layodt-show-if][hidden] {
 	display: none;
 }
 
 /* Notices: an even border all round, no thick side stripe. */
-.adminora-wrap .notice,
-.adminora-notice {
+.layodt-wrap .notice,
+.layodt-notice {
 	border: 1px solid #c3c4c7;
 	border-radius: 4px;
 	box-shadow: none;
 }
 
-.adminora-wrap .notice-success,
-.adminora-notice.notice-success {
+.layodt-wrap .notice-success,
+.layodt-notice.notice-success {
 	background: #edfaef;
 	border-color: #68de7c;
 }
 
-.adminora-wrap .notice-warning,
-.adminora-notice.notice-warning {
+.layodt-wrap .notice-warning,
+.layodt-notice.notice-warning {
 	background: #fcf9e8;
 	border-color: #dba617;
 }
 
-.adminora-wrap .notice-error,
-.adminora-notice.notice-error {
+.layodt-wrap .notice-error,
+.layodt-notice.notice-error {
 	background: #fcf0f1;
 	border-color: #f86368;
 }
 
-.adminora-wrap .notice-info,
-.adminora-notice.notice-info {
+.layodt-wrap .notice-info,
+.layodt-notice.notice-info {
 	background: #f0f6fc;
 	border-color: #72aee6;
 }
 
-.adminora-wrap .notice.inline {
+.layodt-wrap .notice.inline {
 	margin: 16px 0;
 }
 
-.adminora-wrap .adminora-code {
+.layodt-wrap .layodt-code {
 	max-width: 760px;
 	margin: 8px 0 12px;
 	padding: 12px 14px;
@@ -228,7 +228,7 @@
 	white-space: pre;
 }
 
-.adminora-wrap .adminora-actions {
+.layodt-wrap .layodt-actions {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
@@ -237,7 +237,7 @@
 
 /* Sub-navigation inside a tab. With the WordPress default look it matches
    core's own sub-navigation (as on the Posts screen: All | Published). */
-.adminora-subnav ul {
+.layodt-subnav ul {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -246,29 +246,29 @@
 	color: #646970;
 }
 
-.adminora-subnav li {
+.layodt-subnav li {
 	margin: 0;
 }
 
-.adminora-subnav li + li::before {
+.layodt-subnav li + li::before {
 	content: "|";
 	padding: 0 6px;
 	color: #a7aaad;
 }
 
-.adminora-subnav a {
+.layodt-subnav a {
 	display: inline-block;
 	padding: 2px 0;
 	line-height: 2;
 	text-decoration: none;
 }
 
-.adminora-subnav a.is-current {
+.layodt-subnav a.is-current {
 	color: #000;
 	font-weight: 600;
 }
 
-.adminora-subnav a:focus-visible {
+.layodt-subnav a:focus-visible {
 	outline: 2px solid #2271b1;
 	outline-offset: 1px;
 	border-radius: 2px;
@@ -277,57 +277,57 @@
 
 /* With an admin template the tabs above are one segmented bar, so the
    sections stay plain text links: a quieter second level, not more pills. */
-body.adminora-look .adminora-subnav ul {
+body.layodt-look .layodt-subnav ul {
 	gap: 4px 20px;
 	margin: 18px 0 10px;
 }
 
-body.adminora-look .adminora-subnav li + li::before {
+body.layodt-look .layodt-subnav li + li::before {
 	content: none;
 }
 
-body.adminora-look .adminora-subnav a {
+body.layodt-look .layodt-subnav a {
 	color: var(--as-muted);
 	font-weight: 500;
 }
 
-body.adminora-look .adminora-subnav a:hover,
-body.adminora-look .adminora-subnav a:focus {
+body.layodt-look .layodt-subnav a:hover,
+body.layodt-look .layodt-subnav a:focus {
 	color: var(--as-text);
 }
 
-body.adminora-look .adminora-subnav a.is-current {
+body.layodt-look .layodt-subnav a.is-current {
 	color: var(--as-accent-text);
 	font-weight: 600;
 }
 
-body.adminora-look .adminora-subnav a:focus-visible {
+body.layodt-look .layodt-subnav a:focus-visible {
 	outline-color: var(--as-accent);
 	border-radius: 4px;
 }
 
-body.adminora-look .adminora-badge {
+body.layodt-look .layodt-badge {
 	background: var(--as-surface-2);
 	color: var(--as-muted);
 }
 
 /* Roles. */
-.adminora-row-actions {
+.layodt-row-actions {
 	text-align: right;
 }
 
-.adminora-caps-toolbar {
+.layodt-caps-toolbar {
 	margin: 16px 0;
 }
 
-.adminora-cap-groups {
+.layodt-cap-groups {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 	gap: 16px;
 	max-width: 1100px;
 }
 
-.adminora-cap-group {
+.layodt-cap-group {
 	background: #fff;
 	border: 1px solid #dcdcde;
 	border-radius: 8px;
@@ -335,61 +335,61 @@ body.adminora-look .adminora-badge {
 	margin: 0;
 }
 
-.adminora-cap-group legend {
+.layodt-cap-group legend {
 	padding: 0 6px;
 	font-weight: 600;
 	font-size: 14px;
 }
 
-.adminora-cap-all {
+.layodt-cap-all {
 	margin: 0 0 8px;
 	text-align: right;
 }
 
-.adminora-cap {
+.layodt-cap {
 	display: flex;
 	gap: 8px;
 	align-items: flex-start;
 	padding: 4px 0;
 }
 
-.adminora-cap input {
+.layodt-cap input {
 	margin-top: 2px;
 }
 
-.adminora-cap span {
+.layodt-cap span {
 	display: grid;
 }
 
-.adminora-cap code {
+.layodt-cap code {
 	background: none;
 	padding: 0;
 	font-size: 12px;
 }
 
-.adminora-cap small {
+.layodt-cap small {
 	color: #646970;
 }
 
-.adminora-cap[hidden],
-.adminora-cap-group[hidden],
-.adminora-menu-group[hidden],
-.adminora-menu-group li[hidden] {
+.layodt-cap[hidden],
+.layodt-cap-group[hidden],
+.layodt-menu-group[hidden],
+.layodt-menu-group li[hidden] {
 	display: none;
 }
 
-.adminora-caps-select {
+.layodt-caps-select {
 	min-width: 320px;
 }
 
 /* Menu access: one small card per menu, flowing into columns. */
-.adminora-menu-groups {
+.layodt-menu-groups {
 	columns: 260px auto;
 	column-gap: 16px;
 	margin: 16px 0;
 }
 
-.adminora-menu-group {
+.layodt-menu-group {
 	break-inside: avoid;
 	margin: 0 0 16px;
 	padding: 10px 0 8px;
@@ -399,29 +399,29 @@ body.adminora-look .adminora-badge {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminora-menu-group ul {
+.layodt-menu-group ul {
 	margin: 4px 0 0;
 }
 
-.adminora-menu-group li {
+.layodt-menu-group li {
 	margin: 0;
 }
 
-.adminora-menu-group label {
+.layodt-menu-group label {
 	display: block;
 	padding: 4px 14px;
 }
 
-.adminora-menu-group__top {
+.layodt-menu-group__top {
 	font-weight: 600;
 }
 
-.adminora-menu-group ul label {
+.layodt-menu-group ul label {
 	padding-left: 38px;
 	color: #50575e;
 }
 
-.adminora-menu-tools {
+.layodt-menu-tools {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -429,7 +429,7 @@ body.adminora-look .adminora-badge {
 	margin: 16px 0 0;
 }
 
-.adminora-menu-tools input[type="search"] {
+.layodt-menu-tools input[type="search"] {
 	min-width: 240px;
 }
 
@@ -437,7 +437,7 @@ body.adminora-look .adminora-badge {
  * Tables match the cards: same width, corners, border and shadow. A wide
  * table scrolls sideways inside its frame, with the first column fixed.
  */
-.adminora-wrap .adminora-tab table.widefat {
+.layodt-wrap .layodt-tab table.widefat {
 	border-collapse: separate;
 	border-spacing: 0;
 	border: 1px solid var(--as-border, #dcdcde);
@@ -446,7 +446,7 @@ body.adminora-look .adminora-badge {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminora-table-scroll {
+.layodt-table-scroll {
 	max-width: 100%;
 	margin: 10px 0 8px;
 	overflow-x: auto;
@@ -456,12 +456,12 @@ body.adminora-look .adminora-badge {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminora-table-scroll:focus-visible {
+.layodt-table-scroll:focus-visible {
 	outline: 2px solid #2271b1;
 	outline-offset: 2px;
 }
 
-.adminora-wrap .adminora-tab .adminora-table-scroll > table.widefat {
+.layodt-wrap .layodt-tab .layodt-table-scroll > table.widefat {
 	min-width: 100%;
 	border: 0;
 	border-radius: 0;
@@ -469,20 +469,20 @@ body.adminora-look .adminora-badge {
 	overflow: visible;
 }
 
-.adminora-matrix th,
-.adminora-matrix td {
+.layodt-matrix th,
+.layodt-matrix td {
 	vertical-align: middle;
 }
 
-.adminora-matrix tbody td {
+.layodt-matrix tbody td {
 	text-align: center;
 }
 
-.adminora-matrix tbody td input[type="checkbox"] {
+.layodt-matrix tbody td input[type="checkbox"] {
 	margin: 0;
 }
 
-.adminora-matrix thead th {
+.layodt-matrix thead th {
 	min-width: 84px;
 	max-width: 140px;
 	padding: 10px 8px;
@@ -492,7 +492,7 @@ body.adminora-look .adminora-badge {
 	vertical-align: bottom;
 }
 
-.adminora-matrix thead th[scope="colgroup"] {
+.layodt-matrix thead th[scope="colgroup"] {
 	max-width: none;
 	padding: 12px 8px 10px 16px;
 	text-align: left;
@@ -504,13 +504,13 @@ body.adminora-look .adminora-badge {
 	font-size: 11px;
 }
 
-.adminora-matrix thead tr + tr th {
+.layodt-matrix thead tr + tr th {
 	background: var(--as-surface-2, #f6f7f7);
 }
 
 /* The first column stays put while the rest scrolls. */
-.adminora-matrix > tbody > tr > :first-child,
-.adminora-matrix > thead > tr:first-child > :first-child {
+.layodt-matrix > tbody > tr > :first-child,
+.layodt-matrix > thead > tr:first-child > :first-child {
 	position: sticky;
 	left: 0;
 	z-index: 1;
@@ -524,27 +524,27 @@ body.adminora-look .adminora-badge {
 }
 
 /* Group labels stay readable just after the fixed column. */
-.adminora-matrix__group {
+.layodt-matrix__group {
 	position: sticky;
 	left: 206px;
 }
 
-.adminora-matrix.striped > tbody > :nth-child(odd) > :first-child {
+.layodt-matrix.striped > tbody > :nth-child(odd) > :first-child {
 	background: var(--as-surface-2, #f6f7f7);
 }
 
-.adminora-matrix > thead > tr:first-child > :first-child {
+.layodt-matrix > thead > tr:first-child > :first-child {
 	z-index: 2;
 	vertical-align: bottom;
 }
 
 /* Admin templates give table headers their own tint. */
-body.adminora-look .adminora-matrix > thead > tr > th {
+body.layodt-look .layodt-matrix > thead > tr > th {
 	background: var(--as-surface-2);
 }
 
 /* Emails tab. */
-.adminora-emails {
+.layodt-emails {
 	display: grid;
 	grid-template-columns: 240px minmax(0, 1fr);
 	gap: 24px;
@@ -552,7 +552,7 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin-top: 16px;
 }
 
-.adminora-emails__list {
+.layodt-emails__list {
 	background: #fff;
 	border: 1px solid #dcdcde;
 	border-radius: 4px;
@@ -561,7 +561,7 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	top: 48px;
 }
 
-.adminora-emails__list h3 {
+.layodt-emails__list h3 {
 	margin: 12px 16px 4px;
 	font-size: 11px;
 	font-weight: 600;
@@ -570,15 +570,15 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	color: #646970;
 }
 
-.adminora-emails__list ul {
+.layodt-emails__list ul {
 	margin: 0;
 }
 
-.adminora-emails__list li {
+.layodt-emails__list li {
 	margin: 0;
 }
 
-.adminora-emails__list a {
+.layodt-emails__list a {
 	display: block;
 	padding: 8px 16px;
 	text-decoration: none;
@@ -587,23 +587,23 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	border-radius: 4px;
 }
 
-.adminora-emails__list a:hover {
+.layodt-emails__list a:hover {
 	background: #f6f7f7;
 	color: #135e96;
 }
 
-.adminora-emails__list a.is-current {
+.layodt-emails__list a.is-current {
 	background: #f0f6fc;
 	color: #135e96;
 	font-weight: 600;
 }
 
-.adminora-emails__list a:focus {
+.layodt-emails__list a:focus {
 	box-shadow: inset 0 0 0 2px #2271b1;
 	outline: 2px solid transparent;
 }
 
-.adminora-emails__editor {
+.layodt-emails__editor {
 	background: #fff;
 	border: 1px solid #dcdcde;
 	border-radius: 4px;
@@ -611,11 +611,11 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	min-width: 0;
 }
 
-.adminora-emails__editor .form-table th {
+.layodt-emails__editor .form-table th {
 	width: 140px;
 }
 
-.adminora-badge {
+.layodt-badge {
 	display: inline-block;
 	margin-left: 4px;
 	padding: 0 6px;
@@ -627,17 +627,17 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	line-height: 18px;
 }
 
-.adminora-tags {
+.layodt-tags {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 6px;
 }
 
-.adminora-tags .button {
+.layodt-tags .button {
 	font-family: Consolas, Monaco, monospace;
 }
 
-.adminora-inline-forms {
+.layodt-inline-forms {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -646,7 +646,7 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin-top: 8px;
 }
 
-.adminora-inline-form {
+.layodt-inline-form {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -654,117 +654,117 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 }
 
 /* Tools and status. */
-.adminora-status th {
+.layodt-status th {
 	width: 320px;
 }
 
-.adminora-state--active {
+.layodt-state--active {
 	color: #00a32a;
 	font-weight: 600;
 }
 
-.adminora-state--conflict,
-.adminora-state--unwritable {
+.layodt-state--conflict,
+.layodt-state--unwritable {
 	color: #b32d2e;
 }
 
-.adminora-swatches {
+.layodt-swatches {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 12px;
 }
 
-.adminora-swatch {
+.layodt-swatch {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
 }
 
-.adminora-swatch__chip {
+.layodt-swatch__chip {
 	width: 18px;
 	height: 18px;
 	border-radius: 4px;
 	border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
-.adminora-conflicts {
+.layodt-conflicts {
 	margin: 0;
 }
 
-.adminora-log {
+.layodt-log {
 	margin-bottom: 8px;
 }
 
-.adminora-log form {
+.layodt-log form {
 	margin: 0;
 }
 
-.adminora-copyable {
+.layodt-copyable {
 	display: inline-block;
 	padding: 6px 8px;
 	user-select: all;
 	word-break: break-all;
 }
 
-.adminora-credit {
+.layodt-credit {
 	margin-top: 32px;
 	color: #646970;
 }
 
 /* Two-factor on the profile screen. */
-.adminora-2fa-qr {
+.layodt-2fa-qr {
 	display: inline-block;
 	padding: 8px;
 	background: #fff;
 	border: 1px solid #dcdcde;
 }
 
-.adminora-2fa-qr svg {
+.layodt-2fa-qr svg {
 	display: block;
 }
 
-.adminora-2fa-secret {
+.layodt-2fa-secret {
 	user-select: all;
 	word-break: break-all;
 }
 
-.adminora-2fa-codes {
+.layodt-2fa-codes {
 	columns: 2;
 	max-width: 22em;
 	font-family: Consolas, Monaco, monospace;
 	font-size: 14px;
 }
 
-#adminora-2fa-code {
+#layodt-2fa-code {
 	max-width: 10em;
 }
 
-.adminora-2fa-panel {
+.layodt-2fa-panel {
 	margin: 16px 0;
 }
 
-.adminora-2fa-message:empty {
+.layodt-2fa-message:empty {
 	display: none;
 }
 
 @media (max-width: 960px) {
-	.adminora-emails {
+	.layodt-emails {
 		grid-template-columns: minmax(0, 1fr);
 	}
 
-	.adminora-emails__list {
+	.layodt-emails__list {
 		position: static;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.adminora-wrap * {
+	.layodt-wrap * {
 		transition-duration: 1ms !important;
 	}
 }
 
 /* Dashboard look: template cards. */
-.adminora-templates {
+.layodt-templates {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
 	gap: 14px;
@@ -772,7 +772,7 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin: 12px 0 8px;
 }
 
-.adminora-template {
+.layodt-template {
 	display: grid;
 	gap: 10px;
 	align-content: start;
@@ -782,37 +782,37 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	background: #fff;
 }
 
-.adminora-template.is-selected {
+.layodt-template.is-selected {
 	border-color: var(--as-accent, #2271b1);
 	box-shadow: 0 0 0 1px var(--as-accent, #2271b1);
 }
 
-.adminora-template .button {
+.layodt-template .button {
 	justify-self: start;
 }
 
-.adminora-template__pick {
+.layodt-template__pick {
 	display: grid;
 	gap: 4px;
 	cursor: pointer;
 }
 
-.adminora-template__pick input {
+.layodt-template__pick input {
 	position: absolute;
 	opacity: 0;
 }
 
-.adminora-template__pick:has(input:focus-visible) .adminora-thumb {
+.layodt-template__pick:has(input:focus-visible) .layodt-thumb {
 	outline: 2px solid var(--as-accent, #2271b1);
 	outline-offset: 2px;
 }
 
-.adminora-template__pick small {
+.layodt-template__pick small {
 	color: #646970;
 	line-height: 1.4;
 }
 
-.adminora-thumb {
+.layodt-thumb {
 	position: relative;
 	display: block;
 	height: 96px;
@@ -823,14 +823,14 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	background: var(--t-bg);
 }
 
-.adminora-thumb i {
+.layodt-thumb i {
 	position: absolute;
 	inset: 0 auto 0 0;
 	width: 30%;
 	background: var(--t-side) linear-gradient(var(--t-side-text), var(--t-side-text)) no-repeat 8px 12px / 50% 3px;
 }
 
-.adminora-thumb i::after {
+.layodt-thumb i::after {
 	content: "";
 	position: absolute;
 	left: 6px;
@@ -841,16 +841,16 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	background: var(--t-accent);
 }
 
-.adminora-thumb--minimal i::after,
-.adminora-thumb--default i::after {
+.layodt-thumb--minimal i::after,
+.layodt-thumb--default i::after {
 	border-radius: 2px;
 }
 
-.adminora-thumb--compact i {
+.layodt-thumb--compact i {
 	width: 14%;
 }
 
-.adminora-thumb b {
+.layodt-thumb b {
 	position: absolute;
 	left: 36%;
 	right: 8px;
@@ -860,28 +860,28 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	background: var(--t-card);
 }
 
-.adminora-thumb--compact b {
+.layodt-thumb--compact b {
 	left: 20%;
 }
 
-.adminora-thumb b:nth-of-type(1) { top: 12px; }
-.adminora-thumb b:nth-of-type(2) { top: 40px; }
-.adminora-thumb b:nth-of-type(3) { top: 68px; right: 40%; }
+.layodt-thumb b:nth-of-type(1) { top: 12px; }
+.layodt-thumb b:nth-of-type(2) { top: 40px; }
+.layodt-thumb b:nth-of-type(3) { top: 68px; right: 40%; }
 
-.adminora-palettes,
-.adminora-colors {
+.layodt-palettes,
+.layodt-colors {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px 16px;
 }
 
-.adminora-palette {
+.layodt-palette {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
 }
 
-.adminora-palette__dot {
+.layodt-palette__dot {
 	width: 16px;
 	height: 16px;
 	border-radius: 999px;
@@ -889,19 +889,19 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
-.adminora-colors .regular-text {
+.layodt-colors .regular-text {
 	width: 9em;
 }
 
 /* Sortable lists. */
-.adminora-sortable {
+.layodt-sortable {
 	max-width: 900px;
 	margin: 8px 0 16px;
 	padding: 0;
 	list-style: none;
 }
 
-.adminora-sortable__row {
+.layodt-sortable__row {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -913,56 +913,56 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	background: #fff;
 }
 
-.adminora-sortable__row.is-dragging {
+.layodt-sortable__row.is-dragging {
 	opacity: 0.5;
 }
 
-.adminora-sortable__handle {
+.layodt-sortable__handle {
 	width: 10px;
 	height: 16px;
 	cursor: grab;
 	background: radial-gradient(circle, #8c8f94 1.2px, transparent 1.6px) 0 0 / 5px 5px;
 }
 
-.adminora-sortable__up,
-.adminora-sortable__down {
+.layodt-sortable__up,
+.layodt-sortable__down {
 	width: 26px;
 	height: 26px;
 	border-radius: 6px;
 	text-decoration: none;
 }
 
-.adminora-sortable__up:focus-visible,
-.adminora-sortable__down:focus-visible {
+.layodt-sortable__up:focus-visible,
+.layodt-sortable__down:focus-visible {
 	outline: 2px solid #2271b1;
 	box-shadow: none;
 }
 
-.adminora-sortable__row:first-child .adminora-sortable__up,
-.adminora-sortable__row:last-child .adminora-sortable__down {
+.layodt-sortable__row:first-child .layodt-sortable__up,
+.layodt-sortable__row:last-child .layodt-sortable__down {
 	visibility: hidden;
 }
 
-.adminora-sortable__row input[type="text"] {
+.layodt-sortable__row input[type="text"] {
 	flex: 1 1 180px;
 }
 
-.adminora-sortable__remove {
+.layodt-sortable__remove {
 	margin-left: auto;
 }
 
-.adminora-item-icon {
+.layodt-item-icon {
 	display: inline-flex;
 	width: 20px;
 	color: #50575e;
 }
 
-.adminora-list li {
+.layodt-list li {
 	margin-bottom: 4px;
 }
 
 /* Sessions. */
-.adminora-filter {
+.layodt-filter {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -970,16 +970,16 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin: 12px 0;
 }
 
-.adminora-count {
+.layodt-count {
 	color: var(--as-muted, #646970);
 }
 
-.adminora-session-group {
+.layodt-session-group {
 	max-width: 1100px;
 	margin: 0 0 20px;
 }
 
-.adminora-session-group__head {
+.layodt-session-group__head {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -988,46 +988,46 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin-bottom: 8px;
 }
 
-.adminora-session-group .adminora-actions form,
-.adminora-history-actions form,
-.adminora-row-actions form {
+.layodt-session-group .layodt-actions form,
+.layodt-history-actions form,
+.layodt-row-actions form {
 	margin: 0;
 }
 
-.adminora-history-actions {
+.layodt-history-actions {
 	margin: 0 0 10px;
 }
 
-.adminora-person,
-.adminora-device {
+.layodt-person,
+.layodt-device {
 	display: inline-flex;
 	align-items: center;
 	gap: 10px;
 	vertical-align: middle;
 }
 
-.adminora-person img {
+.layodt-person img {
 	border-radius: 999px;
 }
 
-.adminora-person > span,
-.adminora-device > span:last-child {
+.layodt-person > span,
+.layodt-device > span:last-child {
 	display: grid;
 	line-height: 1.35;
 }
 
-.adminora-person small,
-.adminora-device small,
-.adminora-event + small {
+.layodt-person small,
+.layodt-device small,
+.layodt-event + small {
 	color: var(--as-muted, #646970);
 	font-size: 12px;
 }
 
-.adminora-event + small {
+.layodt-event + small {
 	display: block;
 }
 
-.adminora-device__icon {
+.layodt-device__icon {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -1040,28 +1040,28 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	flex: none;
 }
 
-.adminora-sessions td {
+.layodt-sessions td {
 	vertical-align: middle;
 }
 
-.adminora-sessions code {
+.layodt-sessions code {
 	background: transparent;
 	padding: 0;
 }
 
-.adminora-event--failed,
-.adminora-event--refused_limit,
-.adminora-event--refused_blocked,
-.adminora-event--blocked {
+.layodt-event--failed,
+.layodt-event--refused_limit,
+.layodt-event--refused_blocked,
+.layodt-event--blocked {
 	color: #b32d2e;
 	font-weight: 600;
 }
 
-.adminora-pagination {
+.layodt-pagination {
 	margin: 12px 0;
 }
 
-.adminora-pagination .page-numbers {
+.layodt-pagination .page-numbers {
 	display: inline-block;
 	min-width: 28px;
 	padding: 4px 6px;
@@ -1069,41 +1069,41 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	text-decoration: none;
 }
 
-.adminora-pagination .page-numbers.current {
+.layodt-pagination .page-numbers.current {
 	font-weight: 600;
 }
 
 @media screen and (max-width: 782px) {
-	.adminora-sessions thead {
+	.layodt-sessions thead {
 		display: none;
 	}
 
-	.adminora-sessions tr {
+	.layodt-sessions tr {
 		display: grid;
 		gap: 4px;
 		padding: 8px 0;
 	}
 
-	.adminora-sessions td {
+	.layodt-sessions td {
 		display: block;
 		padding: 2px 10px;
 	}
 }
 
 /* Login destination picker. */
-.adminora-destination {
+.layodt-destination {
 	display: inline-flex;
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 6px;
 }
 
-.adminora-destination [hidden] {
+.layodt-destination [hidden] {
 	display: none;
 }
 
 /* The email editor is already a card, so its fields stay flat inside it. */
-.adminora-wrap .adminora-tab .adminora-emails__editor .form-table {
+.layodt-wrap .layodt-tab .layodt-emails__editor .form-table {
 	border: 0;
 	border-radius: 0;
 	background: transparent;
@@ -1111,16 +1111,16 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin: 0;
 }
 
-.adminora-wrap .adminora-tab .adminora-emails__editor .form-table th {
+.layodt-wrap .layodt-tab .layodt-emails__editor .form-table th {
 	padding-left: 0;
 }
 
-.adminora-wrap .adminora-tab .adminora-emails__editor .form-table td {
+.layodt-wrap .layodt-tab .layodt-emails__editor .form-table td {
 	padding-right: 0;
 }
 
 /* Tools: side-by-side action cards. */
-.adminora-cards {
+.layodt-cards {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 	align-items: start;
@@ -1128,7 +1128,7 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin: 20px 0 8px;
 }
 
-.adminora-card {
+.layodt-card {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
@@ -1139,35 +1139,35 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-.adminora-card h2 {
+.layodt-card h2 {
 	margin: 0;
 	font-size: 15px;
 }
 
-.adminora-card > p {
+.layodt-card > p {
 	margin: 0;
 	color: var(--as-muted, #50575e);
 }
 
-.adminora-card form p {
+.layodt-card form p {
 	margin: 8px 0;
 }
 
-.adminora-card input[type="file"] {
+.layodt-card input[type="file"] {
 	max-width: 100%;
 }
 
-.adminora-wrap .adminora-status {
+.layodt-wrap .layodt-status {
 	border-radius: 8px;
 	overflow: hidden;
 }
 
 /* Brand kit card on the Overview tab. */
-.adminora-brand {
+.layodt-brand {
 	display: block;
 }
 
-.adminora-brand__head {
+.layodt-brand__head {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: flex-start;
@@ -1176,7 +1176,7 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin-bottom: 14px;
 }
 
-.adminora-brand__options {
+.layodt-brand__options {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 	gap: 10px;
@@ -1185,7 +1185,7 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	border: 0;
 }
 
-.adminora-brand__option {
+.layodt-brand__option {
 	display: grid;
 	grid-template-columns: auto 1fr;
 	gap: 6px 10px;
@@ -1196,50 +1196,50 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	cursor: pointer;
 }
 
-.adminora-brand__option.is-selected {
+.layodt-brand__option.is-selected {
 	border-color: var(--as-accent, #2271b1);
 	box-shadow: 0 0 0 1px var(--as-accent, #2271b1);
 }
 
-.adminora-brand__option:has(input:focus-visible) {
+.layodt-brand__option:has(input:focus-visible) {
 	outline: 2px solid var(--as-accent, #2271b1);
 	outline-offset: 2px;
 }
 
-.adminora-brand__option input {
+.layodt-brand__option input {
 	margin-top: 2px;
 }
 
-.adminora-brand__option:has(input:disabled) {
+.layodt-brand__option:has(input:disabled) {
 	cursor: default;
 	opacity: 0.7;
 }
 
-.adminora-brand__text {
+.layodt-brand__text {
 	display: grid;
 	gap: 2px;
 }
 
-.adminora-brand__text small {
+.layodt-brand__text small {
 	color: var(--as-muted, #646970);
 	line-height: 1.4;
 }
 
-.adminora-brand__swatches {
+.layodt-brand__swatches {
 	grid-column: 2;
 	display: flex;
 	gap: 4px;
 	min-height: 18px;
 }
 
-.adminora-brand__swatches .adminora-swatch__chip {
+.layodt-brand__swatches .layodt-swatch__chip {
 	width: 18px;
 	height: 18px;
 	border-radius: 999px;
 	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
-.adminora-brand__actions {
+.layodt-brand__actions {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -1247,11 +1247,11 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	margin-top: 14px;
 }
 
-.adminora-brand__status {
+.layodt-brand__status {
 	color: var(--as-muted, #646970);
 }
 
-.adminora-capture-frame {
+.layodt-capture-frame {
 	position: fixed;
 	left: -10000px;
 	top: 0;
@@ -1263,25 +1263,25 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 
 /* Dashboard widgets tab. */
 
-.adminora-widget-matrix th[scope="row"] small {
+.layodt-widget-matrix th[scope="row"] small {
 	display: block;
 	margin-top: 2px;
 	font-weight: 400;
 	color: #646970;
 }
 
-.adminora-widget-types {
+.layodt-widget-types {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 	gap: 12px;
 	margin: 12px 0 0;
 }
 
-.adminora-widget-types li {
+.layodt-widget-types li {
 	margin: 0;
 }
 
-.adminora-widget-types a {
+.layodt-widget-types a {
 	display: grid;
 	grid-template-columns: auto 1fr;
 	column-gap: 12px;
@@ -1296,17 +1296,17 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	text-decoration: none;
 }
 
-.adminora-widget-types a:hover {
+.layodt-widget-types a:hover {
 	border-color: #2271b1;
 }
 
-.adminora-widget-types a:focus-visible {
+.layodt-widget-types a:focus-visible {
 	outline: 2px solid #2271b1;
 	outline-offset: 2px;
 	box-shadow: none;
 }
 
-.adminora-widget-types__icon {
+.layodt-widget-types__icon {
 	grid-row: span 2;
 	display: flex;
 	align-items: center;
@@ -1318,36 +1318,36 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	color: #2271b1;
 }
 
-.adminora-widget-types small {
+.layodt-widget-types small {
 	color: #646970;
 }
 
-.adminora-link-list .adminora-sortable__row input[type="text"] {
+.layodt-link-list .layodt-sortable__row input[type="text"] {
 	flex: 1 1 160px;
 }
 
-.adminora-layout {
+.layodt-layout {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 	gap: 12px;
 }
 
-.adminora-layout__col {
+.layodt-layout__col {
 	padding: 10px 12px;
 	border: 1px dashed #c3c4c7;
 	border-radius: 6px;
 }
 
-.adminora-layout__col h3 {
+.layodt-layout__col h3 {
 	margin: 0 0 8px;
 	font-size: 13px;
 }
 
-.adminora-layout__col ul {
+.layodt-layout__col ul {
 	margin: 0;
 }
 
-.adminora-layout__col li {
+.layodt-layout__col li {
 	padding: 6px 8px;
 	margin: 0 0 6px;
 	border: 1px solid #dcdcde;
@@ -1355,120 +1355,120 @@ body.adminora-look .adminora-matrix > thead > tr > th {
 	background: #f6f7f7;
 }
 
-.adminora-layout__col li small {
+.layodt-layout__col li small {
 	color: #646970;
 }
 
-.adminora-layout__col .adminora-layout__empty {
+.layodt-layout__col .layodt-layout__empty {
 	border-style: dashed;
 	background: none;
 	color: #646970;
 }
 
-.adminora-check {
+.layodt-check {
 	display: inline-block;
 	margin: 0 16px 6px 0;
 }
 
-.adminora-wrap .adminora-card h2.title {
+.layodt-wrap .layodt-card h2.title {
 	margin-top: 0;
 }
 
-.adminora-widget-list .adminora-row-actions {
+.layodt-widget-list .layodt-row-actions {
 	white-space: nowrap;
 	text-align: right;
 }
 
-.adminora-widget-list .adminora-row-actions form {
+.layodt-widget-list .layodt-row-actions form {
 	display: inline-block;
 }
 
-.adminora-widget-matrix > tbody > tr > :first-child,
-.adminora-widget-matrix > thead > tr:first-child > :first-child {
+.layodt-widget-matrix > tbody > tr > :first-child,
+.layodt-widget-matrix > thead > tr:first-child > :first-child {
 	width: 240px;
 	min-width: 240px;
 	max-width: 240px;
 }
 
-.adminora-widget-matrix .adminora-matrix__group {
+.layodt-widget-matrix .layodt-matrix__group {
 	left: 256px;
 }
 
 /* Parts to export or import. */
-.adminora-parts {
+.layodt-parts {
 	margin: 12px 0 14px;
 }
 
-.adminora-parts legend {
+.layodt-parts legend {
 	margin-bottom: 6px;
 	font-weight: 600;
 }
 
-.adminora-parts label {
+.layodt-parts label {
 	display: flex;
 	align-items: flex-start;
 	gap: 8px;
 	margin: 0 0 8px;
 }
 
-.adminora-parts input[type="checkbox"] {
+.layodt-parts input[type="checkbox"] {
 	margin-top: 2px;
 }
 
-.adminora-parts span {
+.layodt-parts span {
 	display: flex;
 	flex-direction: column;
 }
 
-.adminora-parts small {
+.layodt-parts small {
 	color: var(--as-muted, #646970);
 }
 
-.adminora-parts .adminora-parts__sub {
+.layodt-parts .layodt-parts__sub {
 	margin-left: 26px;
 }
 
 /* Import review. */
-.adminora-import-roles .check-column {
+.layodt-import-roles .check-column {
 	width: 2.6em;
 	padding: 12px 0 0 12px;
 	vertical-align: top;
 }
 
-.adminora-import-roles td,
-.adminora-import-roles th {
+.layodt-import-roles td,
+.layodt-import-roles th {
 	vertical-align: top;
 }
 
-.adminora-import-roles small {
+.layodt-import-roles small {
 	color: var(--as-muted, #646970);
 }
 
-.adminora-import-roles .adminora-badge {
+.layodt-import-roles .layodt-badge {
 	margin-left: 0;
 }
 
-.adminora-badge--new {
+.layodt-badge--new {
 	border: 1px solid #00a32a;
 	background: #edfaef;
 	color: #1d2327;
 }
 
-.adminora-diff summary {
+.layodt-diff summary {
 	cursor: pointer;
 	color: var(--as-muted, #50575e);
 }
 
-.adminora-diff summary:focus-visible {
+.layodt-diff summary:focus-visible {
 	outline: 2px solid #2271b1;
 	outline-offset: 2px;
 }
 
-.adminora-diff p {
+.layodt-diff p {
 	margin: 6px 0 0;
 }
 
-.adminora-diff code {
+.layodt-diff code {
 	display: inline-block;
 	margin: 0 4px 4px 0;
 }

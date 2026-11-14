@@ -7,15 +7,15 @@
  * recorded when an administrator opens the dashboard, so they can be listed
  * on the settings page.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Widgets;
+namespace LayoDT\Modules\Widgets;
 
-use Adminora\Plugin;
-use Adminora\Settings;
-use Adminora\Defaults;
-use Adminora\Modules\Emails\Renderer;
+use LayoDT\Plugin;
+use LayoDT\Settings;
+use LayoDT\Defaults;
+use LayoDT\Modules\Emails\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -24,9 +24,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Widgets {
 
-	const OPTION = 'adminora_widgets';
-	const SEEN   = 'adminora_widgets_seen';
-	const PREFIX = 'adminora_';
+	const OPTION = 'layodt_widgets';
+	const SEEN   = 'layodt_widgets_seen';
+	const PREFIX = 'layodt_';
 
 	/**
 	 * Dashboard columns: context => label.
@@ -35,10 +35,10 @@ class Widgets {
 	 */
 	public static function columns() {
 		return array(
-			'normal'  => __( 'Column 1', 'adminora' ),
-			'side'    => __( 'Column 2', 'adminora' ),
-			'column3' => __( 'Column 3', 'adminora' ),
-			'column4' => __( 'Column 4', 'adminora' ),
+			'normal'  => __( 'Column 1', 'layo-dashboard-toolkit' ),
+			'side'    => __( 'Column 2', 'layo-dashboard-toolkit' ),
+			'column3' => __( 'Column 3', 'layo-dashboard-toolkit' ),
+			'column4' => __( 'Column 4', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -206,15 +206,15 @@ class Widgets {
 	 */
 	public static function types() {
 		return array(
-			'text'     => array( __( 'Text', 'adminora' ), __( 'Rich text or HTML, with an optional button.', 'adminora' ), 'file-text' ),
-			'links'    => array( __( 'Quick links', 'adminora' ), __( 'Buttons to admin screens or any address, with icons.', 'adminora' ), 'link' ),
-			'support'  => array( __( 'Support card', 'adminora' ), __( 'Contact details, a message and a button.', 'adminora' ), 'heart' ),
-			'video'    => array( __( 'Video', 'adminora' ), __( 'A video from YouTube, Vimeo or another provider WordPress can embed.', 'adminora' ), 'monitor' ),
-			'posts'    => array( __( 'What\'s new', 'adminora' ), __( 'The latest posts from a category on this site.', 'adminora' ), 'bell' ),
-			'signups'  => array( __( 'Recent sign-ups', 'adminora' ), __( 'The newest user accounts.', 'adminora' ), 'users' ),
-			'counts'   => array( __( 'Content counts', 'adminora' ), __( 'How many posts, pages, products, comments and users there are.', 'adminora' ), 'chart' ),
-			'comments' => array( __( 'Recent comments', 'adminora' ), __( 'The latest comments, with links to moderate them.', 'adminora' ), 'message' ),
-			'health'   => array( __( 'Site health summary', 'adminora' ), __( 'The result of the last Site Health check.', 'adminora' ), 'shield' ),
+			'text'     => array( __( 'Text', 'layo-dashboard-toolkit' ), __( 'Rich text or HTML, with an optional button.', 'layo-dashboard-toolkit' ), 'file-text' ),
+			'links'    => array( __( 'Quick links', 'layo-dashboard-toolkit' ), __( 'Buttons to admin screens or any address, with icons.', 'layo-dashboard-toolkit' ), 'link' ),
+			'support'  => array( __( 'Support card', 'layo-dashboard-toolkit' ), __( 'Contact details, a message and a button.', 'layo-dashboard-toolkit' ), 'heart' ),
+			'video'    => array( __( 'Video', 'layo-dashboard-toolkit' ), __( 'A video from YouTube, Vimeo or another provider WordPress can embed.', 'layo-dashboard-toolkit' ), 'monitor' ),
+			'posts'    => array( __( 'What\'s new', 'layo-dashboard-toolkit' ), __( 'The latest posts from a category on this site.', 'layo-dashboard-toolkit' ), 'bell' ),
+			'signups'  => array( __( 'Recent sign-ups', 'layo-dashboard-toolkit' ), __( 'The newest user accounts.', 'layo-dashboard-toolkit' ), 'users' ),
+			'counts'   => array( __( 'Content counts', 'layo-dashboard-toolkit' ), __( 'How many posts, pages, products, comments and users there are.', 'layo-dashboard-toolkit' ), 'chart' ),
+			'comments' => array( __( 'Recent comments', 'layo-dashboard-toolkit' ), __( 'The latest comments, with links to moderate them.', 'layo-dashboard-toolkit' ), 'message' ),
+			'health'   => array( __( 'Site health summary', 'layo-dashboard-toolkit' ), __( 'The result of the last Site Health check.', 'layo-dashboard-toolkit' ), 'shield' ),
 		);
 	}
 
@@ -269,12 +269,12 @@ class Widgets {
 	 */
 	public static function core_widgets() {
 		return array(
-			'welcome_panel'         => __( 'Welcome panel', 'adminora' ),
-			'dashboard_right_now'   => __( 'At a Glance', 'adminora' ),
-			'dashboard_activity'    => __( 'Activity', 'adminora' ),
-			'dashboard_quick_press' => __( 'Quick Draft', 'adminora' ),
-			'dashboard_primary'     => __( 'WordPress Events and News', 'adminora' ),
-			'dashboard_site_health' => __( 'Site Health Status', 'adminora' ),
+			'welcome_panel'         => __( 'Welcome panel', 'layo-dashboard-toolkit' ),
+			'dashboard_right_now'   => __( 'At a Glance', 'layo-dashboard-toolkit' ),
+			'dashboard_activity'    => __( 'Activity', 'layo-dashboard-toolkit' ),
+			'dashboard_quick_press' => __( 'Quick Draft', 'layo-dashboard-toolkit' ),
+			'dashboard_primary'     => __( 'WordPress Events and News', 'layo-dashboard-toolkit' ),
+			'dashboard_site_health' => __( 'Site Health Status', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -463,10 +463,10 @@ class Widgets {
 			return;
 		}
 
-		wp_enqueue_style( 'adminora-widgets', ADMINORA_URL . 'assets/css/widgets.css', array(), Plugin::asset_version( 'assets/css/widgets.css' ) );
+		wp_enqueue_style( 'layodt-widgets', LAYODT_URL . 'assets/css/widgets.css', array(), Plugin::asset_version( 'assets/css/widgets.css' ) );
 
 		if ( self::locked() ) {
-			wp_add_inline_script( 'dashboard', 'jQuery(function($){document.body.classList.add("adminora-widgets-locked");$(window).on("load",function(){$("#dashboard-widgets .meta-box-sortables").each(function(){if($(this).sortable("instance")){$(this).sortable("disable");}});});});' );
+			wp_add_inline_script( 'dashboard', 'jQuery(function($){document.body.classList.add("layodt-widgets-locked");$(window).on("load",function(){$("#dashboard-widgets .meta-box-sortables").each(function(){if($(this).sortable("instance")){$(this).sortable("disable");}});});});' );
 		}
 	}
 

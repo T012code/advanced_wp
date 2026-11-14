@@ -2,13 +2,13 @@
 /**
  * Browser tab titles, favicon, theme colour and WordPress traces.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Tab_Meta;
+namespace LayoDT\Modules\Tab_Meta;
 
-use Adminora\Brand_Kit;
-use Adminora\Settings;
+use LayoDT\Brand_Kit;
+use LayoDT\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -220,7 +220,7 @@ class Tab_Meta {
 				}
 			);
 
-			wp_safe_redirect( esc_url_raw( $icon ), 302, 'Adminora' );
+			wp_safe_redirect( esc_url_raw( $icon ), 302, 'Layo Dashboard Toolkit' );
 			exit;
 		}
 
@@ -241,7 +241,7 @@ class Tab_Meta {
 
 		status_header( 403 );
 		header( 'Content-Type: text/plain; charset=utf-8' );
-		echo esc_html__( 'XML-RPC is turned off on this site.', 'adminora' );
+		echo esc_html__( 'XML-RPC is turned off on this site.', 'layo-dashboard-toolkit' );
 		exit;
 	}
 

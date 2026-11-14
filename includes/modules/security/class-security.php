@@ -2,12 +2,12 @@
 /**
  * Login protection: custom login URL, attempt limits, honeypot and 2FA.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Security;
+namespace LayoDT\Modules\Security;
 
-use Adminora\Settings;
+use LayoDT\Settings;
 
 defined( 'ABSPATH' ) || exit;
 

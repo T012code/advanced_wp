@@ -2,13 +2,13 @@
 /**
  * Prints the content of custom dashboard widgets.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Widgets;
+namespace LayoDT\Modules\Widgets;
 
-use Adminora\Modules\Admin_Look\Icons;
-use Adminora\Modules\Emails\Renderer;
+use LayoDT\Modules\Admin_Look\Icons;
+use LayoDT\Modules\Emails\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ class Widget_Render {
 		$widget = isset( $box['args'] ) ? (array) $box['args'] : array();
 		$method = 'type_' . ( isset( $widget['type'] ) ? $widget['type'] : 'text' );
 
-		echo '<div class="adminora-widget adminora-widget--' . esc_attr( $widget['type'] ) . '">';
+		echo '<div class="layodt-widget layodt-widget--' . esc_attr( $widget['type'] ) . '">';
 		if ( method_exists( __CLASS__, $method ) ) {
 			self::$method( $widget );
 		}
@@ -53,7 +53,7 @@ class Widget_Render {
 	 */
 	private static function button( array $widget ) {
 		if ( '' !== $widget['button'] && '' !== $widget['button_url'] ) {
-			printf( '<p class="adminora-widget__button"><a class="button button-primary" href="%s">%s</a></p>', esc_url( self::link( $widget['button_url'] ) ), esc_html( $widget['button'] ) );
+			printf( '<p class="layodt-widget__button"><a class="button button-primary" href="%s">%s</a></p>', esc_url( self::link( $widget['button_url'] ) ), esc_html( $widget['button'] ) );
 		}
 	}
 
@@ -86,18 +86,18 @@ class Widget_Render {
 	 */
 	private static function type_links( array $widget ) {
 		if ( ! $widget['links'] ) {
-			echo '<p>' . esc_html__( 'No links yet.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'No links yet.', 'layo-dashboard-toolkit' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminora-qlinks">';
+		echo '<ul class="layodt-qlinks">';
 		foreach ( $widget['links'] as $link ) {
 			$url      = self::link( $link['url'] );
 			$external = 0 !== strpos( $url, home_url() ) && 0 !== strpos( $url, admin_url() ) && preg_match( '#^https?://#i', $url );
 			$icon     = '' !== $link['icon'] ? $link['icon'] : ( $external ? 'external' : 'link' );
 
 			printf(
-				'<li><a class="adminora-qlink" href="%s"%s><span class="adminora-qlink__icon" aria-hidden="true">%s</span><span>%s</span></a></li>',
+				'<li><a class="layodt-qlink" href="%s"%s><span class="layodt-qlink__icon" aria-hidden="true">%s</span><span>%s</span></a></li>',
 				esc_url( $url ),
 				$external ? ' target="_blank" rel="noopener"' : '',
 				wp_kses( Icons::svg( $icon, 20 ), Icons::kses() ),
@@ -119,7 +119,7 @@ class Widget_Render {
 		}
 
 		if ( '' !== $widget['email'] || '' !== $widget['phone'] ) {
-			echo '<ul class="adminora-contact">';
+			echo '<ul class="layodt-contact">';
 			if ( '' !== $widget['email'] ) {
 				printf( '<li><span aria-hidden="true">%s</span><a href="%s">%s</a></li>', wp_kses( Icons::svg( 'mail', 18 ), Icons::kses() ), esc_url( 'mailto:' . $widget['email'] ), esc_html( $widget['email'] ) );
 			}
@@ -140,11 +140,11 @@ class Widget_Render {
 	 */
 	private static function type_video( array $widget ) {
 		if ( '' === $widget['video'] ) {
-			echo '<p>' . esc_html__( 'No video address yet.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'No video address yet.', 'layo-dashboard-toolkit' ) . '</p>';
 			return;
 		}
 
-		$key  = 'adminora_embed_' . md5( $widget['video'] );
+		$key  = 'layodt_embed_' . md5( $widget['video'] );
 		$html = get_transient( $key );
 
 		if ( false === $html ) {
@@ -154,9 +154,9 @@ class Widget_Render {
 		}
 
 		if ( '' === $html ) {
-			printf( '<p><a href="%s" target="_blank" rel="noopener">%s</a></p>', esc_url( $widget['video'] ), esc_html__( 'Watch the video', 'adminora' ) );
+			printf( '<p><a href="%s" target="_blank" rel="noopener">%s</a></p>', esc_url( $widget['video'] ), esc_html__( 'Watch the video', 'layo-dashboard-toolkit' ) );
 		} else {
-			echo '<div class="adminora-video">' . wp_kses(
+			echo '<div class="layodt-video">' . wp_kses(
 				$html,
 				array(
 					'iframe' => array(
@@ -196,11 +196,11 @@ class Widget_Render {
 		);
 
 		if ( ! $posts ) {
-			echo '<p>' . esc_html__( 'Nothing published yet.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'Nothing published yet.', 'layo-dashboard-toolkit' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminora-feed">';
+		echo '<ul class="layodt-feed">';
 		foreach ( $posts as $post ) {
 			printf(
 				'<li><a href="%s">%s</a><time datetime="%s">%s</time><p>%s</p></li>',
@@ -230,13 +230,13 @@ class Widget_Render {
 		);
 
 		if ( ! $users ) {
-			echo '<p>' . esc_html__( 'Nobody yet.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'Nobody yet.', 'layo-dashboard-toolkit' ) . '</p>';
 			return;
 		}
 
 		$names = wp_roles()->get_names();
 
-		echo '<ul class="adminora-people">';
+		echo '<ul class="layodt-people">';
 		foreach ( $users as $user ) {
 			$role = $user->roles ? reset( $user->roles ) : '';
 			$name = esc_html( $user->display_name );
@@ -252,7 +252,7 @@ class Widget_Render {
 					trim(
 						( isset( $names[ $role ] ) ? translate_user_role( $names[ $role ] ) . ' · ' : '' ) .
 						/* translators: %s: time span such as "3 days". */
-						sprintf( __( 'joined %s ago', 'adminora' ), human_time_diff( strtotime( $user->user_registered . ' UTC' ), time() ) )
+						sprintf( __( 'joined %s ago', 'layo-dashboard-toolkit' ), human_time_diff( strtotime( $user->user_registered . ' UTC' ), time() ) )
 					)
 				)
 			);
@@ -284,12 +284,12 @@ class Widget_Render {
 		}
 
 		$comments = wp_count_comments();
-		$tiles[]  = array( (int) $comments->approved, __( 'Comments', 'adminora' ), current_user_can( 'moderate_comments' ) ? admin_url( 'edit-comments.php' ) : '' );
+		$tiles[]  = array( (int) $comments->approved, __( 'Comments', 'layo-dashboard-toolkit' ), current_user_can( 'moderate_comments' ) ? admin_url( 'edit-comments.php' ) : '' );
 
 		$users   = count_users();
-		$tiles[] = array( (int) $users['total_users'], __( 'Users', 'adminora' ), current_user_can( 'list_users' ) ? admin_url( 'users.php' ) : '' );
+		$tiles[] = array( (int) $users['total_users'], __( 'Users', 'layo-dashboard-toolkit' ), current_user_can( 'list_users' ) ? admin_url( 'users.php' ) : '' );
 
-		echo '<ul class="adminora-tiles">';
+		echo '<ul class="layodt-tiles">';
 		foreach ( $tiles as $tile ) {
 			$inner = '<strong>' . esc_html( number_format_i18n( $tile[0] ) ) . '</strong><span>' . esc_html( $tile[1] ) . '</span>';
 			echo '<li>' . ( '' !== $tile[2] ? '<a href="' . esc_url( $tile[2] ) . '">' . wp_kses_post( $inner ) . '</a>' : wp_kses_post( $inner ) ) . '</li>';
@@ -314,31 +314,31 @@ class Widget_Render {
 		);
 
 		if ( ! $comments ) {
-			echo '<p>' . esc_html__( 'No comments yet.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'No comments yet.', 'layo-dashboard-toolkit' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminora-feed">';
+		echo '<ul class="layodt-feed">';
 		foreach ( $comments as $comment ) {
 			$pending = '0' === $comment->comment_approved;
 
 			printf(
 				'<li><span><strong>%s</strong> %s <a href="%s">%s</a>%s</span><time datetime="%s">%s</time><p>%s</p></li>',
 				esc_html( $comment->comment_author ),
-				esc_html__( 'on', 'adminora' ),
+				esc_html__( 'on', 'layo-dashboard-toolkit' ),
 				esc_url( $moderate ? admin_url( 'comment.php?action=editcomment&c=' . $comment->comment_ID ) : get_comment_link( $comment ) ),
 				esc_html( get_the_title( $comment->comment_post_ID ) ),
-				$pending ? ' <span class="adminora-pill">' . esc_html__( 'Waiting for approval', 'adminora' ) . '</span>' : '',
+				$pending ? ' <span class="layodt-pill">' . esc_html__( 'Waiting for approval', 'layo-dashboard-toolkit' ) . '</span>' : '',
 				esc_attr( mysql2date( 'c', $comment->comment_date_gmt ) ),
 				/* translators: %s: time span such as "5 minutes". */
-				esc_html( sprintf( __( '%s ago', 'adminora' ), human_time_diff( strtotime( $comment->comment_date_gmt . ' UTC' ), time() ) ) ),
+				esc_html( sprintf( __( '%s ago', 'layo-dashboard-toolkit' ), human_time_diff( strtotime( $comment->comment_date_gmt . ' UTC' ), time() ) ) ),
 				esc_html( wp_trim_words( wp_strip_all_tags( $comment->comment_content ), 20 ) )
 			);
 		}
 		echo '</ul>';
 
 		if ( $moderate ) {
-			echo '<p><a href="' . esc_url( admin_url( 'edit-comments.php' ) ) . '">' . esc_html__( 'All comments', 'adminora' ) . '</a></p>';
+			echo '<p><a href="' . esc_url( admin_url( 'edit-comments.php' ) ) . '">' . esc_html__( 'All comments', 'layo-dashboard-toolkit' ) . '</a></p>';
 		}
 	}
 
@@ -353,27 +353,27 @@ class Widget_Render {
 		$link   = current_user_can( 'view_site_health_checks' ) ? admin_url( 'site-health.php' ) : '';
 
 		if ( ! is_array( $result ) ) {
-			echo '<p>' . esc_html__( 'No results yet. Site Health runs its checks when someone opens it.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'No results yet. Site Health runs its checks when someone opens it.', 'layo-dashboard-toolkit' ) . '</p>';
 		} else {
 			$critical    = isset( $result['critical'] ) ? (int) $result['critical'] : 0;
 			$recommended = isset( $result['recommended'] ) ? (int) $result['recommended'] : 0;
 			$good        = isset( $result['good'] ) ? (int) $result['good'] : 0;
 
 			if ( $critical ) {
-				$state = array( 'bad', __( 'Needs attention', 'adminora' ) );
+				$state = array( 'bad', __( 'Needs attention', 'layo-dashboard-toolkit' ) );
 			} elseif ( $recommended > 2 ) {
-				$state = array( 'fair', __( 'Could be better', 'adminora' ) );
+				$state = array( 'fair', __( 'Could be better', 'layo-dashboard-toolkit' ) );
 			} else {
-				$state = array( 'good', __( 'Good', 'adminora' ) );
+				$state = array( 'good', __( 'Good', 'layo-dashboard-toolkit' ) );
 			}
 
-			echo '<p class="adminora-health adminora-health--' . esc_attr( $state[0] ) . '"><strong>' . esc_html( $state[1] ) . '</strong></p>';
-			echo '<ul class="adminora-tiles">';
+			echo '<p class="layodt-health layodt-health--' . esc_attr( $state[0] ) . '"><strong>' . esc_html( $state[1] ) . '</strong></p>';
+			echo '<ul class="layodt-tiles">';
 			foreach (
 				array(
-					array( $critical, __( 'Critical issues', 'adminora' ) ),
-					array( $recommended, __( 'Recommended improvements', 'adminora' ) ),
-					array( $good, __( 'Passed checks', 'adminora' ) ),
+					array( $critical, __( 'Critical issues', 'layo-dashboard-toolkit' ) ),
+					array( $recommended, __( 'Recommended improvements', 'layo-dashboard-toolkit' ) ),
+					array( $good, __( 'Passed checks', 'layo-dashboard-toolkit' ) ),
 				) as $tile
 			) {
 				echo '<li><strong>' . esc_html( number_format_i18n( $tile[0] ) ) . '</strong><span>' . esc_html( $tile[1] ) . '</span></li>';
@@ -382,7 +382,7 @@ class Widget_Render {
 		}
 
 		if ( '' !== $link ) {
-			echo '<p><a href="' . esc_url( $link ) . '">' . esc_html__( 'Open Site Health', 'adminora' ) . '</a></p>';
+			echo '<p><a href="' . esc_url( $link ) . '">' . esc_html__( 'Open Site Health', 'layo-dashboard-toolkit' ) . '</a></p>';
 		}
 	}
 }

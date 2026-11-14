@@ -4,16 +4,16 @@
  *
  * After the password check succeeds, no login cookie is sent. The user is sent
  * to a second screen on wp-login.php and only gets the cookie after entering a
- * valid code. Add `define( 'ADMINORA_DISABLE_2FA', true );` to wp-config.php to
+ * valid code. Add `define( 'LAYODT_DISABLE_2FA', true );` to wp-config.php to
  * switch this off if you get locked out.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Security;
+namespace LayoDT\Modules\Security;
 
-use Adminora\Settings;
-use Adminora\Modules\Emails\Renderer;
+use LayoDT\Settings;
+use LayoDT\Modules\Emails\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -22,14 +22,14 @@ defined( 'ABSPATH' ) || exit;
  */
 class Two_Factor {
 
-	const META_METHOD = 'adminora_2fa_method';
-	const META_SECRET = 'adminora_2fa_secret';
-	const META_PEND   = 'adminora_2fa_pending';
-	const META_BACKUP = 'adminora_2fa_backup';
-	const META_SLICE  = 'adminora_2fa_last_slice';
-	const META_LOGIN  = 'adminora_2fa_login';
-	const META_EMAIL  = 'adminora_2fa_email_code';
-	const META_SINCE  = 'adminora_2fa_required_since';
+	const META_METHOD = 'layodt_2fa_method';
+	const META_SECRET = 'layodt_2fa_secret';
+	const META_PEND   = 'layodt_2fa_pending';
+	const META_BACKUP = 'layodt_2fa_backup';
+	const META_SLICE  = 'layodt_2fa_last_slice';
+	const META_LOGIN  = 'layodt_2fa_login';
+	const META_EMAIL  = 'layodt_2fa_email_code';
+	const META_SINCE  = 'layodt_2fa_required_since';
 
 	const LOGIN_TTL    = 600;
 	const MAX_ATTEMPTS = 5;
@@ -54,14 +54,14 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function init() {
-		if ( defined( 'ADMINORA_DISABLE_2FA' ) && ADMINORA_DISABLE_2FA ) {
+		if ( defined( 'LAYODT_DISABLE_2FA' ) && LAYODT_DISABLE_2FA ) {
 			return;
 		}
 
 		add_filter( 'authenticate', array( __CLASS__, 'intercept' ), PHP_INT_MAX );
 		add_action( 'set_auth_cookie', array( __CLASS__, 'capture_token' ), 10, 6 );
 		add_action( 'wp_login', array( __CLASS__, 'after_login' ), PHP_INT_MAX, 2 );
-		add_action( 'login_form_adminora_2fa', array( __CLASS__, 'screen' ) );
+		add_action( 'login_form_layodt_2fa', array( __CLASS__, 'screen' ) );
 
 		add_action( 'show_user_profile', array( __CLASS__, 'profile' ) );
 		add_action( 'edit_user_profile', array( __CLASS__, 'profile' ) );
@@ -69,7 +69,7 @@ class Two_Factor {
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 
 		foreach ( array( 'setup', 'verify', 'email_start', 'email_verify', 'backup', 'disable' ) as $action ) {
-			add_action( 'wp_ajax_adminora_2fa_' . $action, array( __CLASS__, 'ajax_' . $action ) );
+			add_action( 'wp_ajax_layodt_2fa_' . $action, array( __CLASS__, 'ajax_' . $action ) );
 		}
 
 		add_action( 'admin_init', array( __CLASS__, 'enforce' ) );
@@ -120,7 +120,7 @@ class Two_Factor {
 		}
 
 		if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {
-			return new \WP_Error( 'adminora_2fa_xmlrpc', __( 'Two-factor authentication is on for this account. Use an application password for XML-RPC.', 'adminora' ) );
+			return new \WP_Error( 'layodt_2fa_xmlrpc', __( 'Two-factor authentication is on for this account. Use an application password for XML-RPC.', 'layo-dashboard-toolkit' ) );
 		}
 
 		add_filter( 'send_auth_cookies', '__return_false', PHP_INT_MAX );
@@ -189,7 +189,7 @@ class Two_Factor {
 		}
 
 		$args = array(
-			'action' => 'adminora_2fa',
+			'action' => 'layodt_2fa',
 			'uid'    => $user->ID,
 			'token'  => $token,
 		);
@@ -220,7 +220,7 @@ class Two_Factor {
 	}
 
 	/**
-	 * The code entry screen, shown on wp-login.php?action=adminora_2fa.
+	 * The code entry screen, shown on wp-login.php?action=layodt_2fa.
 	 *
 	 * Runs inside wp-login.php, so login_header() and login_footer() are available
 	 * and the login page design applies.
@@ -240,9 +240,9 @@ class Two_Factor {
 		$notice  = '';
 
 		if ( ! $state ) {
-			$errors->add( 'adminora_2fa_expired', __( 'This sign-in link has expired. Please log in again.', 'adminora' ) );
-			login_header( __( 'Two-factor authentication', 'adminora' ), '', $errors );
-			printf( '<p id="nav"><a href="%s">%s</a></p>', esc_url( wp_login_url() ), esc_html__( 'Back to log in', 'adminora' ) );
+			$errors->add( 'layodt_2fa_expired', __( 'This sign-in link has expired. Please log in again.', 'layo-dashboard-toolkit' ) );
+			login_header( __( 'Two-factor authentication', 'layo-dashboard-toolkit' ), '', $errors );
+			printf( '<p id="nav"><a href="%s">%s</a></p>', esc_url( wp_login_url() ), esc_html__( 'Back to log in', 'layo-dashboard-toolkit' ) );
 			login_footer();
 			exit;
 		}
@@ -252,13 +252,13 @@ class Two_Factor {
 		$method_used = isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_key( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : '';
 
 		if ( 'post' === $method_used ) {
-			if ( ! isset( $_POST['_adminora_2fa'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminora_2fa'] ) ), 'adminora_2fa_login_' . $user_id ) ) {
-				$errors->add( 'adminora_2fa_nonce', __( 'The form expired. Please enter your code again.', 'adminora' ) );
-			} elseif ( isset( $_POST['adminora_send_email'] ) ) {
+			if ( ! isset( $_POST['_layodt_2fa'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_layodt_2fa'] ) ), 'layodt_2fa_login_' . $user_id ) ) {
+				$errors->add( 'layodt_2fa_nonce', __( 'The form expired. Please enter your code again.', 'layo-dashboard-toolkit' ) );
+			} elseif ( isset( $_POST['layodt_send_email'] ) ) {
 				self::send_email_code( $user );
-				$notice = __( 'We sent a code to your email address.', 'adminora' );
+				$notice = __( 'We sent a code to your email address.', 'layo-dashboard-toolkit' );
 			} else {
-				$code = isset( $_POST['adminora_code'] ) ? sanitize_text_field( wp_unslash( $_POST['adminora_code'] ) ) : '';
+				$code = isset( $_POST['layodt_code'] ) ? sanitize_text_field( wp_unslash( $_POST['layodt_code'] ) ) : '';
 
 				if ( self::verify_code( $user, $code ) ) {
 					delete_user_meta( $user_id, self::META_LOGIN );
@@ -266,7 +266,7 @@ class Two_Factor {
 
 					if ( $interim ) {
 						$interim_login = 'success'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- Read by login_header().
-						login_header( '', '<p class="message">' . esc_html__( 'You have logged in successfully.', 'adminora' ) . '</p>' );
+						login_header( '', '<p class="message">' . esc_html__( 'You have logged in successfully.', 'layo-dashboard-toolkit' ) . '</p>' );
 						login_footer();
 						exit;
 					}
@@ -279,64 +279,64 @@ class Two_Factor {
 				++$state['attempts'];
 
 				// Feed the attempt limiter.
-				do_action( 'wp_login_failed', $user->user_login, new \WP_Error( 'adminora_2fa_invalid' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core hook.
+				do_action( 'wp_login_failed', $user->user_login, new \WP_Error( 'layodt_2fa_invalid' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core hook.
 
 				if ( $state['attempts'] >= self::MAX_ATTEMPTS ) {
 					delete_user_meta( $user_id, self::META_LOGIN );
-					$errors->add( 'adminora_2fa_locked', __( 'Too many incorrect codes. Please log in again.', 'adminora' ) );
-					login_header( __( 'Two-factor authentication', 'adminora' ), '', $errors );
-					printf( '<p id="nav"><a href="%s">%s</a></p>', esc_url( wp_login_url() ), esc_html__( 'Back to log in', 'adminora' ) );
+					$errors->add( 'layodt_2fa_locked', __( 'Too many incorrect codes. Please log in again.', 'layo-dashboard-toolkit' ) );
+					login_header( __( 'Two-factor authentication', 'layo-dashboard-toolkit' ), '', $errors );
+					printf( '<p id="nav"><a href="%s">%s</a></p>', esc_url( wp_login_url() ), esc_html__( 'Back to log in', 'layo-dashboard-toolkit' ) );
 					login_footer();
 					exit;
 				}
 
 				update_user_meta( $user_id, self::META_LOGIN, $state );
-				$errors->add( 'adminora_2fa_invalid', __( '<strong>Error:</strong> That code is not valid. Please try again.', 'adminora' ) );
+				$errors->add( 'layodt_2fa_invalid', __( '<strong>Error:</strong> That code is not valid. Please try again.', 'layo-dashboard-toolkit' ) );
 			}
 		}
 		// phpcs:enable
 
 		$intro = 'totp' === $method
-			? __( 'Enter the 6-digit code from your authenticator app.', 'adminora' )
-			: __( 'Enter the 6-digit code we sent to your email address.', 'adminora' );
+			? __( 'Enter the 6-digit code from your authenticator app.', 'layo-dashboard-toolkit' )
+			: __( 'Enter the 6-digit code we sent to your email address.', 'layo-dashboard-toolkit' );
 
 		if ( $notice ) {
 			$intro = $notice;
 		}
 
 		add_filter( 'shake_error_codes', array( __CLASS__, 'shake' ) );
-		login_header( __( 'Two-factor authentication', 'adminora' ), '<p class="message">' . esc_html( $intro ) . '</p>', $errors );
+		login_header( __( 'Two-factor authentication', 'layo-dashboard-toolkit' ), '<p class="message">' . esc_html( $intro ) . '</p>', $errors );
 
-		$action = add_query_arg( 'action', 'adminora_2fa', site_url( 'wp-login.php', 'login_post' ) );
+		$action = add_query_arg( 'action', 'layodt_2fa', site_url( 'wp-login.php', 'login_post' ) );
 		?>
-		<form name="adminora2faform" id="loginform" action="<?php echo esc_url( $action ); ?>" method="post" autocomplete="off">
+		<form name="layodt2faform" id="loginform" action="<?php echo esc_url( $action ); ?>" method="post" autocomplete="off">
 			<input type="hidden" name="uid" value="<?php echo esc_attr( $user_id ); ?>">
 			<input type="hidden" name="token" value="<?php echo esc_attr( $token ); ?>">
 			<?php if ( $interim ) : ?>
 				<input type="hidden" name="interim-login" value="1">
 			<?php endif; ?>
-			<?php wp_nonce_field( 'adminora_2fa_login_' . $user_id, '_adminora_2fa', false ); ?>
+			<?php wp_nonce_field( 'layodt_2fa_login_' . $user_id, '_layodt_2fa', false ); ?>
 			<p>
-				<label for="adminora_code"><?php esc_html_e( 'Authentication code', 'adminora' ); ?></label>
-				<input type="text" name="adminora_code" id="adminora_code" class="input" value="" size="20" inputmode="numeric" autocomplete="one-time-code" autocapitalize="off" spellcheck="false" required>
+				<label for="layodt_code"><?php esc_html_e( 'Authentication code', 'layo-dashboard-toolkit' ); ?></label>
+				<input type="text" name="layodt_code" id="layodt_code" class="input" value="" size="20" inputmode="numeric" autocomplete="one-time-code" autocapitalize="off" spellcheck="false" required>
 			</p>
-			<p class="description" style="margin-bottom:16px;"><?php esc_html_e( 'Lost access to your device? Enter one of your backup codes instead.', 'adminora' ); ?></p>
+			<p class="description" style="margin-bottom:16px;"><?php esc_html_e( 'Lost access to your device? Enter one of your backup codes instead.', 'layo-dashboard-toolkit' ); ?></p>
 			<p class="submit">
-				<input type="submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Verify', 'adminora' ); ?>">
+				<input type="submit" class="button button-primary button-large" value="<?php esc_attr_e( 'Verify', 'layo-dashboard-toolkit' ); ?>">
 			</p>
 		</form>
 		<?php if ( 'email' === $method || Settings::get( 'security.twofa_email' ) ) : ?>
 			<form id="nav" method="post" action="<?php echo esc_url( $action ); ?>">
 				<input type="hidden" name="uid" value="<?php echo esc_attr( $user_id ); ?>">
 				<input type="hidden" name="token" value="<?php echo esc_attr( $token ); ?>">
-				<?php wp_nonce_field( 'adminora_2fa_login_' . $user_id, '_adminora_2fa', false ); ?>
-				<button type="submit" name="adminora_send_email" value="1" class="button-link">
-					<?php echo 'email' === $method ? esc_html__( 'Send a new code', 'adminora' ) : esc_html__( 'Email me a code instead', 'adminora' ); ?>
+				<?php wp_nonce_field( 'layodt_2fa_login_' . $user_id, '_layodt_2fa', false ); ?>
+				<button type="submit" name="layodt_send_email" value="1" class="button-link">
+					<?php echo 'email' === $method ? esc_html__( 'Send a new code', 'layo-dashboard-toolkit' ) : esc_html__( 'Email me a code instead', 'layo-dashboard-toolkit' ); ?>
 				</button>
 			</form>
 		<?php endif; ?>
 		<?php
-		login_footer( 'adminora_code' );
+		login_footer( 'layodt_code' );
 		exit;
 	}
 
@@ -347,7 +347,7 @@ class Two_Factor {
 	 * @return string[]
 	 */
 	public static function shake( $codes ) {
-		$codes[] = 'adminora_2fa_invalid';
+		$codes[] = 'layodt_2fa_invalid';
 
 		return $codes;
 	}
@@ -423,18 +423,18 @@ class Two_Factor {
 		$body = '<p>' . esc_html(
 			sprintf(
 				/* translators: %s: site title. */
-				__( 'Use this code to finish signing in to %s:', 'adminora' ),
+				__( 'Use this code to finish signing in to %s:', 'layo-dashboard-toolkit' ),
 				$site
 			)
 		) . '</p>'
 			. '<p style="font-size:32px;font-weight:700;letter-spacing:8px;margin:24px 0;">' . esc_html( $code ) . '</p>'
-			. '<p>' . esc_html__( 'The code expires in 10 minutes. If you did not try to sign in, change your password straight away.', 'adminora' ) . '</p>';
+			. '<p>' . esc_html__( 'The code expires in 10 minutes. If you did not try to sign in, change your password straight away.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		return wp_mail(
 			$user->user_email,
 			/* translators: %s: site title. */
-			sprintf( __( '[%s] Your sign-in code', 'adminora' ), $site ),
-			Renderer::layout( __( 'Your sign-in code', 'adminora' ), $body ),
+			sprintf( __( '[%s] Your sign-in code', 'layo-dashboard-toolkit' ), $site ),
+			Renderer::layout( __( 'Your sign-in code', 'layo-dashboard-toolkit' ), $body ),
 			array( 'Content-Type: text/html; charset=UTF-8' )
 		);
 	}
@@ -475,21 +475,21 @@ class Two_Factor {
 			return;
 		}
 
-		wp_enqueue_script( 'adminora-qrcode', ADMINORA_URL . 'assets/vendor/qrcode.js', array(), '1.4.4', true );
-		wp_enqueue_script( 'adminora-two-factor', ADMINORA_URL . 'assets/js/two-factor.js', array( 'adminora-qrcode', 'wp-util' ), \Adminora\Plugin::asset_version( 'assets/js/two-factor.js' ), true );
+		wp_enqueue_script( 'layodt-qrcode', LAYODT_URL . 'assets/vendor/qrcode.js', array(), '1.4.4', true );
+		wp_enqueue_script( 'layodt-two-factor', LAYODT_URL . 'assets/js/two-factor.js', array( 'layodt-qrcode', 'wp-util' ), \LayoDT\Plugin::asset_version( 'assets/js/two-factor.js' ), true );
 		wp_localize_script(
-			'adminora-two-factor',
-			'adminora2fa',
+			'layodt-two-factor',
+			'layodt2fa',
 			array(
-				'nonce' => wp_create_nonce( 'adminora_2fa' ),
+				'nonce' => wp_create_nonce( 'layodt_2fa' ),
 				'i18n'  => array(
-					'invalid'  => __( 'That code is not valid. Check your app and try again.', 'adminora' ),
-					'sent'     => __( 'We sent a code to your email address. Enter it below.', 'adminora' ),
-					'error'    => __( 'Something went wrong. Please reload the page and try again.', 'adminora' ),
-					'confirm'  => __( 'Turn off two-factor authentication for your account?', 'adminora' ),
-					'copied'   => __( 'Copied', 'adminora' ),
-					'enabled'  => __( 'Two-factor authentication is on. Save your backup codes now.', 'adminora' ),
-					'disabled' => __( 'Two-factor authentication is off.', 'adminora' ),
+					'invalid'  => __( 'That code is not valid. Check your app and try again.', 'layo-dashboard-toolkit' ),
+					'sent'     => __( 'We sent a code to your email address. Enter it below.', 'layo-dashboard-toolkit' ),
+					'error'    => __( 'Something went wrong. Please reload the page and try again.', 'layo-dashboard-toolkit' ),
+					'confirm'  => __( 'Turn off two-factor authentication for your account?', 'layo-dashboard-toolkit' ),
+					'copied'   => __( 'Copied', 'layo-dashboard-toolkit' ),
+					'enabled'  => __( 'Two-factor authentication is on. Save your backup codes now.', 'layo-dashboard-toolkit' ),
+					'disabled' => __( 'Two-factor authentication is off.', 'layo-dashboard-toolkit' ),
 				),
 			)
 		);
@@ -508,80 +508,80 @@ class Two_Factor {
 		$left     = is_array( $backup ) ? count( $backup ) : 0;
 		$required = self::required( $user );
 		?>
-		<h2 id="adminora-2fa"><?php esc_html_e( 'Two-factor authentication', 'adminora' ); ?></h2>
+		<h2 id="layodt-2fa"><?php esc_html_e( 'Two-factor authentication', 'layo-dashboard-toolkit' ); ?></h2>
 		<table class="form-table" role="presentation">
 			<tr>
-				<th scope="row"><?php esc_html_e( 'Status', 'adminora' ); ?></th>
+				<th scope="row"><?php esc_html_e( 'Status', 'layo-dashboard-toolkit' ); ?></th>
 				<td>
 					<p>
 						<?php
 						if ( 'totp' === $method ) {
-							esc_html_e( 'On, using an authenticator app.', 'adminora' );
+							esc_html_e( 'On, using an authenticator app.', 'layo-dashboard-toolkit' );
 						} elseif ( 'email' === $method ) {
-							esc_html_e( 'On, using codes sent by email.', 'adminora' );
+							esc_html_e( 'On, using codes sent by email.', 'layo-dashboard-toolkit' );
 						} else {
-							esc_html_e( 'Off.', 'adminora' );
+							esc_html_e( 'Off.', 'layo-dashboard-toolkit' );
 						}
 
 						if ( $method ) {
 							echo ' ';
 							/* translators: %d: number of unused backup codes. */
-							echo esc_html( sprintf( _n( '%d backup code left.', '%d backup codes left.', $left, 'adminora' ), $left ) );
+							echo esc_html( sprintf( _n( '%d backup code left.', '%d backup codes left.', $left, 'layo-dashboard-toolkit' ), $left ) );
 						}
 
 						if ( $required && ! $method ) {
-							echo ' <strong>' . esc_html__( 'Your role requires two-factor authentication.', 'adminora' ) . '</strong>';
+							echo ' <strong>' . esc_html__( 'Your role requires two-factor authentication.', 'layo-dashboard-toolkit' ) . '</strong>';
 						}
 						?>
 					</p>
 
 					<?php if ( $own ) : ?>
-						<div id="adminora-2fa-app" data-method="<?php echo esc_attr( $method ); ?>">
-							<p class="adminora-2fa-actions">
+						<div id="layodt-2fa-app" data-method="<?php echo esc_attr( $method ); ?>">
+							<p class="layodt-2fa-actions">
 								<?php if ( $method ) : ?>
-									<button type="button" class="button" data-adminora-2fa="backup"><?php esc_html_e( 'Generate new backup codes', 'adminora' ); ?></button>
+									<button type="button" class="button" data-layodt-2fa="backup"><?php esc_html_e( 'Generate new backup codes', 'layo-dashboard-toolkit' ); ?></button>
 									<?php if ( ! $required ) : ?>
-										<button type="button" class="button button-link-delete" data-adminora-2fa="disable"><?php esc_html_e( 'Turn off two-factor', 'adminora' ); ?></button>
+										<button type="button" class="button button-link-delete" data-layodt-2fa="disable"><?php esc_html_e( 'Turn off two-factor', 'layo-dashboard-toolkit' ); ?></button>
 									<?php endif; ?>
 								<?php else : ?>
-									<button type="button" class="button button-primary" data-adminora-2fa="setup"><?php esc_html_e( 'Set up an authenticator app', 'adminora' ); ?></button>
+									<button type="button" class="button button-primary" data-layodt-2fa="setup"><?php esc_html_e( 'Set up an authenticator app', 'layo-dashboard-toolkit' ); ?></button>
 									<?php if ( Settings::get( 'security.twofa_email' ) ) : ?>
-										<button type="button" class="button" data-adminora-2fa="email_start"><?php esc_html_e( 'Use email codes instead', 'adminora' ); ?></button>
+										<button type="button" class="button" data-layodt-2fa="email_start"><?php esc_html_e( 'Use email codes instead', 'layo-dashboard-toolkit' ); ?></button>
 									<?php endif; ?>
 								<?php endif; ?>
 							</p>
 
-							<div class="adminora-2fa-panel" data-panel="setup" hidden>
-								<p><?php esc_html_e( 'Scan this QR code with your authenticator app, such as Google Authenticator, Microsoft Authenticator, 1Password or Authy.', 'adminora' ); ?></p>
-								<div class="adminora-2fa-qr"></div>
+							<div class="layodt-2fa-panel" data-panel="setup" hidden>
+								<p><?php esc_html_e( 'Scan this QR code with your authenticator app, such as Google Authenticator, Microsoft Authenticator, 1Password or Authy.', 'layo-dashboard-toolkit' ); ?></p>
+								<div class="layodt-2fa-qr"></div>
 								<p>
-									<?php esc_html_e( 'Cannot scan it? Enter this key in the app instead:', 'adminora' ); ?>
-									<code class="adminora-2fa-secret"></code>
+									<?php esc_html_e( 'Cannot scan it? Enter this key in the app instead:', 'layo-dashboard-toolkit' ); ?>
+									<code class="layodt-2fa-secret"></code>
 								</p>
 							</div>
 
-							<div class="adminora-2fa-panel" data-panel="verify" hidden>
-								<label for="adminora-2fa-code"><?php esc_html_e( 'Enter the 6-digit code to confirm', 'adminora' ); ?></label><br>
-								<input type="text" id="adminora-2fa-code" class="regular-text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
-								<button type="button" class="button button-primary" data-adminora-2fa="confirm"><?php esc_html_e( 'Verify and turn on', 'adminora' ); ?></button>
+							<div class="layodt-2fa-panel" data-panel="verify" hidden>
+								<label for="layodt-2fa-code"><?php esc_html_e( 'Enter the 6-digit code to confirm', 'layo-dashboard-toolkit' ); ?></label><br>
+								<input type="text" id="layodt-2fa-code" class="regular-text" inputmode="numeric" autocomplete="one-time-code" maxlength="6">
+								<button type="button" class="button button-primary" data-layodt-2fa="confirm"><?php esc_html_e( 'Verify and turn on', 'layo-dashboard-toolkit' ); ?></button>
 							</div>
 
-							<div class="adminora-2fa-panel" data-panel="codes" hidden>
-								<p><strong><?php esc_html_e( 'Backup codes', 'adminora' ); ?></strong></p>
-								<p class="description"><?php esc_html_e( 'Each code works once. Keep them somewhere safe, such as a password manager. They will not be shown again.', 'adminora' ); ?></p>
-								<ol class="adminora-2fa-codes"></ol>
-								<button type="button" class="button" data-adminora-2fa="copy"><?php esc_html_e( 'Copy codes', 'adminora' ); ?></button>
+							<div class="layodt-2fa-panel" data-panel="codes" hidden>
+								<p><strong><?php esc_html_e( 'Backup codes', 'layo-dashboard-toolkit' ); ?></strong></p>
+								<p class="description"><?php esc_html_e( 'Each code works once. Keep them somewhere safe, such as a password manager. They will not be shown again.', 'layo-dashboard-toolkit' ); ?></p>
+								<ol class="layodt-2fa-codes"></ol>
+								<button type="button" class="button" data-layodt-2fa="copy"><?php esc_html_e( 'Copy codes', 'layo-dashboard-toolkit' ); ?></button>
 							</div>
 
-							<p class="adminora-2fa-message" role="status" aria-live="polite"></p>
+							<p class="layodt-2fa-message" role="status" aria-live="polite"></p>
 						</div>
 					<?php elseif ( $method && current_user_can( 'edit_users' ) ) : ?>
 						<label>
-							<input type="checkbox" name="adminora_2fa_reset" value="1">
-							<?php esc_html_e( 'Reset two-factor for this user', 'adminora' ); ?>
+							<input type="checkbox" name="layodt_2fa_reset" value="1">
+							<?php esc_html_e( 'Reset two-factor for this user', 'layo-dashboard-toolkit' ); ?>
 						</label>
-						<?php wp_nonce_field( 'adminora_2fa_reset_' . $user->ID, '_adminora_2fa_reset', false ); ?>
-						<p class="description"><?php esc_html_e( 'Use this if they lost their device and backup codes. They can sign in with only a password until they set it up again.', 'adminora' ); ?></p>
+						<?php wp_nonce_field( 'layodt_2fa_reset_' . $user->ID, '_layodt_2fa_reset', false ); ?>
+						<p class="description"><?php esc_html_e( 'Use this if they lost their device and backup codes. They can sign in with only a password until they set it up again.', 'layo-dashboard-toolkit' ); ?></p>
 					<?php endif; ?>
 				</td>
 			</tr>
@@ -596,11 +596,11 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function admin_reset( $user_id ) {
-		if ( ! isset( $_POST['_adminora_2fa_reset'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminora_2fa_reset'] ) ), 'adminora_2fa_reset_' . $user_id ) ) {
+		if ( ! isset( $_POST['_layodt_2fa_reset'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_layodt_2fa_reset'] ) ), 'layodt_2fa_reset_' . $user_id ) ) {
 			return;
 		}
 
-		if ( empty( $_POST['adminora_2fa_reset'] ) || ! current_user_can( 'edit_users' ) || ! current_user_can( 'edit_user', $user_id ) ) {
+		if ( empty( $_POST['layodt_2fa_reset'] ) || ! current_user_can( 'edit_users' ) || ! current_user_can( 'edit_user', $user_id ) ) {
 			return;
 		}
 
@@ -629,7 +629,7 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_setup() {
-		check_ajax_referer( 'adminora_2fa', 'nonce' );
+		check_ajax_referer( 'layodt_2fa', 'nonce' );
 
 		if ( ! current_user_can( 'read' ) ) {
 			wp_send_json_error( null, 403 );
@@ -654,7 +654,7 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_verify() {
-		check_ajax_referer( 'adminora_2fa', 'nonce' );
+		check_ajax_referer( 'layodt_2fa', 'nonce' );
 
 		if ( ! current_user_can( 'read' ) ) {
 			wp_send_json_error( null, 403 );
@@ -684,7 +684,7 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_email_start() {
-		check_ajax_referer( 'adminora_2fa', 'nonce' );
+		check_ajax_referer( 'layodt_2fa', 'nonce' );
 
 		if ( ! current_user_can( 'read' ) ) {
 			wp_send_json_error( null, 403 );
@@ -705,7 +705,7 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_email_verify() {
-		check_ajax_referer( 'adminora_2fa', 'nonce' );
+		check_ajax_referer( 'layodt_2fa', 'nonce' );
 
 		if ( ! current_user_can( 'read' ) ) {
 			wp_send_json_error( null, 403 );
@@ -732,7 +732,7 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_backup() {
-		check_ajax_referer( 'adminora_2fa', 'nonce' );
+		check_ajax_referer( 'layodt_2fa', 'nonce' );
 
 		if ( ! current_user_can( 'read' ) ) {
 			wp_send_json_error( null, 403 );
@@ -753,7 +753,7 @@ class Two_Factor {
 	 * @return void
 	 */
 	public static function ajax_disable() {
-		check_ajax_referer( 'adminora_2fa', 'nonce' );
+		check_ajax_referer( 'layodt_2fa', 'nonce' );
 
 		if ( ! current_user_can( 'read' ) ) {
 			wp_send_json_error( null, 403 );
@@ -813,7 +813,7 @@ class Two_Factor {
 		global $pagenow;
 
 		if ( 'profile.php' !== $pagenow ) {
-			wp_safe_redirect( admin_url( 'profile.php#adminora-2fa' ) );
+			wp_safe_redirect( admin_url( 'profile.php#layodt-2fa' ) );
 			exit;
 		}
 	}
@@ -825,7 +825,7 @@ class Two_Factor {
 	 */
 	public static function notice_style() {
 		if ( self::grace_left( wp_get_current_user() ) >= 0 ) {
-			wp_add_inline_style( 'common', '.adminora-notice{border:1px solid #dba617;border-radius:4px;background:#fcf9e8;box-shadow:none}' );
+			wp_add_inline_style( 'common', '.layodt-notice{border:1px solid #dba617;border-radius:4px;background:#fcf9e8;box-shadow:none}' );
 		}
 	}
 
@@ -842,18 +842,18 @@ class Two_Factor {
 		}
 
 		$message = 0 === $left
-			? __( 'Your role requires two-factor authentication. Set it up below to keep using the dashboard.', 'adminora' )
+			? __( 'Your role requires two-factor authentication. Set it up below to keep using the dashboard.', 'layo-dashboard-toolkit' )
 			: sprintf(
 				/* translators: %d: number of days. */
-				_n( 'Your role requires two-factor authentication. Please set it up within %d day.', 'Your role requires two-factor authentication. Please set it up within %d days.', $left, 'adminora' ),
+				_n( 'Your role requires two-factor authentication. Please set it up within %d day.', 'Your role requires two-factor authentication. Please set it up within %d days.', $left, 'layo-dashboard-toolkit' ),
 				$left
 			);
 
 		printf(
-			'<div class="notice notice-warning adminora-notice"><p>%s <a href="%s">%s</a></p></div>',
+			'<div class="notice notice-warning layodt-notice"><p>%s <a href="%s">%s</a></p></div>',
 			esc_html( $message ),
-			esc_url( admin_url( 'profile.php#adminora-2fa' ) ),
-			esc_html__( 'Set up two-factor', 'adminora' )
+			esc_url( admin_url( 'profile.php#layodt-2fa' ) ),
+			esc_html__( 'Set up two-factor', 'layo-dashboard-toolkit' )
 		);
 	}
 }

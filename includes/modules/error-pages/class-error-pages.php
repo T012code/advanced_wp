@@ -6,16 +6,16 @@
  * as drop-in files (see Dropins). Notice screens from wp_die() and the 404 page
  * are handled live through filters.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Error_Pages;
+namespace LayoDT\Modules\Error_Pages;
 
-use Adminora\Brand_Kit;
-use Adminora\Preview;
-use Adminora\Settings;
-use Adminora\System_Page;
-use Adminora\Modules\Login\Login_Text;
+use LayoDT\Brand_Kit;
+use LayoDT\Preview;
+use LayoDT\Settings;
+use LayoDT\System_Page;
+use LayoDT\Modules\Login\Login_Text;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -58,7 +58,7 @@ class Error_Pages {
 	/**
 	 * Placeholder in the critical error drop-in for the administrators' note.
 	 */
-	const NOTE_MARKER = 'ADMINORA_ADMIN_NOTE';
+	const NOTE_MARKER = 'LAYODT_ADMIN_NOTE';
 
 	/**
 	 * The administrators' note on the critical error page, with tags filled in.
@@ -85,10 +85,10 @@ class Error_Pages {
 		}
 
 		if ( $for_dropin ) {
-			return '<p class="adminora-page__note">' . self::NOTE_MARKER . '</p>';
+			return '<p class="layodt-page__note">' . self::NOTE_MARKER . '</p>';
 		}
 
-		return current_user_can( 'manage_options' ) ? '<p class="adminora-page__note">' . esc_html( $text ) . '</p>' : '';
+		return current_user_can( 'manage_options' ) ? '<p class="layodt-page__note">' . esc_html( $text ) . '</p>' : '';
 	}
 
 	/**
@@ -140,7 +140,7 @@ class Error_Pages {
 			case 'wp_die':
 				$args = array(
 					'heading' => Settings::get( $p . 'wp_die_title' ),
-					'message' => __( 'Sorry, you are not allowed to access this page.', 'adminora' ),
+					'message' => __( 'Sorry, you are not allowed to access this page.', 'layo-dashboard-toolkit' ),
 					'buttons' => array( array( Settings::get( $p . 'wp_die_button' ), home_url( '/' ) ) ),
 				);
 				break;
@@ -259,10 +259,10 @@ class Error_Pages {
 	 */
 	private static function search_form() {
 		return sprintf(
-			'<form class="adminora-page__search" role="search" method="get" action="%1$s"><label class="screen-reader-text" for="adminora-s">%2$s</label><input type="search" id="adminora-s" name="s" placeholder="%2$s"><button type="submit">%3$s</button></form>',
+			'<form class="layodt-page__search" role="search" method="get" action="%1$s"><label class="screen-reader-text" for="layodt-s">%2$s</label><input type="search" id="layodt-s" name="s" placeholder="%2$s"><button type="submit">%3$s</button></form>',
 			esc_url( home_url( '/' ) ),
-			esc_attr__( 'Search this site', 'adminora' ),
-			esc_html__( 'Search', 'adminora' )
+			esc_attr__( 'Search this site', 'layo-dashboard-toolkit' ),
+			esc_html__( 'Search', 'layo-dashboard-toolkit' )
 		);
 	}
 
@@ -439,6 +439,6 @@ class Error_Pages {
 	 * @return string
 	 */
 	public static function notfound_template( $template ) {
-		return is_404() ? ADMINORA_DIR . 'templates/notfound.php' : $template;
+		return is_404() ? LAYODT_DIR . 'templates/notfound.php' : $template;
 	}
 }

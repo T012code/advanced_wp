@@ -1,5 +1,5 @@
 /**
- * Adminora Customizer controls: preview routing and contrast warnings.
+ * Layò Dashboard Toolkit Customizer controls: preview routing and contrast warnings.
  */
 ( function ( api, $, data ) {
 	'use strict';
@@ -64,7 +64,7 @@
 		}
 
 		var ratio = contrast( fg, bg ),
-			code = 'adminora_contrast';
+			code = 'layodt_contrast';
 
 		control.notifications.remove( code );
 
@@ -90,7 +90,7 @@
 			} );
 		} );
 
-		$( document ).on( 'change', '[data-adminora-picker]', function () {
+		$( document ).on( 'change', '[data-layodt-picker]', function () {
 			api.previewer.previewUrl.set( this.value );
 		} );
 
@@ -111,4 +111,4 @@
 			} );
 		} );
 	} );
-} )( window.wp && window.wp.customize, window.jQuery, window.adminoraCustomizer );
+} )( window.wp && window.wp.customize, window.jQuery, window.layodtCustomizer );

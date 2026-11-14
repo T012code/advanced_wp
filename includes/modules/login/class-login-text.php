@@ -6,12 +6,12 @@
  * original English string so it works in every language. Replacements only
  * apply while a login screen is being built.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Login;
+namespace LayoDT\Modules\Login;
 
-use Adminora\Settings;
+use LayoDT\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -69,29 +69,29 @@ class Login_Text {
 	 */
 	public static function labels() {
 		return array(
-			'login_title'       => __( '"Log In" button and screen name', 'adminora' ),
-			'username_label'    => __( 'Username field label', 'adminora' ),
-			'password_label'    => __( 'Password field label', 'adminora' ),
-			'remember'          => __( '"Remember Me"', 'adminora' ),
-			'lost_link'         => __( '"Lost your password?" link', 'adminora' ),
-			'register_link'     => __( '"Register" link and button', 'adminora' ),
-			'login_link'        => __( '"Log in" link on the other screens', 'adminora' ),
-			'logged_out'        => __( 'Message after logging out', 'adminora' ),
-			'session_expired'   => __( 'Message when the session has expired', 'adminora' ),
-			'lost_title'        => __( 'Lost password: screen name', 'adminora' ),
-			'lost_message'      => __( 'Lost password: instructions', 'adminora' ),
-			'lost_button'       => __( 'Lost password: button', 'adminora' ),
-			'check_email_title' => __( 'Check your email: screen name', 'adminora' ),
-			'check_email'       => __( 'Check your email: message', 'adminora' ),
-			'reset_title'       => __( 'Reset password: screen name', 'adminora' ),
-			'reset_message'     => __( 'Reset password: instructions', 'adminora' ),
-			'new_password'      => __( 'Reset password: field label', 'adminora' ),
-			'save_password'     => __( 'Reset password: button', 'adminora' ),
-			'reset_done'        => __( 'Reset password: success message', 'adminora' ),
-			'register_title'    => __( 'Register: screen name', 'adminora' ),
-			'register_message'  => __( 'Register: message above the form', 'adminora' ),
-			'register_note'     => __( 'Register: note under the fields', 'adminora' ),
-			'register_done'     => __( 'Register: success message', 'adminora' ),
+			'login_title'       => __( '"Log In" button and screen name', 'layo-dashboard-toolkit' ),
+			'username_label'    => __( 'Username field label', 'layo-dashboard-toolkit' ),
+			'password_label'    => __( 'Password field label', 'layo-dashboard-toolkit' ),
+			'remember'          => __( '"Remember Me"', 'layo-dashboard-toolkit' ),
+			'lost_link'         => __( '"Lost your password?" link', 'layo-dashboard-toolkit' ),
+			'register_link'     => __( '"Register" link and button', 'layo-dashboard-toolkit' ),
+			'login_link'        => __( '"Log in" link on the other screens', 'layo-dashboard-toolkit' ),
+			'logged_out'        => __( 'Message after logging out', 'layo-dashboard-toolkit' ),
+			'session_expired'   => __( 'Message when the session has expired', 'layo-dashboard-toolkit' ),
+			'lost_title'        => __( 'Lost password: screen name', 'layo-dashboard-toolkit' ),
+			'lost_message'      => __( 'Lost password: instructions', 'layo-dashboard-toolkit' ),
+			'lost_button'       => __( 'Lost password: button', 'layo-dashboard-toolkit' ),
+			'check_email_title' => __( 'Check your email: screen name', 'layo-dashboard-toolkit' ),
+			'check_email'       => __( 'Check your email: message', 'layo-dashboard-toolkit' ),
+			'reset_title'       => __( 'Reset password: screen name', 'layo-dashboard-toolkit' ),
+			'reset_message'     => __( 'Reset password: instructions', 'layo-dashboard-toolkit' ),
+			'new_password'      => __( 'Reset password: field label', 'layo-dashboard-toolkit' ),
+			'save_password'     => __( 'Reset password: button', 'layo-dashboard-toolkit' ),
+			'reset_done'        => __( 'Reset password: success message', 'layo-dashboard-toolkit' ),
+			'register_title'    => __( 'Register: screen name', 'layo-dashboard-toolkit' ),
+			'register_message'  => __( 'Register: message above the form', 'layo-dashboard-toolkit' ),
+			'register_note'     => __( 'Register: note under the fields', 'layo-dashboard-toolkit' ),
+			'register_done'     => __( 'Register: success message', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -145,7 +145,7 @@ class Login_Text {
 		$site = get_bloginfo( 'name', 'display' );
 
 		/* translators: %s: site title. */
-		return '' !== $text ? str_replace( '{site_name}', $site, $text ) : sprintf( __( '&larr; Go to %s', 'adminora' ), $site );
+		return '' !== $text ? str_replace( '{site_name}', $site, $text ) : sprintf( __( '&larr; Go to %s', 'layo-dashboard-toolkit' ), $site );
 	}
 
 	/**
@@ -249,7 +249,7 @@ class Login_Text {
 		}
 
 		if ( $replaced ) {
-			$errors->add( 'adminora_failed', esc_html( $message ) );
+			$errors->add( 'layodt_failed', esc_html( $message ) );
 		}
 
 		return $errors;

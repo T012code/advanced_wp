@@ -2,23 +2,23 @@
 /**
  * Customizer panel, sections and controls.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Customizer;
+namespace LayoDT\Customizer;
 
-use Adminora\Brand_Kit;
-use Adminora\Fonts;
-use Adminora\Preview;
-use Adminora\Settings;
-use Adminora\Modules\Emails\Templates;
-use Adminora\Modules\Login\Login;
-use Adminora\Modules\Login\Login_Text;
+use LayoDT\Brand_Kit;
+use LayoDT\Fonts;
+use LayoDT\Preview;
+use LayoDT\Settings;
+use LayoDT\Modules\Emails\Templates;
+use LayoDT\Modules\Login\Login;
+use LayoDT\Modules\Login\Login_Text;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Registers everything under Appearance → Customize → Adminora.
+ * Registers everything under Appearance → Customize → Layò Dashboard Toolkit.
  */
 class Customizer {
 
@@ -39,20 +39,20 @@ class Customizer {
 	 */
 	private static function previews() {
 		return array(
-			'adminora_brand'              => Preview::url( 'login' ),
-			'adminora_login_layout'       => Preview::url( 'login' ),
-			'adminora_login_logo'         => Preview::url( 'login' ),
-			'adminora_login_form'         => Preview::url( 'login' ),
-			'adminora_login_text'         => Preview::url( 'login' ),
-			'adminora_login_words'        => Preview::url( 'login' ),
-			'adminora_emails'             => Preview::url( 'email', array( 'adminora_template' => 'welcome' ) ),
-			'adminora_errors_design'      => Preview::url( 'page', array( 'adminora_page' => 'critical' ) ),
-			'adminora_errors_critical'    => Preview::url( 'page', array( 'adminora_page' => 'critical' ) ),
-			'adminora_errors_db'          => Preview::url( 'page', array( 'adminora_page' => 'db' ) ),
-			'adminora_errors_maintenance' => Preview::url( 'page', array( 'adminora_page' => 'maintenance' ) ),
-			'adminora_errors_wp_die'      => Preview::url( 'page', array( 'adminora_page' => 'denied' ) ),
-			'adminora_errors_notfound'    => Preview::url( 'page', array( 'adminora_page' => 'notfound' ) ),
-			'adminora_maintenance'        => Preview::url( 'maintenance' ),
+			'layodt_brand'              => Preview::url( 'login' ),
+			'layodt_login_layout'       => Preview::url( 'login' ),
+			'layodt_login_logo'         => Preview::url( 'login' ),
+			'layodt_login_form'         => Preview::url( 'login' ),
+			'layodt_login_text'         => Preview::url( 'login' ),
+			'layodt_login_words'        => Preview::url( 'login' ),
+			'layodt_emails'             => Preview::url( 'email', array( 'layodt_template' => 'welcome' ) ),
+			'layodt_errors_design'      => Preview::url( 'page', array( 'layodt_page' => 'critical' ) ),
+			'layodt_errors_critical'    => Preview::url( 'page', array( 'layodt_page' => 'critical' ) ),
+			'layodt_errors_db'          => Preview::url( 'page', array( 'layodt_page' => 'db' ) ),
+			'layodt_errors_maintenance' => Preview::url( 'page', array( 'layodt_page' => 'maintenance' ) ),
+			'layodt_errors_wp_die'      => Preview::url( 'page', array( 'layodt_page' => 'denied' ) ),
+			'layodt_errors_notfound'    => Preview::url( 'page', array( 'layodt_page' => 'notfound' ) ),
+			'layodt_maintenance'        => Preview::url( 'maintenance' ),
 		);
 	}
 
@@ -64,13 +64,13 @@ class Customizer {
 	 */
 	public static function register( $wp ) {
 		$wp->add_panel(
-			'adminora',
+			'layodt',
 			array(
-				'title'       => __( 'Adminora', 'adminora' ),
+				'title'       => __( 'Layò Dashboard Toolkit', 'layo-dashboard-toolkit' ),
 				'description' => sprintf(
 					/* translators: %s: settings page URL. */
-					__( 'Design your login page, emails and system pages. Email wording, security and admin branding live on the <a href="%s">settings page</a>.', 'adminora' ),
-					esc_url( admin_url( 'options-general.php?page=adminora' ) )
+					__( 'Design your login page, emails and system pages. Email wording, security and admin branding live on the <a href="%s">settings page</a>.', 'layo-dashboard-toolkit' ),
+					esc_url( admin_url( 'options-general.php?page=layo-dashboard-toolkit' ) )
 				),
 				'priority'    => 160,
 			)
@@ -82,7 +82,7 @@ class Customizer {
 				array(
 					'title'       => $section['title'],
 					'description' => isset( $section['description'] ) ? $section['description'] : '',
-					'panel'       => 'adminora',
+					'panel'       => 'layodt',
 				)
 			);
 
@@ -91,7 +91,7 @@ class Customizer {
 					$wp->add_control(
 						new Preview_Picker_Control(
 							$wp,
-							'adminora_' . str_replace( ':', '_', $key ),
+							'layodt_' . str_replace( ':', '_', $key ),
 							array(
 								'section'  => $id,
 								'label'    => $control['label'],
@@ -231,24 +231,24 @@ class Customizer {
 	 * @return array
 	 */
 	private static function sections() {
-		$inherit  = __( 'Leave empty to use the brand kit.', 'adminora' );
+		$inherit  = __( 'Leave empty to use the brand kit.', 'layo-dashboard-toolkit' );
 		$detected = Brand_Kit::detected();
 		$custom   = 'custom' === Brand_Kit::source();
 		$theme    = static function ( $key ) use ( $detected, $custom ) {
 			if ( ! $custom ) {
-				return __( 'Used when "Brand colours from" is set to Custom colours.', 'adminora' );
+				return __( 'Used when "Brand colours from" is set to Custom colours.', 'layo-dashboard-toolkit' );
 			}
 
 			return '' !== $detected[ $key ]
 				/* translators: %s: colour value detected from the theme. */
-				? sprintf( __( 'Following theme: %s. Pick a colour to override, or clear it to follow the theme again.', 'adminora' ), $detected[ $key ] )
-				: __( 'Not set by the theme. Using the built-in default until you pick one.', 'adminora' );
+				? sprintf( __( 'Following theme: %s. Pick a colour to override, or clear it to follow the theme again.', 'layo-dashboard-toolkit' ), $detected[ $key ] )
+				: __( 'Not set by the theme. Using the built-in default until you pick one.', 'layo-dashboard-toolkit' );
 		};
 		$px       = array(
 			'input_attrs' => array(
 				'min'         => 0,
 				'max'         => 2000,
-				'placeholder' => __( 'Brand default', 'adminora' ),
+				'placeholder' => __( 'Brand default', 'layo-dashboard-toolkit' ),
 			),
 		);
 		$range    = array(
@@ -262,29 +262,29 @@ class Customizer {
 
 		$email_choices = array();
 		foreach ( Templates::all() as $key => $template ) {
-			$email_choices[ Preview::url( 'email', array( 'adminora_template' => $key ) ) ] = $template['label'];
+			$email_choices[ Preview::url( 'email', array( 'layodt_template' => $key ) ) ] = $template['label'];
 		}
 
 		$page_choices = array(
-			Preview::url( 'page', array( 'adminora_page' => 'critical' ) )    => __( 'Critical error', 'adminora' ),
-			Preview::url( 'page', array( 'adminora_page' => 'db' ) )          => __( 'Database connection error', 'adminora' ),
-			Preview::url( 'page', array( 'adminora_page' => 'maintenance' ) ) => __( 'Update maintenance', 'adminora' ),
-			Preview::url( 'page', array( 'adminora_page' => 'denied' ) )      => __( 'No permission', 'adminora' ),
-			Preview::url( 'page', array( 'adminora_page' => 'expired' ) )     => __( 'Expired link', 'adminora' ),
-			Preview::url( 'page', array( 'adminora_page' => 'wp_die' ) )      => __( 'Other notice screens', 'adminora' ),
-			Preview::url( 'page', array( 'adminora_page' => 'notfound' ) )    => __( 'Page not found (404)', 'adminora' ),
+			Preview::url( 'page', array( 'layodt_page' => 'critical' ) )    => __( 'Critical error', 'layo-dashboard-toolkit' ),
+			Preview::url( 'page', array( 'layodt_page' => 'db' ) )          => __( 'Database connection error', 'layo-dashboard-toolkit' ),
+			Preview::url( 'page', array( 'layodt_page' => 'maintenance' ) ) => __( 'Update maintenance', 'layo-dashboard-toolkit' ),
+			Preview::url( 'page', array( 'layodt_page' => 'denied' ) )      => __( 'No permission', 'layo-dashboard-toolkit' ),
+			Preview::url( 'page', array( 'layodt_page' => 'expired' ) )     => __( 'Expired link', 'layo-dashboard-toolkit' ),
+			Preview::url( 'page', array( 'layodt_page' => 'wp_die' ) )      => __( 'Other notice screens', 'layo-dashboard-toolkit' ),
+			Preview::url( 'page', array( 'layodt_page' => 'notfound' ) )    => __( 'Page not found (404)', 'layo-dashboard-toolkit' ),
 		);
 
 		$login_choices = array();
 		foreach ( Login::preview_screens() as $key => $label ) {
-			$login_choices[ Preview::url( 'login', array( 'adminora_screen' => $key ) ) ] = $label;
+			$login_choices[ Preview::url( 'login', array( 'layodt_screen' => $key ) ) ] = $label;
 		}
 
 		$link_places = array(
-			'below'    => __( 'Below the form', 'adminora' ),
-			'password' => __( 'Next to the Password label', 'adminora' ),
-			'button'   => __( 'Above the main button', 'adminora' ),
-			'hidden'   => __( 'Hidden', 'adminora' ),
+			'below'    => __( 'Below the form', 'layo-dashboard-toolkit' ),
+			'password' => __( 'Next to the Password label', 'layo-dashboard-toolkit' ),
+			'button'   => __( 'Above the main button', 'layo-dashboard-toolkit' ),
+			'hidden'   => __( 'Hidden', 'layo-dashboard-toolkit' ),
 		);
 
 		$words = array();
@@ -293,44 +293,44 @@ class Customizer {
 			$words[ 'login_words.' . $key ] = self::c(
 				$label,
 				/* translators: %s: WordPress's own wording. */
-				sprintf( __( 'WordPress says: "%s"', 'adminora' ), $original ),
+				sprintf( __( 'WordPress says: "%s"', 'layo-dashboard-toolkit' ), $original ),
 				array( 'input_attrs' => array( 'placeholder' => $original ) )
 			);
 		}
 
 		return array(
-			'adminora_brand'              => array(
-				'title'       => __( 'Brand kit', 'adminora' ),
-				'description' => __( 'Set these once. The login page, emails and system pages all use them unless you override a value in that area.', 'adminora' ),
+			'layodt_brand'              => array(
+				'title'       => __( 'Brand kit', 'layo-dashboard-toolkit' ),
+				'description' => __( 'Set these once. The login page, emails and system pages all use them unless you override a value in that area.', 'layo-dashboard-toolkit' ),
 				'controls'    => array(
-					'brand.logo'         => self::c( __( 'Logo', 'adminora' ), __( 'Defaults to your theme logo, then your site icon.', 'adminora' ) ),
-					'brand.logo_width'   => self::c( __( 'Logo width (px)', 'adminora' ) ),
+					'brand.logo'         => self::c( __( 'Logo', 'layo-dashboard-toolkit' ), __( 'Defaults to your theme logo, then your site icon.', 'layo-dashboard-toolkit' ) ),
+					'brand.logo_width'   => self::c( __( 'Logo width (px)', 'layo-dashboard-toolkit' ) ),
 					'brand.source'       => self::select(
-						__( 'Brand colours from', 'adminora' ),
+						__( 'Brand colours from', 'layo-dashboard-toolkit' ),
 						array(
-							'theme'    => __( 'Theme', 'adminora' ),
-							'logo'     => __( 'Logo', 'adminora' ),
-							'frontend' => __( 'Front end (what visitors see)', 'adminora' ),
-							'custom'   => __( 'Custom colours (below)', 'adminora' ),
+							'theme'    => __( 'Theme', 'layo-dashboard-toolkit' ),
+							'logo'     => __( 'Logo', 'layo-dashboard-toolkit' ),
+							'frontend' => __( 'Front end (what visitors see)', 'layo-dashboard-toolkit' ),
+							'custom'   => __( 'Custom colours (below)', 'layo-dashboard-toolkit' ),
 						),
 						sprintf(
 							/* translators: %s: settings page URL. */
-							__( 'To read the front end colours again, use the Brand kit card on the <a href="%s">settings page</a>. Fonts, logo and corners are set here whichever you pick.', 'adminora' ),
-							esc_url( admin_url( 'options-general.php?page=adminora' ) )
+							__( 'To read the front end colours again, use the Brand kit card on the <a href="%s">settings page</a>. Fonts, logo and corners are set here whichever you pick.', 'layo-dashboard-toolkit' ),
+							esc_url( admin_url( 'options-general.php?page=layo-dashboard-toolkit' ) )
 						)
 					),
-					'brand.primary'      => self::c( __( 'Primary colour', 'adminora' ), $theme( 'primary' ) ),
-					'brand.secondary'    => self::c( __( 'Secondary colour', 'adminora' ), $theme( 'secondary' ) ),
-					'brand.text'         => self::c( __( 'Text colour', 'adminora' ), $theme( 'text' ) ),
-					'brand.background'   => self::c( __( 'Background colour', 'adminora' ), $theme( 'background' ) ),
-					'brand.surface'      => self::c( __( 'Surface colour', 'adminora' ), __( 'Cards, forms and email bodies.', 'adminora' ) ),
-					'brand.border'       => self::c( __( 'Border colour', 'adminora' ) ),
-					'brand.success'      => self::c( __( 'Success colour', 'adminora' ) ),
-					'brand.error'        => self::c( __( 'Error colour', 'adminora' ) ),
-					'brand.font_heading' => self::select( __( 'Heading font', 'adminora' ), Fonts::choices(), __( 'Google fonts are downloaded to your site when you publish, so visitors never load them from Google.', 'adminora' ) ),
-					'brand.font_body'    => self::select( __( 'Body font', 'adminora' ), Fonts::choices() ),
+					'brand.primary'      => self::c( __( 'Primary colour', 'layo-dashboard-toolkit' ), $theme( 'primary' ) ),
+					'brand.secondary'    => self::c( __( 'Secondary colour', 'layo-dashboard-toolkit' ), $theme( 'secondary' ) ),
+					'brand.text'         => self::c( __( 'Text colour', 'layo-dashboard-toolkit' ), $theme( 'text' ) ),
+					'brand.background'   => self::c( __( 'Background colour', 'layo-dashboard-toolkit' ), $theme( 'background' ) ),
+					'brand.surface'      => self::c( __( 'Surface colour', 'layo-dashboard-toolkit' ), __( 'Cards, forms and email bodies.', 'layo-dashboard-toolkit' ) ),
+					'brand.border'       => self::c( __( 'Border colour', 'layo-dashboard-toolkit' ) ),
+					'brand.success'      => self::c( __( 'Success colour', 'layo-dashboard-toolkit' ) ),
+					'brand.error'        => self::c( __( 'Error colour', 'layo-dashboard-toolkit' ) ),
+					'brand.font_heading' => self::select( __( 'Heading font', 'layo-dashboard-toolkit' ), Fonts::choices(), __( 'Google fonts are downloaded to your site when you publish, so visitors never load them from Google.', 'layo-dashboard-toolkit' ) ),
+					'brand.font_body'    => self::select( __( 'Body font', 'layo-dashboard-toolkit' ), Fonts::choices() ),
 					'brand.radius'       => self::c(
-						__( 'Corner radius (px)', 'adminora' ),
+						__( 'Corner radius (px)', 'layo-dashboard-toolkit' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -340,49 +340,49 @@ class Customizer {
 						)
 					),
 					'brand.button_style' => self::select(
-						__( 'Button style', 'adminora' ),
+						__( 'Button style', 'layo-dashboard-toolkit' ),
 						array(
-							'filled'  => __( 'Filled', 'adminora' ),
-							'outline' => __( 'Outline', 'adminora' ),
-							'pill'    => __( 'Pill', 'adminora' ),
+							'filled'  => __( 'Filled', 'layo-dashboard-toolkit' ),
+							'outline' => __( 'Outline', 'layo-dashboard-toolkit' ),
+							'pill'    => __( 'Pill', 'layo-dashboard-toolkit' ),
 						)
 					),
 				),
 			),
-			'adminora_login_layout'       => array(
-				'title'    => __( 'Login: layout and background', 'adminora' ),
+			'layodt_login_layout'       => array(
+				'title'    => __( 'Login: layout and background', 'layo-dashboard-toolkit' ),
 				'controls' => array(
 					'login.layout'            => self::select(
-						__( 'Layout', 'adminora' ),
+						__( 'Layout', 'layo-dashboard-toolkit' ),
 						array(
-							'centered' => __( 'Centered card', 'adminora' ),
-							'split'    => __( 'Split screen', 'adminora' ),
-							'fullbg'   => __( 'Full background', 'adminora' ),
-							'minimal'  => __( 'Minimal (WordPress default, restyled)', 'adminora' ),
+							'centered' => __( 'Centered card', 'layo-dashboard-toolkit' ),
+							'split'    => __( 'Split screen', 'layo-dashboard-toolkit' ),
+							'fullbg'   => __( 'Full background', 'layo-dashboard-toolkit' ),
+							'minimal'  => __( 'Minimal (WordPress default, restyled)', 'layo-dashboard-toolkit' ),
 						)
 					),
 					'login.split_side'        => self::select(
-						__( 'Split screen: image side', 'adminora' ),
+						__( 'Split screen: image side', 'layo-dashboard-toolkit' ),
 						array(
-							'left'  => __( 'Left', 'adminora' ),
-							'right' => __( 'Right', 'adminora' ),
+							'left'  => __( 'Left', 'layo-dashboard-toolkit' ),
+							'right' => __( 'Right', 'layo-dashboard-toolkit' ),
 						)
 					),
-					'login.side_image'        => self::c( __( 'Split screen: image', 'adminora' ) ),
+					'login.side_image'        => self::c( __( 'Split screen: image', 'layo-dashboard-toolkit' ) ),
 					'login.bg_type'           => self::select(
-						__( 'Background type', 'adminora' ),
+						__( 'Background type', 'layo-dashboard-toolkit' ),
 						array(
-							'color'    => __( 'Colour', 'adminora' ),
-							'gradient' => __( 'Gradient', 'adminora' ),
-							'image'    => __( 'Image', 'adminora' ),
-							'video'    => __( 'Video', 'adminora' ),
+							'color'    => __( 'Colour', 'layo-dashboard-toolkit' ),
+							'gradient' => __( 'Gradient', 'layo-dashboard-toolkit' ),
+							'image'    => __( 'Image', 'layo-dashboard-toolkit' ),
+							'video'    => __( 'Video', 'layo-dashboard-toolkit' ),
 						)
 					),
-					'login.bg_color'          => self::c( __( 'Background colour', 'adminora' ), $inherit ),
-					'login.bg_gradient_from'  => self::c( __( 'Gradient start', 'adminora' ) ),
-					'login.bg_gradient_to'    => self::c( __( 'Gradient end', 'adminora' ) ),
+					'login.bg_color'          => self::c( __( 'Background colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'login.bg_gradient_from'  => self::c( __( 'Gradient start', 'layo-dashboard-toolkit' ) ),
+					'login.bg_gradient_to'    => self::c( __( 'Gradient end', 'layo-dashboard-toolkit' ) ),
 					'login.bg_gradient_angle' => self::c(
-						__( 'Gradient angle (degrees)', 'adminora' ),
+						__( 'Gradient angle (degrees)', 'layo-dashboard-toolkit' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -391,27 +391,27 @@ class Customizer {
 							),
 						)
 					),
-					'login.bg_image'          => self::c( __( 'Background image', 'adminora' ) ),
-					'login.bg_video'          => self::c( __( 'Background video (MP4)', 'adminora' ), __( 'Muted and looped. The background colour shows while it loads.', 'adminora' ), array( 'control' => 'video' ) ),
-					'login.overlay_color'     => self::c( __( 'Overlay colour', 'adminora' ) ),
-					'login.overlay_opacity'   => array_merge( self::c( __( 'Overlay opacity', 'adminora' ) ), $range ),
+					'login.bg_image'          => self::c( __( 'Background image', 'layo-dashboard-toolkit' ) ),
+					'login.bg_video'          => self::c( __( 'Background video (MP4)', 'layo-dashboard-toolkit' ), __( 'Muted and looped. The background colour shows while it loads.', 'layo-dashboard-toolkit' ), array( 'control' => 'video' ) ),
+					'login.overlay_color'     => self::c( __( 'Overlay colour', 'layo-dashboard-toolkit' ) ),
+					'login.overlay_opacity'   => array_merge( self::c( __( 'Overlay opacity', 'layo-dashboard-toolkit' ) ), $range ),
 				),
 			),
-			'adminora_login_logo'         => array(
-				'title'    => __( 'Login: logo', 'adminora' ),
+			'layodt_login_logo'         => array(
+				'title'    => __( 'Login: logo', 'layo-dashboard-toolkit' ),
 				'controls' => array(
-					'login.hide_logo'  => self::c( __( 'Hide the logo', 'adminora' ) ),
-					'login.logo'       => self::c( __( 'Logo', 'adminora' ), $inherit ),
-					'login.logo_width' => self::c( __( 'Logo width (px)', 'adminora' ), '', $px ),
-					'login.logo_url'   => self::c( __( 'Logo link', 'adminora' ), __( 'Defaults to your home page.', 'adminora' ), array( 'control' => 'url' ) ),
-					'login.logo_title' => self::c( __( 'Logo text for screen readers', 'adminora' ), __( 'Defaults to your site title.', 'adminora' ) ),
+					'login.hide_logo'  => self::c( __( 'Hide the logo', 'layo-dashboard-toolkit' ) ),
+					'login.logo'       => self::c( __( 'Logo', 'layo-dashboard-toolkit' ), $inherit ),
+					'login.logo_width' => self::c( __( 'Logo width (px)', 'layo-dashboard-toolkit' ), '', $px ),
+					'login.logo_url'   => self::c( __( 'Logo link', 'layo-dashboard-toolkit' ), __( 'Defaults to your home page.', 'layo-dashboard-toolkit' ), array( 'control' => 'url' ) ),
+					'login.logo_title' => self::c( __( 'Logo text for screen readers', 'layo-dashboard-toolkit' ), __( 'Defaults to your site title.', 'layo-dashboard-toolkit' ) ),
 				),
 			),
-			'adminora_login_form'         => array(
-				'title'    => __( 'Login: form and button', 'adminora' ),
+			'layodt_login_form'         => array(
+				'title'    => __( 'Login: form and button', 'layo-dashboard-toolkit' ),
 				'controls' => array(
 					'login.form_width'    => self::c(
-						__( 'Form width (px)', 'adminora' ),
+						__( 'Form width (px)', 'layo-dashboard-toolkit' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -421,7 +421,7 @@ class Customizer {
 						)
 					),
 					'login.form_padding'  => self::c(
-						__( 'Form padding (px)', 'adminora' ),
+						__( 'Form padding (px)', 'layo-dashboard-toolkit' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -430,87 +430,87 @@ class Customizer {
 							),
 						)
 					),
-					'login.form_radius'   => self::c( __( 'Form corner radius (px)', 'adminora' ), '', $px ),
-					'login.form_bg'       => self::c( __( 'Form background', 'adminora' ), $inherit ),
-					'login.form_shadow'   => self::c( __( 'Show a shadow under the form', 'adminora' ) ),
+					'login.form_radius'   => self::c( __( 'Form corner radius (px)', 'layo-dashboard-toolkit' ), '', $px ),
+					'login.form_bg'       => self::c( __( 'Form background', 'layo-dashboard-toolkit' ), $inherit ),
+					'login.form_shadow'   => self::c( __( 'Show a shadow under the form', 'layo-dashboard-toolkit' ) ),
 					'login.field_style'   => self::select(
-						__( 'Field style', 'adminora' ),
+						__( 'Field style', 'layo-dashboard-toolkit' ),
 						array(
-							'boxed'     => __( 'Boxed', 'adminora' ),
-							'underline' => __( 'Underline', 'adminora' ),
-							'filled'    => __( 'Filled', 'adminora' ),
+							'boxed'     => __( 'Boxed', 'layo-dashboard-toolkit' ),
+							'underline' => __( 'Underline', 'layo-dashboard-toolkit' ),
+							'filled'    => __( 'Filled', 'layo-dashboard-toolkit' ),
 						)
 					),
-					'login.hide_labels'   => self::c( __( 'Hide field labels and use placeholders', 'adminora' ) ),
-					'login.text_color'    => self::c( __( 'Text colour', 'adminora' ), $inherit ),
-					'login.link_color'    => self::c( __( 'Link colour', 'adminora' ), $inherit ),
-					'login.button_bg'     => self::c( __( 'Button colour', 'adminora' ), $inherit ),
-					'login.button_text'   => self::c( __( 'Button text colour', 'adminora' ), __( 'Leave empty to pick black or white automatically.', 'adminora' ) ),
-					'login.button_radius' => self::c( __( 'Button corner radius (px)', 'adminora' ), '', $px ),
+					'login.hide_labels'   => self::c( __( 'Hide field labels and use placeholders', 'layo-dashboard-toolkit' ) ),
+					'login.text_color'    => self::c( __( 'Text colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'login.link_color'    => self::c( __( 'Link colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'login.button_bg'     => self::c( __( 'Button colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'login.button_text'   => self::c( __( 'Button text colour', 'layo-dashboard-toolkit' ), __( 'Leave empty to pick black or white automatically.', 'layo-dashboard-toolkit' ) ),
+					'login.button_radius' => self::c( __( 'Button corner radius (px)', 'layo-dashboard-toolkit' ), '', $px ),
 				),
 			),
-			'adminora_login_text'         => array(
-				'title'       => __( 'Login: text and links', 'adminora' ),
-				'description' => __( 'The "Register" link only appears on your site when anyone can register (Settings → General → Membership).', 'adminora' ),
+			'layodt_login_text'         => array(
+				'title'       => __( 'Login: text and links', 'layo-dashboard-toolkit' ),
+				'description' => __( 'The "Register" link only appears on your site when anyone can register (Settings → General → Membership).', 'layo-dashboard-toolkit' ),
 				'controls'    => array(
 					'picker:login'                 => array(
-						'label'   => __( 'Preview screen', 'adminora' ),
+						'label'   => __( 'Preview screen', 'layo-dashboard-toolkit' ),
 						'choices' => $login_choices,
 					),
 					'login.links_layout'           => self::select(
-						__( 'Links under the form', 'adminora' ),
+						__( 'Links under the form', 'layo-dashboard-toolkit' ),
 						array(
-							'stacked' => __( 'Stacked, one per line (WordPress default)', 'adminora' ),
-							'inline'  => __( 'Inline, side by side', 'adminora' ),
-							'split'   => __( 'Split, spread across the width', 'adminora' ),
-							'card'    => __( 'Inside the card', 'adminora' ),
-							'buttons' => __( 'Full-width buttons', 'adminora' ),
+							'stacked' => __( 'Stacked, one per line (WordPress default)', 'layo-dashboard-toolkit' ),
+							'inline'  => __( 'Inline, side by side', 'layo-dashboard-toolkit' ),
+							'split'   => __( 'Split, spread across the width', 'layo-dashboard-toolkit' ),
+							'card'    => __( 'Inside the card', 'layo-dashboard-toolkit' ),
+							'buttons' => __( 'Full-width buttons', 'layo-dashboard-toolkit' ),
 						)
 					),
-					'login.link_lost'              => self::select( __( '"Lost your password?"', 'adminora' ), $link_places, __( 'Next to the Password label is how most apps place it.', 'adminora' ) ),
-					'login.link_register'          => self::select( __( '"Register"', 'adminora' ), $link_places ),
-					'login.link_login'             => self::select( __( '"Log in" (on the other screens)', 'adminora' ), $link_places ),
-					'login.link_back'              => self::select( __( '"Go to site"', 'adminora' ), $link_places ),
-					'login.message'                => self::c( __( 'Message above the form', 'adminora' ), __( 'Basic HTML is allowed.', 'adminora' ) ),
-					'login.footer_text'            => self::c( __( 'Footer text', 'adminora' ) ),
-					'login.hide_language_switcher' => self::c( __( 'Hide the language switcher', 'adminora' ) ),
-					'login.hide_privacy_link'      => self::c( __( 'Hide the privacy policy link', 'adminora' ) ),
-					'login.back_link_text'         => self::c( __( '"Go to site" link text', 'adminora' ), __( 'For example "Back to {site_name}". Leave empty for WordPress\'s "← Go to" text.', 'adminora' ) ),
-					'login.error_message'          => self::c( __( 'Message for a failed log in', 'adminora' ), __( 'One message for a wrong username, email or password, for example "Those details did not match. Try again." It also stops the screen revealing which usernames exist. Leave empty for WordPress\'s messages.', 'adminora' ) ),
+					'login.link_lost'              => self::select( __( '"Lost your password?"', 'layo-dashboard-toolkit' ), $link_places, __( 'Next to the Password label is how most apps place it.', 'layo-dashboard-toolkit' ) ),
+					'login.link_register'          => self::select( __( '"Register"', 'layo-dashboard-toolkit' ), $link_places ),
+					'login.link_login'             => self::select( __( '"Log in" (on the other screens)', 'layo-dashboard-toolkit' ), $link_places ),
+					'login.link_back'              => self::select( __( '"Go to site"', 'layo-dashboard-toolkit' ), $link_places ),
+					'login.message'                => self::c( __( 'Message above the form', 'layo-dashboard-toolkit' ), __( 'Basic HTML is allowed.', 'layo-dashboard-toolkit' ) ),
+					'login.footer_text'            => self::c( __( 'Footer text', 'layo-dashboard-toolkit' ) ),
+					'login.hide_language_switcher' => self::c( __( 'Hide the language switcher', 'layo-dashboard-toolkit' ) ),
+					'login.hide_privacy_link'      => self::c( __( 'Hide the privacy policy link', 'layo-dashboard-toolkit' ) ),
+					'login.back_link_text'         => self::c( __( '"Go to site" link text', 'layo-dashboard-toolkit' ), __( 'For example "Back to {site_name}". Leave empty for WordPress\'s "← Go to" text.', 'layo-dashboard-toolkit' ) ),
+					'login.error_message'          => self::c( __( 'Message for a failed log in', 'layo-dashboard-toolkit' ), __( 'One message for a wrong username, email or password, for example "Those details did not match. Try again." It also stops the screen revealing which usernames exist. Leave empty for WordPress\'s messages.', 'layo-dashboard-toolkit' ) ),
 				),
 			),
-			'adminora_login_words'        => array(
-				'title'       => __( 'Login: wording', 'adminora' ),
-				'description' => __( 'Replace any text on the log in, lost password, reset password and registration screens. Leave a box empty to keep WordPress\'s wording. You can use {site_name}; in the two messages with a link, use {login_url} for the login address.', 'adminora' ),
+			'layodt_login_words'        => array(
+				'title'       => __( 'Login: wording', 'layo-dashboard-toolkit' ),
+				'description' => __( 'Replace any text on the log in, lost password, reset password and registration screens. Leave a box empty to keep WordPress\'s wording. You can use {site_name}; in the two messages with a link, use {login_url} for the login address.', 'layo-dashboard-toolkit' ),
 				'controls'    => $words,
 			),
-			'adminora_emails'             => array(
-				'title'       => __( 'Emails: design', 'adminora' ),
+			'layodt_emails'             => array(
+				'title'       => __( 'Emails: design', 'layo-dashboard-toolkit' ),
 				'description' => sprintf(
 					/* translators: %s: settings page URL. */
-					__( 'Edit the wording of each email on the <a href="%s">settings page</a>.', 'adminora' ),
-					esc_url( admin_url( 'options-general.php?page=adminora&tab=emails' ) )
+					__( 'Edit the wording of each email on the <a href="%s">settings page</a>.', 'layo-dashboard-toolkit' ),
+					esc_url( admin_url( 'options-general.php?page=layo-dashboard-toolkit&tab=emails' ) )
 				),
 				'controls'    => array(
 					'picker:email'       => array(
-						'label'   => __( 'Preview email', 'adminora' ),
+						'label'   => __( 'Preview email', 'layo-dashboard-toolkit' ),
 						'choices' => $email_choices,
 					),
-					'emails.show_logo'   => self::c( __( 'Show the logo in the header', 'adminora' ) ),
-					'emails.logo'        => self::c( __( 'Logo', 'adminora' ), $inherit ),
-					'emails.logo_width'  => self::c( __( 'Logo width (px)', 'adminora' ), '', $px ),
-					'emails.header_bg'   => self::c( __( 'Header background', 'adminora' ), __( 'Leave empty to use the content background.', 'adminora' ) ),
-					'emails.header_text' => self::c( __( 'Header text colour', 'adminora' ) ),
-					'emails.body_bg'     => self::c( __( 'Outer background', 'adminora' ), $inherit ),
-					'emails.content_bg'  => self::c( __( 'Content background', 'adminora' ), $inherit ),
-					'emails.text_color'  => self::c( __( 'Text colour', 'adminora' ), $inherit ),
-					'emails.button_bg'   => self::c( __( 'Button colour', 'adminora' ), $inherit ),
-					'emails.button_text' => self::c( __( 'Button text colour', 'adminora' ) ),
+					'emails.show_logo'   => self::c( __( 'Show the logo in the header', 'layo-dashboard-toolkit' ) ),
+					'emails.logo'        => self::c( __( 'Logo', 'layo-dashboard-toolkit' ), $inherit ),
+					'emails.logo_width'  => self::c( __( 'Logo width (px)', 'layo-dashboard-toolkit' ), '', $px ),
+					'emails.header_bg'   => self::c( __( 'Header background', 'layo-dashboard-toolkit' ), __( 'Leave empty to use the content background.', 'layo-dashboard-toolkit' ) ),
+					'emails.header_text' => self::c( __( 'Header text colour', 'layo-dashboard-toolkit' ) ),
+					'emails.body_bg'     => self::c( __( 'Outer background', 'layo-dashboard-toolkit' ), $inherit ),
+					'emails.content_bg'  => self::c( __( 'Content background', 'layo-dashboard-toolkit' ), $inherit ),
+					'emails.text_color'  => self::c( __( 'Text colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'emails.button_bg'   => self::c( __( 'Button colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'emails.button_text' => self::c( __( 'Button text colour', 'layo-dashboard-toolkit' ) ),
 					'emails.font'        => self::select(
-						__( 'Font', 'adminora' ),
+						__( 'Font', 'layo-dashboard-toolkit' ),
 						array(
-							'brand'     => __( 'Brand body font (falls back to a safe font in most mail apps)', 'adminora' ),
-							'system'    => __( 'System font', 'adminora' ),
+							'brand'     => __( 'Brand body font (falls back to a safe font in most mail apps)', 'layo-dashboard-toolkit' ),
+							'system'    => __( 'System font', 'layo-dashboard-toolkit' ),
 							'arial'     => 'Arial',
 							'helvetica' => 'Helvetica',
 							'georgia'   => 'Georgia',
@@ -519,7 +519,7 @@ class Customizer {
 						)
 					),
 					'emails.width'       => self::c(
-						__( 'Content width (px)', 'adminora' ),
+						__( 'Content width (px)', 'layo-dashboard-toolkit' ),
 						'',
 						array(
 							'input_attrs' => array(
@@ -528,94 +528,94 @@ class Customizer {
 							),
 						)
 					),
-					'emails.radius'      => self::c( __( 'Corner radius (px)', 'adminora' ), '', $px ),
-					'emails.footer_text' => self::c( __( 'Footer text', 'adminora' ), __( 'Tags: {site_name}, {site_url}, {year}.', 'adminora' ) ),
+					'emails.radius'      => self::c( __( 'Corner radius (px)', 'layo-dashboard-toolkit' ), '', $px ),
+					'emails.footer_text' => self::c( __( 'Footer text', 'layo-dashboard-toolkit' ), __( 'Tags: {site_name}, {site_url}, {year}.', 'layo-dashboard-toolkit' ) ),
 				),
 			),
-			'adminora_errors_design'      => array(
-				'title'       => __( 'System pages: design', 'adminora' ),
-				'description' => __( 'Shared by the critical error, database error, update maintenance, permission and 404 pages.', 'adminora' ),
+			'layodt_errors_design'      => array(
+				'title'       => __( 'System pages: design', 'layo-dashboard-toolkit' ),
+				'description' => __( 'Shared by the critical error, database error, update maintenance, permission and 404 pages.', 'layo-dashboard-toolkit' ),
 				'controls'    => array(
 					'picker:page'            => array(
-						'label'   => __( 'Preview page', 'adminora' ),
+						'label'   => __( 'Preview page', 'layo-dashboard-toolkit' ),
 						'choices' => $page_choices,
 					),
-					'error_pages.bg_color'   => self::c( __( 'Background colour', 'adminora' ), $inherit ),
-					'error_pages.surface'    => self::c( __( 'Card colour', 'adminora' ), $inherit ),
-					'error_pages.text_color' => self::c( __( 'Text colour', 'adminora' ), $inherit ),
-					'error_pages.primary'    => self::c( __( 'Button colour', 'adminora' ), $inherit ),
-					'error_pages.show_logo'  => self::c( __( 'Show the logo', 'adminora' ) ),
-					'error_pages.image'      => self::c( __( 'Illustration', 'adminora' ), __( 'Optional image shown above the title.', 'adminora' ) ),
+					'error_pages.bg_color'   => self::c( __( 'Background colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'error_pages.surface'    => self::c( __( 'Card colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'error_pages.text_color' => self::c( __( 'Text colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'error_pages.primary'    => self::c( __( 'Button colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'error_pages.show_logo'  => self::c( __( 'Show the logo', 'layo-dashboard-toolkit' ) ),
+					'error_pages.image'      => self::c( __( 'Illustration', 'layo-dashboard-toolkit' ), __( 'Optional image shown above the title.', 'layo-dashboard-toolkit' ) ),
 				),
 			),
-			'adminora_errors_critical'    => array(
-				'title'    => __( 'System pages: critical error', 'adminora' ),
+			'layodt_errors_critical'    => array(
+				'title'    => __( 'System pages: critical error', 'layo-dashboard-toolkit' ),
 				'controls' => array(
-					'error_pages.critical'            => self::c( __( 'Replace the critical error page', 'adminora' ), __( 'Shown when a plugin or theme causes a fatal PHP error.', 'adminora' ) ),
-					'error_pages.critical_title'      => self::c( __( 'Title', 'adminora' ) ),
-					'error_pages.critical_message'    => self::c( __( 'Message', 'adminora' ) ),
-					'error_pages.critical_button'     => self::c( __( 'Button text', 'adminora' ), __( 'Leave empty to hide the button.', 'adminora' ) ),
-					'error_pages.critical_button_url' => self::c( __( 'Button link', 'adminora' ), __( 'Defaults to your home page.', 'adminora' ), array( 'control' => 'url' ) ),
-					'error_pages.critical_admin_note' => self::c( __( 'Message for administrators', 'adminora' ), __( 'Shown under the message only to signed-in administrators, so they know how to recover. Visitors never see it. Use {admin_email} for the site\'s admin email. Leave empty to show nothing extra.', 'adminora' ), array( 'control' => 'textarea' ) ),
+					'error_pages.critical'            => self::c( __( 'Replace the critical error page', 'layo-dashboard-toolkit' ), __( 'Shown when a plugin or theme causes a fatal PHP error.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.critical_title'      => self::c( __( 'Title', 'layo-dashboard-toolkit' ) ),
+					'error_pages.critical_message'    => self::c( __( 'Message', 'layo-dashboard-toolkit' ) ),
+					'error_pages.critical_button'     => self::c( __( 'Button text', 'layo-dashboard-toolkit' ), __( 'Leave empty to hide the button.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.critical_button_url' => self::c( __( 'Button link', 'layo-dashboard-toolkit' ), __( 'Defaults to your home page.', 'layo-dashboard-toolkit' ), array( 'control' => 'url' ) ),
+					'error_pages.critical_admin_note' => self::c( __( 'Message for administrators', 'layo-dashboard-toolkit' ), __( 'Shown under the message only to signed-in administrators, so they know how to recover. Visitors never see it. Use {admin_email} for the site\'s admin email. Leave empty to show nothing extra.', 'layo-dashboard-toolkit' ), array( 'control' => 'textarea' ) ),
 				),
 			),
-			'adminora_errors_db'          => array(
-				'title'    => __( 'System pages: database error', 'adminora' ),
+			'layodt_errors_db'          => array(
+				'title'    => __( 'System pages: database error', 'layo-dashboard-toolkit' ),
 				'controls' => array(
-					'error_pages.db'         => self::c( __( 'Replace the database connection error page', 'adminora' ), __( 'Saved as a static file, because the database is unavailable when this page shows.', 'adminora' ) ),
-					'error_pages.db_title'   => self::c( __( 'Title', 'adminora' ) ),
-					'error_pages.db_message' => self::c( __( 'Message', 'adminora' ) ),
+					'error_pages.db'         => self::c( __( 'Replace the database connection error page', 'layo-dashboard-toolkit' ), __( 'Saved as a static file, because the database is unavailable when this page shows.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.db_title'   => self::c( __( 'Title', 'layo-dashboard-toolkit' ) ),
+					'error_pages.db_message' => self::c( __( 'Message', 'layo-dashboard-toolkit' ) ),
 				),
 			),
-			'adminora_errors_maintenance' => array(
-				'title'    => __( 'System pages: update maintenance', 'adminora' ),
+			'layodt_errors_maintenance' => array(
+				'title'    => __( 'System pages: update maintenance', 'layo-dashboard-toolkit' ),
 				'controls' => array(
-					'error_pages.maintenance'         => self::c( __( 'Replace the "Briefly unavailable" screen', 'adminora' ), __( 'Shown for a few seconds while WordPress installs updates.', 'adminora' ) ),
-					'error_pages.maintenance_title'   => self::c( __( 'Title', 'adminora' ) ),
-					'error_pages.maintenance_message' => self::c( __( 'Message', 'adminora' ) ),
+					'error_pages.maintenance'         => self::c( __( 'Replace the "Briefly unavailable" screen', 'layo-dashboard-toolkit' ), __( 'Shown for a few seconds while WordPress installs updates.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.maintenance_title'   => self::c( __( 'Title', 'layo-dashboard-toolkit' ) ),
+					'error_pages.maintenance_message' => self::c( __( 'Message', 'layo-dashboard-toolkit' ) ),
 				),
 			),
-			'adminora_errors_wp_die'      => array(
-				'title'    => __( 'System pages: no permission and notices', 'adminora' ),
+			'layodt_errors_wp_die'      => array(
+				'title'    => __( 'System pages: no permission and notices', 'layo-dashboard-toolkit' ),
 				'controls' => array(
-					'error_pages.wp_die'            => self::c( __( 'Restyle WordPress notice screens', 'adminora' ), __( 'Every screen WordPress shows with a short message and a back link gets your design.', 'adminora' ) ),
-					'error_pages.denied'            => self::c( __( 'Use my own "no permission" page', 'adminora' ), __( 'Replaces "Sorry, you are not allowed to access this page." and similar messages with the text below.', 'adminora' ) ),
-					'error_pages.denied_title'      => self::c( __( 'No permission: title', 'adminora' ) ),
-					'error_pages.denied_message'    => self::c( __( 'No permission: message', 'adminora' ), __( 'Leave empty to show WordPress\'s own message.', 'adminora' ) ),
-					'error_pages.denied_button'     => self::c( __( 'No permission: button text', 'adminora' ), __( 'Leave empty to hide the button.', 'adminora' ) ),
-					'error_pages.denied_button_url' => self::c( __( 'No permission: button link', 'adminora' ), __( 'Defaults to the dashboard for people who can use it, otherwise the home page.', 'adminora' ), array( 'control' => 'url' ) ),
-					'error_pages.expired_title'     => self::c( __( 'Expired link: title', 'adminora' ), __( 'Shown instead of "The link you followed has expired."', 'adminora' ) ),
-					'error_pages.expired_message'   => self::c( __( 'Expired link: message', 'adminora' ) ),
-					'error_pages.wp_die_title'      => self::c( __( 'Other screens: fallback title', 'adminora' ), __( 'Used when WordPress does not give the screen a title.', 'adminora' ) ),
-					'error_pages.wp_die_button'     => self::c( __( 'Other screens: back button text', 'adminora' ) ),
+					'error_pages.wp_die'            => self::c( __( 'Restyle WordPress notice screens', 'layo-dashboard-toolkit' ), __( 'Every screen WordPress shows with a short message and a back link gets your design.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.denied'            => self::c( __( 'Use my own "no permission" page', 'layo-dashboard-toolkit' ), __( 'Replaces "Sorry, you are not allowed to access this page." and similar messages with the text below.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.denied_title'      => self::c( __( 'No permission: title', 'layo-dashboard-toolkit' ) ),
+					'error_pages.denied_message'    => self::c( __( 'No permission: message', 'layo-dashboard-toolkit' ), __( 'Leave empty to show WordPress\'s own message.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.denied_button'     => self::c( __( 'No permission: button text', 'layo-dashboard-toolkit' ), __( 'Leave empty to hide the button.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.denied_button_url' => self::c( __( 'No permission: button link', 'layo-dashboard-toolkit' ), __( 'Defaults to the dashboard for people who can use it, otherwise the home page.', 'layo-dashboard-toolkit' ), array( 'control' => 'url' ) ),
+					'error_pages.expired_title'     => self::c( __( 'Expired link: title', 'layo-dashboard-toolkit' ), __( 'Shown instead of "The link you followed has expired."', 'layo-dashboard-toolkit' ) ),
+					'error_pages.expired_message'   => self::c( __( 'Expired link: message', 'layo-dashboard-toolkit' ) ),
+					'error_pages.wp_die_title'      => self::c( __( 'Other screens: fallback title', 'layo-dashboard-toolkit' ), __( 'Used when WordPress does not give the screen a title.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.wp_die_button'     => self::c( __( 'Other screens: back button text', 'layo-dashboard-toolkit' ) ),
 				),
 			),
-			'adminora_errors_notfound'    => array(
-				'title'    => __( 'System pages: page not found (404)', 'adminora' ),
+			'layodt_errors_notfound'    => array(
+				'title'    => __( 'System pages: page not found (404)', 'layo-dashboard-toolkit' ),
 				'controls' => array(
-					'error_pages.notfound'         => self::c( __( 'Replace the theme 404 page', 'adminora' ), __( 'Off by default, so your theme keeps its own 404 page.', 'adminora' ) ),
-					'error_pages.notfound_title'   => self::c( __( 'Title', 'adminora' ) ),
-					'error_pages.notfound_message' => self::c( __( 'Message', 'adminora' ) ),
-					'error_pages.notfound_button'  => self::c( __( 'Button text', 'adminora' ) ),
-					'error_pages.notfound_search'  => self::c( __( 'Show a search box', 'adminora' ) ),
+					'error_pages.notfound'         => self::c( __( 'Replace the theme 404 page', 'layo-dashboard-toolkit' ), __( 'Off by default, so your theme keeps its own 404 page.', 'layo-dashboard-toolkit' ) ),
+					'error_pages.notfound_title'   => self::c( __( 'Title', 'layo-dashboard-toolkit' ) ),
+					'error_pages.notfound_message' => self::c( __( 'Message', 'layo-dashboard-toolkit' ) ),
+					'error_pages.notfound_button'  => self::c( __( 'Button text', 'layo-dashboard-toolkit' ) ),
+					'error_pages.notfound_search'  => self::c( __( 'Show a search box', 'layo-dashboard-toolkit' ) ),
 				),
 			),
-			'adminora_maintenance'        => array(
-				'title'       => __( 'Coming soon page', 'adminora' ),
+			'layodt_maintenance'        => array(
+				'title'       => __( 'Coming soon page', 'layo-dashboard-toolkit' ),
 				'description' => sprintf(
 					/* translators: %s: settings page URL. */
-					__( 'Turn the mode on and choose who can see the site on the <a href="%s">settings page</a>. This design is not used when the settings page is set to show a page you built.', 'adminora' ),
-					esc_url( admin_url( 'options-general.php?page=adminora&tab=maintenance' ) )
+					__( 'Turn the mode on and choose who can see the site on the <a href="%s">settings page</a>. This design is not used when the settings page is set to show a page you built.', 'layo-dashboard-toolkit' ),
+					esc_url( admin_url( 'options-general.php?page=layo-dashboard-toolkit&tab=maintenance' ) )
 				),
 				'controls'    => array(
-					'maintenance.headline'        => self::c( __( 'Headline', 'adminora' ) ),
-					'maintenance.message'         => self::c( __( 'Message', 'adminora' ) ),
-					'maintenance.countdown'       => self::c( __( 'Countdown to', 'adminora' ), __( 'Leave empty to hide the countdown. Uses your site time zone.', 'adminora' ) ),
-					'maintenance.show_logo'       => self::c( __( 'Show the logo', 'adminora' ) ),
-					'maintenance.bg_color'        => self::c( __( 'Background colour', 'adminora' ), $inherit ),
-					'maintenance.bg_image'        => self::c( __( 'Background image', 'adminora' ) ),
-					'maintenance.overlay_opacity' => array_merge( self::c( __( 'Image darkening', 'adminora' ) ), $range ),
-					'maintenance.text_color'      => self::c( __( 'Text colour', 'adminora' ), __( 'Leave empty to pick a readable colour automatically.', 'adminora' ) ),
+					'maintenance.headline'        => self::c( __( 'Headline', 'layo-dashboard-toolkit' ) ),
+					'maintenance.message'         => self::c( __( 'Message', 'layo-dashboard-toolkit' ) ),
+					'maintenance.countdown'       => self::c( __( 'Countdown to', 'layo-dashboard-toolkit' ), __( 'Leave empty to hide the countdown. Uses your site time zone.', 'layo-dashboard-toolkit' ) ),
+					'maintenance.show_logo'       => self::c( __( 'Show the logo', 'layo-dashboard-toolkit' ) ),
+					'maintenance.bg_color'        => self::c( __( 'Background colour', 'layo-dashboard-toolkit' ), $inherit ),
+					'maintenance.bg_image'        => self::c( __( 'Background image', 'layo-dashboard-toolkit' ) ),
+					'maintenance.overlay_opacity' => array_merge( self::c( __( 'Image darkening', 'layo-dashboard-toolkit' ) ), $range ),
+					'maintenance.text_color'      => self::c( __( 'Text colour', 'layo-dashboard-toolkit' ), __( 'Leave empty to pick a readable colour automatically.', 'layo-dashboard-toolkit' ) ),
 				),
 			),
 		);
@@ -627,13 +627,13 @@ class Customizer {
 	 * @return void
 	 */
 	public static function enqueue() {
-		wp_enqueue_script( 'adminora-customizer', ADMINORA_URL . 'assets/js/customizer-controls.js', array( 'customize-controls', 'jquery' ), \Adminora\Plugin::asset_version( 'assets/js/customizer-controls.js' ), true );
+		wp_enqueue_script( 'layodt-customizer', LAYODT_URL . 'assets/js/customizer-controls.js', array( 'customize-controls', 'jquery' ), \LayoDT\Plugin::asset_version( 'assets/js/customizer-controls.js' ), true );
 
 		$brand = Brand_Kit::get();
 
 		wp_localize_script(
-			'adminora-customizer',
-			'adminoraCustomizer',
+			'layodt-customizer',
+			'layodtCustomizer',
 			array(
 				'previews' => self::previews(),
 				'contrast' => array(
@@ -668,7 +668,7 @@ class Customizer {
 				),
 				'i18n'     => array(
 					/* translators: %s: contrast ratio such as 3.2. */
-					'lowContrast' => __( 'Low contrast (%s:1). Text may be hard to read. Aim for at least 4.5:1.', 'adminora' ),
+					'lowContrast' => __( 'Low contrast (%s:1). Text may be hard to read. Aim for at least 4.5:1.', 'layo-dashboard-toolkit' ),
 				),
 			)
 		);

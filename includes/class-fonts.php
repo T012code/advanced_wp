@@ -6,10 +6,10 @@
  * and then served from the uploads folder. Visitors' browsers never contact
  * Google.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora;
+namespace LayoDT;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Fonts {
 
-	const OPTION = 'adminora_fonts';
+	const OPTION = 'layodt_fonts';
 
 	/**
 	 * Google fonts offered: key => [family, generic fallback].
@@ -62,9 +62,9 @@ class Fonts {
 	 */
 	public static function choices() {
 		$choices = array(
-			'theme'  => __( 'Same as theme', 'adminora' ),
-			'system' => __( 'System sans-serif', 'adminora' ),
-			'serif'  => __( 'System serif', 'adminora' ),
+			'theme'  => __( 'Same as theme', 'layo-dashboard-toolkit' ),
+			'system' => __( 'System sans-serif', 'layo-dashboard-toolkit' ),
+			'serif'  => __( 'System serif', 'layo-dashboard-toolkit' ),
 		);
 
 		foreach ( self::google() as $key => $font ) {
@@ -231,7 +231,7 @@ class Fonts {
 	private static function base_dir() {
 		$uploads = wp_upload_dir( null, false );
 
-		return trailingslashit( $uploads['basedir'] ) . 'adminora/fonts/';
+		return trailingslashit( $uploads['basedir'] ) . 'layo-dashboard-toolkit/fonts/';
 	}
 
 	/**
@@ -242,6 +242,6 @@ class Fonts {
 	private static function base_url() {
 		$uploads = wp_upload_dir( null, false );
 
-		return set_url_scheme( trailingslashit( $uploads['baseurl'] ) . 'adminora/fonts/' );
+		return set_url_scheme( trailingslashit( $uploads['baseurl'] ) . 'layo-dashboard-toolkit/fonts/' );
 	}
 }

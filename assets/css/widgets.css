@@ -1,29 +1,29 @@
-/* Custom dashboard widgets from Adminora. Colours follow the admin colour scheme through currentColor and core greys. */
+/* Custom dashboard widgets from Layò Dashboard Toolkit. Colours follow the admin colour scheme through currentColor and core greys. */
 
-.adminora-widget > :first-child {
+.layodt-widget > :first-child {
 	margin-top: 0;
 }
 
-.adminora-widget > :last-child {
+.layodt-widget > :last-child {
 	margin-bottom: 0;
 }
 
-.adminora-widget__button {
+.layodt-widget__button {
 	margin-top: 12px;
 }
 
-.adminora-qlinks {
+.layodt-qlinks {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
 	gap: 8px;
 	margin: 0;
 }
 
-.adminora-qlinks li {
+.layodt-qlinks li {
 	margin: 0;
 }
 
-.adminora-qlink {
+.layodt-qlink {
 	display: flex;
 	align-items: center;
 	gap: 10px;
@@ -36,44 +36,44 @@
 	transition: transform 0.15s ease;
 }
 
-.adminora-qlink:hover {
+.layodt-qlink:hover {
 	border-color: currentColor;
 	transform: translateY(-1px);
 }
 
-.adminora-qlink:focus-visible {
+.layodt-qlink:focus-visible {
 	outline: 2px solid currentColor;
 	outline-offset: 2px;
 	box-shadow: none;
 }
 
-.adminora-qlink__icon {
+.layodt-qlink__icon {
 	display: flex;
 	flex: 0 0 auto;
 }
 
-.adminora-contact {
+.layodt-contact {
 	margin: 12px 0 0;
 }
 
-.adminora-contact li {
+.layodt-contact li {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 }
 
-.adminora-contact span {
+.layodt-contact span {
 	display: flex;
 	color: #646970;
 }
 
-.adminora-video {
+.layodt-video {
 	position: relative;
 	aspect-ratio: 16 / 9;
 	margin-bottom: 12px;
 }
 
-.adminora-video iframe {
+.layodt-video iframe {
 	position: absolute;
 	inset: 0;
 	width: 100%;
@@ -82,30 +82,30 @@
 	border-radius: 6px;
 }
 
-.adminora-feed {
+.layodt-feed {
 	margin: 0;
 }
 
-.adminora-feed li {
+.layodt-feed li {
 	padding: 0;
 	margin: 0 0 14px;
 }
 
-.adminora-feed li:last-child {
+.layodt-feed li:last-child {
 	margin-bottom: 0;
 }
 
-.adminora-feed time {
+.layodt-feed time {
 	display: block;
 	color: #646970;
 	font-size: 12px;
 }
 
-.adminora-feed p {
+.layodt-feed p {
 	margin: 4px 0 0;
 }
 
-.adminora-pill {
+.layodt-pill {
 	display: inline-block;
 	padding: 0 6px;
 	border: 1px solid #dba617;
@@ -114,48 +114,48 @@
 	font-size: 11px;
 }
 
-.adminora-people {
+.layodt-people {
 	margin: 0;
 }
 
-.adminora-people li {
+.layodt-people li {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 	margin: 0 0 10px;
 }
 
-.adminora-people img {
+.layodt-people img {
 	border-radius: 50%;
 }
 
-.adminora-people span {
+.layodt-people span {
 	display: flex;
 	flex-direction: column;
 }
 
-.adminora-people small {
+.layodt-people small {
 	color: #646970;
 }
 
-.adminora-tiles {
+.layodt-tiles {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
 	gap: 8px;
 	margin: 0;
 }
 
-.adminora-tiles li {
+.layodt-tiles li {
 	margin: 0;
 }
 
-.adminora-tiles li > a,
-.adminora-tiles li > strong:first-child {
+.layodt-tiles li > a,
+.layodt-tiles li > strong:first-child {
 	text-decoration: none;
 }
 
-.adminora-tiles li > a,
-.adminora-tiles li:not(:has(> a)) {
+.layodt-tiles li > a,
+.layodt-tiles li:not(:has(> a)) {
 	display: flex;
 	flex-direction: column;
 	height: 100%;
@@ -165,59 +165,59 @@
 	border-radius: 6px;
 }
 
-.adminora-tiles li > a:focus-visible {
+.layodt-tiles li > a:focus-visible {
 	outline: 2px solid currentColor;
 	outline-offset: 2px;
 	box-shadow: none;
 }
 
-.adminora-tiles strong {
+.layodt-tiles strong {
 	font-size: 20px;
 	line-height: 1.3;
 }
 
-.adminora-tiles span {
+.layodt-tiles span {
 	color: #646970;
 }
 
-.adminora-health {
+.layodt-health {
 	display: inline-block;
 	padding: 2px 10px;
 	border: 1px solid;
 	border-radius: 999px;
 }
 
-.adminora-health--good {
+.layodt-health--good {
 	border-color: #00a32a;
 	background: #edfaef;
 }
 
-.adminora-health--fair {
+.layodt-health--fair {
 	border-color: #dba617;
 	background: #fcf9e8;
 }
 
-.adminora-health--bad {
+.layodt-health--bad {
 	border-color: #d63638;
 	background: #fcf0f1;
 }
 
-.adminora-widgets-locked .handle-order-higher,
-.adminora-widgets-locked .handle-order-lower,
-.adminora-widgets-locked #dashboard-widgets .postbox-container .empty-container {
+.layodt-widgets-locked .handle-order-higher,
+.layodt-widgets-locked .handle-order-lower,
+.layodt-widgets-locked #dashboard-widgets .postbox-container .empty-container {
 	display: none;
 }
 
-.adminora-widgets-locked #dashboard-widgets .hndle {
+.layodt-widgets-locked #dashboard-widgets .hndle {
 	cursor: default;
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.adminora-qlink {
+	.layodt-qlink {
 		transition: none;
 	}
 
-	.adminora-qlink:hover {
+	.layodt-qlink:hover {
 		transform: none;
 	}
 }

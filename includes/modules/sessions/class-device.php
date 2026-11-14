@@ -2,10 +2,10 @@
 /**
  * Reads the browser, operating system and device type from a user agent.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Sessions;
+namespace LayoDT\Modules\Sessions;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -31,15 +31,15 @@ class Device {
 		if ( 'app' === $type ) {
 			$label = sprintf(
 				/* translators: %s: operating system. */
-				__( 'WordPress app on %s', 'adminora' ),
+				__( 'WordPress app on %s', 'layo-dashboard-toolkit' ),
 				$os
 			);
 		} elseif ( '' === $ua ) {
-			$label = __( 'Unknown device', 'adminora' );
+			$label = __( 'Unknown device', 'layo-dashboard-toolkit' );
 		} else {
 			$label = sprintf(
 				/* translators: 1: browser, 2: operating system. */
-				__( '%1$s on %2$s', 'adminora' ),
+				__( '%1$s on %2$s', 'layo-dashboard-toolkit' ),
 				$browser,
 				$os
 			);
@@ -61,11 +61,11 @@ class Device {
 	 */
 	public static function type_label( $type ) {
 		$labels = array(
-			'desktop' => __( 'Computer', 'adminora' ),
-			'phone'   => __( 'Phone', 'adminora' ),
-			'tablet'  => __( 'Tablet', 'adminora' ),
-			'app'     => __( 'Mobile app', 'adminora' ),
-			'other'   => __( 'Other', 'adminora' ),
+			'desktop' => __( 'Computer', 'layo-dashboard-toolkit' ),
+			'phone'   => __( 'Phone', 'layo-dashboard-toolkit' ),
+			'tablet'  => __( 'Tablet', 'layo-dashboard-toolkit' ),
+			'app'     => __( 'Mobile app', 'layo-dashboard-toolkit' ),
+			'other'   => __( 'Other', 'layo-dashboard-toolkit' ),
 		);
 
 		return isset( $labels[ $type ] ) ? $labels[ $type ] : $labels['other'];
@@ -119,7 +119,7 @@ class Device {
 			}
 		}
 
-		return __( 'Unknown browser', 'adminora' );
+		return __( 'Unknown browser', 'layo-dashboard-toolkit' );
 	}
 
 	/**
@@ -155,6 +155,6 @@ class Device {
 			}
 		}
 
-		return __( 'an unknown system', 'adminora' );
+		return __( 'an unknown system', 'layo-dashboard-toolkit' );
 	}
 }

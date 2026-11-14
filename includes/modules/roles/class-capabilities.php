@@ -2,10 +2,10 @@
 /**
  * Capability catalogue: every capability on the site, grouped and labelled.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Roles;
+namespace LayoDT\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -39,16 +39,16 @@ class Capabilities {
 	 */
 	public static function group_labels() {
 		return array(
-			'posts'       => __( 'Posts', 'adminora' ),
-			'pages'       => __( 'Pages', 'adminora' ),
-			'media'       => __( 'Media', 'adminora' ),
-			'comments'    => __( 'Comments', 'adminora' ),
-			'users'       => __( 'Users', 'adminora' ),
-			'appearance'  => __( 'Appearance', 'adminora' ),
-			'plugins'     => __( 'Plugins', 'adminora' ),
-			'settings'    => __( 'Settings and tools', 'adminora' ),
-			'woocommerce' => __( 'WooCommerce', 'adminora' ),
-			'other'       => __( 'Other', 'adminora' ),
+			'posts'       => __( 'Posts', 'layo-dashboard-toolkit' ),
+			'pages'       => __( 'Pages', 'layo-dashboard-toolkit' ),
+			'media'       => __( 'Media', 'layo-dashboard-toolkit' ),
+			'comments'    => __( 'Comments', 'layo-dashboard-toolkit' ),
+			'users'       => __( 'Users', 'layo-dashboard-toolkit' ),
+			'appearance'  => __( 'Appearance', 'layo-dashboard-toolkit' ),
+			'plugins'     => __( 'Plugins', 'layo-dashboard-toolkit' ),
+			'settings'    => __( 'Settings and tools', 'layo-dashboard-toolkit' ),
+			'woocommerce' => __( 'WooCommerce', 'layo-dashboard-toolkit' ),
+			'other'       => __( 'Other', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -59,47 +59,47 @@ class Capabilities {
 	 */
 	public static function descriptions() {
 		return array(
-			'read'                   => __( 'Open the dashboard and their own profile.', 'adminora' ),
-			'edit_posts'             => __( 'Write and edit their own posts.', 'adminora' ),
-			'edit_others_posts'      => __( 'Edit posts written by anyone.', 'adminora' ),
-			'edit_published_posts'   => __( 'Edit their posts after publishing.', 'adminora' ),
-			'edit_private_posts'     => __( 'Edit private posts.', 'adminora' ),
-			'publish_posts'          => __( 'Publish posts.', 'adminora' ),
-			'read_private_posts'     => __( 'Read private posts.', 'adminora' ),
-			'delete_posts'           => __( 'Delete their own posts.', 'adminora' ),
-			'delete_others_posts'    => __( 'Delete posts written by anyone.', 'adminora' ),
-			'delete_published_posts' => __( 'Delete their published posts.', 'adminora' ),
-			'delete_private_posts'   => __( 'Delete private posts.', 'adminora' ),
-			'manage_categories'      => __( 'Add, edit and delete categories and tags.', 'adminora' ),
-			'edit_pages'             => __( 'Write and edit their own pages.', 'adminora' ),
-			'edit_others_pages'      => __( 'Edit pages created by anyone.', 'adminora' ),
-			'publish_pages'          => __( 'Publish pages.', 'adminora' ),
-			'delete_pages'           => __( 'Delete their own pages.', 'adminora' ),
-			'delete_others_pages'    => __( 'Delete pages created by anyone.', 'adminora' ),
-			'upload_files'           => __( 'Upload images and other files to the media library.', 'adminora' ),
-			'unfiltered_upload'      => __( 'Upload any file type, including ones WordPress normally blocks.', 'adminora' ),
-			'moderate_comments'      => __( 'Approve, edit and delete comments.', 'adminora' ),
-			'list_users'             => __( 'See the list of users.', 'adminora' ),
-			'create_users'           => __( 'Create new users.', 'adminora' ),
-			'edit_users'             => __( 'Edit other users\' profiles.', 'adminora' ),
-			'promote_users'          => __( 'Change other users\' roles.', 'adminora' ),
-			'remove_users'           => __( 'Remove users from the site.', 'adminora' ),
-			'delete_users'           => __( 'Delete users.', 'adminora' ),
-			'switch_themes'          => __( 'Change the active theme.', 'adminora' ),
-			'edit_theme_options'     => __( 'Use the Customizer, menus and widgets.', 'adminora' ),
-			'install_themes'         => __( 'Install new themes.', 'adminora' ),
-			'edit_themes'            => __( 'Edit theme files in the code editor.', 'adminora' ),
-			'activate_plugins'       => __( 'Turn plugins on and off.', 'adminora' ),
-			'install_plugins'        => __( 'Install new plugins.', 'adminora' ),
-			'update_plugins'         => __( 'Update plugins.', 'adminora' ),
-			'edit_plugins'           => __( 'Edit plugin files in the code editor.', 'adminora' ),
-			'delete_plugins'         => __( 'Delete plugins.', 'adminora' ),
-			'manage_options'         => __( 'Change site settings, including Adminora.', 'adminora' ),
-			'edit_dashboard'         => __( 'Change dashboard widgets for everyone.', 'adminora' ),
-			'import'                 => __( 'Import content.', 'adminora' ),
-			'export'                 => __( 'Export content.', 'adminora' ),
-			'update_core'            => __( 'Update WordPress itself.', 'adminora' ),
-			'unfiltered_html'        => __( 'Add any HTML or scripts to content. Give this only to people you fully trust.', 'adminora' ),
+			'read'                   => __( 'Open the dashboard and their own profile.', 'layo-dashboard-toolkit' ),
+			'edit_posts'             => __( 'Write and edit their own posts.', 'layo-dashboard-toolkit' ),
+			'edit_others_posts'      => __( 'Edit posts written by anyone.', 'layo-dashboard-toolkit' ),
+			'edit_published_posts'   => __( 'Edit their posts after publishing.', 'layo-dashboard-toolkit' ),
+			'edit_private_posts'     => __( 'Edit private posts.', 'layo-dashboard-toolkit' ),
+			'publish_posts'          => __( 'Publish posts.', 'layo-dashboard-toolkit' ),
+			'read_private_posts'     => __( 'Read private posts.', 'layo-dashboard-toolkit' ),
+			'delete_posts'           => __( 'Delete their own posts.', 'layo-dashboard-toolkit' ),
+			'delete_others_posts'    => __( 'Delete posts written by anyone.', 'layo-dashboard-toolkit' ),
+			'delete_published_posts' => __( 'Delete their published posts.', 'layo-dashboard-toolkit' ),
+			'delete_private_posts'   => __( 'Delete private posts.', 'layo-dashboard-toolkit' ),
+			'manage_categories'      => __( 'Add, edit and delete categories and tags.', 'layo-dashboard-toolkit' ),
+			'edit_pages'             => __( 'Write and edit their own pages.', 'layo-dashboard-toolkit' ),
+			'edit_others_pages'      => __( 'Edit pages created by anyone.', 'layo-dashboard-toolkit' ),
+			'publish_pages'          => __( 'Publish pages.', 'layo-dashboard-toolkit' ),
+			'delete_pages'           => __( 'Delete their own pages.', 'layo-dashboard-toolkit' ),
+			'delete_others_pages'    => __( 'Delete pages created by anyone.', 'layo-dashboard-toolkit' ),
+			'upload_files'           => __( 'Upload images and other files to the media library.', 'layo-dashboard-toolkit' ),
+			'unfiltered_upload'      => __( 'Upload any file type, including ones WordPress normally blocks.', 'layo-dashboard-toolkit' ),
+			'moderate_comments'      => __( 'Approve, edit and delete comments.', 'layo-dashboard-toolkit' ),
+			'list_users'             => __( 'See the list of users.', 'layo-dashboard-toolkit' ),
+			'create_users'           => __( 'Create new users.', 'layo-dashboard-toolkit' ),
+			'edit_users'             => __( 'Edit other users\' profiles.', 'layo-dashboard-toolkit' ),
+			'promote_users'          => __( 'Change other users\' roles.', 'layo-dashboard-toolkit' ),
+			'remove_users'           => __( 'Remove users from the site.', 'layo-dashboard-toolkit' ),
+			'delete_users'           => __( 'Delete users.', 'layo-dashboard-toolkit' ),
+			'switch_themes'          => __( 'Change the active theme.', 'layo-dashboard-toolkit' ),
+			'edit_theme_options'     => __( 'Use the Customizer, menus and widgets.', 'layo-dashboard-toolkit' ),
+			'install_themes'         => __( 'Install new themes.', 'layo-dashboard-toolkit' ),
+			'edit_themes'            => __( 'Edit theme files in the code editor.', 'layo-dashboard-toolkit' ),
+			'activate_plugins'       => __( 'Turn plugins on and off.', 'layo-dashboard-toolkit' ),
+			'install_plugins'        => __( 'Install new plugins.', 'layo-dashboard-toolkit' ),
+			'update_plugins'         => __( 'Update plugins.', 'layo-dashboard-toolkit' ),
+			'edit_plugins'           => __( 'Edit plugin files in the code editor.', 'layo-dashboard-toolkit' ),
+			'delete_plugins'         => __( 'Delete plugins.', 'layo-dashboard-toolkit' ),
+			'manage_options'         => __( 'Change site settings, including Layò Dashboard Toolkit.', 'layo-dashboard-toolkit' ),
+			'edit_dashboard'         => __( 'Change dashboard widgets for everyone.', 'layo-dashboard-toolkit' ),
+			'import'                 => __( 'Import content.', 'layo-dashboard-toolkit' ),
+			'export'                 => __( 'Export content.', 'layo-dashboard-toolkit' ),
+			'update_core'            => __( 'Update WordPress itself.', 'layo-dashboard-toolkit' ),
+			'unfiltered_html'        => __( 'Add any HTML or scripts to content. Give this only to people you fully trust.', 'layo-dashboard-toolkit' ),
 		);
 	}
 

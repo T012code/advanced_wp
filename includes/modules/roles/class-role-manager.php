@@ -5,10 +5,10 @@
  * All changes go through WordPress's own role API, so other plugins see them
  * straight away.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Roles;
+namespace LayoDT\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Role_Manager {
 
-	const BACKUPS     = 'adminora_role_backups';
+	const BACKUPS     = 'layodt_role_backups';
 	const MAX_BACKUPS = 20;
 	const LOCKED      = 'administrator';
 
@@ -148,11 +148,11 @@ class Role_Manager {
 		$slug = sanitize_key( '' !== $slug ? $slug : str_replace( '-', '_', sanitize_title( $name ) ) );
 
 		if ( '' === $name || '' === $slug ) {
-			return new \WP_Error( 'adminora_role_name', __( 'Give the role a name.', 'adminora' ) );
+			return new \WP_Error( 'layodt_role_name', __( 'Give the role a name.', 'layo-dashboard-toolkit' ) );
 		}
 
 		if ( wp_roles()->is_role( $slug ) ) {
-			return new \WP_Error( 'adminora_role_exists', __( 'A role with that name already exists.', 'adminora' ) );
+			return new \WP_Error( 'layodt_role_exists', __( 'A role with that name already exists.', 'layo-dashboard-toolkit' ) );
 		}
 
 		$caps = array( 'read' => true );
@@ -168,9 +168,9 @@ class Role_Manager {
 			'role_created',
 			'' !== $copy
 				/* translators: 1: new role, 2: copied role. */
-				? sprintf( __( 'Created "%1$s" as a copy of "%2$s".', 'adminora' ), $name, $copy )
+				? sprintf( __( 'Created "%1$s" as a copy of "%2$s".', 'layo-dashboard-toolkit' ), $name, $copy )
 				/* translators: %s: role name. */
-				: sprintf( __( 'Created "%s".', 'adminora' ), $name )
+				: sprintf( __( 'Created "%s".', 'layo-dashboard-toolkit' ), $name )
 		);
 
 		return $slug;
@@ -188,7 +188,7 @@ class Role_Manager {
 		$name  = sanitize_text_field( $name );
 
 		if ( '' === $name || ! $roles->is_role( $slug ) ) {
-			return new \WP_Error( 'adminora_role_name', __( 'Give the role a name.', 'adminora' ) );
+			return new \WP_Error( 'layodt_role_name', __( 'Give the role a name.', 'layo-dashboard-toolkit' ) );
 		}
 
 		$old = $roles->roles[ $slug ]['name'];
@@ -204,7 +204,7 @@ class Role_Manager {
 		update_option( $roles->role_key, $roles->roles );
 
 		/* translators: 1: old name, 2: new name. */
-		Audit::log( 'role_renamed', sprintf( __( 'Renamed "%1$s" to "%2$s".', 'adminora' ), $old, $name ) );
+		Audit::log( 'role_renamed', sprintf( __( 'Renamed "%1$s" to "%2$s".', 'layo-dashboard-toolkit' ), $old, $name ) );
 
 		return true;
 	}
@@ -220,17 +220,17 @@ class Role_Manager {
 		$role = get_role( $slug );
 
 		if ( ! $role ) {
-			return new \WP_Error( 'adminora_role_missing', __( 'That role no longer exists.', 'adminora' ) );
+			return new \WP_Error( 'layodt_role_missing', __( 'That role no longer exists.', 'layo-dashboard-toolkit' ) );
 		}
 
 		if ( self::LOCKED === $slug ) {
-			return new \WP_Error( 'adminora_role_locked', __( 'The Administrator role is locked so the site always has someone who can manage it.', 'adminora' ) );
+			return new \WP_Error( 'layodt_role_locked', __( 'The Administrator role is locked so the site always has someone who can manage it.', 'layo-dashboard-toolkit' ) );
 		}
 
 		$caps = array_values( array_unique( array_filter( array_map( 'sanitize_key', $caps ) ) ) );
 
 		if ( ! self::keeps_access( $slug, $caps ) ) {
-			return new \WP_Error( 'adminora_self_lockout', __( 'That change would remove your own ability to manage settings or user roles, so it was not saved.', 'adminora' ) );
+			return new \WP_Error( 'layodt_self_lockout', __( 'That change would remove your own ability to manage settings or user roles, so it was not saved.', 'layo-dashboard-toolkit' ) );
 		}
 
 		$current = array_keys( array_filter( $role->capabilities ) );
@@ -255,7 +255,7 @@ class Role_Manager {
 			'role_caps',
 			sprintf(
 				/* translators: 1: role, 2: added capabilities, 3: removed capabilities. */
-				__( '%1$s: added %2$s; removed %3$s.', 'adminora' ),
+				__( '%1$s: added %2$s; removed %3$s.', 'layo-dashboard-toolkit' ),
 				$slug,
 				$added ? implode( ', ', $added ) : '-',
 				$removed ? implode( ', ', $removed ) : '-'
@@ -274,15 +274,15 @@ class Role_Manager {
 	 */
 	public static function delete( $slug, $reassign ) {
 		if ( self::is_core( $slug ) ) {
-			return new \WP_Error( 'adminora_role_core', __( 'WordPress\'s own roles cannot be deleted.', 'adminora' ) );
+			return new \WP_Error( 'layodt_role_core', __( 'WordPress\'s own roles cannot be deleted.', 'layo-dashboard-toolkit' ) );
 		}
 
 		if ( ! get_role( $slug ) || ! get_role( $reassign ) || $slug === $reassign ) {
-			return new \WP_Error( 'adminora_role_missing', __( 'Choose a different role for its users.', 'adminora' ) );
+			return new \WP_Error( 'layodt_role_missing', __( 'Choose a different role for its users.', 'layo-dashboard-toolkit' ) );
 		}
 
 		if ( ! self::keeps_access( $slug, null ) ) {
-			return new \WP_Error( 'adminora_self_lockout', __( 'You need this role to manage the site, so it was not deleted.', 'adminora' ) );
+			return new \WP_Error( 'layodt_self_lockout', __( 'You need this role to manage the site, so it was not deleted.', 'layo-dashboard-toolkit' ) );
 		}
 
 		self::backup( 'Before deleting ' . $slug );
@@ -299,7 +299,7 @@ class Role_Manager {
 		remove_role( $slug );
 
 		/* translators: 1: deleted role, 2: role its users moved to. */
-		Audit::log( 'role_deleted', sprintf( __( 'Deleted "%1$s"; its users moved to "%2$s".', 'adminora' ), $name, $reassign ) );
+		Audit::log( 'role_deleted', sprintf( __( 'Deleted "%1$s"; its users moved to "%2$s".', 'layo-dashboard-toolkit' ), $name, $reassign ) );
 
 		return true;
 	}
@@ -314,7 +314,7 @@ class Role_Manager {
 		$backups = self::backups();
 
 		if ( ! isset( $backups[ $index ]['roles'] ) || ! is_array( $backups[ $index ]['roles'] ) ) {
-			return new \WP_Error( 'adminora_backup_missing', __( 'That backup no longer exists.', 'adminora' ) );
+			return new \WP_Error( 'layodt_backup_missing', __( 'That backup no longer exists.', 'layo-dashboard-toolkit' ) );
 		}
 
 		$roles = $backups[ $index ]['roles'];
@@ -322,7 +322,7 @@ class Role_Manager {
 		// Never restore a state that would lock the current user out.
 		foreach ( (array) wp_get_current_user()->roles as $role ) {
 			if ( ! isset( $roles[ $role ] ) || ! self::keeps_access( $role, array_keys( array_filter( (array) $roles[ $role ]['capabilities'] ) ) ) ) {
-				return new \WP_Error( 'adminora_self_lockout', __( 'That backup would remove your own access, so it was not restored.', 'adminora' ) );
+				return new \WP_Error( 'layodt_self_lockout', __( 'That backup would remove your own access, so it was not restored.', 'layo-dashboard-toolkit' ) );
 			}
 		}
 
@@ -333,7 +333,7 @@ class Role_Manager {
 		$wp_roles->for_site();
 
 		/* translators: %s: backup date. */
-		Audit::log( 'roles_restored', sprintf( __( 'Restored the backup from %s.', 'adminora' ), wp_date( 'Y-m-d H:i', $backups[ $index ]['time'] ) ) );
+		Audit::log( 'roles_restored', sprintf( __( 'Restored the backup from %s.', 'layo-dashboard-toolkit' ), wp_date( 'Y-m-d H:i', $backups[ $index ]['time'] ) ) );
 
 		return true;
 	}
@@ -356,7 +356,7 @@ class Role_Manager {
 		// Administrator is left in place so the current user never loses access.
 		populate_roles();
 
-		Audit::log( 'roles_restored', __( 'Restored WordPress\'s default roles.', 'adminora' ) );
+		Audit::log( 'roles_restored', __( 'Restored WordPress\'s default roles.', 'layo-dashboard-toolkit' ) );
 
 		return true;
 	}

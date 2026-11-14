@@ -2,10 +2,10 @@
 /**
  * Activity log for role, permission, menu and access changes.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Roles;
+namespace LayoDT\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Audit {
 
-	const OPTION = 'adminora_audit';
+	const OPTION = 'layodt_audit';
 	const SIZE   = 500;
 
 	/**
@@ -59,18 +59,18 @@ class Audit {
 	 */
 	public static function labels() {
 		return array(
-			'role_created'   => __( 'Role created', 'adminora' ),
-			'role_renamed'   => __( 'Role renamed', 'adminora' ),
-			'role_deleted'   => __( 'Role deleted', 'adminora' ),
-			'role_caps'      => __( 'Capabilities changed', 'adminora' ),
-			'roles_restored' => __( 'Roles restored', 'adminora' ),
-			'user_perms'     => __( 'User permissions changed', 'adminora' ),
-			'menu_access'    => __( 'Menu access changed', 'adminora' ),
-			'access'         => __( 'Login and access changed', 'adminora' ),
-			'toolbar'        => __( 'Toolbar changed', 'adminora' ),
-			'look'           => __( 'Dashboard look changed', 'adminora' ),
-			'widgets'        => __( 'Dashboard widgets changed', 'adminora' ),
-			'import'         => __( 'Settings imported', 'adminora' ),
+			'role_created'   => __( 'Role created', 'layo-dashboard-toolkit' ),
+			'role_renamed'   => __( 'Role renamed', 'layo-dashboard-toolkit' ),
+			'role_deleted'   => __( 'Role deleted', 'layo-dashboard-toolkit' ),
+			'role_caps'      => __( 'Capabilities changed', 'layo-dashboard-toolkit' ),
+			'roles_restored' => __( 'Roles restored', 'layo-dashboard-toolkit' ),
+			'user_perms'     => __( 'User permissions changed', 'layo-dashboard-toolkit' ),
+			'menu_access'    => __( 'Menu access changed', 'layo-dashboard-toolkit' ),
+			'access'         => __( 'Login and access changed', 'layo-dashboard-toolkit' ),
+			'toolbar'        => __( 'Toolbar changed', 'layo-dashboard-toolkit' ),
+			'look'           => __( 'Dashboard look changed', 'layo-dashboard-toolkit' ),
+			'widgets'        => __( 'Dashboard widgets changed', 'layo-dashboard-toolkit' ),
+			'import'         => __( 'Settings imported', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -84,7 +84,7 @@ class Audit {
 
 		nocache_headers();
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=adminora-activity-' . gmdate( 'Y-m-d' ) . '.csv' );
+		header( 'Content-Disposition: attachment; filename=layodt-activity-' . gmdate( 'Y-m-d' ) . '.csv' );
 
 		$rows   = array( array( 'time', 'user', 'action', 'summary' ) );
 		$format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );

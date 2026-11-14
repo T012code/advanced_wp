@@ -6,14 +6,14 @@
  * Sessions are WordPress's own (the session_tokens user meta that backs every
  * login cookie), so ending one here signs that device out at once.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Sessions;
+namespace LayoDT\Modules\Sessions;
 
-use Adminora\Admin\Admin;
-use Adminora\Settings;
-use Adminora\Modules\Security\Attempts;
+use LayoDT\Admin\Admin;
+use LayoDT\Settings;
+use LayoDT\Modules\Security\Attempts;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -22,8 +22,8 @@ defined( 'ABSPATH' ) || exit;
  */
 class Sessions {
 
-	const META_BLOCKED = 'adminora_blocked';
-	const HISTORY      = 'adminora_signins';
+	const META_BLOCKED = 'layodt_blocked';
+	const HISTORY      = 'layodt_signins';
 	const HISTORY_MAX  = 1000;
 
 	/**
@@ -278,7 +278,7 @@ class Sessions {
 		if ( self::is_blocked( $user->ID ) ) {
 			self::log( 'refused_blocked', $user->ID );
 
-			return new \WP_Error( 'adminora_blocked', esc_html__( 'This account has been blocked. Contact the site administrator.', 'adminora' ) );
+			return new \WP_Error( 'layodt_blocked', esc_html__( 'This account has been blocked. Contact the site administrator.', 'layo-dashboard-toolkit' ) );
 		}
 
 		$limit = self::limit_for( $user );
@@ -287,11 +287,11 @@ class Sessions {
 			self::log( 'refused_limit', $user->ID );
 
 			return new \WP_Error(
-				'adminora_session_limit',
+				'layodt_session_limit',
 				esc_html(
 					sprintf(
 						/* translators: %d: number of devices. */
-						_n( 'You are already signed in on %d device, the most this site allows. Sign out there first, or ask an administrator to sign you out.', 'You are already signed in on %d devices, the most this site allows. Sign out on one of them first, or ask an administrator to sign you out.', $limit, 'adminora' ),
+						_n( 'You are already signed in on %d device, the most this site allows. Sign out there first, or ask an administrator to sign you out.', 'You are already signed in on %d devices, the most this site allows. Sign out on one of them first, or ask an administrator to sign you out.', $limit, 'layo-dashboard-toolkit' ),
 						$limit
 					)
 				)
@@ -387,7 +387,7 @@ class Sessions {
 		}
 
 		// Blocked and over-limit refusals are recorded on their own.
-		if ( is_wp_error( $error ) && array_intersect( $error->get_error_codes(), array( 'adminora_blocked', 'adminora_session_limit' ) ) ) {
+		if ( is_wp_error( $error ) && array_intersect( $error->get_error_codes(), array( 'layodt_blocked', 'layodt_session_limit' ) ) ) {
 			return;
 		}
 
@@ -429,15 +429,15 @@ class Sessions {
 	 */
 	public static function events() {
 		return array(
-			'login'           => __( 'Signed in', 'adminora' ),
-			'logout'          => __( 'Signed out', 'adminora' ),
-			'failed'          => __( 'Failed sign-in', 'adminora' ),
-			'ended_admin'     => __( 'Signed out by an administrator', 'adminora' ),
-			'ended_limit'     => __( 'Signed out: session limit', 'adminora' ),
-			'refused_limit'   => __( 'Refused: session limit', 'adminora' ),
-			'refused_blocked' => __( 'Refused: account blocked', 'adminora' ),
-			'blocked'         => __( 'Blocked', 'adminora' ),
-			'unblocked'       => __( 'Unblocked', 'adminora' ),
+			'login'           => __( 'Signed in', 'layo-dashboard-toolkit' ),
+			'logout'          => __( 'Signed out', 'layo-dashboard-toolkit' ),
+			'failed'          => __( 'Failed sign-in', 'layo-dashboard-toolkit' ),
+			'ended_admin'     => __( 'Signed out by an administrator', 'layo-dashboard-toolkit' ),
+			'ended_limit'     => __( 'Signed out: session limit', 'layo-dashboard-toolkit' ),
+			'refused_limit'   => __( 'Refused: session limit', 'layo-dashboard-toolkit' ),
+			'refused_blocked' => __( 'Refused: account blocked', 'layo-dashboard-toolkit' ),
+			'blocked'         => __( 'Blocked', 'layo-dashboard-toolkit' ),
+			'unblocked'       => __( 'Unblocked', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -518,10 +518,10 @@ class Sessions {
 		}
 
 		wp_add_privacy_policy_content(
-			__( 'Adminora', 'adminora' ),
+			__( 'Layò Dashboard Toolkit', 'layo-dashboard-toolkit' ),
 			wp_kses_post(
 				wpautop(
-					__( 'When you sign in to this site, we record the time, your IP address and your browser and device type, to show you and the site administrators where your account is signed in, to keep a history of sign-ins and failed attempts, and to protect accounts from misuse. The history keeps the last 1,000 events and is not shared with anyone.', 'adminora' )
+					__( 'When you sign in to this site, we record the time, your IP address and your browser and device type, to show you and the site administrators where your account is signed in, to keep a history of sign-ins and failed attempts, and to protect accounts from misuse. The history keeps the last 1,000 events and is not shared with anyone.', 'layo-dashboard-toolkit' )
 				)
 			)
 		);
@@ -539,7 +539,7 @@ class Sessions {
 	 */
 	public static function users_column( $columns ) {
 		if ( current_user_can( 'manage_options' ) ) {
-			$columns['adminora_sessions'] = __( 'Sessions', 'adminora' );
+			$columns['layodt_sessions'] = __( 'Sessions', 'layo-dashboard-toolkit' );
 		}
 
 		return $columns;
@@ -554,24 +554,24 @@ class Sessions {
 	 * @return string
 	 */
 	public static function users_cell( $output, $column, $user_id ) {
-		if ( 'adminora_sessions' !== $column ) {
+		if ( 'layodt_sessions' !== $column ) {
 			return $output;
 		}
 
 		if ( self::is_blocked( $user_id ) ) {
-			return '<span class="adminora-badge">' . esc_html__( 'Blocked', 'adminora' ) . '</span>';
+			return '<span class="layodt-badge">' . esc_html__( 'Blocked', 'layo-dashboard-toolkit' ) . '</span>';
 		}
 
 		$count = count( self::of( $user_id ) );
 
 		if ( ! $count ) {
-			return '<span aria-hidden="true">&mdash;</span><span class="screen-reader-text">' . esc_html__( 'Not signed in', 'adminora' ) . '</span>';
+			return '<span aria-hidden="true">&mdash;</span><span class="screen-reader-text">' . esc_html__( 'Not signed in', 'layo-dashboard-toolkit' ) . '</span>';
 		}
 
 		return '<a href="' . esc_url( Admin::url( 'sessions', array( 'user' => $user_id ) ) ) . '">' . esc_html(
 			sprintf(
 				/* translators: %d: number of devices. */
-				_n( '%d device', '%d devices', $count, 'adminora' ),
+				_n( '%d device', '%d devices', $count, 'layo-dashboard-toolkit' ),
 				$count
 			)
 		) . '</a>';
@@ -590,13 +590,13 @@ class Sessions {
 		}
 
 		if ( self::of( $user->ID ) ) {
-			$actions['adminora_signout'] = '<a href="' . esc_url( self::action_url( 'session_end_all', $user->ID ) ) . '">' . esc_html__( 'Sign out everywhere', 'adminora' ) . '</a>';
+			$actions['layodt_signout'] = '<a href="' . esc_url( self::action_url( 'session_end_all', $user->ID ) ) . '">' . esc_html__( 'Sign out everywhere', 'layo-dashboard-toolkit' ) . '</a>';
 		}
 
 		if ( self::is_blocked( $user->ID ) ) {
-			$actions['adminora_unblock'] = '<a href="' . esc_url( self::action_url( 'user_unblock', $user->ID ) ) . '">' . esc_html__( 'Unblock', 'adminora' ) . '</a>';
+			$actions['layodt_unblock'] = '<a href="' . esc_url( self::action_url( 'user_unblock', $user->ID ) ) . '">' . esc_html__( 'Unblock', 'layo-dashboard-toolkit' ) . '</a>';
 		} else {
-			$actions['adminora_block'] = '<a class="delete" href="' . esc_url( self::action_url( 'user_block', $user->ID ) ) . '">' . esc_html__( 'Block', 'adminora' ) . '</a>';
+			$actions['layodt_block'] = '<a class="delete" href="' . esc_url( self::action_url( 'user_block', $user->ID ) ) . '">' . esc_html__( 'Block', 'layo-dashboard-toolkit' ) . '</a>';
 		}
 
 		return $actions;
@@ -613,13 +613,13 @@ class Sessions {
 		return wp_nonce_url(
 			add_query_arg(
 				array(
-					'action' => 'adminora_' . $action,
+					'action' => 'layodt_' . $action,
 					'user'   => $user_id,
 					'back'   => 'users',
 				),
 				admin_url( 'admin-post.php' )
 			),
-			'adminora_' . $action
+			'layodt_' . $action
 		);
 	}
 }

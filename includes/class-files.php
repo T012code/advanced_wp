@@ -2,10 +2,10 @@
 /**
  * Thin wrapper around WP_Filesystem for the few files the plugin writes.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora;
+namespace LayoDT;
 
 defined( 'ABSPATH' ) || exit;
 

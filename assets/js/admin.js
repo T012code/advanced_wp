@@ -1,5 +1,5 @@
 /**
- * Adminora settings page: conditional rows, media picker, tag insertion,
+ * Layò Dashboard Toolkit settings page: conditional rows, media picker, tag insertion,
  * confirmations and colour swatches.
  */
 ( function ( $, data ) {
@@ -21,20 +21,20 @@
 	}
 
 	function updateRows() {
-		$( '[data-adminora-show-if]' ).each( function () {
+		$( '[data-layodt-show-if]' ).each( function () {
 			var $row = $( this );
-			$row.prop( 'hidden', fieldValue( $row.data( 'adminora-show-if' ) ) !== String( $row.data( 'adminora-show-value' ) ) );
+			$row.prop( 'hidden', fieldValue( $row.data( 'layodt-show-if' ) ) !== String( $row.data( 'layodt-show-value' ) ) );
 		} );
 	}
 
-	$( document ).on( 'change', '.adminora-wrap :input, .adminora-destination select', updateRows );
+	$( document ).on( 'change', '.layodt-wrap :input, .layodt-destination select', updateRows );
 	updateRows();
 
 	// Media picker for image URL fields.
-	$( document ).on( 'click', '[data-adminora-media]', function ( event ) {
+	$( document ).on( 'click', '[data-layodt-media]', function ( event ) {
 		event.preventDefault();
 
-		var $input = $( '#' + $( this ).data( 'adminora-media' ) ),
+		var $input = $( '#' + $( this ).data( 'layodt-media' ) ),
 			frame = wp.media( {
 				title: data.chooseImage,
 				button: { text: data.useImage },
@@ -51,9 +51,9 @@
 	} );
 
 	// Insert a {tag} into the email body, in either editor mode.
-	$( document ).on( 'click', '[data-adminora-tag]', function () {
-		var tag = $( this ).data( 'adminora-tag' ),
-			editor = window.tinymce && window.tinymce.get( 'adminora_email_body' );
+	$( document ).on( 'click', '[data-layodt-tag]', function () {
+		var tag = $( this ).data( 'layodt-tag' ),
+			editor = window.tinymce && window.tinymce.get( 'layodt_email_body' );
 
 		if ( editor && ! editor.isHidden() ) {
 			editor.execCommand( 'mceInsertContent', false, tag );
@@ -61,7 +61,7 @@
 			return;
 		}
 
-		var textarea = document.getElementById( 'adminora_email_body' );
+		var textarea = document.getElementById( 'layodt_email_body' );
 
 		if ( ! textarea ) {
 			return;
@@ -76,32 +76,32 @@
 	} );
 
 	// Confirm before destructive forms.
-	$( document ).on( 'submit', 'form[data-adminora-confirm]', function ( event ) {
+	$( document ).on( 'submit', 'form[data-layodt-confirm]', function ( event ) {
 		if ( ! window.confirm( data.confirm ) ) {
 			event.preventDefault();
 		}
 	} );
 
-	$( document ).on( 'click', '[data-adminora-confirm-click]', function ( event ) {
+	$( document ).on( 'click', '[data-layodt-confirm-click]', function ( event ) {
 		if ( ! window.confirm( data.confirm ) ) {
 			event.preventDefault();
 		}
 	} );
 
 	// Template cards: mark the chosen one.
-	$( document ).on( 'change', '.adminora-template input[type="radio"]', function () {
-		$( '.adminora-template' ).removeClass( 'is-selected' );
-		$( this ).closest( '.adminora-template' ).addClass( 'is-selected' );
+	$( document ).on( 'change', '.layodt-template input[type="radio"]', function () {
+		$( '.layodt-template' ).removeClass( 'is-selected' );
+		$( this ).closest( '.layodt-template' ).addClass( 'is-selected' );
 	} );
 
 	// Sortable lists: up and down buttons, plus drag and drop.
-	$( document ).on( 'click', '[data-adminora-move]', function () {
-		var $row = $( this ).closest( '.adminora-sortable__row' );
+	$( document ).on( 'click', '[data-layodt-move]', function () {
+		var $row = $( this ).closest( '.layodt-sortable__row' );
 
-		if ( '-1' === String( $( this ).data( 'adminora-move' ) ) ) {
-			$row.prev( '.adminora-sortable__row' ).before( $row );
+		if ( '-1' === String( $( this ).data( 'layodt-move' ) ) ) {
+			$row.prev( '.layodt-sortable__row' ).before( $row );
 		} else {
-			$row.next( '.adminora-sortable__row' ).after( $row );
+			$row.next( '.layodt-sortable__row' ).after( $row );
 		}
 
 		$( this ).trigger( 'focus' );
@@ -109,7 +109,7 @@
 
 	var dragged = null;
 
-	$( document ).on( 'dragstart', '[data-adminora-sortable] > .adminora-sortable__row', function ( event ) {
+	$( document ).on( 'dragstart', '[data-layodt-sortable] > .layodt-sortable__row', function ( event ) {
 		if ( $( event.target ).is( 'input, select, button' ) ) {
 			return;
 		}
@@ -120,7 +120,7 @@
 		event.originalEvent.dataTransfer.setData( 'text/plain', '' );
 	} );
 
-	$( document ).on( 'dragover', '[data-adminora-sortable] > .adminora-sortable__row', function ( event ) {
+	$( document ).on( 'dragover', '[data-layodt-sortable] > .layodt-sortable__row', function ( event ) {
 		if ( ! dragged || dragged === this || dragged.parentNode !== this.parentNode ) {
 			return;
 		}
@@ -133,34 +133,34 @@
 		this.parentNode.insertBefore( dragged, after ? this.nextSibling : this );
 	} );
 
-	$( document ).on( 'dragend drop', '[data-adminora-sortable] > .adminora-sortable__row', function ( event ) {
+	$( document ).on( 'dragend drop', '[data-layodt-sortable] > .layodt-sortable__row', function ( event ) {
 		event.preventDefault();
 		$( dragged ).removeClass( 'is-dragging' );
 		dragged = null;
 	} );
 
 	// Selects that reload the page with a new choice.
-	$( document ).on( 'change', 'select[data-adminora-autosubmit]', function () {
+	$( document ).on( 'change', 'select[data-layodt-autosubmit]', function () {
 		this.form.submit();
 	} );
 
 	// Import review: tick every role, only the new ones, or none.
-	$( document ).on( 'click', '[data-adminora-tick]', function () {
-		var mode = $( this ).data( 'adminora-tick' );
+	$( document ).on( 'click', '[data-layodt-tick]', function () {
+		var mode = $( this ).data( 'layodt-tick' );
 
-		$( '.adminora-import-roles tbody tr' ).each( function () {
-			var box = $( this ).find( 'input[name="adminora_roles[]"]' );
+		$( '.layodt-import-roles tbody tr' ).each( function () {
+			var box = $( this ).find( 'input[name="layodt_roles[]"]' );
 			box.prop( 'checked', 'all' === mode || ( 'new' === mode && 'new' === $( this ).data( 'status' ) ) );
 		} );
 	} );
 
 	// Menu access search: a matching menu shows all its items, otherwise only matching items show.
-	$( document ).on( 'input', '[data-adminora-menu-filter]', function () {
+	$( document ).on( 'input', '[data-layodt-menu-filter]', function () {
 		var term = this.value.toLowerCase().trim();
 
-		$( '.adminora-menu-group' ).each( function () {
+		$( '.layodt-menu-group' ).each( function () {
 			var $group = $( this ),
-				topMatch = ! term || -1 !== $group.find( '.adminora-menu-group__top' ).text().toLowerCase().indexOf( term ),
+				topMatch = ! term || -1 !== $group.find( '.layodt-menu-group__top' ).text().toLowerCase().indexOf( term ),
 				subMatch = false;
 
 			$group.find( 'li' ).each( function () {
@@ -174,14 +174,14 @@
 	} );
 
 	// Capability search: hides capabilities and groups that do not match.
-	$( document ).on( 'input', '[data-adminora-cap-search]', function () {
+	$( document ).on( 'input', '[data-layodt-cap-search]', function () {
 		var term = this.value.toLowerCase().trim();
 
-		$( '[data-adminora-cap-group]' ).each( function () {
+		$( '[data-layodt-cap-group]' ).each( function () {
 			var $group = $( this ),
 				visible = 0;
 
-			$group.find( '.adminora-cap' ).each( function () {
+			$group.find( '.layodt-cap' ).each( function () {
 				var match = ! term || this.textContent.toLowerCase().indexOf( term ) !== -1;
 				$( this ).prop( 'hidden', ! match );
 				visible += match ? 1 : 0;
@@ -192,17 +192,17 @@
 	} );
 
 	// Select or clear every capability in a group.
-	$( document ).on( 'click', '[data-adminora-cap-toggle]', function () {
-		var $boxes = $( this ).closest( '[data-adminora-cap-group]' ).find( 'input[type="checkbox"]:visible' ),
+	$( document ).on( 'click', '[data-layodt-cap-toggle]', function () {
+		var $boxes = $( this ).closest( '[data-layodt-cap-group]' ).find( 'input[type="checkbox"]:visible' ),
 			allOn = $boxes.length === $boxes.filter( ':checked' ).length;
 
 		$boxes.prop( 'checked', ! allOn );
 	} );
 
 	// Brand kit: mark the chosen source.
-	$( document ).on( 'change', '.adminora-brand__option input', function () {
-		$( '.adminora-brand__option' ).removeClass( 'is-selected' );
-		$( this ).closest( '.adminora-brand__option' ).addClass( 'is-selected' );
+	$( document ).on( 'change', '.layodt-brand__option input', function () {
+		$( '.layodt-brand__option' ).removeClass( 'is-selected' );
+		$( this ).closest( '.layodt-brand__option' ).addClass( 'is-selected' );
 	} );
 
 	// Brand kit: read the colours visitors see on the home page.
@@ -261,9 +261,9 @@
 		};
 	}
 
-	$( document ).on( 'click', '[data-adminora-capture]', function () {
+	$( document ).on( 'click', '[data-layodt-capture]', function () {
 		var $button = $( this ),
-			$status = $button.siblings( '.adminora-brand__status' ),
+			$status = $button.siblings( '.layodt-brand__status' ),
 			settings = data.capture || {},
 			frame = document.createElement( 'iframe' ),
 			timer;
@@ -278,7 +278,7 @@
 		$button.prop( 'disabled', true );
 		$status.text( settings.reading );
 
-		frame.className = 'adminora-capture-frame';
+		frame.className = 'layodt-capture-frame';
 		frame.setAttribute( 'aria-hidden', 'true' );
 		frame.setAttribute( 'tabindex', '-1' );
 		frame.src = settings.url;
@@ -298,9 +298,9 @@
 					return;
 				}
 
-				$.post( settings.ajax, { action: 'adminora_brand_capture', nonce: settings.nonce, colors: colors } ).done( function ( response ) {
-					var $row = $( '[data-adminora-source="frontend"]' ),
-						$swatches = $row.find( '[data-adminora-swatches]' ).empty();
+				$.post( settings.ajax, { action: 'layodt_brand_capture', nonce: settings.nonce, colors: colors } ).done( function ( response ) {
+					var $row = $( '[data-layodt-source="frontend"]' ),
+						$swatches = $row.find( '[data-layodt-swatches]' ).empty();
 
 					if ( ! response || ! response.success ) {
 						finish( settings.failed );
@@ -309,11 +309,11 @@
 
 					$.each( [ 'primary', 'secondary', 'text', 'background' ], function ( i, key ) {
 						if ( response.data.colors[ key ] ) {
-							$( '<span class="adminora-swatch__chip">' ).attr( 'title', key + ' ' + response.data.colors[ key ] ).css( 'background-color', response.data.colors[ key ] ).appendTo( $swatches );
+							$( '<span class="layodt-swatch__chip">' ).attr( 'title', key + ' ' + response.data.colors[ key ] ).css( 'background-color', response.data.colors[ key ] ).appendTo( $swatches );
 						}
 					} );
 
-					$row.find( '[data-adminora-source-note]' ).text( settings.note );
+					$row.find( '[data-layodt-source-note]' ).text( settings.note );
 					$row.find( 'input' ).prop( 'checked', true ).trigger( 'change' );
 					finish( settings.done );
 				} ).fail( function () {
@@ -326,7 +326,7 @@
 	} );
 
 	// Colour swatches on the status table.
-	$( '.adminora-swatch__chip[data-color]' ).each( function () {
+	$( '.layodt-swatch__chip[data-color]' ).each( function () {
 		this.style.backgroundColor = this.getAttribute( 'data-color' );
 	} );
-} )( window.jQuery, window.adminoraAdmin || {} );
+} )( window.jQuery, window.layodtAdmin || {} );

@@ -2,14 +2,14 @@
 /**
  * Settings storage, field schema and sanitizing.
  *
- * Every setting lives in one nested option, `adminora_settings`, and is addressed
+ * Every setting lives in one nested option, `layodt_settings`, and is addressed
  * with a dot path such as `login.layout`. The Customizer stores into the same
- * option through ids like `adminora_settings[login][layout]`.
+ * option through ids like `layodt_settings[login][layout]`.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora;
+namespace LayoDT;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Settings {
 
-	const OPTION = 'adminora_settings';
+	const OPTION = 'layodt_settings';
 
 	/**
 	 * Field schema, built once per request.

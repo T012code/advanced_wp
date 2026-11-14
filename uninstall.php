@@ -1,53 +1,53 @@
 <?php
 /**
- * Removes Adminora data on uninstall, only if the owner opted in.
+ * Removes Layò Dashboard Toolkit data on uninstall, only if the owner opted in.
  *
  * Drop-in files are removed on deactivation, before this runs.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
-$adminora_settings = get_option( 'adminora_settings', array() );
+$layodt_settings = get_option( 'layodt_settings', array() );
 
-if ( empty( $adminora_settings['general']['remove_data'] ) ) {
+if ( empty( $layodt_settings['general']['remove_data'] ) ) {
 	return;
 }
 
-delete_option( 'adminora_settings' );
-delete_option( 'adminora_version' );
-delete_option( 'adminora_fonts' );
-delete_option( 'adminora_lockouts' );
-delete_option( 'adminora_access' );
-delete_option( 'adminora_toolbar_nodes' );
-delete_option( 'adminora_role_backups' );
-delete_option( 'adminora_audit' );
-delete_option( 'adminora_look' );
-delete_option( 'adminora_widgets' );
-delete_option( 'adminora_widgets_seen' );
-delete_option( 'adminora_signins' );
-delete_option( 'adminora_brand_palette' );
-delete_option( 'adminora_admin_url' );
-delete_option( 'adminora_htaccess_backup' );
-delete_option( 'adminora_reapply_admin_url' );
+delete_option( 'layodt_settings' );
+delete_option( 'layodt_version' );
+delete_option( 'layodt_fonts' );
+delete_option( 'layodt_lockouts' );
+delete_option( 'layodt_access' );
+delete_option( 'layodt_toolbar_nodes' );
+delete_option( 'layodt_role_backups' );
+delete_option( 'layodt_audit' );
+delete_option( 'layodt_look' );
+delete_option( 'layodt_widgets' );
+delete_option( 'layodt_widgets_seen' );
+delete_option( 'layodt_signins' );
+delete_option( 'layodt_brand_palette' );
+delete_option( 'layodt_admin_url' );
+delete_option( 'layodt_htaccess_backup' );
+delete_option( 'layodt_reapply_admin_url' );
 
-foreach ( array( 'adminora_2fa_method', 'adminora_2fa_secret', 'adminora_2fa_pending', 'adminora_2fa_backup', 'adminora_2fa_last_slice', 'adminora_2fa_login', 'adminora_2fa_email_code', 'adminora_2fa_required_since', 'adminora_toolbar', 'adminora_look_admin', 'adminora_look_self', 'adminora_look_try', 'adminora_look_mode', 'adminora_blocked', 'adminora_login_redirect' ) as $adminora_meta_key ) {
-	delete_metadata( 'user', 0, $adminora_meta_key, '', true );
+foreach ( array( 'layodt_2fa_method', 'layodt_2fa_secret', 'layodt_2fa_pending', 'layodt_2fa_backup', 'layodt_2fa_last_slice', 'layodt_2fa_login', 'layodt_2fa_email_code', 'layodt_2fa_required_since', 'layodt_toolbar', 'layodt_look_admin', 'layodt_look_self', 'layodt_look_try', 'layodt_look_mode', 'layodt_blocked', 'layodt_login_redirect' ) as $layodt_meta_key ) {
+	delete_metadata( 'user', 0, $layodt_meta_key, '', true );
 }
 
 // Users on the brand admin colour scheme go back to the default.
-delete_metadata( 'user', 0, 'admin_color', 'adminora', true );
+delete_metadata( 'user', 0, 'admin_color', 'layodt', true );
 
 // Downloaded fonts.
-$adminora_uploads = wp_upload_dir( null, false );
-$adminora_dir     = trailingslashit( $adminora_uploads['basedir'] ) . 'adminora';
+$layodt_uploads = wp_upload_dir( null, false );
+$layodt_dir     = trailingslashit( $layodt_uploads['basedir'] ) . 'layo-dashboard-toolkit';
 
-if ( is_dir( $adminora_dir ) ) {
+if ( is_dir( $layodt_dir ) ) {
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 
 	if ( WP_Filesystem() ) {
 		global $wp_filesystem;
-		$wp_filesystem->delete( $adminora_dir, true );
+		$wp_filesystem->delete( $layodt_dir, true );
 	}
 }

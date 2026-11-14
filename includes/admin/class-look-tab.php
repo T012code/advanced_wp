@@ -1,18 +1,18 @@
 <?php
 /**
- * Settings → Adminora → Dashboard look.
+ * Settings → Layò Dashboard Toolkit → Dashboard look.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Admin;
+namespace LayoDT\Admin;
 
-use Adminora\Color;
-use Adminora\Settings;
-use Adminora\Modules\Admin_Look\Admin_Look;
-use Adminora\Modules\Admin_Look\Icons;
-use Adminora\Modules\Roles\Audit;
-use Adminora\Modules\Roles\Role_Manager;
+use LayoDT\Color;
+use LayoDT\Settings;
+use LayoDT\Modules\Admin_Look\Admin_Look;
+use LayoDT\Modules\Admin_Look\Icons;
+use LayoDT\Modules\Roles\Audit;
+use LayoDT\Modules\Roles\Role_Manager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ class Look_Tab {
 	 */
 	public static function init() {
 		foreach ( array( 'look_save', 'look_apply', 'look_stop' ) as $action ) {
-			add_action( 'admin_post_adminora_' . $action, array( __CLASS__, 'handle_' . $action ) );
+			add_action( 'admin_post_layodt_' . $action, array( __CLASS__, 'handle_' . $action ) );
 		}
 	}
 
@@ -39,9 +39,9 @@ class Look_Tab {
 	 */
 	private static function sections() {
 		return array(
-			'templates' => __( 'Templates', 'adminora' ),
-			'roles'     => __( 'Roles and users', 'adminora' ),
-			'menu'      => __( 'Sidebar menu', 'adminora' ),
+			'templates' => __( 'Templates', 'layo-dashboard-toolkit' ),
+			'roles'     => __( 'Roles and users', 'layo-dashboard-toolkit' ),
+			'menu'      => __( 'Sidebar menu', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -64,7 +64,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	private static function back( $section, $notice ) {
-		wp_safe_redirect( self::url( $section, array( 'adminora_notice' => $notice ) ) );
+		wp_safe_redirect( self::url( $section, array( 'layodt_notice' => $notice ) ) );
 		exit;
 	}
 
@@ -74,7 +74,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	private static function deny() {
-		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'adminora' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'layo-dashboard-toolkit' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -85,9 +85,9 @@ class Look_Tab {
 	 */
 	private static function form( $group ) {
 		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';
-		echo '<input type="hidden" name="action" value="adminora_look_save">';
+		echo '<input type="hidden" name="action" value="layodt_look_save">';
 		echo '<input type="hidden" name="group" value="' . esc_attr( $group ) . '">';
-		wp_nonce_field( 'adminora_look_save' );
+		wp_nonce_field( 'layodt_look_save' );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Look_Tab {
 	 */
 	public static function render() {
 		if ( ! Settings::module_on( 'admin_look' ) ) {
-			echo '<div class="notice notice-warning inline adminora-notice"><p>' . esc_html__( 'Dashboard look is switched off on the Overview tab.', 'adminora' ) . '</p></div>';
+			echo '<div class="notice notice-warning inline layodt-notice"><p>' . esc_html__( 'Dashboard look is switched off on the Overview tab.', 'layo-dashboard-toolkit' ) . '</p></div>';
 			return;
 		}
 
@@ -126,7 +126,7 @@ class Look_Tab {
 		$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : 'templates';
 		$section = array_key_exists( $section, self::sections() ) ? $section : 'templates';
 
-		echo '<nav class="adminora-subnav" aria-label="' . esc_attr__( 'Dashboard look sections', 'adminora' ) . '"><ul>';
+		echo '<nav class="layodt-subnav" aria-label="' . esc_attr__( 'Dashboard look sections', 'layo-dashboard-toolkit' ) . '"><ul>';
 		foreach ( self::sections() as $key => $label ) {
 			printf(
 				'<li><a href="%s"%s>%s</a></li>',
@@ -186,24 +186,24 @@ class Look_Tab {
 		$config  = Admin_Look::config();
 		$current = Admin_Look::resolve( wp_get_current_user() );
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Pick the look everyone gets unless their role or profile says otherwise. "Try it on me" switches only your own dashboard so you can look around first.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Pick the look everyone gets unless their role or profile says otherwise. "Try it on me" switches only your own dashboard so you can look around first.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		self::form( 'templates' );
 
-		echo '<h2 class="title">' . esc_html__( 'Template', 'adminora' ) . '</h2>';
-		echo '<div class="adminora-templates" role="radiogroup" aria-label="' . esc_attr__( 'Site template', 'adminora' ) . '">';
+		echo '<h2 class="title">' . esc_html__( 'Template', 'layo-dashboard-toolkit' ) . '</h2>';
+		echo '<div class="layodt-templates" role="radiogroup" aria-label="' . esc_attr__( 'Site template', 'layo-dashboard-toolkit' ) . '">';
 		foreach ( Admin_Look::templates() as $key => $template ) {
 			$is_on = $config['default']['template'] === $key;
-			echo '<div class="adminora-template' . ( $is_on ? ' is-selected' : '' ) . '">';
-			echo '<label class="adminora-template__pick">';
+			echo '<div class="layodt-template' . ( $is_on ? ' is-selected' : '' ) . '">';
+			echo '<label class="layodt-template__pick">';
 			echo '<input type="radio" name="default[template]" value="' . esc_attr( $key ) . '"' . checked( $is_on, true, false ) . '>';
-			echo '<span class="adminora-thumb adminora-thumb--' . esc_attr( $key ) . '" style="' . esc_attr( self::thumb_style( $key, $config['default']['palette'] ) ) . '" aria-hidden="true"><i></i><b></b><b></b><b></b></span>';
+			echo '<span class="layodt-thumb layodt-thumb--' . esc_attr( $key ) . '" style="' . esc_attr( self::thumb_style( $key, $config['default']['palette'] ) ) . '" aria-hidden="true"><i></i><b></b><b></b><b></b></span>';
 			echo '<strong>' . esc_html( $template[0] ) . '</strong>';
 			echo '<small>' . esc_html( $template[1] ) . '</small>';
 			echo '</label>';
 			if ( 'default' !== $key ) {
 				$trying = 'try' === $current['source'] && $current['template'] === $key;
-				echo '<button type="submit" class="button button-small" name="try" value="' . esc_attr( $key ) . '"' . disabled( $trying, true, false ) . '>' . esc_html( $trying ? __( 'Trying now', 'adminora' ) : __( 'Try it on me', 'adminora' ) ) . '</button>';
+				echo '<button type="submit" class="button button-small" name="try" value="' . esc_attr( $key ) . '"' . disabled( $trying, true, false ) . '>' . esc_html( $trying ? __( 'Trying now', 'layo-dashboard-toolkit' ) : __( 'Try it on me', 'layo-dashboard-toolkit' ) ) . '</button>';
 			}
 			echo '</div>';
 		}
@@ -211,7 +211,7 @@ class Look_Tab {
 
 		echo '<table class="form-table" role="presentation">';
 
-		echo '<tr><th scope="row">' . esc_html__( 'Colour palette', 'adminora' ) . '</th><td><div class="adminora-palettes">';
+		echo '<tr><th scope="row">' . esc_html__( 'Colour palette', 'layo-dashboard-toolkit' ) . '</th><td><div class="layodt-palettes">';
 		foreach ( Admin_Look::palettes() as $key => $palette ) {
 			$swatch = '' !== $palette[1] ? $palette[1] : Admin_Look::colors(
 				array(
@@ -219,24 +219,24 @@ class Look_Tab {
 					'palette'  => $key,
 				)
 			)[0]['accent'];
-			echo '<label class="adminora-palette"><input type="radio" name="default[palette]" value="' . esc_attr( $key ) . '"' . checked( $config['default']['palette'], $key, false ) . '>';
-			echo '<span class="adminora-palette__dot" style="' . esc_attr( '--dot:' . Color::to_hex( $swatch ) ) . '" aria-hidden="true"></span> ' . esc_html( $palette[0] ) . '</label>';
+			echo '<label class="layodt-palette"><input type="radio" name="default[palette]" value="' . esc_attr( $key ) . '"' . checked( $config['default']['palette'], $key, false ) . '>';
+			echo '<span class="layodt-palette__dot" style="' . esc_attr( '--dot:' . Color::to_hex( $swatch ) ) . '" aria-hidden="true"></span> ' . esc_html( $palette[0] ) . '</label>';
 		}
-		echo '</div><p class="description">' . esc_html__( 'Brand kit uses your theme\'s main colour. Dark mode adjusts every palette automatically.', 'adminora' ) . '</p></td></tr>';
+		echo '</div><p class="description">' . esc_html__( 'Brand kit uses your theme\'s main colour. Dark mode adjusts every palette automatically.', 'layo-dashboard-toolkit' ) . '</p></td></tr>';
 
-		echo '<tr data-adminora-show-if="default[palette]" data-adminora-show-value="custom"><th scope="row">' . esc_html__( 'Custom colours', 'adminora' ) . '</th><td><div class="adminora-colors">';
+		echo '<tr data-layodt-show-if="default[palette]" data-layodt-show-value="custom"><th scope="row">' . esc_html__( 'Custom colours', 'layo-dashboard-toolkit' ) . '</th><td><div class="layodt-colors">';
 		$labels = array(
-			'accent'     => __( 'Accent', 'adminora' ),
-			'sidebar'    => __( 'Sidebar', 'adminora' ),
-			'background' => __( 'Page background', 'adminora' ),
-			'text'       => __( 'Text', 'adminora' ),
+			'accent'     => __( 'Accent', 'layo-dashboard-toolkit' ),
+			'sidebar'    => __( 'Sidebar', 'layo-dashboard-toolkit' ),
+			'background' => __( 'Page background', 'layo-dashboard-toolkit' ),
+			'text'       => __( 'Text', 'layo-dashboard-toolkit' ),
 		);
 		foreach ( $labels as $key => $label ) {
-			echo '<label>' . esc_html( $label ) . '<br><input type="text" class="regular-text adminora-hex" name="custom[' . esc_attr( $key ) . ']" value="' . esc_attr( $config['custom'][ $key ] ) . '" placeholder="#2a5bea" pattern="#[0-9a-fA-F]{3,6}"></label>';
+			echo '<label>' . esc_html( $label ) . '<br><input type="text" class="regular-text layodt-hex" name="custom[' . esc_attr( $key ) . ']" value="' . esc_attr( $config['custom'][ $key ] ) . '" placeholder="#2a5bea" pattern="#[0-9a-fA-F]{3,6}"></label>';
 		}
-		echo '</div><p class="description">' . esc_html__( 'Leave a colour empty to have it worked out from the accent. Text colours are checked for contrast automatically.', 'adminora' ) . '</p></td></tr>';
+		echo '</div><p class="description">' . esc_html__( 'Leave a colour empty to have it worked out from the accent. Text colours are checked for contrast automatically.', 'layo-dashboard-toolkit' ) . '</p></td></tr>';
 
-		echo '<tr><th scope="row">' . esc_html__( 'Personal choice', 'adminora' ) . '</th><td><label><input type="checkbox" name="self_choice" value="1"' . checked( $config['self_choice'], true, false ) . '> ' . esc_html__( 'Let users pick their own template on their profile', 'adminora' ) . '</label><p class="description">' . esc_html__( 'You can still lock a role or a single user to a template.', 'adminora' ) . '</p></td></tr>';
+		echo '<tr><th scope="row">' . esc_html__( 'Personal choice', 'layo-dashboard-toolkit' ) . '</th><td><label><input type="checkbox" name="self_choice" value="1"' . checked( $config['self_choice'], true, false ) . '> ' . esc_html__( 'Let users pick their own template on their profile', 'layo-dashboard-toolkit' ) . '</label><p class="description">' . esc_html__( 'You can still lock a role or a single user to a template.', 'layo-dashboard-toolkit' ) . '</p></td></tr>';
 
 		echo '</table>';
 
@@ -254,10 +254,10 @@ class Look_Tab {
 		$templates = Admin_Look::templates();
 		$palettes  = Admin_Look::palettes();
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Give each role its own template. Locking stops people in that role from choosing a different one on their profile. To set a template for one person, open their profile under Users.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Give each role its own template. Locking stops people in that role from choosing a different one on their profile. To set a template for one person, open their profile under Users.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		self::form( 'roles' );
-		echo '<table class="widefat striped adminora-rule-table"><thead><tr><th scope="col">' . esc_html__( 'Role', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Template', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Palette', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Lock', 'adminora' ) . '</th></tr></thead><tbody>';
+		echo '<table class="widefat striped layodt-rule-table"><thead><tr><th scope="col">' . esc_html__( 'Role', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Template', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Palette', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Lock', 'layo-dashboard-toolkit' ) . '</th></tr></thead><tbody>';
 		foreach ( Role_Manager::roles() as $slug => $role ) {
 			$choice = isset( $config['roles'][ $slug ] ) ? $config['roles'][ $slug ] : array(
 				'template' => '',
@@ -265,10 +265,10 @@ class Look_Tab {
 				'lock'     => false,
 			);
 			echo '<tr><th scope="row">' . esc_html( $role['name'] ) . '</th><td>';
-			self::select( 'roles[' . $slug . '][template]', $templates, $choice['template'], __( 'Site default', 'adminora' ), $role['name'] . ': ' . __( 'Template', 'adminora' ) );
+			self::select( 'roles[' . $slug . '][template]', $templates, $choice['template'], __( 'Site default', 'layo-dashboard-toolkit' ), $role['name'] . ': ' . __( 'Template', 'layo-dashboard-toolkit' ) );
 			echo '</td><td>';
-			self::select( 'roles[' . $slug . '][palette]', $palettes, $choice['palette'], null, $role['name'] . ': ' . __( 'Palette', 'adminora' ) );
-			echo '</td><td><input type="checkbox" name="roles[' . esc_attr( $slug ) . '][lock]" value="1"' . checked( ! empty( $choice['lock'] ), true, false ) . ' aria-label="' . esc_attr( $role['name'] . ': ' . __( 'Lock', 'adminora' ) ) . '"></td></tr>';
+			self::select( 'roles[' . $slug . '][palette]', $palettes, $choice['palette'], null, $role['name'] . ': ' . __( 'Palette', 'layo-dashboard-toolkit' ) );
+			echo '</td><td><input type="checkbox" name="roles[' . esc_attr( $slug ) . '][lock]" value="1"' . checked( ! empty( $choice['lock'] ), true, false ) . ' aria-label="' . esc_attr( $role['name'] . ': ' . __( 'Lock', 'layo-dashboard-toolkit' ) ) . '"></td></tr>';
 		}
 		echo '</tbody></table>';
 		submit_button();
@@ -282,21 +282,21 @@ class Look_Tab {
 			)
 		);
 
-		echo '<h2 class="title">' . esc_html__( 'People with their own setting', 'adminora' ) . '</h2>';
+		echo '<h2 class="title">' . esc_html__( 'People with their own setting', 'layo-dashboard-toolkit' ) . '</h2>';
 		if ( ! $users ) {
-			echo '<p>' . esc_html__( 'Nobody yet. Open a user\'s profile to give them a template of their own.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'Nobody yet. Open a user\'s profile to give them a template of their own.', 'layo-dashboard-toolkit' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminora-list">';
+		echo '<ul class="layodt-list">';
 		foreach ( $users as $user ) {
 			$resolved = Admin_Look::resolve( get_userdata( $user->ID ) );
 			printf(
 				'<li><a href="%s">%s</a>: %s%s</li>',
-				esc_url( get_edit_user_link( $user->ID ) . '#adminora-look' ),
+				esc_url( get_edit_user_link( $user->ID ) . '#layodt-look' ),
 				esc_html( $user->display_name ),
 				esc_html( $templates[ $resolved['template'] ][0] ),
-				$resolved['locked'] ? ' (' . esc_html__( 'locked', 'adminora' ) . ')' : ''
+				$resolved['locked'] ? ' (' . esc_html__( 'locked', 'layo-dashboard-toolkit' ) . ')' : ''
 			);
 		}
 		echo '</ul>';
@@ -315,27 +315,27 @@ class Look_Tab {
 		$icons    = array_keys( Icons::all() );
 
 		$icon_options = array(
-			''    => __( 'Automatic', 'adminora' ),
-			'own' => __( 'Keep the plugin\'s own icon', 'adminora' ),
+			''    => __( 'Automatic', 'layo-dashboard-toolkit' ),
+			'own' => __( 'Keep the plugin\'s own icon', 'layo-dashboard-toolkit' ),
 		);
 		foreach ( $icons as $icon ) {
 			$icon_options[ $icon ] = ucfirst( str_replace( '-', ' ', $icon ) );
 		}
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Group the sidebar into sections, rename items, change their icons and drag them into order. This applies to every admin template; "WordPress default" keeps the standard menu. Which items each role can see is set under Roles & permissions → Menu access.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Group the sidebar into sections, rename items, change their icons and drag them into order. This applies to every admin template; "WordPress default" keeps the standard menu. Which items each role can see is set under Roles & permissions → Menu access.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		self::form( 'menu' );
 
-		echo '<h2 class="title">' . esc_html__( 'Sections', 'adminora' ) . '</h2>';
-		echo '<ol class="adminora-sortable adminora-section-list" data-adminora-sortable>';
+		echo '<h2 class="title">' . esc_html__( 'Sections', 'layo-dashboard-toolkit' ) . '</h2>';
+		echo '<ol class="layodt-sortable layodt-section-list" data-layodt-sortable>';
 		foreach ( $sections as $id => $label ) {
 			self::section_row( $id, $label );
 		}
 		echo '</ol>';
-		echo '<p><label for="adminora-new-section">' . esc_html__( 'Add a section', 'adminora' ) . '</label><br><input type="text" id="adminora-new-section" class="regular-text" name="new_section" placeholder="' . esc_attr__( 'For example: Marketing', 'adminora' ) . '"></p>';
+		echo '<p><label for="layodt-new-section">' . esc_html__( 'Add a section', 'layo-dashboard-toolkit' ) . '</label><br><input type="text" id="layodt-new-section" class="regular-text" name="new_section" placeholder="' . esc_attr__( 'For example: Marketing', 'layo-dashboard-toolkit' ) . '"></p>';
 
-		echo '<h2 class="title">' . esc_html__( 'Menu items', 'adminora' ) . '</h2>';
-		echo '<ol class="adminora-sortable adminora-item-list" data-adminora-sortable>';
+		echo '<h2 class="title">' . esc_html__( 'Menu items', 'layo-dashboard-toolkit' ) . '</h2>';
+		echo '<ol class="layodt-sortable layodt-item-list" data-layodt-sortable>';
 		foreach ( $slugs as $slug ) {
 			if ( ! isset( $top[ $slug ] ) || '' === $top[ $slug ][0] ) {
 				continue;
@@ -346,21 +346,21 @@ class Look_Tab {
 			$icon = isset( $item['icon'] ) ? $item['icon'] : '';
 			$auto = '' !== $icon && 'own' !== $icon ? $icon : Icons::default_for( $slug );
 
-			echo '<li class="adminora-sortable__row" draggable="true">';
+			echo '<li class="layodt-sortable__row" draggable="true">';
 			echo '<input type="hidden" name="order[]" value="' . esc_attr( $slug ) . '">';
 			self::move_buttons( $name );
-			echo '<span class="adminora-item-icon" aria-hidden="true">' . wp_kses( '' !== $auto ? Icons::svg( $auto, 18 ) : '', Icons::kses() ) . '</span>';
-			echo '<input type="text" name="items[' . esc_attr( $slug ) . '][label]" value="' . esc_attr( isset( $item['label'] ) ? $item['label'] : '' ) . '" placeholder="' . esc_attr( $name ) . '" aria-label="' . esc_attr( $name . ': ' . __( 'Label', 'adminora' ) ) . '">';
-			self::select( 'items[' . $slug . '][section]', $sections, Admin_Look::section_of( $slug ), null, $name . ': ' . __( 'Section', 'adminora' ) );
-			self::select( 'items[' . $slug . '][icon]', $icon_options, $icon, null, $name . ': ' . __( 'Icon', 'adminora' ) );
+			echo '<span class="layodt-item-icon" aria-hidden="true">' . wp_kses( '' !== $auto ? Icons::svg( $auto, 18 ) : '', Icons::kses() ) . '</span>';
+			echo '<input type="text" name="items[' . esc_attr( $slug ) . '][label]" value="' . esc_attr( isset( $item['label'] ) ? $item['label'] : '' ) . '" placeholder="' . esc_attr( $name ) . '" aria-label="' . esc_attr( $name . ': ' . __( 'Label', 'layo-dashboard-toolkit' ) ) . '">';
+			self::select( 'items[' . $slug . '][section]', $sections, Admin_Look::section_of( $slug ), null, $name . ': ' . __( 'Section', 'layo-dashboard-toolkit' ) );
+			self::select( 'items[' . $slug . '][icon]', $icon_options, $icon, null, $name . ': ' . __( 'Icon', 'layo-dashboard-toolkit' ) );
 			echo '</li>';
 		}
 		echo '</ol>';
 
 		echo '<p class="submit">';
-		submit_button( __( 'Save menu', 'adminora' ), 'primary', 'submit', false );
+		submit_button( __( 'Save menu', 'layo-dashboard-toolkit' ), 'primary', 'submit', false );
 		echo ' ';
-		submit_button( __( 'Reset to the standard layout', 'adminora' ), 'secondary', 'reset_menu', false, array( 'data-adminora-confirm-click' => '1' ) );
+		submit_button( __( 'Reset to the standard layout', 'layo-dashboard-toolkit' ), 'secondary', 'reset_menu', false, array( 'data-layodt-confirm-click' => '1' ) );
 		echo '</p></form>';
 	}
 
@@ -372,10 +372,10 @@ class Look_Tab {
 	 * @return void
 	 */
 	private static function section_row( $id, $label ) {
-		echo '<li class="adminora-sortable__row" draggable="true">';
+		echo '<li class="layodt-sortable__row" draggable="true">';
 		self::move_buttons( $label );
-		echo '<input type="text" name="sections[' . esc_attr( $id ) . ']" value="' . esc_attr( $label ) . '" aria-label="' . esc_attr__( 'Section name', 'adminora' ) . '">';
-		echo '<label class="adminora-sortable__remove"><input type="checkbox" name="remove_sections[]" value="' . esc_attr( $id ) . '"> ' . esc_html__( 'Remove', 'adminora' ) . '</label>';
+		echo '<input type="text" name="sections[' . esc_attr( $id ) . ']" value="' . esc_attr( $label ) . '" aria-label="' . esc_attr__( 'Section name', 'layo-dashboard-toolkit' ) . '">';
+		echo '<label class="layodt-sortable__remove"><input type="checkbox" name="remove_sections[]" value="' . esc_attr( $id ) . '"> ' . esc_html__( 'Remove', 'layo-dashboard-toolkit' ) . '</label>';
 		echo '</li>';
 	}
 
@@ -386,11 +386,11 @@ class Look_Tab {
 	 * @return void
 	 */
 	private static function move_buttons( $name ) {
-		echo '<span class="adminora-sortable__handle" aria-hidden="true"></span>';
+		echo '<span class="layodt-sortable__handle" aria-hidden="true"></span>';
 		/* translators: %s: item name. */
-		echo '<button type="button" class="button-link adminora-sortable__up" data-adminora-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'adminora' ), $name ) ) . '">&uarr;</button>';
+		echo '<button type="button" class="button-link layodt-sortable__up" data-layodt-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'layo-dashboard-toolkit' ), $name ) ) . '">&uarr;</button>';
 		/* translators: %s: item name. */
-		echo '<button type="button" class="button-link adminora-sortable__down" data-adminora-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'adminora' ), $name ) ) . '">&darr;</button>';
+		echo '<button type="button" class="button-link layodt-sortable__down" data-layodt-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'layo-dashboard-toolkit' ), $name ) ) . '">&darr;</button>';
 	}
 
 	/**
@@ -399,7 +399,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_save() {
-		check_admin_referer( 'adminora_look_save' );
+		check_admin_referer( 'layodt_look_save' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -436,7 +436,7 @@ class Look_Tab {
 			$templates = Admin_Look::templates();
 			$saved     = Admin_Look::config()['default']['template'];
 			/* translators: %s: template name. */
-			Audit::log( 'look', sprintf( __( 'Site template set to %s.', 'adminora' ), $templates[ $saved ][0] ) );
+			Audit::log( 'look', sprintf( __( 'Site template set to %s.', 'layo-dashboard-toolkit' ), $templates[ $saved ][0] ) );
 			self::back( 'templates', 'saved' );
 		}
 
@@ -450,7 +450,7 @@ class Look_Tab {
 			}
 
 			Admin_Look::save( array( 'roles' => $roles ) );
-			Audit::log( 'look', __( 'Templates per role updated.', 'adminora' ) );
+			Audit::log( 'look', __( 'Templates per role updated.', 'layo-dashboard-toolkit' ) );
 			self::back( 'roles', 'saved' );
 		}
 
@@ -462,7 +462,7 @@ class Look_Tab {
 						'items'    => array(),
 					)
 				);
-				Audit::log( 'look', __( 'Sidebar menu reset to the standard layout.', 'adminora' ) );
+				Audit::log( 'look', __( 'Sidebar menu reset to the standard layout.', 'layo-dashboard-toolkit' ) );
 				self::back( 'menu', 'saved' );
 			}
 
@@ -509,7 +509,7 @@ class Look_Tab {
 					'items'    => $items,
 				)
 			);
-			Audit::log( 'look', __( 'Sidebar menu layout updated.', 'adminora' ) );
+			Audit::log( 'look', __( 'Sidebar menu layout updated.', 'layo-dashboard-toolkit' ) );
 			self::back( 'menu', 'saved' );
 		}
 
@@ -522,7 +522,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_apply() {
-		check_admin_referer( 'adminora_look_apply' );
+		check_admin_referer( 'layodt_look_apply' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -543,7 +543,7 @@ class Look_Tab {
 
 			$templates = Admin_Look::templates();
 			/* translators: %s: template name. */
-			Audit::log( 'look', sprintf( __( 'Site template set to %s.', 'adminora' ), $templates[ $try['template'] ][0] ) );
+			Audit::log( 'look', sprintf( __( 'Site template set to %s.', 'layo-dashboard-toolkit' ), $templates[ $try['template'] ][0] ) );
 		}
 
 		delete_user_meta( get_current_user_id(), Admin_Look::META_TRY );
@@ -556,7 +556,7 @@ class Look_Tab {
 	 * @return void
 	 */
 	public static function handle_look_stop() {
-		check_admin_referer( 'adminora_look_stop' );
+		check_admin_referer( 'layodt_look_stop' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();

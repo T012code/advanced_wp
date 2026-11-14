@@ -3,15 +3,15 @@
  * White-label the admin: admin bar logo, footer credit
  * and a colour scheme built from the brand kit.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Admin_Branding;
+namespace LayoDT\Modules\Admin_Branding;
 
-use Adminora\Brand_Kit;
-use Adminora\Color;
-use Adminora\Settings;
-use Adminora\Modules\Emails\Renderer;
+use LayoDT\Brand_Kit;
+use LayoDT\Color;
+use LayoDT\Settings;
+use LayoDT\Modules\Emails\Renderer;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Admin_Branding {
 
-	const SCHEME = 'adminora';
+	const SCHEME = 'layodt';
 
 	/**
 	 * Hooks.
@@ -85,12 +85,12 @@ class Admin_Branding {
 		$name  = get_bloginfo( 'name' );
 
 		$title = '' !== $image
-			? '<img src="' . esc_url( $image ) . '" alt="" class="adminora-ab-logo"><span class="screen-reader-text">' . esc_html( $name ) . '</span>'
+			? '<img src="' . esc_url( $image ) . '" alt="" class="layodt-ab-logo"><span class="screen-reader-text">' . esc_html( $name ) . '</span>'
 			: '<span class="ab-label">' . esc_html( $name ) . '</span>';
 
 		$bar->add_node(
 			array(
-				'id'    => 'adminora-logo',
+				'id'    => 'layodt-logo',
 				'title' => $title,
 				'href'  => '' !== $link ? $link : home_url( '/' ),
 				'meta'  => array( 'title' => $name ),
@@ -118,7 +118,7 @@ class Admin_Branding {
 			return;
 		}
 
-		wp_add_inline_style( 'admin-bar', '#wpadminbar #wp-admin-bar-adminora-logo .ab-item{display:flex;align-items:center;padding:0 8px}#wpadminbar .adminora-ab-logo{display:block;height:20px;width:auto;max-width:120px}' );
+		wp_add_inline_style( 'admin-bar', '#wpadminbar #wp-admin-bar-layodt-logo .ab-item{display:flex;align-items:center;padding:0 8px}#wpadminbar .layodt-ab-logo{display:block;height:20px;width:auto;max-width:120px}' );
 	}
 
 	/**
@@ -157,8 +157,8 @@ class Admin_Branding {
 
 		wp_admin_css_color(
 			self::SCHEME,
-			__( 'Brand (Adminora)', 'adminora' ),
-			add_query_arg( 'v', \Adminora\Plugin::asset_version( 'assets/css/admin-scheme.css' ), ADMINORA_URL . 'assets/css/admin-scheme.css' ),
+			__( 'Brand (Layò Dashboard Toolkit)', 'layo-dashboard-toolkit' ),
+			add_query_arg( 'v', \LayoDT\Plugin::asset_version( 'assets/css/admin-scheme.css' ), LAYODT_URL . 'assets/css/admin-scheme.css' ),
 			array( self::menu_bg( $b ), $b['primary'], $b['secondary'], Color::readable_on( self::menu_bg( $b ) ) ),
 			array(
 				'base'    => Color::mix( Color::readable_on( self::menu_bg( $b ) ), self::menu_bg( $b ), 0.3 ),
@@ -215,15 +215,15 @@ class Admin_Branding {
 
 		$css = ':root{';
 		foreach ( $vars as $name => $value ) {
-			$css .= '--adminora-admin-' . $name . ':' . $value . ';';
+			$css .= '--layodt-admin-' . $name . ':' . $value . ';';
 		}
 		$css .= '}';
 
 		// The admin bar shows in the admin and on the front end; the rest of the
 		// scheme loads in the admin only, through the `colors` handle.
 		if ( is_admin_bar_showing() ) {
-			wp_enqueue_style( 'adminora-admin-bar-scheme', ADMINORA_URL . 'assets/css/admin-bar-scheme.css', array( 'admin-bar' ), \Adminora\Plugin::asset_version( 'assets/css/admin-bar-scheme.css' ) );
-			wp_add_inline_style( 'adminora-admin-bar-scheme', $css );
+			wp_enqueue_style( 'layodt-admin-bar-scheme', LAYODT_URL . 'assets/css/admin-bar-scheme.css', array( 'admin-bar' ), \LayoDT\Plugin::asset_version( 'assets/css/admin-bar-scheme.css' ) );
+			wp_add_inline_style( 'layodt-admin-bar-scheme', $css );
 		}
 
 		if ( is_admin() ) {

@@ -1,98 +1,98 @@
-/* Adminora system pages: error, maintenance and coming soon screens. */
+/* Layò Dashboard Toolkit system pages: error, maintenance and coming soon screens. */
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body { overflow-x: clip; }
 
-body.adminora-page {
+body.layodt-page {
 	margin: 0;
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 32px 16px;
-	background: var(--adminora-page-bg);
-	color: var(--adminora-page-text);
-	font-family: var(--adminora-font-body);
+	background: var(--layodt-page-bg);
+	color: var(--layodt-page-text);
+	font-family: var(--layodt-font-body);
 	font-size: 16px;
 	line-height: 1.6;
 	-webkit-font-smoothing: antialiased;
 }
 
-.adminora-page__inner {
+.layodt-page__inner {
 	width: 100%;
 	max-width: 560px;
 	text-align: center;
 }
 
-.adminora-page__logo {
+.layodt-page__logo {
 	display: block;
-	width: var(--adminora-logo-width);
+	width: var(--layodt-logo-width);
 	max-width: 100%;
 	height: auto;
 	margin: 0 auto 32px;
 }
 
-.adminora-page__sitename {
+.layodt-page__sitename {
 	margin: 0 0 32px;
-	font-family: var(--adminora-font-heading);
+	font-family: var(--layodt-font-heading);
 	font-size: 20px;
 	font-weight: 600;
 }
 
-.adminora-page__card {
-	background: var(--adminora-surface);
-	color: var(--adminora-text);
-	border: 1px solid var(--adminora-border);
-	border-radius: var(--adminora-radius);
+.layodt-page__card {
+	background: var(--layodt-surface);
+	color: var(--layodt-text);
+	border: 1px solid var(--layodt-border);
+	border-radius: var(--layodt-radius);
 	padding: 40px 32px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 16px 40px -16px rgba(0, 0, 0, 0.18);
 }
 
-.adminora-page--hero .adminora-page__card {
+.layodt-page--hero .layodt-page__card {
 	background: transparent;
 	border: 0;
 	box-shadow: none;
-	color: var(--adminora-page-text);
+	color: var(--layodt-page-text);
 	padding: 0;
 }
 
-.adminora-page__image {
+.layodt-page__image {
 	display: block;
 	max-width: 160px;
 	max-height: 160px;
 	margin: 0 auto 24px;
 }
 
-.adminora-page__heading {
+.layodt-page__heading {
 	margin: 0 0 12px;
-	font-family: var(--adminora-font-heading);
+	font-family: var(--layodt-font-heading);
 	font-size: clamp(24px, 5vw, 32px);
 	font-weight: 700;
 	line-height: 1.2;
 	letter-spacing: -0.01em;
 }
 
-.adminora-page--hero .adminora-page__heading {
+.layodt-page--hero .layodt-page__heading {
 	font-size: clamp(32px, 7vw, 48px);
 }
 
-.adminora-page__message {
+.layodt-page__message {
 	color: inherit;
 	opacity: 0.85;
 }
 
-.adminora-page__message p { margin: 0 0 12px; }
+.layodt-page__message p { margin: 0 0 12px; }
 
-.adminora-page__message a { color: var(--adminora-primary); }
+.layodt-page__message a { color: var(--layodt-primary); }
 
-.adminora-page--hero .adminora-page__message a { color: inherit; }
+.layodt-page--hero .layodt-page__message a { color: inherit; }
 
-.adminora-page__message ul {
+.layodt-page__message ul {
 	text-align: left;
 	padding-left: 20px;
 }
 
-.adminora-page__actions {
+.layodt-page__actions {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 12px;
@@ -100,77 +100,77 @@ body.adminora-page {
 	margin: 28px 0 0;
 }
 
-.adminora-page__button {
+.layodt-page__button {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	min-height: 44px;
 	padding: 0 24px;
-	border: 2px solid var(--adminora-primary);
-	border-radius: var(--adminora-button-radius);
-	background: var(--adminora-primary);
-	color: var(--adminora-on-primary);
+	border: 2px solid var(--layodt-primary);
+	border-radius: var(--layodt-button-radius);
+	background: var(--layodt-primary);
+	color: var(--layodt-on-primary);
 	font-weight: 600;
 	text-decoration: none;
 	transition: filter 150ms cubic-bezier(0.22, 1, 0.36, 1), transform 150ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.adminora-page__button:hover { filter: brightness(0.92); }
+.layodt-page__button:hover { filter: brightness(0.92); }
 
-.adminora-page__button:active { transform: scale(0.98); }
+.layodt-page__button:active { transform: scale(0.98); }
 
-.adminora-page__button:focus-visible {
+.layodt-page__button:focus-visible {
 	outline: 2px solid transparent;
-	box-shadow: 0 0 0 2px var(--adminora-surface), 0 0 0 4px var(--adminora-primary);
+	box-shadow: 0 0 0 2px var(--layodt-surface), 0 0 0 4px var(--layodt-primary);
 }
 
-.adminora-page__button--secondary {
+.layodt-page__button--secondary {
 	background: transparent;
-	color: var(--adminora-primary);
+	color: var(--layodt-primary);
 }
 
-.adminora-page__search {
+.layodt-page__search {
 	display: flex;
 	gap: 8px;
 	margin: 24px 0 0;
 }
 
-.adminora-page__search input {
+.layodt-page__search input {
 	flex: 1;
 	min-width: 0;
 	min-height: 44px;
 	padding: 8px 12px;
-	border: 1px solid var(--adminora-border);
-	border-radius: calc(var(--adminora-radius) * 0.75);
-	background: var(--adminora-surface);
-	color: var(--adminora-text);
+	border: 1px solid var(--layodt-border);
+	border-radius: calc(var(--layodt-radius) * 0.75);
+	background: var(--layodt-surface);
+	color: var(--layodt-text);
 	font: inherit;
 }
 
-.adminora-page__search input:focus {
+.layodt-page__search input:focus {
 	outline: 2px solid transparent;
-	border-color: var(--adminora-primary);
-	box-shadow: 0 0 0 1px var(--adminora-primary);
+	border-color: var(--layodt-primary);
+	box-shadow: 0 0 0 1px var(--layodt-primary);
 }
 
-.adminora-page__search button {
+.layodt-page__search button {
 	min-height: 44px;
 	padding: 0 20px;
 	border: 0;
-	border-radius: calc(var(--adminora-radius) * 0.75);
-	background: var(--adminora-primary);
-	color: var(--adminora-on-primary);
+	border-radius: calc(var(--layodt-radius) * 0.75);
+	background: var(--layodt-primary);
+	color: var(--layodt-on-primary);
 	font: inherit;
 	font-weight: 600;
 	cursor: pointer;
 }
 
-.adminora-page__search button:focus-visible {
+.layodt-page__search button:focus-visible {
 	outline: 2px solid transparent;
-	box-shadow: 0 0 0 2px var(--adminora-surface), 0 0 0 4px var(--adminora-primary);
+	box-shadow: 0 0 0 2px var(--layodt-surface), 0 0 0 4px var(--layodt-primary);
 }
 
-.adminora-countdown {
+.layodt-countdown {
 	display: flex;
 	justify-content: center;
 	gap: 12px;
@@ -179,22 +179,22 @@ body.adminora-page {
 	list-style: none;
 }
 
-.adminora-countdown li {
+.layodt-countdown li {
 	min-width: 72px;
 	padding: 12px 8px;
 	border: 1px solid currentColor;
-	border-radius: var(--adminora-radius);
+	border-radius: var(--layodt-radius);
 }
 
-.adminora-countdown strong {
+.layodt-countdown strong {
 	display: block;
-	font-family: var(--adminora-font-heading);
+	font-family: var(--layodt-font-heading);
 	font-size: 28px;
 	line-height: 1.1;
 	font-variant-numeric: tabular-nums;
 }
 
-.adminora-countdown span {
+.layodt-countdown span {
 	font-size: 12px;
 	text-transform: uppercase;
 	letter-spacing: 0.08em;
@@ -212,17 +212,17 @@ body.adminora-page {
 }
 
 @media (max-width: 480px) {
-	.adminora-page__card { padding: 32px 20px; }
-	.adminora-countdown li { min-width: 60px; }
+	.layodt-page__card { padding: 32px 20px; }
+	.layodt-countdown li { min-width: 60px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.adminora-page__button { transition-duration: 1ms; }
-	.adminora-page__button:active { transform: none; }
+	.layodt-page__button { transition-duration: 1ms; }
+	.layodt-page__button:active { transform: none; }
 }
 
 /* Shown on the critical error page to signed-in administrators only. */
-.adminora-page__note {
+.layodt-page__note {
 	margin: 20px 0 0;
 	padding: 12px 14px;
 	border: 1px solid color-mix(in srgb, currentColor 18%, transparent);

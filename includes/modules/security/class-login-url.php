@@ -4,16 +4,16 @@
  *
  * Logged-out requests to wp-login.php and /wp-admin are blocked. Every login
  * link WordPress builds is rewritten to the new address. Add
- * `define( 'ADMINORA_DISABLE_LOGIN_URL', true );` to wp-config.php to switch this
+ * `define( 'LAYODT_DISABLE_LOGIN_URL', true );` to wp-config.php to switch this
  * off if you get locked out.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Security;
+namespace LayoDT\Modules\Security;
 
-use Adminora\Settings;
-use Adminora\Modules\Error_Pages\Error_Pages;
+use LayoDT\Settings;
+use LayoDT\Modules\Error_Pages\Error_Pages;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -49,7 +49,7 @@ class Login_Url {
 	 * @return void
 	 */
 	public static function init() {
-		if ( defined( 'ADMINORA_DISABLE_LOGIN_URL' ) && ADMINORA_DISABLE_LOGIN_URL ) {
+		if ( defined( 'LAYODT_DISABLE_LOGIN_URL' ) && LAYODT_DISABLE_LOGIN_URL ) {
 			return;
 		}
 

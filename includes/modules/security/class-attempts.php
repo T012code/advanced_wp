@@ -2,12 +2,12 @@
 /**
  * Limits failed login attempts per IP address.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Security;
+namespace LayoDT\Modules\Security;
 
-use Adminora\Settings;
+use LayoDT\Settings;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Attempts {
 
-	const LOG_OPTION = 'adminora_lockouts';
+	const LOG_OPTION = 'layodt_lockouts';
 	const LOG_SIZE   = 100;
 
 	/**
@@ -105,7 +105,7 @@ class Attempts {
 	 * @return string
 	 */
 	private static function key( $type, $ip ) {
-		return 'adminora_' . $type . '_' . md5( $ip );
+		return 'layodt_' . $type . '_' . md5( $ip );
 	}
 
 	/**
@@ -135,10 +135,10 @@ class Attempts {
 		}
 
 		return new \WP_Error(
-			'adminora_locked',
+			'layodt_locked',
 			sprintf(
 				/* translators: %s: time left, such as "12 mins". */
-				__( '<strong>Error:</strong> Too many failed login attempts. Please try again in %s.', 'adminora' ),
+				__( '<strong>Error:</strong> Too many failed login attempts. Please try again in %s.', 'layo-dashboard-toolkit' ),
 				human_time_diff( time(), $until )
 			)
 		);
@@ -161,7 +161,7 @@ class Attempts {
 	 */
 	public static function failed( $username, $error = null ) {
 		// A blocked account or a full session limit is not a guessed password.
-		if ( is_wp_error( $error ) && array_intersect( $error->get_error_codes(), array( 'adminora_blocked', 'adminora_session_limit' ) ) ) {
+		if ( is_wp_error( $error ) && array_intersect( $error->get_error_codes(), array( 'layodt_blocked', 'layodt_session_limit' ) ) ) {
 			self::$not_counted = true;
 			return;
 		}
@@ -218,7 +218,7 @@ class Attempts {
 		return $errors . '<br>' . esc_html(
 			sprintf(
 				/* translators: %d: number of attempts left. */
-				_n( '%d attempt left before a temporary lockout.', '%d attempts left before a temporary lockout.', $left, 'adminora' ),
+				_n( '%d attempt left before a temporary lockout.', '%d attempts left before a temporary lockout.', $left, 'layo-dashboard-toolkit' ),
 				$left
 			)
 		);
@@ -231,7 +231,7 @@ class Attempts {
 	 * @return string[]
 	 */
 	public static function shake( $codes ) {
-		$codes[] = 'adminora_locked';
+		$codes[] = 'layodt_locked';
 
 		return $codes;
 	}

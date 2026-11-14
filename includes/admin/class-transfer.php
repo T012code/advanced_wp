@@ -1,26 +1,26 @@
 <?php
 /**
- * Export and import of everything Adminora stores, in one JSON file.
+ * Export and import of everything Layò Dashboard Toolkit stores, in one JSON file.
  *
  * Pages and categories are referred to by ID inside the settings. IDs differ
  * from site to site, so the file also carries each one's slug, and an import
  * links them to the page or category with the same slug on the new site.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Admin;
+namespace LayoDT\Admin;
 
-use Adminora\Brand_Kit;
-use Adminora\Settings;
-use Adminora\Modules\Admin_Look\Admin_Look;
-use Adminora\Modules\Roles\Access;
-use Adminora\Modules\Roles\Audit;
-use Adminora\Modules\Roles\Redirects;
-use Adminora\Modules\Roles\Role_Manager;
-use Adminora\Modules\Security\Admin_Url;
-use Adminora\Modules\Security\Login_Url;
-use Adminora\Modules\Widgets\Widgets;
+use LayoDT\Brand_Kit;
+use LayoDT\Settings;
+use LayoDT\Modules\Admin_Look\Admin_Look;
+use LayoDT\Modules\Roles\Access;
+use LayoDT\Modules\Roles\Audit;
+use LayoDT\Modules\Roles\Redirects;
+use LayoDT\Modules\Roles\Role_Manager;
+use LayoDT\Modules\Security\Admin_Url;
+use LayoDT\Modules\Security\Login_Url;
+use LayoDT\Modules\Widgets\Widgets;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -38,12 +38,12 @@ class Transfer {
 	 */
 	public static function parts() {
 		return array(
-			'settings' => array( __( 'Settings and designs', 'adminora' ), __( 'Brand kit, login page, emails, system pages, tab details, admin branding, login protection, sessions and coming soon.', 'adminora' ) ),
-			'look'     => array( __( 'Dashboard look', 'adminora' ), __( 'Templates, colours, templates per role and the sidebar menu layout.', 'adminora' ) ),
-			'widgets'  => array( __( 'Dashboard widgets', 'adminora' ), __( 'Which roles see each widget, custom widgets and the default layout.', 'adminora' ) ),
-			'access'   => array( __( 'Menu, toolbar and login rules', 'adminora' ), __( 'Menu access, toolbar settings, login destinations and dashboard access per role.', 'adminora' ) ),
-			'roles'    => array( __( 'Roles and capabilities', 'adminora' ), __( 'Every role and what it can do.', 'adminora' ) ),
-			'users'    => array( __( 'Personal settings', 'adminora' ), __( 'Login destination, template and toolbar choice of each person, matched by username or email. Roles and permissions given to one person are not included.', 'adminora' ) ),
+			'settings' => array( __( 'Settings and designs', 'layo-dashboard-toolkit' ), __( 'Brand kit, login page, emails, system pages, tab details, admin branding, login protection, sessions and coming soon.', 'layo-dashboard-toolkit' ) ),
+			'look'     => array( __( 'Dashboard look', 'layo-dashboard-toolkit' ), __( 'Templates, colours, templates per role and the sidebar menu layout.', 'layo-dashboard-toolkit' ) ),
+			'widgets'  => array( __( 'Dashboard widgets', 'layo-dashboard-toolkit' ), __( 'Which roles see each widget, custom widgets and the default layout.', 'layo-dashboard-toolkit' ) ),
+			'access'   => array( __( 'Menu, toolbar and login rules', 'layo-dashboard-toolkit' ), __( 'Menu access, toolbar settings, login destinations and dashboard access per role.', 'layo-dashboard-toolkit' ) ),
+			'roles'    => array( __( 'Roles and capabilities', 'layo-dashboard-toolkit' ), __( 'Every role and what it can do.', 'layo-dashboard-toolkit' ) ),
+			'users'    => array( __( 'Personal settings', 'layo-dashboard-toolkit' ), __( 'Login destination, template and toolbar choice of each person, matched by username or email. Roles and permissions given to one person are not included.', 'layo-dashboard-toolkit' ) ),
 		);
 	}
 
@@ -152,8 +152,8 @@ class Transfer {
 	public static function export( array $parts ) {
 		$parts = array_intersect( $parts, array_keys( self::parts() ) );
 		$data  = array(
-			'plugin'   => 'adminora',
-			'version'  => ADMINORA_VERSION,
+			'plugin'   => 'layo-dashboard-toolkit',
+			'version'  => LAYODT_VERSION,
 			'format'   => self::FORMAT,
 			'exported' => gmdate( 'c' ),
 			'site'     => home_url(),
@@ -327,13 +327,13 @@ class Transfer {
 	// ------------------------------------------------------------------
 
 	/**
-	 * Whether decoded JSON is an Adminora export.
+	 * Whether decoded JSON is a Layò Dashboard Toolkit export.
 	 *
 	 * @param mixed $data Decoded file.
 	 * @return bool
 	 */
 	public static function is_export( $data ) {
-		return is_array( $data ) && 'adminora' === ( isset( $data['plugin'] ) ? $data['plugin'] : '' ) && array_intersect( array_keys( $data ), array_keys( self::parts() ) );
+		return is_array( $data ) && 'layo-dashboard-toolkit' === ( isset( $data['plugin'] ) ? $data['plugin'] : '' ) && array_intersect( array_keys( $data ), array_keys( self::parts() ) );
 	}
 
 	/**
@@ -436,7 +436,7 @@ class Transfer {
 		}
 
 		if ( $report['imported'] ) {
-			Audit::log( 'import', __( 'Settings imported from a file.', 'adminora' ) );
+			Audit::log( 'import', __( 'Settings imported from a file.', 'layo-dashboard-toolkit' ) );
 		}
 
 		return $report;
@@ -558,7 +558,7 @@ class Transfer {
 			$exists = isset( $current[ $slug ] );
 
 			if ( $exists && ! Role_Manager::keeps_access( $slug, array_keys( array_filter( $role['capabilities'] ) ) ) ) {
-				return new \WP_Error( 'adminora_self_lockout', __( 'The roles were not imported, because they would remove your own access.', 'adminora' ) );
+				return new \WP_Error( 'layodt_self_lockout', __( 'The roles were not imported, because they would remove your own access.', 'layo-dashboard-toolkit' ) );
 			}
 
 			$changes[ $slug ] = $role;

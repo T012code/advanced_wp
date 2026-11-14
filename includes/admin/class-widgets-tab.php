@@ -1,17 +1,17 @@
 <?php
 /**
- * Settings → Adminora → Dashboard widgets.
+ * Settings → Layò Dashboard Toolkit → Dashboard widgets.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Admin;
+namespace LayoDT\Admin;
 
-use Adminora\Settings;
-use Adminora\Modules\Admin_Look\Icons;
-use Adminora\Modules\Roles\Audit;
-use Adminora\Modules\Roles\Role_Manager;
-use Adminora\Modules\Widgets\Widgets;
+use LayoDT\Settings;
+use LayoDT\Modules\Admin_Look\Icons;
+use LayoDT\Modules\Roles\Audit;
+use LayoDT\Modules\Roles\Role_Manager;
+use LayoDT\Modules\Widgets\Widgets;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,7 +27,7 @@ class Widgets_Tab {
 	 */
 	public static function init() {
 		foreach ( array( 'widgets_visibility', 'widget_save', 'widget_delete', 'widgets_layout' ) as $action ) {
-			add_action( 'admin_post_adminora_' . $action, array( __CLASS__, 'handle_' . $action ) );
+			add_action( 'admin_post_layodt_' . $action, array( __CLASS__, 'handle_' . $action ) );
 		}
 	}
 
@@ -38,9 +38,9 @@ class Widgets_Tab {
 	 */
 	private static function sections() {
 		return array(
-			'visibility' => __( 'Show and hide', 'adminora' ),
-			'custom'     => __( 'Custom widgets', 'adminora' ),
-			'layout'     => __( 'Default layout', 'adminora' ),
+			'visibility' => __( 'Show and hide', 'layo-dashboard-toolkit' ),
+			'custom'     => __( 'Custom widgets', 'layo-dashboard-toolkit' ),
+			'layout'     => __( 'Default layout', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -64,7 +64,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	private static function back( $section, $notice, array $args = array() ) {
-		wp_safe_redirect( self::url( $section, array_merge( array( 'adminora_notice' => $notice ), $args ) ) );
+		wp_safe_redirect( self::url( $section, array_merge( array( 'layodt_notice' => $notice ), $args ) ) );
 		exit;
 	}
 
@@ -74,7 +74,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	private static function deny() {
-		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'adminora' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'layo-dashboard-toolkit' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -87,12 +87,12 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	private static function form( $action, array $extra = array(), $confirm = false, $css_class = '' ) {
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"' . ( $confirm ? ' data-adminora-confirm' : '' ) . ( '' !== $css_class ? ' class="' . esc_attr( $css_class ) . '"' : '' ) . '>';
-		echo '<input type="hidden" name="action" value="adminora_' . esc_attr( $action ) . '">';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"' . ( $confirm ? ' data-layodt-confirm' : '' ) . ( '' !== $css_class ? ' class="' . esc_attr( $css_class ) . '"' : '' ) . '>';
+		echo '<input type="hidden" name="action" value="layodt_' . esc_attr( $action ) . '">';
 		foreach ( $extra as $name => $value ) {
 			echo '<input type="hidden" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '">';
 		}
-		wp_nonce_field( 'adminora_' . $action );
+		wp_nonce_field( 'layodt_' . $action );
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Widgets_Tab {
 	 */
 	public static function render() {
 		if ( ! Settings::module_on( 'widgets' ) ) {
-			echo '<div class="notice notice-warning inline adminora-notice"><p>' . esc_html__( 'Dashboard widgets is switched off on the Overview tab.', 'adminora' ) . '</p></div>';
+			echo '<div class="notice notice-warning inline layodt-notice"><p>' . esc_html__( 'Dashboard widgets is switched off on the Overview tab.', 'layo-dashboard-toolkit' ) . '</p></div>';
 			return;
 		}
 
@@ -124,7 +124,7 @@ class Widgets_Tab {
 		$section = isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : 'visibility';
 		$section = array_key_exists( $section, self::sections() ) ? $section : 'visibility';
 
-		echo '<nav class="adminora-subnav" aria-label="' . esc_attr__( 'Dashboard widgets sections', 'adminora' ) . '"><ul>';
+		echo '<nav class="layodt-subnav" aria-label="' . esc_attr__( 'Dashboard widgets sections', 'layo-dashboard-toolkit' ) . '"><ul>';
 		foreach ( self::sections() as $key => $label ) {
 			printf(
 				'<li><a href="%s"%s>%s</a></li>',
@@ -149,17 +149,17 @@ class Widgets_Tab {
 		$roles  = self::role_names();
 		$known  = Widgets::known();
 
-		echo '<p class="adminora-intro">' . wp_kses_post(
+		echo '<p class="layodt-intro">' . wp_kses_post(
 			sprintf(
 				/* translators: %s: dashboard URL. */
-				__( 'Untick a role to hide a widget from everyone in it. Widgets from other plugins appear here after an administrator opens <a href="%s">the dashboard</a> with those plugins active. Someone with several roles sees a widget if any of their roles does.', 'adminora' ),
+				__( 'Untick a role to hide a widget from everyone in it. Widgets from other plugins appear here after an administrator opens <a href="%s">the dashboard</a> with those plugins active. Someone with several roles sees a widget if any of their roles does.', 'layo-dashboard-toolkit' ),
 				esc_url( admin_url( 'index.php' ) )
 			)
 		) . '</p>';
 
 		self::form( 'widgets_visibility' );
-		echo '<div class="adminora-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr__( 'Widgets per role', 'adminora' ) . '"><table class="widefat striped adminora-matrix adminora-widget-matrix"><thead>';
-		echo '<tr><th scope="col" rowspan="2">' . esc_html__( 'Widget', 'adminora' ) . '</th><th scope="colgroup" colspan="' . (int) count( $roles ) . '"><span class="adminora-matrix__group">' . esc_html__( 'Shown to', 'adminora' ) . '</span></th></tr><tr>';
+		echo '<div class="layodt-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr__( 'Widgets per role', 'layo-dashboard-toolkit' ) . '"><table class="widefat striped layodt-matrix layodt-widget-matrix"><thead>';
+		echo '<tr><th scope="col" rowspan="2">' . esc_html__( 'Widget', 'layo-dashboard-toolkit' ) . '</th><th scope="colgroup" colspan="' . (int) count( $roles ) . '"><span class="layodt-matrix__group">' . esc_html__( 'Shown to', 'layo-dashboard-toolkit' ) . '</span></th></tr><tr>';
 		foreach ( $roles as $name ) {
 			echo '<th scope="col">' . esc_html( $name ) . '</th>';
 		}
@@ -176,14 +176,14 @@ class Widgets_Tab {
 					esc_attr( $slug ),
 					checked( ! in_array( $slug, $hidden, true ), true, false ),
 					/* translators: 1: widget title, 2: role name. */
-					esc_attr( sprintf( __( 'Show %1$s to %2$s', 'adminora' ), $title, $name ) )
+					esc_attr( sprintf( __( 'Show %1$s to %2$s', 'layo-dashboard-toolkit' ), $title, $name ) )
 				);
 			}
 			echo '</tr>';
 		}
 		echo '</tbody></table></div>';
 
-		echo '<p class="description">' . esc_html__( 'Custom widgets choose their roles in their own settings, under Custom widgets.', 'adminora' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'Custom widgets choose their roles in their own settings, under Custom widgets.', 'layo-dashboard-toolkit' ) . '</p>';
 		submit_button();
 		echo '</form>';
 	}
@@ -215,29 +215,29 @@ class Widgets_Tab {
 		$roles   = self::role_names();
 		$columns = Widgets::columns();
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Add your own widgets to the dashboard: a welcome message, links to the screens people use most, how to get help, a video, or live numbers from the site. Each one can be limited to chosen roles.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Add your own widgets to the dashboard: a welcome message, links to the screens people use most, how to get help, a video, or live numbers from the site. Each one can be limited to chosen roles.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		if ( $config['custom'] ) {
-			echo '<table class="widefat striped adminora-rule-table adminora-widget-list"><thead><tr><th scope="col">' . esc_html__( 'Widget', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Type', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Shown to', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'Column', 'adminora' ) . '</th><th scope="col"><span class="screen-reader-text">' . esc_html__( 'Actions', 'adminora' ) . '</span></th></tr></thead><tbody>';
+			echo '<table class="widefat striped layodt-rule-table layodt-widget-list"><thead><tr><th scope="col">' . esc_html__( 'Widget', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Type', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Shown to', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Column', 'layo-dashboard-toolkit' ) . '</th><th scope="col"><span class="screen-reader-text">' . esc_html__( 'Actions', 'layo-dashboard-toolkit' ) . '</span></th></tr></thead><tbody>';
 			foreach ( $config['custom'] as $id => $widget ) {
-				$who = $widget['roles'] ? implode( ', ', array_intersect_key( $roles, array_flip( $widget['roles'] ) ) ) : __( 'Everyone', 'adminora' );
+				$who = $widget['roles'] ? implode( ', ', array_intersect_key( $roles, array_flip( $widget['roles'] ) ) ) : __( 'Everyone', 'layo-dashboard-toolkit' );
 				echo '<tr><th scope="row"><a href="' . esc_url( self::url( 'custom', array( 'edit' => $id ) ) ) . '">' . esc_html( $widget['title'] ) . '</a></th>';
-				echo '<td>' . esc_html( $types[ $widget['type'] ][0] ) . '</td><td>' . esc_html( $who ) . '</td><td>' . esc_html( $columns[ $widget['column'] ] ) . '</td><td class="adminora-row-actions">';
-				echo '<a class="button button-small" href="' . esc_url( self::url( 'custom', array( 'edit' => $id ) ) ) . '">' . esc_html__( 'Edit', 'adminora' ) . '</a> ';
-				self::form( 'widget_delete', array( 'widget' => $id ), true, 'adminora-inline-form' );
-				echo '<button type="submit" class="button button-small button-link-delete">' . esc_html__( 'Delete', 'adminora' ) . '</button></form>';
+				echo '<td>' . esc_html( $types[ $widget['type'] ][0] ) . '</td><td>' . esc_html( $who ) . '</td><td>' . esc_html( $columns[ $widget['column'] ] ) . '</td><td class="layodt-row-actions">';
+				echo '<a class="button button-small" href="' . esc_url( self::url( 'custom', array( 'edit' => $id ) ) ) . '">' . esc_html__( 'Edit', 'layo-dashboard-toolkit' ) . '</a> ';
+				self::form( 'widget_delete', array( 'widget' => $id ), true, 'layodt-inline-form' );
+				echo '<button type="submit" class="button button-small button-link-delete">' . esc_html__( 'Delete', 'layo-dashboard-toolkit' ) . '</button></form>';
 				echo '</td></tr>';
 			}
 			echo '</tbody></table>';
 		} else {
-			echo '<p>' . esc_html__( 'No custom widgets yet.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'No custom widgets yet.', 'layo-dashboard-toolkit' ) . '</p>';
 		}
 
-		echo '<h2 class="title">' . esc_html__( 'Add a widget', 'adminora' ) . '</h2>';
-		echo '<ul class="adminora-widget-types">';
+		echo '<h2 class="title">' . esc_html__( 'Add a widget', 'layo-dashboard-toolkit' ) . '</h2>';
+		echo '<ul class="layodt-widget-types">';
 		foreach ( $types as $key => $info ) {
 			printf(
-				'<li><a href="%s"><span class="adminora-widget-types__icon" aria-hidden="true">%s</span><strong>%s</strong><small>%s</small></a></li>',
+				'<li><a href="%s"><span class="layodt-widget-types__icon" aria-hidden="true">%s</span><strong>%s</strong><small>%s</small></a></li>',
 				esc_url(
 					self::url(
 						'custom',
@@ -266,14 +266,14 @@ class Widgets_Tab {
 		$types = Widgets::types();
 		$type  = $widget['type'];
 
-		echo '<p><a href="' . esc_url( self::url( 'custom' ) ) . '">&larr; ' . esc_html__( 'All custom widgets', 'adminora' ) . '</a></p>';
+		echo '<p><a href="' . esc_url( self::url( 'custom' ) ) . '">&larr; ' . esc_html__( 'All custom widgets', 'layo-dashboard-toolkit' ) . '</a></p>';
 		echo '<h2 class="title">' . esc_html(
 			'' === $id
 				/* translators: %s: widget type. */
-				? sprintf( __( 'New widget: %s', 'adminora' ), $types[ $type ][0] )
+				? sprintf( __( 'New widget: %s', 'layo-dashboard-toolkit' ), $types[ $type ][0] )
 				: $widget['title']
 		) . '</h2>';
-		echo '<p class="adminora-intro">' . esc_html( $types[ $type ][1] ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html( $types[ $type ][1] ) . '</p>';
 
 		self::form(
 			'widget_save',
@@ -284,20 +284,20 @@ class Widgets_Tab {
 		);
 		echo '<table class="form-table" role="presentation">';
 
-		Fields::row_start( __( 'Title', 'adminora' ), 'adminora-widget-title' );
-		echo '<input type="text" id="adminora-widget-title" class="regular-text" name="data[title]" value="' . esc_attr( $widget['title'] ) . '">';
-		Fields::row_end( __( 'You can use {site_name}.', 'adminora' ) );
+		Fields::row_start( __( 'Title', 'layo-dashboard-toolkit' ), 'layodt-widget-title' );
+		echo '<input type="text" id="layodt-widget-title" class="regular-text" name="data[title]" value="' . esc_attr( $widget['title'] ) . '">';
+		Fields::row_end( __( 'You can use {site_name}.', 'layo-dashboard-toolkit' ) );
 
 		if ( in_array( $type, array( 'text', 'support', 'video' ), true ) ) {
 			$labels = array(
-				'text'    => __( 'Content', 'adminora' ),
-				'support' => __( 'Message', 'adminora' ),
-				'video'   => __( 'Text under the video', 'adminora' ),
+				'text'    => __( 'Content', 'layo-dashboard-toolkit' ),
+				'support' => __( 'Message', 'layo-dashboard-toolkit' ),
+				'video'   => __( 'Text under the video', 'layo-dashboard-toolkit' ),
 			);
-			Fields::row_start( $labels[ $type ], 'adminora_widget_content' );
+			Fields::row_start( $labels[ $type ], 'layodt_widget_content' );
 			wp_editor(
 				$widget['content'],
-				'adminora_widget_content',
+				'layodt_widget_content',
 				array(
 					'textarea_name' => 'data[content]',
 					'textarea_rows' => 'text' === $type ? 10 : 5,
@@ -305,31 +305,31 @@ class Widgets_Tab {
 					'quicktags'     => true,
 				)
 			);
-			Fields::row_end( __( 'Switch between Visual and Code (HTML) with the tabs above the editor. {site_name}, {site_url} and {admin_email} are replaced.', 'adminora' ) );
+			Fields::row_end( __( 'Switch between Visual and Code (HTML) with the tabs above the editor. {site_name}, {site_url} and {admin_email} are replaced.', 'layo-dashboard-toolkit' ) );
 		}
 
 		if ( 'support' === $type ) {
-			Fields::row_start( __( 'Email', 'adminora' ), 'adminora-widget-email' );
-			echo '<input type="email" id="adminora-widget-email" class="regular-text" name="data[email]" value="' . esc_attr( $widget['email'] ) . '">';
+			Fields::row_start( __( 'Email', 'layo-dashboard-toolkit' ), 'layodt-widget-email' );
+			echo '<input type="email" id="layodt-widget-email" class="regular-text" name="data[email]" value="' . esc_attr( $widget['email'] ) . '">';
 			Fields::row_end();
-			Fields::row_start( __( 'Phone', 'adminora' ), 'adminora-widget-phone' );
-			echo '<input type="tel" id="adminora-widget-phone" class="regular-text" name="data[phone]" value="' . esc_attr( $widget['phone'] ) . '">';
+			Fields::row_start( __( 'Phone', 'layo-dashboard-toolkit' ), 'layodt-widget-phone' );
+			echo '<input type="tel" id="layodt-widget-phone" class="regular-text" name="data[phone]" value="' . esc_attr( $widget['phone'] ) . '">';
 			Fields::row_end();
 		}
 
 		if ( in_array( $type, array( 'text', 'support' ), true ) ) {
-			Fields::row_start( __( 'Button text', 'adminora' ), 'adminora-widget-button' );
-			echo '<input type="text" id="adminora-widget-button" class="regular-text" name="data[button]" value="' . esc_attr( $widget['button'] ) . '">';
-			Fields::row_end( __( 'Leave empty for no button.', 'adminora' ) );
-			Fields::row_start( __( 'Button link', 'adminora' ), 'adminora-widget-button-url' );
-			echo '<input type="text" id="adminora-widget-button-url" class="regular-text" name="data[button_url]" value="' . esc_attr( $widget['button_url'] ) . '" placeholder="https://">';
-			Fields::row_end( __( 'An address, or an admin screen such as post-new.php.', 'adminora' ) );
+			Fields::row_start( __( 'Button text', 'layo-dashboard-toolkit' ), 'layodt-widget-button' );
+			echo '<input type="text" id="layodt-widget-button" class="regular-text" name="data[button]" value="' . esc_attr( $widget['button'] ) . '">';
+			Fields::row_end( __( 'Leave empty for no button.', 'layo-dashboard-toolkit' ) );
+			Fields::row_start( __( 'Button link', 'layo-dashboard-toolkit' ), 'layodt-widget-button-url' );
+			echo '<input type="text" id="layodt-widget-button-url" class="regular-text" name="data[button_url]" value="' . esc_attr( $widget['button_url'] ) . '" placeholder="https://">';
+			Fields::row_end( __( 'An address, or an admin screen such as post-new.php.', 'layo-dashboard-toolkit' ) );
 		}
 
 		if ( 'video' === $type ) {
-			Fields::row_start( __( 'Video address', 'adminora' ), 'adminora-widget-video' );
-			echo '<input type="url" id="adminora-widget-video" class="large-text" name="data[video]" value="' . esc_attr( $widget['video'] ) . '" placeholder="https://www.youtube.com/watch?v=…">';
-			Fields::row_end( __( 'The page address of a video on YouTube, Vimeo, or another site WordPress can embed. The player loads from that site when someone views the dashboard.', 'adminora' ) );
+			Fields::row_start( __( 'Video address', 'layo-dashboard-toolkit' ), 'layodt-widget-video' );
+			echo '<input type="url" id="layodt-widget-video" class="large-text" name="data[video]" value="' . esc_attr( $widget['video'] ) . '" placeholder="https://www.youtube.com/watch?v=…">';
+			Fields::row_end( __( 'The page address of a video on YouTube, Vimeo, or another site WordPress can embed. The player loads from that site when someone views the dashboard.', 'layo-dashboard-toolkit' ) );
 		}
 
 		if ( 'links' === $type ) {
@@ -337,13 +337,13 @@ class Widgets_Tab {
 		}
 
 		if ( 'posts' === $type ) {
-			Fields::row_start( __( 'Category', 'adminora' ), 'adminora-widget-category' );
+			Fields::row_start( __( 'Category', 'layo-dashboard-toolkit' ), 'layodt-widget-category' );
 			wp_dropdown_categories(
 				array(
 					'name'            => 'data[category]',
-					'id'              => 'adminora-widget-category',
+					'id'              => 'layodt-widget-category',
 					'selected'        => $widget['category'],
-					'show_option_all' => __( 'All categories', 'adminora' ),
+					'show_option_all' => __( 'All categories', 'layo-dashboard-toolkit' ),
 					'hide_empty'      => false,
 					'hierarchical'    => true,
 				)
@@ -352,35 +352,35 @@ class Widgets_Tab {
 		}
 
 		if ( in_array( $type, array( 'posts', 'signups', 'comments' ), true ) ) {
-			Fields::row_start( __( 'How many to show', 'adminora' ), 'adminora-widget-number' );
-			echo '<input type="number" id="adminora-widget-number" class="small-text" name="data[number]" min="1" max="20" value="' . esc_attr( (string) $widget['number'] ) . '">';
+			Fields::row_start( __( 'How many to show', 'layo-dashboard-toolkit' ), 'layodt-widget-number' );
+			echo '<input type="number" id="layodt-widget-number" class="small-text" name="data[number]" min="1" max="20" value="' . esc_attr( (string) $widget['number'] ) . '">';
 			Fields::row_end();
 		}
 
-		Fields::row_start( __( 'Column', 'adminora' ), 'adminora-widget-column' );
-		echo '<select id="adminora-widget-column" name="data[column]">';
+		Fields::row_start( __( 'Column', 'layo-dashboard-toolkit' ), 'layodt-widget-column' );
+		echo '<select id="layodt-widget-column" name="data[column]">';
 		foreach ( Widgets::columns() as $key => $label ) {
 			echo '<option value="' . esc_attr( $key ) . '"' . selected( $widget['column'], $key, false ) . '>' . esc_html( $label ) . '</option>';
 		}
 		echo '</select>';
-		Fields::row_end( __( 'Where it starts. People can still move it unless the default layout is locked. Columns 3 and 4 only show on wide screens.', 'adminora' ) );
+		Fields::row_end( __( 'Where it starts. People can still move it unless the default layout is locked. Columns 3 and 4 only show on wide screens.', 'layo-dashboard-toolkit' ) );
 
-		Fields::row_start( __( 'Shown to', 'adminora' ) );
-		echo '<fieldset><legend class="screen-reader-text">' . esc_html__( 'Shown to', 'adminora' ) . '</legend>';
+		Fields::row_start( __( 'Shown to', 'layo-dashboard-toolkit' ) );
+		echo '<fieldset><legend class="screen-reader-text">' . esc_html__( 'Shown to', 'layo-dashboard-toolkit' ) . '</legend>';
 		foreach ( self::role_names() as $slug => $name ) {
-			echo '<label class="adminora-check"><input type="checkbox" name="data[roles][]" value="' . esc_attr( $slug ) . '"' . checked( in_array( $slug, $widget['roles'], true ), true, false ) . '> ' . esc_html( $name ) . '</label>';
+			echo '<label class="layodt-check"><input type="checkbox" name="data[roles][]" value="' . esc_attr( $slug ) . '"' . checked( in_array( $slug, $widget['roles'], true ), true, false ) . '> ' . esc_html( $name ) . '</label>';
 		}
 		echo '</fieldset>';
-		Fields::row_end( __( 'Tick none to show it to everyone who can open the dashboard.', 'adminora' ) );
+		Fields::row_end( __( 'Tick none to show it to everyone who can open the dashboard.', 'layo-dashboard-toolkit' ) );
 
 		if ( in_array( $type, array( 'signups', 'counts', 'comments', 'health' ), true ) ) {
-			Fields::row_start( __( 'Privacy', 'adminora' ) );
-			echo '<p>' . esc_html__( 'This widget shows site data to everyone it is shown to. Links to edit screens only appear for people allowed to use them.', 'adminora' ) . '</p>';
+			Fields::row_start( __( 'Privacy', 'layo-dashboard-toolkit' ) );
+			echo '<p>' . esc_html__( 'This widget shows site data to everyone it is shown to. Links to edit screens only appear for people allowed to use them.', 'layo-dashboard-toolkit' ) . '</p>';
 			Fields::row_end();
 		}
 
 		echo '</table>';
-		submit_button( '' === $id ? __( 'Add widget', 'adminora' ) : __( 'Save widget', 'adminora' ) );
+		submit_button( '' === $id ? __( 'Add widget', 'layo-dashboard-toolkit' ) : __( 'Save widget', 'layo-dashboard-toolkit' ) );
 		echo '</form>';
 	}
 
@@ -391,7 +391,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	private static function links_field( array $links ) {
-		$icons = array( '' => __( 'Automatic', 'adminora' ) );
+		$icons = array( '' => __( 'Automatic', 'layo-dashboard-toolkit' ) );
 		foreach ( array_keys( Icons::all() ) as $icon ) {
 			$icons[ $icon ] = ucfirst( str_replace( '-', ' ', $icon ) );
 		}
@@ -404,26 +404,26 @@ class Widgets_Tab {
 			);
 		}
 
-		Fields::row_start( __( 'Links', 'adminora' ) );
-		echo '<ol class="adminora-sortable adminora-link-list" data-adminora-sortable>';
+		Fields::row_start( __( 'Links', 'layo-dashboard-toolkit' ) );
+		echo '<ol class="layodt-sortable layodt-link-list" data-layodt-sortable>';
 		foreach ( array_values( $links ) as $n => $link ) {
-			$name = '' !== $link['label'] ? $link['label'] : __( 'New link', 'adminora' );
-			echo '<li class="adminora-sortable__row" draggable="true">';
-			echo '<span class="adminora-sortable__handle" aria-hidden="true"></span>';
+			$name = '' !== $link['label'] ? $link['label'] : __( 'New link', 'layo-dashboard-toolkit' );
+			echo '<li class="layodt-sortable__row" draggable="true">';
+			echo '<span class="layodt-sortable__handle" aria-hidden="true"></span>';
 			/* translators: %s: item name. */
-			echo '<button type="button" class="button-link adminora-sortable__up" data-adminora-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'adminora' ), $name ) ) . '">&uarr;</button>';
+			echo '<button type="button" class="button-link layodt-sortable__up" data-layodt-move="-1" aria-label="' . esc_attr( sprintf( __( 'Move %s up', 'layo-dashboard-toolkit' ), $name ) ) . '">&uarr;</button>';
 			/* translators: %s: item name. */
-			echo '<button type="button" class="button-link adminora-sortable__down" data-adminora-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'adminora' ), $name ) ) . '">&darr;</button>';
-			echo '<input type="text" name="data[links][' . (int) $n . '][label]" value="' . esc_attr( $link['label'] ) . '" placeholder="' . esc_attr__( 'Label', 'adminora' ) . '" aria-label="' . esc_attr__( 'Label', 'adminora' ) . '">';
-			echo '<input type="text" name="data[links][' . (int) $n . '][url]" value="' . esc_attr( $link['url'] ) . '" placeholder="' . esc_attr__( 'post-new.php or https://…', 'adminora' ) . '" aria-label="' . esc_attr__( 'Address', 'adminora' ) . '">';
-			echo '<select name="data[links][' . (int) $n . '][icon]" aria-label="' . esc_attr__( 'Icon', 'adminora' ) . '">';
+			echo '<button type="button" class="button-link layodt-sortable__down" data-layodt-move="1" aria-label="' . esc_attr( sprintf( __( 'Move %s down', 'layo-dashboard-toolkit' ), $name ) ) . '">&darr;</button>';
+			echo '<input type="text" name="data[links][' . (int) $n . '][label]" value="' . esc_attr( $link['label'] ) . '" placeholder="' . esc_attr__( 'Label', 'layo-dashboard-toolkit' ) . '" aria-label="' . esc_attr__( 'Label', 'layo-dashboard-toolkit' ) . '">';
+			echo '<input type="text" name="data[links][' . (int) $n . '][url]" value="' . esc_attr( $link['url'] ) . '" placeholder="' . esc_attr__( 'post-new.php or https://…', 'layo-dashboard-toolkit' ) . '" aria-label="' . esc_attr__( 'Address', 'layo-dashboard-toolkit' ) . '">';
+			echo '<select name="data[links][' . (int) $n . '][icon]" aria-label="' . esc_attr__( 'Icon', 'layo-dashboard-toolkit' ) . '">';
 			foreach ( $icons as $key => $label ) {
 				echo '<option value="' . esc_attr( $key ) . '"' . selected( $link['icon'], $key, false ) . '>' . esc_html( $label ) . '</option>';
 			}
 			echo '</select></li>';
 		}
 		echo '</ol>';
-		Fields::row_end( __( 'Drag to reorder. Leave a label empty to remove that link. Use an admin screen such as edit.php?post_type=page, or a full address. Save to get more empty rows.', 'adminora' ) );
+		Fields::row_end( __( 'Drag to reorder. Leave a label empty to remove that link. Use an admin screen such as edit.php?post_type=page, or a full address. Save to get more empty rows.', 'layo-dashboard-toolkit' ) );
 	}
 
 	/**
@@ -436,73 +436,73 @@ class Widgets_Tab {
 		$titles  = Widgets::titles();
 		$columns = Widgets::columns();
 
-		echo '<p class="adminora-intro">' . wp_kses_post(
+		echo '<p class="layodt-intro">' . wp_kses_post(
 			sprintf(
 				/* translators: %s: dashboard URL. */
-				__( 'Arrange <a href="%s">your own dashboard</a> the way everyone should see it: drag widgets into place, collapse the ones that should start closed and hide any with Screen Options. Then come back here and save it as the default layout. People who have not arranged their own dashboard get it straight away.', 'adminora' ),
+				__( 'Arrange <a href="%s">your own dashboard</a> the way everyone should see it: drag widgets into place, collapse the ones that should start closed and hide any with Screen Options. Then come back here and save it as the default layout. People who have not arranged their own dashboard get it straight away.', 'layo-dashboard-toolkit' ),
 				esc_url( admin_url( 'index.php' ) )
 			)
 		) . '</p>';
 
-		echo '<div class="adminora-card">';
-		echo '<h2 class="title">' . esc_html__( 'Saved layout', 'adminora' ) . '</h2>';
+		echo '<div class="layodt-card">';
+		echo '<h2 class="title">' . esc_html__( 'Saved layout', 'layo-dashboard-toolkit' ) . '</h2>';
 		if ( empty( $layout['saved'] ) ) {
-			echo '<p>' . esc_html__( 'None yet. Everyone sees the WordPress arrangement until you save one.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'None yet. Everyone sees the WordPress arrangement until you save one.', 'layo-dashboard-toolkit' ) . '</p>';
 		} else {
 			printf(
 				'<p>%s</p>',
 				esc_html(
 					sprintf(
 						/* translators: %s: date and time. */
-						__( 'Saved on %s.', 'adminora' ),
+						__( 'Saved on %s.', 'layo-dashboard-toolkit' ),
 						wp_date( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $layout['saved'] )
 					)
 				)
 			);
-			echo '<div class="adminora-layout">';
+			echo '<div class="layodt-layout">';
 			foreach ( $columns as $key => $label ) {
 				$ids = isset( $layout['order'][ $key ] ) ? array_filter( explode( ',', $layout['order'][ $key ] ) ) : array();
-				echo '<div class="adminora-layout__col"><h3>' . esc_html( $label ) . '</h3><ul>';
+				echo '<div class="layodt-layout__col"><h3>' . esc_html( $label ) . '</h3><ul>';
 				foreach ( $ids as $box ) {
 					if ( ! isset( $titles[ $box ] ) ) {
 						continue;
 					}
 					$flags = array();
 					if ( in_array( $box, $layout['closed'], true ) ) {
-						$flags[] = __( 'collapsed', 'adminora' );
+						$flags[] = __( 'collapsed', 'layo-dashboard-toolkit' );
 					}
 					if ( in_array( $box, $layout['hidden'], true ) ) {
-						$flags[] = __( 'hidden', 'adminora' );
+						$flags[] = __( 'hidden', 'layo-dashboard-toolkit' );
 					}
 					echo '<li>' . esc_html( $titles[ $box ] ) . ( $flags ? ' <small>(' . esc_html( implode( ', ', $flags ) ) . ')</small>' : '' ) . '</li>';
 				}
 				if ( ! array_intersect( $ids, array_keys( $titles ) ) ) {
-					echo '<li class="adminora-layout__empty">' . esc_html__( 'Empty', 'adminora' ) . '</li>';
+					echo '<li class="layodt-layout__empty">' . esc_html__( 'Empty', 'layo-dashboard-toolkit' ) . '</li>';
 				}
 				echo '</ul></div>';
 			}
 			echo '</div>';
-			echo '<p class="description">' . esc_html__( 'Widgets that are not listed, such as ones added by a plugin later, keep their usual place.', 'adminora' ) . '</p>';
+			echo '<p class="description">' . esc_html__( 'Widgets that are not listed, such as ones added by a plugin later, keep their usual place.', 'layo-dashboard-toolkit' ) . '</p>';
 		}
 		echo '</div>';
 
 		self::form( 'widgets_layout' );
 		echo '<table class="form-table" role="presentation">';
-		Fields::row_start( __( 'Lock', 'adminora' ) );
-		echo '<label><input type="checkbox" name="lock" value="1"' . checked( $layout['lock'], true, false ) . '> ' . esc_html__( 'Stop people rearranging their dashboard', 'adminora' ) . '</label>';
-		Fields::row_end( __( 'Everyone gets the saved order and cannot drag widgets. They can still collapse widgets. Administrators are never locked, so they can change the default.', 'adminora' ) );
-		Fields::row_start( __( 'Everyone', 'adminora' ) );
-		echo '<label><input type="checkbox" name="reset_users" value="1"> ' . esc_html__( 'Also replace the arrangement people have already made', 'adminora' ) . '</label>';
-		Fields::row_end( __( 'Clears each person\'s own order, collapsed and hidden widgets, so the default applies to them too.', 'adminora' ) );
+		Fields::row_start( __( 'Lock', 'layo-dashboard-toolkit' ) );
+		echo '<label><input type="checkbox" name="lock" value="1"' . checked( $layout['lock'], true, false ) . '> ' . esc_html__( 'Stop people rearranging their dashboard', 'layo-dashboard-toolkit' ) . '</label>';
+		Fields::row_end( __( 'Everyone gets the saved order and cannot drag widgets. They can still collapse widgets. Administrators are never locked, so they can change the default.', 'layo-dashboard-toolkit' ) );
+		Fields::row_start( __( 'Everyone', 'layo-dashboard-toolkit' ) );
+		echo '<label><input type="checkbox" name="reset_users" value="1"> ' . esc_html__( 'Also replace the arrangement people have already made', 'layo-dashboard-toolkit' ) . '</label>';
+		Fields::row_end( __( 'Clears each person\'s own order, collapsed and hidden widgets, so the default applies to them too.', 'layo-dashboard-toolkit' ) );
 		echo '</table>';
 
 		echo '<p class="submit">';
-		submit_button( __( 'Save my dashboard as the default', 'adminora' ), 'primary', 'capture', false );
+		submit_button( __( 'Save my dashboard as the default', 'layo-dashboard-toolkit' ), 'primary', 'capture', false );
 		if ( ! empty( $layout['saved'] ) ) {
 			echo ' ';
-			submit_button( __( 'Save lock setting only', 'adminora' ), 'secondary', 'lock_only', false );
+			submit_button( __( 'Save lock setting only', 'layo-dashboard-toolkit' ), 'secondary', 'lock_only', false );
 			echo ' ';
-			submit_button( __( 'Remove the default layout', 'adminora' ), 'secondary', 'clear', false, array( 'data-adminora-confirm-click' => '1' ) );
+			submit_button( __( 'Remove the default layout', 'layo-dashboard-toolkit' ), 'secondary', 'clear', false, array( 'data-layodt-confirm-click' => '1' ) );
 		}
 		echo '</p></form>';
 	}
@@ -513,7 +513,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widgets_visibility() {
-		check_admin_referer( 'adminora_widgets_visibility' );
+		check_admin_referer( 'layodt_widgets_visibility' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -532,7 +532,7 @@ class Widgets_Tab {
 		}
 
 		Widgets::save( array( 'hide' => $hide ) );
-		Audit::log( 'widgets', __( 'Dashboard widget visibility updated.', 'adminora' ) );
+		Audit::log( 'widgets', __( 'Dashboard widget visibility updated.', 'layo-dashboard-toolkit' ) );
 		self::back( 'visibility', 'saved' );
 	}
 
@@ -542,7 +542,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widget_save() {
-		check_admin_referer( 'adminora_widget_save' );
+		check_admin_referer( 'layodt_widget_save' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -565,7 +565,7 @@ class Widgets_Tab {
 
 		Widgets::save( array( 'custom' => $config['custom'] ) );
 		/* translators: %s: widget title. */
-		Audit::log( 'widgets', sprintf( __( 'Dashboard widget "%s" saved.', 'adminora' ), $config['custom'][ $id ]['title'] ) );
+		Audit::log( 'widgets', sprintf( __( 'Dashboard widget "%s" saved.', 'layo-dashboard-toolkit' ), $config['custom'][ $id ]['title'] ) );
 		self::back( 'custom', 'saved', array( 'edit' => $id ) );
 	}
 
@@ -575,7 +575,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widget_delete() {
-		check_admin_referer( 'adminora_widget_delete' );
+		check_admin_referer( 'layodt_widget_delete' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -589,7 +589,7 @@ class Widgets_Tab {
 			unset( $config['custom'][ $id ] );
 			Widgets::save( array( 'custom' => $config['custom'] ) );
 			/* translators: %s: widget title. */
-			Audit::log( 'widgets', sprintf( __( 'Dashboard widget "%s" deleted.', 'adminora' ), $title ) );
+			Audit::log( 'widgets', sprintf( __( 'Dashboard widget "%s" deleted.', 'layo-dashboard-toolkit' ), $title ) );
 		}
 
 		self::back( 'custom', 'widget_deleted' );
@@ -601,7 +601,7 @@ class Widgets_Tab {
 	 * @return void
 	 */
 	public static function handle_widgets_layout() {
-		check_admin_referer( 'adminora_widgets_layout' );
+		check_admin_referer( 'layodt_widgets_layout' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			self::deny();
@@ -612,7 +612,7 @@ class Widgets_Tab {
 
 		if ( isset( $_POST['clear'] ) ) {
 			Widgets::save( array( 'layout' => array() ) );
-			Audit::log( 'widgets', __( 'Default dashboard layout removed.', 'adminora' ) );
+			Audit::log( 'widgets', __( 'Default dashboard layout removed.', 'layo-dashboard-toolkit' ) );
 			self::back( 'layout', 'saved' );
 		}
 
@@ -627,7 +627,7 @@ class Widgets_Tab {
 			Widgets::reset_users();
 		}
 
-		Audit::log( 'widgets', $lock ? __( 'Default dashboard layout saved and locked.', 'adminora' ) : __( 'Default dashboard layout saved.', 'adminora' ) );
+		Audit::log( 'widgets', $lock ? __( 'Default dashboard layout saved and locked.', 'layo-dashboard-toolkit' ) : __( 'Default dashboard layout saved.', 'layo-dashboard-toolkit' ) );
 		self::back( 'layout', 'saved' );
 	}
 }

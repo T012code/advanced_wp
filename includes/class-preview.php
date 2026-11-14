@@ -3,13 +3,13 @@
  * Front-end preview pages for the Customizer.
  *
  * The Customizer can only preview front-end URLs, so the login page, emails
- * and system pages are rendered at `?adminora_preview=...` for users who can
+ * and system pages are rendered at `?layodt_preview=...` for users who can
  * customize the site.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora;
+namespace LayoDT;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -35,7 +35,7 @@ class Preview {
 	 * @return string
 	 */
 	public static function url( $type, array $args = array() ) {
-		return add_query_arg( array_merge( array( 'adminora_preview' => $type ), $args ), home_url( '/' ) );
+		return add_query_arg( array_merge( array( 'layodt_preview' => $type ), $args ), home_url( '/' ) );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Preview {
 	 */
 	public static function is_preview() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only routing; access is limited to the Customizer preview.
-		return isset( $_GET['adminora_preview'] ) && is_customize_preview() && current_user_can( 'customize' );
+		return isset( $_GET['layodt_preview'] ) && is_customize_preview() && current_user_can( 'customize' );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class Preview {
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- See is_preview().
-		$type = isset( $_GET['adminora_preview'] ) ? sanitize_key( wp_unslash( $_GET['adminora_preview'] ) ) : '';
+		$type = isset( $_GET['layodt_preview'] ) ? sanitize_key( wp_unslash( $_GET['layodt_preview'] ) ) : '';
 
 		switch ( $type ) {
 			case 'login':
@@ -67,12 +67,12 @@ class Preview {
 				break;
 
 			case 'email':
-				$template = isset( $_GET['adminora_template'] ) ? sanitize_key( wp_unslash( $_GET['adminora_template'] ) ) : 'welcome';
+				$template = isset( $_GET['layodt_template'] ) ? sanitize_key( wp_unslash( $_GET['layodt_template'] ) ) : 'welcome';
 				Modules\Emails\Renderer::print_preview( $template, true );
 				break;
 
 			case 'page':
-				$page = isset( $_GET['adminora_page'] ) ? sanitize_key( wp_unslash( $_GET['adminora_page'] ) ) : 'critical';
+				$page = isset( $_GET['layodt_page'] ) ? sanitize_key( wp_unslash( $_GET['layodt_page'] ) ) : 'critical';
 				Modules\Error_Pages\Error_Pages::render_preview( $page );
 				break;
 

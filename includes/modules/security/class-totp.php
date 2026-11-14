@@ -2,10 +2,10 @@
 /**
  * Time-based one-time passwords (RFC 6238), as used by authenticator apps.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Security;
+namespace LayoDT\Modules\Security;
 
 defined( 'ABSPATH' ) || exit;
 

@@ -1,18 +1,18 @@
 <?php
 /**
- * Settings → Adminora → Roles & permissions.
+ * Settings → Layò Dashboard Toolkit → Roles & permissions.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Admin;
+namespace LayoDT\Admin;
 
-use Adminora\Settings;
-use Adminora\Modules\Roles\Access;
-use Adminora\Modules\Roles\Audit;
-use Adminora\Modules\Roles\Capabilities;
-use Adminora\Modules\Roles\Redirects;
-use Adminora\Modules\Roles\Role_Manager;
+use LayoDT\Settings;
+use LayoDT\Modules\Roles\Access;
+use LayoDT\Modules\Roles\Audit;
+use LayoDT\Modules\Roles\Capabilities;
+use LayoDT\Modules\Roles\Redirects;
+use LayoDT\Modules\Roles\Role_Manager;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ class Roles_Tab {
 	 */
 	public static function init() {
 		foreach ( array( 'role_create', 'role_save', 'role_delete', 'role_restore', 'role_defaults', 'access_save', 'audit_csv' ) as $action ) {
-			add_action( 'admin_post_adminora_' . $action, array( __CLASS__, 'handle_' . $action ) );
+			add_action( 'admin_post_layodt_' . $action, array( __CLASS__, 'handle_' . $action ) );
 		}
 	}
 
@@ -39,12 +39,12 @@ class Roles_Tab {
 	 */
 	private static function sections() {
 		return array(
-			'roles'   => __( 'Roles', 'adminora' ),
-			'menu'    => __( 'Menu access', 'adminora' ),
-			'toolbar' => __( 'Toolbar', 'adminora' ),
-			'access'  => __( 'Login and access', 'adminora' ),
-			'backups' => __( 'Backups', 'adminora' ),
-			'log'     => __( 'Activity log', 'adminora' ),
+			'roles'   => __( 'Roles', 'layo-dashboard-toolkit' ),
+			'menu'    => __( 'Menu access', 'layo-dashboard-toolkit' ),
+			'toolbar' => __( 'Toolbar', 'layo-dashboard-toolkit' ),
+			'access'  => __( 'Login and access', 'layo-dashboard-toolkit' ),
+			'backups' => __( 'Backups', 'layo-dashboard-toolkit' ),
+			'log'     => __( 'Activity log', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -69,11 +69,11 @@ class Roles_Tab {
 	 */
 	private static function back( $section, $notice, array $args = array() ) {
 		if ( 0 === strpos( $notice, 'error:' ) ) {
-			set_transient( 'adminora_roles_error_' . get_current_user_id(), substr( $notice, 6 ), 60 );
+			set_transient( 'layodt_roles_error_' . get_current_user_id(), substr( $notice, 6 ), 60 );
 			$notice = 'roles_error';
 		}
 
-		wp_safe_redirect( self::url( $section, array_merge( array( 'adminora_notice' => $notice ), $args ) ) );
+		wp_safe_redirect( self::url( $section, array_merge( array( 'layodt_notice' => $notice ), $args ) ) );
 		exit;
 	}
 
@@ -83,7 +83,7 @@ class Roles_Tab {
 	 * @return void
 	 */
 	private static function deny() {
-		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'adminora' ), '', array( 'response' => 403 ) );
+		wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'layo-dashboard-toolkit' ), '', array( 'response' => 403 ) );
 	}
 
 	/**
@@ -95,12 +95,12 @@ class Roles_Tab {
 	 * @return void
 	 */
 	private static function form( $action, array $extra = array(), $confirm = false ) {
-		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"' . ( $confirm ? ' data-adminora-confirm' : '' ) . '>';
-		echo '<input type="hidden" name="action" value="adminora_' . esc_attr( $action ) . '">';
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"' . ( $confirm ? ' data-layodt-confirm' : '' ) . '>';
+		echo '<input type="hidden" name="action" value="layodt_' . esc_attr( $action ) . '">';
 		foreach ( $extra as $name => $value ) {
 			echo '<input type="hidden" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '">';
 		}
-		wp_nonce_field( 'adminora_' . $action );
+		wp_nonce_field( 'layodt_' . $action );
 	}
 
 	/**
@@ -110,7 +110,7 @@ class Roles_Tab {
 	 */
 	public static function render() {
 		if ( ! Settings::module_on( 'roles' ) ) {
-			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'Roles and permissions is switched off on the Overview tab.', 'adminora' ) . '</p></div>';
+			echo '<div class="notice notice-warning inline"><p>' . esc_html__( 'Roles and permissions is switched off on the Overview tab.', 'layo-dashboard-toolkit' ) . '</p></div>';
 			return;
 		}
 
@@ -121,13 +121,13 @@ class Roles_Tab {
 
 		$section = array_key_exists( $section, self::sections() ) ? $section : 'roles';
 
-		$error = get_transient( 'adminora_roles_error_' . get_current_user_id() );
+		$error = get_transient( 'layodt_roles_error_' . get_current_user_id() );
 		if ( $error ) {
-			delete_transient( 'adminora_roles_error_' . get_current_user_id() );
-			echo '<div class="notice notice-error inline adminora-notice"><p>' . esc_html( $error ) . '</p></div>';
+			delete_transient( 'layodt_roles_error_' . get_current_user_id() );
+			echo '<div class="notice notice-error inline layodt-notice"><p>' . esc_html( $error ) . '</p></div>';
 		}
 
-		echo '<nav class="adminora-subnav" aria-label="' . esc_attr__( 'Roles and permissions sections', 'adminora' ) . '"><ul>';
+		echo '<nav class="layodt-subnav" aria-label="' . esc_attr__( 'Roles and permissions sections', 'layo-dashboard-toolkit' ) . '"><ul>';
 		foreach ( self::sections() as $key => $label ) {
 			printf(
 				'<li><a href="%s"%s>%s</a></li>',
@@ -155,35 +155,35 @@ class Roles_Tab {
 	private static function section_roles() {
 		$roles = Role_Manager::roles();
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Create roles, copy existing ones and choose exactly what each role can do. A copy of all roles is saved before every change.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Create roles, copy existing ones and choose exactly what each role can do. A copy of all roles is saved before every change.', 'layo-dashboard-toolkit' ) . '</p>';
 
-		echo '<table class="widefat striped adminora-roles"><thead><tr><th>' . esc_html__( 'Role', 'adminora' ) . '</th><th>' . esc_html__( 'Slug', 'adminora' ) . '</th><th>' . esc_html__( 'Users', 'adminora' ) . '</th><th>' . esc_html__( 'Capabilities', 'adminora' ) . '</th><th><span class="screen-reader-text">' . esc_html__( 'Actions', 'adminora' ) . '</span></th></tr></thead><tbody>';
+		echo '<table class="widefat striped layodt-roles"><thead><tr><th>' . esc_html__( 'Role', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'Slug', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'Users', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'Capabilities', 'layo-dashboard-toolkit' ) . '</th><th><span class="screen-reader-text">' . esc_html__( 'Actions', 'layo-dashboard-toolkit' ) . '</span></th></tr></thead><tbody>';
 
 		foreach ( $roles as $slug => $role ) {
 			echo '<tr><td><strong>' . esc_html( $role['name'] ) . '</strong>';
 			if ( Role_Manager::LOCKED === $slug ) {
-				echo ' <span class="adminora-badge">' . esc_html__( 'Locked', 'adminora' ) . '</span>';
+				echo ' <span class="layodt-badge">' . esc_html__( 'Locked', 'layo-dashboard-toolkit' ) . '</span>';
 			} elseif ( ! Role_Manager::is_core( $slug ) ) {
-				echo ' <span class="adminora-badge">' . esc_html__( 'Custom', 'adminora' ) . '</span>';
+				echo ' <span class="layodt-badge">' . esc_html__( 'Custom', 'layo-dashboard-toolkit' ) . '</span>';
 			}
 			echo '</td><td><code>' . esc_html( $slug ) . '</code></td>';
 			echo '<td><a href="' . esc_url( admin_url( 'users.php?role=' . $slug ) ) . '">' . esc_html( number_format_i18n( $role['count'] ) ) . '</a></td>';
 			echo '<td>' . esc_html( number_format_i18n( count( $role['caps'] ) ) ) . '</td>';
-			echo '<td class="adminora-row-actions"><a class="button button-small" href="' . esc_url( self::url( 'roles', array( 'role' => $slug ) ) ) . '">' . esc_html( Role_Manager::LOCKED === $slug ? __( 'View', 'adminora' ) : __( 'Edit', 'adminora' ) ) . '</a></td></tr>';
+			echo '<td class="layodt-row-actions"><a class="button button-small" href="' . esc_url( self::url( 'roles', array( 'role' => $slug ) ) ) . '">' . esc_html( Role_Manager::LOCKED === $slug ? __( 'View', 'layo-dashboard-toolkit' ) : __( 'Edit', 'layo-dashboard-toolkit' ) ) . '</a></td></tr>';
 		}
 
 		echo '</tbody></table>';
 
-		echo '<h2 class="title">' . esc_html__( 'Add a role', 'adminora' ) . '</h2>';
+		echo '<h2 class="title">' . esc_html__( 'Add a role', 'layo-dashboard-toolkit' ) . '</h2>';
 		self::form( 'role_create' );
 		echo '<table class="form-table" role="presentation">';
-		echo '<tr><th scope="row"><label for="adminora-role-name">' . esc_html__( 'Name', 'adminora' ) . '</label></th><td><input type="text" id="adminora-role-name" name="name" class="regular-text" required placeholder="' . esc_attr__( 'Shop Manager', 'adminora' ) . '"></td></tr>';
-		echo '<tr><th scope="row"><label for="adminora-role-copy">' . esc_html__( 'Start from', 'adminora' ) . '</label></th><td><select id="adminora-role-copy" name="copy"><option value="">' . esc_html__( 'Nothing (can only read)', 'adminora' ) . '</option>';
+		echo '<tr><th scope="row"><label for="layodt-role-name">' . esc_html__( 'Name', 'layo-dashboard-toolkit' ) . '</label></th><td><input type="text" id="layodt-role-name" name="name" class="regular-text" required placeholder="' . esc_attr__( 'Shop Manager', 'layo-dashboard-toolkit' ) . '"></td></tr>';
+		echo '<tr><th scope="row"><label for="layodt-role-copy">' . esc_html__( 'Start from', 'layo-dashboard-toolkit' ) . '</label></th><td><select id="layodt-role-copy" name="copy"><option value="">' . esc_html__( 'Nothing (can only read)', 'layo-dashboard-toolkit' ) . '</option>';
 		foreach ( $roles as $slug => $role ) {
-			echo '<option value="' . esc_attr( $slug ) . '">' . esc_html( sprintf( /* translators: %s: role name. */ __( 'A copy of %s', 'adminora' ), $role['name'] ) ) . '</option>';
+			echo '<option value="' . esc_attr( $slug ) . '">' . esc_html( sprintf( /* translators: %s: role name. */ __( 'A copy of %s', 'layo-dashboard-toolkit' ), $role['name'] ) ) . '</option>';
 		}
 		echo '</select></td></tr></table>';
-		submit_button( __( 'Add role', 'adminora' ), 'primary' );
+		submit_button( __( 'Add role', 'layo-dashboard-toolkit' ), 'primary' );
 		echo '</form>';
 	}
 
@@ -199,31 +199,31 @@ class Roles_Tab {
 		$locked = Role_Manager::LOCKED === $slug;
 		$descs  = Capabilities::descriptions();
 
-		echo '<p><a href="' . esc_url( self::url( 'roles' ) ) . '">&larr; ' . esc_html__( 'All roles', 'adminora' ) . '</a></p>';
+		echo '<p><a href="' . esc_url( self::url( 'roles' ) ) . '">&larr; ' . esc_html__( 'All roles', 'layo-dashboard-toolkit' ) . '</a></p>';
 		echo '<h2 class="title">' . esc_html( $role['name'] ) . ' <code>' . esc_html( $slug ) . '</code></h2>';
 
 		if ( $locked ) {
-			echo '<div class="notice notice-info inline adminora-notice"><p>' . esc_html__( 'The Administrator role is locked so the site always has someone who can manage it. You can see its capabilities but not change them.', 'adminora' ) . '</p></div>';
+			echo '<div class="notice notice-info inline layodt-notice"><p>' . esc_html__( 'The Administrator role is locked so the site always has someone who can manage it. You can see its capabilities but not change them.', 'layo-dashboard-toolkit' ) . '</p></div>';
 		}
 
 		self::form( 'role_save', array( 'role' => $slug ) );
 
-		echo '<table class="form-table" role="presentation"><tr><th scope="row"><label for="adminora-role-rename">' . esc_html__( 'Display name', 'adminora' ) . '</label></th><td><input type="text" id="adminora-role-rename" name="name" class="regular-text" value="' . esc_attr( wp_roles()->roles[ $slug ]['name'] ) . '"' . disabled( $locked, true, false ) . '></td></tr></table>';
+		echo '<table class="form-table" role="presentation"><tr><th scope="row"><label for="layodt-role-rename">' . esc_html__( 'Display name', 'layo-dashboard-toolkit' ) . '</label></th><td><input type="text" id="layodt-role-rename" name="name" class="regular-text" value="' . esc_attr( wp_roles()->roles[ $slug ]['name'] ) . '"' . disabled( $locked, true, false ) . '></td></tr></table>';
 
-		echo '<div class="adminora-caps-toolbar"><label for="adminora-cap-search" class="screen-reader-text">' . esc_html__( 'Search capabilities', 'adminora' ) . '</label><input type="search" id="adminora-cap-search" class="regular-text" placeholder="' . esc_attr__( 'Search capabilities', 'adminora' ) . '" data-adminora-cap-search></div>';
+		echo '<div class="layodt-caps-toolbar"><label for="layodt-cap-search" class="screen-reader-text">' . esc_html__( 'Search capabilities', 'layo-dashboard-toolkit' ) . '</label><input type="search" id="layodt-cap-search" class="regular-text" placeholder="' . esc_attr__( 'Search capabilities', 'layo-dashboard-toolkit' ) . '" data-layodt-cap-search></div>';
 
-		echo '<div class="adminora-cap-groups">';
+		echo '<div class="layodt-cap-groups">';
 		foreach ( Capabilities::grouped() as $key => $group ) {
 			if ( ! $group[1] ) {
 				continue;
 			}
-			echo '<fieldset class="adminora-cap-group" data-adminora-cap-group><legend>' . esc_html( $group[0] ) . '</legend>';
+			echo '<fieldset class="layodt-cap-group" data-layodt-cap-group><legend>' . esc_html( $group[0] ) . '</legend>';
 			if ( ! $locked ) {
-				echo '<p class="adminora-cap-all"><button type="button" class="button-link" data-adminora-cap-toggle>' . esc_html__( 'Select all', 'adminora' ) . '</button></p>';
+				echo '<p class="layodt-cap-all"><button type="button" class="button-link" data-layodt-cap-toggle>' . esc_html__( 'Select all', 'layo-dashboard-toolkit' ) . '</button></p>';
 			}
 			foreach ( $group[1] as $cap ) {
 				printf(
-					'<label class="adminora-cap" data-cap="%1$s"><input type="checkbox" name="caps[]" value="%1$s" %2$s %3$s> <span><code>%1$s</code>%4$s</span></label>',
+					'<label class="layodt-cap" data-cap="%1$s"><input type="checkbox" name="caps[]" value="%1$s" %2$s %3$s> <span><code>%1$s</code>%4$s</span></label>',
 					esc_attr( $cap ),
 					checked( in_array( $cap, $role['caps'], true ), true, false ),
 					disabled( $locked, true, false ),
@@ -235,23 +235,23 @@ class Roles_Tab {
 		echo '</div>';
 
 		if ( ! $locked ) {
-			echo '<table class="form-table" role="presentation"><tr><th scope="row"><label for="adminora-custom-cap">' . esc_html__( 'Add a capability', 'adminora' ) . '</label></th><td><input type="text" id="adminora-custom-cap" name="custom_cap" class="regular-text" placeholder="manage_bookings"><p class="description">' . esc_html__( 'For capabilities a plugin checks but has not given to any role yet. Lowercase letters, numbers and underscores.', 'adminora' ) . '</p></td></tr></table>';
-			submit_button( __( 'Save role', 'adminora' ) );
+			echo '<table class="form-table" role="presentation"><tr><th scope="row"><label for="layodt-custom-cap">' . esc_html__( 'Add a capability', 'layo-dashboard-toolkit' ) . '</label></th><td><input type="text" id="layodt-custom-cap" name="custom_cap" class="regular-text" placeholder="manage_bookings"><p class="description">' . esc_html__( 'For capabilities a plugin checks but has not given to any role yet. Lowercase letters, numbers and underscores.', 'layo-dashboard-toolkit' ) . '</p></td></tr></table>';
+			submit_button( __( 'Save role', 'layo-dashboard-toolkit' ) );
 		}
 
 		echo '</form>';
 
 		if ( ! $locked && ! Role_Manager::is_core( $slug ) ) {
-			echo '<h2 class="title">' . esc_html__( 'Delete this role', 'adminora' ) . '</h2>';
+			echo '<h2 class="title">' . esc_html__( 'Delete this role', 'layo-dashboard-toolkit' ) . '</h2>';
 			self::form( 'role_delete', array( 'role' => $slug ), true );
-			echo '<p><label for="adminora-reassign">' . esc_html__( 'Move its users to', 'adminora' ) . '</label> <select id="adminora-reassign" name="reassign">';
+			echo '<p><label for="layodt-reassign">' . esc_html__( 'Move its users to', 'layo-dashboard-toolkit' ) . '</label> <select id="layodt-reassign" name="reassign">';
 			foreach ( $roles as $other => $data ) {
 				if ( $other !== $slug ) {
 					echo '<option value="' . esc_attr( $other ) . '"' . selected( $other, get_option( 'default_role' ), false ) . '>' . esc_html( $data['name'] ) . '</option>';
 				}
 			}
 			echo '</select></p>';
-			submit_button( __( 'Delete role', 'adminora' ), 'delete' );
+			submit_button( __( 'Delete role', 'layo-dashboard-toolkit' ), 'delete' );
 			echo '</form>';
 		}
 	}
@@ -286,14 +286,14 @@ class Roles_Tab {
 		$rules = Access::rules();
 		$hide  = isset( $rules['menu'][ $role ] ) ? (array) $rules['menu'][ $role ] : array();
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Choose which dashboard menu items each role sees. Hidden screens are also blocked if someone opens them by address. Administrators always see everything.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Choose which dashboard menu items each role sees. Hidden screens are also blocked if someone opens them by address. Administrators always see everything.', 'layo-dashboard-toolkit' ) . '</p>';
 
-		echo '<form method="get" action="' . esc_url( admin_url( 'options-general.php' ) ) . '" class="adminora-inline-form"><input type="hidden" name="page" value="adminora"><input type="hidden" name="tab" value="roles"><input type="hidden" name="section" value="menu">';
-		echo '<label for="adminora-menu-role">' . esc_html__( 'Role', 'adminora' ) . '</label> <select id="adminora-menu-role" name="for" data-adminora-autosubmit>';
+		echo '<form method="get" action="' . esc_url( admin_url( 'options-general.php' ) ) . '" class="layodt-inline-form"><input type="hidden" name="page" value="layo-dashboard-toolkit"><input type="hidden" name="tab" value="roles"><input type="hidden" name="section" value="menu">';
+		echo '<label for="layodt-menu-role">' . esc_html__( 'Role', 'layo-dashboard-toolkit' ) . '</label> <select id="layodt-menu-role" name="for" data-layodt-autosubmit>';
 		foreach ( $roles as $slug => $name ) {
 			echo '<option value="' . esc_attr( $slug ) . '"' . selected( $slug, $role, false ) . '>' . esc_html( $name ) . '</option>';
 		}
-		echo '</select> <noscript><button class="button">' . esc_html__( 'Show', 'adminora' ) . '</button></noscript></form>';
+		echo '</select> <noscript><button class="button">' . esc_html__( 'Show', 'layo-dashboard-toolkit' ) . '</button></noscript></form>';
 
 		self::form(
 			'access_save',
@@ -306,7 +306,7 @@ class Roles_Tab {
 		// Group each top-level item with the items under it.
 		$groups = array();
 		foreach ( Access::menu_items() as $id => $item ) {
-			if ( '' === $item[0] || false !== strpos( $id, 'adminora' ) ) {
+			if ( '' === $item[0] || false !== strpos( $id, 'layo-dashboard-toolkit' ) ) {
 				continue;
 			}
 			if ( $item[1] && $groups ) {
@@ -320,19 +320,19 @@ class Roles_Tab {
 			}
 		}
 
-		echo '<div class="adminora-menu-tools"><label for="adminora-menu-filter" class="screen-reader-text">' . esc_html__( 'Find a menu item', 'adminora' ) . '</label><input type="search" id="adminora-menu-filter" placeholder="' . esc_attr__( 'Find a menu item', 'adminora' ) . '" data-adminora-menu-filter>';
+		echo '<div class="layodt-menu-tools"><label for="layodt-menu-filter" class="screen-reader-text">' . esc_html__( 'Find a menu item', 'layo-dashboard-toolkit' ) . '</label><input type="search" id="layodt-menu-filter" placeholder="' . esc_attr__( 'Find a menu item', 'layo-dashboard-toolkit' ) . '" data-layodt-menu-filter>';
 		echo '<span class="description">' . esc_html(
 			sprintf(
 				/* translators: %d: number of menus. */
-				_n( '%d menu. Untick an item to hide it.', '%d menus. Untick an item to hide it.', count( $groups ), 'adminora' ),
+				_n( '%d menu. Untick an item to hide it.', '%d menus. Untick an item to hide it.', count( $groups ), 'layo-dashboard-toolkit' ),
 				count( $groups )
 			)
 		) . '</span></div>';
 
-		echo '<div class="adminora-menu-groups">';
+		echo '<div class="layodt-menu-groups">';
 		foreach ( $groups as $group ) {
-			echo '<div class="adminora-menu-group">';
-			self::menu_check( $group['id'], $group['label'], $hide, 'adminora-menu-group__top' );
+			echo '<div class="layodt-menu-group">';
+			self::menu_check( $group['id'], $group['label'], $hide, 'layodt-menu-group__top' );
 			if ( $group['subs'] ) {
 				echo '<ul>';
 				foreach ( $group['subs'] as $id => $label ) {
@@ -345,7 +345,7 @@ class Roles_Tab {
 			echo '</div>';
 		}
 		echo '</div>';
-		submit_button( sprintf( /* translators: %s: role name. */ __( 'Save menu for %s', 'adminora' ), $roles[ $role ] ) );
+		submit_button( sprintf( /* translators: %s: role name. */ __( 'Save menu for %s', 'layo-dashboard-toolkit' ), $roles[ $role ] ) );
 		echo '</form>';
 	}
 
@@ -378,16 +378,16 @@ class Roles_Tab {
 		$rules = Access::rules();
 		$nodes = Access::toolbar_nodes();
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Hide the top toolbar, or individual items on it, for each role. Each user\'s profile can override the site setting. Hiding it inside the dashboard needs an admin template other than "WordPress default", because the account menu then moves into the sidebar footer.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Hide the top toolbar, or individual items on it, for each role. Each user\'s profile can override the site setting. Hiding it inside the dashboard needs an admin template other than "WordPress default", because the account menu then moves into the sidebar footer.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		self::form( 'access_save', array( 'group' => 'toolbar' ) );
 		echo '<input type="hidden" name="present" value="1">';
-		echo '<div class="adminora-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr__( 'Toolbar per role', 'adminora' ) . '"><table class="widefat striped adminora-matrix"><thead>';
-		echo '<tr><th scope="col" rowspan="2">' . esc_html__( 'Role', 'adminora' ) . '</th><th scope="colgroup" colspan="2"><span class="adminora-matrix__group">' . esc_html__( 'Hide the whole toolbar', 'adminora' ) . '</span></th>';
+		echo '<div class="layodt-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr__( 'Toolbar per role', 'layo-dashboard-toolkit' ) . '"><table class="widefat striped layodt-matrix"><thead>';
+		echo '<tr><th scope="col" rowspan="2">' . esc_html__( 'Role', 'layo-dashboard-toolkit' ) . '</th><th scope="colgroup" colspan="2"><span class="layodt-matrix__group">' . esc_html__( 'Hide the whole toolbar', 'layo-dashboard-toolkit' ) . '</span></th>';
 		if ( $nodes ) {
-			echo '<th scope="colgroup" colspan="' . (int) count( $nodes ) . '"><span class="adminora-matrix__group">' . esc_html__( 'Hide one item', 'adminora' ) . '</span></th>';
+			echo '<th scope="colgroup" colspan="' . (int) count( $nodes ) . '"><span class="layodt-matrix__group">' . esc_html__( 'Hide one item', 'layo-dashboard-toolkit' ) . '</span></th>';
 		}
-		echo '</tr><tr><th scope="col">' . esc_html__( 'On the site', 'adminora' ) . '</th><th scope="col">' . esc_html__( 'In the dashboard', 'adminora' ) . '</th>';
+		echo '</tr><tr><th scope="col">' . esc_html__( 'On the site', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'In the dashboard', 'layo-dashboard-toolkit' ) . '</th>';
 		foreach ( $nodes as $label ) {
 			echo '<th scope="col">' . esc_html( $label ) . '</th>';
 		}
@@ -395,8 +395,8 @@ class Roles_Tab {
 
 		foreach ( $roles as $slug => $name ) {
 			echo '<tr><th scope="row">' . esc_html( $name ) . '</th>';
-			printf( '<td><input type="checkbox" name="toolbar_front[]" value="%s" %s aria-label="%s"></td>', esc_attr( $slug ), checked( in_array( $slug, $rules['toolbar_front'], true ), true, false ), esc_attr( $name . ': ' . __( 'Hide on the site', 'adminora' ) ) );
-			printf( '<td><input type="checkbox" name="toolbar_admin[]" value="%s" %s aria-label="%s"></td>', esc_attr( $slug ), checked( in_array( $slug, $rules['toolbar_admin'], true ), true, false ), esc_attr( $name . ': ' . __( 'Hide in the dashboard', 'adminora' ) ) );
+			printf( '<td><input type="checkbox" name="toolbar_front[]" value="%s" %s aria-label="%s"></td>', esc_attr( $slug ), checked( in_array( $slug, $rules['toolbar_front'], true ), true, false ), esc_attr( $name . ': ' . __( 'Hide on the site', 'layo-dashboard-toolkit' ) ) );
+			printf( '<td><input type="checkbox" name="toolbar_admin[]" value="%s" %s aria-label="%s"></td>', esc_attr( $slug ), checked( in_array( $slug, $rules['toolbar_admin'], true ), true, false ), esc_attr( $name . ': ' . __( 'Hide in the dashboard', 'layo-dashboard-toolkit' ) ) );
 			foreach ( $nodes as $id => $label ) {
 				$hidden = isset( $rules['toolbar_items'][ $slug ] ) && in_array( $id, (array) $rules['toolbar_items'][ $slug ], true );
 				printf( '<td><input type="checkbox" name="toolbar_items[%1$s][]" value="%2$s" %3$s aria-label="%4$s"></td>', esc_attr( $slug ), esc_attr( $id ), checked( $hidden, true, false ), esc_attr( $name . ': ' . $label ) );
@@ -405,8 +405,8 @@ class Roles_Tab {
 		}
 
 		echo '</tbody></table></div>';
-		echo '<p class="description">' . esc_html__( 'Items added by other plugins appear here after you have seen them in your own toolbar once.', 'adminora' ) . '</p>';
-		submit_button( __( 'Save toolbar', 'adminora' ) );
+		echo '<p class="description">' . esc_html__( 'Items added by other plugins appear here after you have seen them in your own toolbar once.', 'layo-dashboard-toolkit' ) . '</p>';
+		submit_button( __( 'Save toolbar', 'layo-dashboard-toolkit' ) );
 		echo '</form>';
 	}
 
@@ -419,42 +419,42 @@ class Roles_Tab {
 		$restrictable = self::restrictable_roles();
 		$rules        = Access::rules();
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Choose where each role goes after logging in, and keep roles that never need the dashboard out of it. To send one person somewhere else, open their profile under Users; their own choice wins over their role\'s.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Choose where each role goes after logging in, and keep roles that never need the dashboard out of it. To send one person somewhere else, open their profile under Users; their own choice wins over their role\'s.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		self::form( 'access_save', array( 'group' => 'access' ) );
 		echo '<input type="hidden" name="present" value="1">';
-		echo '<table class="widefat striped adminora-matrix"><thead><tr><th>' . esc_html__( 'Role', 'adminora' ) . '</th><th>' . esc_html__( 'After logging in, go to', 'adminora' ) . '</th><th>' . esc_html__( 'Keep out of the dashboard', 'adminora' ) . '</th></tr></thead><tbody>';
+		echo '<table class="widefat striped layodt-matrix"><thead><tr><th>' . esc_html__( 'Role', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'After logging in, go to', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'Keep out of the dashboard', 'layo-dashboard-toolkit' ) . '</th></tr></thead><tbody>';
 		foreach ( Role_Manager::roles() as $slug => $role ) {
 			$name = $role['name'];
 			echo '<tr><th scope="row">' . esc_html( $name ) . '</th><td>';
-			Redirects::field( 'redirect[' . $slug . ']', isset( $rules['redirect'][ $slug ] ) ? $rules['redirect'][ $slug ] : '', $name . ': ' . __( 'After logging in, go to', 'adminora' ) );
+			Redirects::field( 'redirect[' . $slug . ']', isset( $rules['redirect'][ $slug ] ) ? $rules['redirect'][ $slug ] : '', $name . ': ' . __( 'After logging in, go to', 'layo-dashboard-toolkit' ) );
 			echo '</td><td>';
 			if ( isset( $restrictable[ $slug ] ) ) {
-				printf( '<input type="checkbox" name="block[]" value="%1$s" %2$s aria-label="%3$s">', esc_attr( $slug ), checked( in_array( $slug, $rules['block'], true ), true, false ), esc_attr( $name . ': ' . __( 'Keep out of the dashboard', 'adminora' ) ) );
+				printf( '<input type="checkbox" name="block[]" value="%1$s" %2$s aria-label="%3$s">', esc_attr( $slug ), checked( in_array( $slug, $rules['block'], true ), true, false ), esc_attr( $name . ': ' . __( 'Keep out of the dashboard', 'layo-dashboard-toolkit' ) ) );
 			} else {
 				echo '<span aria-hidden="true">&mdash;</span>';
 			}
 			echo '</td></tr>';
 		}
 		echo '</tbody></table>';
-		echo '<p><label><input type="checkbox" name="redirect_all" value="1"' . checked( ! empty( $rules['redirect_all'] ), true, false ) . '> ' . esc_html__( 'Always use these destinations, even when someone was on their way to a specific page', 'adminora' ) . '</label></p>';
-		echo '<p class="description">' . esc_html__( 'Without this, someone who logs in from a link to a particular screen still goes to that screen. Kept-out roles are sent to the home page if they open the dashboard; background requests that plugins rely on keep working. Roles that can manage settings are never kept out.', 'adminora' ) . '</p>';
-		submit_button( __( 'Save login and access', 'adminora' ) );
+		echo '<p><label><input type="checkbox" name="redirect_all" value="1"' . checked( ! empty( $rules['redirect_all'] ), true, false ) . '> ' . esc_html__( 'Always use these destinations, even when someone was on their way to a specific page', 'layo-dashboard-toolkit' ) . '</label></p>';
+		echo '<p class="description">' . esc_html__( 'Without this, someone who logs in from a link to a particular screen still goes to that screen. Kept-out roles are sent to the home page if they open the dashboard; background requests that plugins rely on keep working. Roles that can manage settings are never kept out.', 'layo-dashboard-toolkit' ) . '</p>';
+		submit_button( __( 'Save login and access', 'layo-dashboard-toolkit' ) );
 		echo '</form>';
 
 		$people = Redirects::users();
 
-		echo '<h2 class="title">' . esc_html__( 'People with their own destination', 'adminora' ) . '</h2>';
+		echo '<h2 class="title">' . esc_html__( 'People with their own destination', 'layo-dashboard-toolkit' ) . '</h2>';
 		if ( ! $people ) {
-			echo '<p>' . esc_html__( 'Nobody yet. Open someone\'s profile under Users and use "After logging in" to send them somewhere of their own.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'Nobody yet. Open someone\'s profile under Users and use "After logging in" to send them somewhere of their own.', 'layo-dashboard-toolkit' ) . '</p>';
 			return;
 		}
 
-		echo '<ul class="adminora-list">';
+		echo '<ul class="layodt-list">';
 		foreach ( $people as $row ) {
 			printf(
 				'<li><a href="%s">%s</a>: %s</li>',
-				esc_url( get_edit_user_link( $row[0]->ID ) . '#adminora-login-redirect' ),
+				esc_url( get_edit_user_link( $row[0]->ID ) . '#layodt-login-redirect' ),
 				esc_html( $row[0]->display_name ),
 				esc_html( Redirects::describe( $row[1] ) )
 			);
@@ -471,25 +471,25 @@ class Roles_Tab {
 		$backups = Role_Manager::backups();
 		$format  = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
 
-		echo '<p class="adminora-intro">' . esc_html__( 'A copy of every role is saved before each change. The last 20 copies are kept.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'A copy of every role is saved before each change. The last 20 copies are kept.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		if ( ! $backups ) {
-			echo '<p>' . esc_html__( 'No backups yet. One is made automatically before your first change.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'No backups yet. One is made automatically before your first change.', 'layo-dashboard-toolkit' ) . '</p>';
 		} else {
-			echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Saved', 'adminora' ) . '</th><th>' . esc_html__( 'By', 'adminora' ) . '</th><th>' . esc_html__( 'Reason', 'adminora' ) . '</th><th>' . esc_html__( 'Roles', 'adminora' ) . '</th><th><span class="screen-reader-text">' . esc_html__( 'Actions', 'adminora' ) . '</span></th></tr></thead><tbody>';
+			echo '<table class="widefat striped"><thead><tr><th>' . esc_html__( 'Saved', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'By', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'Reason', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'Roles', 'layo-dashboard-toolkit' ) . '</th><th><span class="screen-reader-text">' . esc_html__( 'Actions', 'layo-dashboard-toolkit' ) . '</span></th></tr></thead><tbody>';
 			foreach ( $backups as $i => $backup ) {
 				echo '<tr><td>' . esc_html( wp_date( $format, $backup['time'] ) ) . '</td><td>' . esc_html( $backup['user'] ) . '</td><td>' . esc_html( $backup['reason'] ) . '</td><td>' . esc_html( number_format_i18n( count( (array) $backup['roles'] ) ) ) . '</td><td>';
 				self::form( 'role_restore', array( 'index' => $i ), true );
-				submit_button( __( 'Restore', 'adminora' ), 'small', 'submit', false );
+				submit_button( __( 'Restore', 'layo-dashboard-toolkit' ), 'small', 'submit', false );
 				echo '</form></td></tr>';
 			}
 			echo '</tbody></table>';
 		}
 
-		echo '<h2 class="title">' . esc_html__( 'Restore WordPress default roles', 'adminora' ) . '</h2>';
-		echo '<p>' . esc_html__( 'Resets Editor, Author, Contributor and Subscriber to WordPress\'s original capabilities. Custom roles and the Administrator role are kept.', 'adminora' ) . '</p>';
+		echo '<h2 class="title">' . esc_html__( 'Restore WordPress default roles', 'layo-dashboard-toolkit' ) . '</h2>';
+		echo '<p>' . esc_html__( 'Resets Editor, Author, Contributor and Subscriber to WordPress\'s original capabilities. Custom roles and the Administrator role are kept.', 'layo-dashboard-toolkit' ) . '</p>';
 		self::form( 'role_defaults', array(), true );
-		submit_button( __( 'Restore default roles', 'adminora' ), 'secondary' );
+		submit_button( __( 'Restore default roles', 'layo-dashboard-toolkit' ), 'secondary' );
 		echo '</form>';
 	}
 
@@ -503,18 +503,18 @@ class Roles_Tab {
 		$labels  = Audit::labels();
 		$format  = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
 
-		echo '<p class="adminora-intro">' . esc_html__( 'Who changed which role, permission, menu or access rule, and when. The last 500 changes are kept.', 'adminora' ) . '</p>';
+		echo '<p class="layodt-intro">' . esc_html__( 'Who changed which role, permission, menu or access rule, and when. The last 500 changes are kept.', 'layo-dashboard-toolkit' ) . '</p>';
 
 		if ( ! $entries ) {
-			echo '<p>' . esc_html__( 'No changes recorded yet.', 'adminora' ) . '</p>';
+			echo '<p>' . esc_html__( 'No changes recorded yet.', 'layo-dashboard-toolkit' ) . '</p>';
 			return;
 		}
 
 		self::form( 'audit_csv' );
-		submit_button( __( 'Download as CSV', 'adminora' ), 'secondary', 'submit', false );
+		submit_button( __( 'Download as CSV', 'layo-dashboard-toolkit' ), 'secondary', 'submit', false );
 		echo '</form>';
 
-		echo '<table class="widefat striped adminora-log"><thead><tr><th>' . esc_html__( 'When', 'adminora' ) . '</th><th>' . esc_html__( 'Who', 'adminora' ) . '</th><th>' . esc_html__( 'What', 'adminora' ) . '</th><th>' . esc_html__( 'Details', 'adminora' ) . '</th></tr></thead><tbody>';
+		echo '<table class="widefat striped layodt-log"><thead><tr><th>' . esc_html__( 'When', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'Who', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'What', 'layo-dashboard-toolkit' ) . '</th><th>' . esc_html__( 'Details', 'layo-dashboard-toolkit' ) . '</th></tr></thead><tbody>';
 		foreach ( array_slice( $entries, 0, 200 ) as $entry ) {
 			echo '<tr><td>' . esc_html( wp_date( $format, $entry['time'] ) ) . '</td><td>' . esc_html( $entry['user'] ) . '</td><td>' . esc_html( isset( $labels[ $entry['action'] ] ) ? $labels[ $entry['action'] ] : $entry['action'] ) . '</td><td>' . esc_html( $entry['summary'] ) . '</td></tr>';
 		}
@@ -531,7 +531,7 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_create() {
-		check_admin_referer( 'adminora_role_create' );
+		check_admin_referer( 'layodt_role_create' );
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
 			self::deny();
@@ -555,7 +555,7 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_save() {
-		check_admin_referer( 'adminora_role_save' );
+		check_admin_referer( 'layodt_role_save' );
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
 			self::deny();
@@ -591,7 +591,7 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_delete() {
-		check_admin_referer( 'adminora_role_delete' );
+		check_admin_referer( 'layodt_role_delete' );
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
 			self::deny();
@@ -615,7 +615,7 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_restore() {
-		check_admin_referer( 'adminora_role_restore' );
+		check_admin_referer( 'layodt_role_restore' );
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
 			self::deny();
@@ -633,7 +633,7 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_role_defaults() {
-		check_admin_referer( 'adminora_role_defaults' );
+		check_admin_referer( 'layodt_role_defaults' );
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
 			self::deny();
@@ -648,7 +648,7 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_access_save() {
-		check_admin_referer( 'adminora_access_save' );
+		check_admin_referer( 'layodt_access_save' );
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
 			self::deny();
@@ -668,7 +668,7 @@ class Roles_Tab {
 			Access::save( 'menu', $menu );
 
 			/* translators: 1: role, 2: number of hidden items. */
-			Audit::log( 'menu_access', sprintf( __( '%1$s: %2$d menu items hidden.', 'adminora' ), $role, count( $menu[ $role ] ) ) );
+			Audit::log( 'menu_access', sprintf( __( '%1$s: %2$d menu items hidden.', 'layo-dashboard-toolkit' ), $role, count( $menu[ $role ] ) ) );
 			self::back( 'menu', 'saved', array( 'for' => $role ) );
 		}
 
@@ -677,7 +677,7 @@ class Roles_Tab {
 			Access::save( 'toolbar_admin', isset( $_POST['toolbar_admin'] ) ? wp_unslash( $_POST['toolbar_admin'] ) : array() );
 			Access::save( 'toolbar_items', isset( $_POST['toolbar_items'] ) ? wp_unslash( $_POST['toolbar_items'] ) : array() );
 
-			Audit::log( 'toolbar', __( 'Toolbar rules updated.', 'adminora' ) );
+			Audit::log( 'toolbar', __( 'Toolbar rules updated.', 'layo-dashboard-toolkit' ) );
 			self::back( 'toolbar', 'saved' );
 		}
 
@@ -686,7 +686,7 @@ class Roles_Tab {
 			Access::save( 'redirect_all', ! empty( $_POST['redirect_all'] ) );
 			Access::save( 'block', isset( $_POST['block'] ) ? wp_unslash( $_POST['block'] ) : array() );
 
-			Audit::log( 'access', __( 'Login redirects and dashboard access updated.', 'adminora' ) );
+			Audit::log( 'access', __( 'Login redirects and dashboard access updated.', 'layo-dashboard-toolkit' ) );
 			self::back( 'access', 'saved' );
 		}
 		// phpcs:enable
@@ -700,7 +700,7 @@ class Roles_Tab {
 	 * @return void
 	 */
 	public static function handle_audit_csv() {
-		check_admin_referer( 'adminora_audit_csv' );
+		check_admin_referer( 'layodt_audit_csv' );
 
 		if ( ! current_user_can( 'manage_options' ) || ! current_user_can( 'promote_users' ) ) {
 			self::deny();

@@ -6,16 +6,16 @@
  * or a page built in the editor or a page builder such as Elementor. Chosen
  * roles, allow-listed paths and anyone with the bypass link see the real site.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Maintenance;
+namespace LayoDT\Modules\Maintenance;
 
-use Adminora\Brand_Kit;
-use Adminora\Color;
-use Adminora\Preview;
-use Adminora\Settings;
-use Adminora\System_Page;
+use LayoDT\Brand_Kit;
+use LayoDT\Color;
+use LayoDT\Preview;
+use LayoDT\Settings;
+use LayoDT\System_Page;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -24,9 +24,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Maintenance {
 
-	const COOKIE  = 'adminora_bypass';
-	const PREVIEW = 'adminora_holding';
-	const TOOLBAR = 'adminora-toolbar';
+	const COOKIE  = 'layodt_bypass';
+	const PREVIEW = 'layodt_holding';
+	const TOOLBAR = 'layodt-toolbar';
 
 	/**
 	 * Holding page being shown on this request.
@@ -75,7 +75,7 @@ class Maintenance {
 		$key = Settings::get( 'maintenance.bypass_key' );
 
 		if ( '' !== $key ) {
-			$hash = wp_hash( 'adminora-bypass-' . $key );
+			$hash = wp_hash( 'layodt-bypass-' . $key );
 
 			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- The key itself is the secret.
 			if ( isset( $_GET[ self::COOKIE ] ) && hash_equals( $key, sanitize_title( wp_unslash( $_GET[ self::COOKIE ] ) ) ) ) {
@@ -279,10 +279,10 @@ class Maintenance {
 	 * @return array
 	 */
 	public static function page_types() {
-		$types = array( 'page' => __( 'Pages', 'adminora' ) );
+		$types = array( 'page' => __( 'Pages', 'layo-dashboard-toolkit' ) );
 
 		if ( post_type_exists( 'elementor_library' ) ) {
-			$types['elementor_library'] = __( 'Elementor templates', 'adminora' );
+			$types['elementor_library'] = __( 'Elementor templates', 'layo-dashboard-toolkit' );
 		}
 
 		return $types;
@@ -317,11 +317,11 @@ class Maintenance {
 
 			$items = array();
 			foreach ( get_posts( $args ) as $post ) {
-				$title = '' !== $post->post_title ? $post->post_title : __( '(no title)', 'adminora' );
+				$title = '' !== $post->post_title ? $post->post_title : __( '(no title)', 'layo-dashboard-toolkit' );
 				$notes = array();
 
 				if ( 'page' === $type && self::is_elementor( $post->ID ) ) {
-					$notes[] = __( 'Elementor', 'adminora' );
+					$notes[] = __( 'Elementor', 'layo-dashboard-toolkit' );
 				}
 				if ( 'publish' !== $post->post_status ) {
 					$notes[] = get_post_status_object( $post->post_status ) ? get_post_status_object( $post->post_status )->label : $post->post_status;
@@ -446,7 +446,7 @@ class Maintenance {
 	public static function page_template() {
 		ob_start( array( __CLASS__, 'strip_site_links' ) );
 
-		return ADMINORA_DIR . 'templates/holding-page.php';
+		return LAYODT_DIR . 'templates/holding-page.php';
 	}
 
 	/**
@@ -511,13 +511,13 @@ class Maintenance {
 		}
 
 		$units = array(
-			'd' => array( (int) floor( $left / DAY_IN_SECONDS ), __( 'Days', 'adminora' ) ),
-			'h' => array( (int) floor( ( $left % DAY_IN_SECONDS ) / HOUR_IN_SECONDS ), __( 'Hours', 'adminora' ) ),
-			'm' => array( (int) floor( ( $left % HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS ), __( 'Minutes', 'adminora' ) ),
-			's' => array( $left % MINUTE_IN_SECONDS, __( 'Seconds', 'adminora' ) ),
+			'd' => array( (int) floor( $left / DAY_IN_SECONDS ), __( 'Days', 'layo-dashboard-toolkit' ) ),
+			'h' => array( (int) floor( ( $left % DAY_IN_SECONDS ) / HOUR_IN_SECONDS ), __( 'Hours', 'layo-dashboard-toolkit' ) ),
+			'm' => array( (int) floor( ( $left % HOUR_IN_SECONDS ) / MINUTE_IN_SECONDS ), __( 'Minutes', 'layo-dashboard-toolkit' ) ),
+			's' => array( $left % MINUTE_IN_SECONDS, __( 'Seconds', 'layo-dashboard-toolkit' ) ),
 		);
 
-		$html = '<ul class="adminora-countdown" data-target="' . esc_attr( $target ) . '" aria-label="' . esc_attr__( 'Time until launch', 'adminora' ) . '">';
+		$html = '<ul class="layodt-countdown" data-target="' . esc_attr( $target ) . '" aria-label="' . esc_attr__( 'Time until launch', 'layo-dashboard-toolkit' ) . '">';
 
 		foreach ( $units as $unit => $data ) {
 			$html .= '<li><strong data-unit="' . esc_attr( $unit ) . '">' . esc_html( str_pad( (string) $data[0], 2, '0', STR_PAD_LEFT ) ) . '</strong><span>' . esc_html( $data[1] ) . '</span></li>';
@@ -525,7 +525,7 @@ class Maintenance {
 
 		$html .= '</ul>';
 
-		$script = '(function(){var el=document.querySelector(".adminora-countdown");if(!el){return;}var t=parseInt(el.getAttribute("data-target"),10)*1000;function p(n){return(n<10?"0":"")+n;}function tick(){var s=Math.max(0,Math.floor((t-Date.now())/1000));var v={d:Math.floor(s/86400),h:Math.floor(s%86400/3600),m:Math.floor(s%3600/60),s:s%60};Object.keys(v).forEach(function(k){var n=el.querySelector("[data-unit="+k+"]");if(n){n.textContent=p(v[k]);}});if(s>0){setTimeout(tick,1000);}}tick();})();';
+		$script = '(function(){var el=document.querySelector(".layodt-countdown");if(!el){return;}var t=parseInt(el.getAttribute("data-target"),10)*1000;function p(n){return(n<10?"0":"")+n;}function tick(){var s=Math.max(0,Math.floor((t-Date.now())/1000));var v={d:Math.floor(s/86400),h:Math.floor(s%86400/3600),m:Math.floor(s%3600/60),s:s%60};Object.keys(v).forEach(function(k){var n=el.querySelector("[data-unit="+k+"]");if(n){n.textContent=p(v[k]);}});if(s>0){setTimeout(tick,1000);}}tick();})();';
 
 		return array( $html, $script );
 	}
@@ -543,10 +543,10 @@ class Maintenance {
 
 		$bar->add_node(
 			array(
-				'id'     => 'adminora-maintenance',
+				'id'     => 'layodt-maintenance',
 				'parent' => 'top-secondary',
-				'title'  => self::is_maintenance() ? esc_html__( 'Maintenance mode on', 'adminora' ) : esc_html__( 'Coming soon mode on', 'adminora' ),
-				'href'   => admin_url( 'options-general.php?page=adminora&tab=maintenance' ),
+				'title'  => self::is_maintenance() ? esc_html__( 'Maintenance mode on', 'layo-dashboard-toolkit' ) : esc_html__( 'Coming soon mode on', 'layo-dashboard-toolkit' ),
+				'href'   => admin_url( 'options-general.php?page=layo-dashboard-toolkit&tab=maintenance' ),
 			)
 		);
 	}
@@ -566,7 +566,7 @@ class Maintenance {
 		wp_add_inline_style(
 			'admin-bar',
 			sprintf(
-				'#wpadminbar #wp-admin-bar-adminora-maintenance > .ab-item{background:%1$s;color:%2$s}',
+				'#wpadminbar #wp-admin-bar-layodt-maintenance > .ab-item{background:%1$s;color:%2$s}',
 				Brand_Kit::css_value( $bg ),
 				Brand_Kit::css_value( Color::readable_on( $bg ) )
 			)

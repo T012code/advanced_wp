@@ -6,10 +6,10 @@
  * logo, the colours visitors see on the front end, or custom colours. Anything
  * a source does not provide falls back to the theme, then a neutral palette.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora;
+namespace LayoDT;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,7 +25,7 @@ class Brand_Kit {
 	/**
 	 * Colours read from the logo and the front end.
 	 */
-	const PALETTES = 'adminora_brand_palette';
+	const PALETTES = 'layodt_brand_palette';
 
 	/**
 	 * Cached theme detection.
@@ -413,7 +413,7 @@ class Brand_Kit {
 		$css = '';
 
 		foreach ( $vars as $name => $value ) {
-			$css .= '--adminora-' . $name . ':' . self::css_value( $value ) . ';';
+			$css .= '--layodt-' . $name . ':' . self::css_value( $value ) . ';';
 		}
 
 		return $css;

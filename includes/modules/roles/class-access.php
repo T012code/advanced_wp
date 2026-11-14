@@ -7,10 +7,10 @@
  * only hidden or blocked if every one of their roles hides or blocks it.
  * Administrators are never restricted.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Roles;
+namespace LayoDT\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -19,9 +19,9 @@ defined( 'ABSPATH' ) || exit;
  */
 class Access {
 
-	const OPTION       = 'adminora_access';
-	const NODES        = 'adminora_toolbar_nodes';
-	const USER_TOOLBAR = 'adminora_toolbar';
+	const OPTION       = 'layodt_access';
+	const NODES        = 'layodt_toolbar_nodes';
+	const USER_TOOLBAR = 'layodt_toolbar';
 
 	/**
 	 * Screens that always stay reachable.
@@ -285,7 +285,7 @@ class Access {
 			$slug = false !== strpos( $id, '>' ) ? explode( '>', $id, 2 )[1] : $id;
 
 			if ( in_array( $slug, $requested, true ) ) {
-				wp_die( esc_html__( 'Sorry, you are not allowed to access this page.', 'adminora' ), 403 );
+				wp_die( esc_html__( 'Sorry, you are not allowed to access this page.', 'layo-dashboard-toolkit' ), 403 );
 			}
 		}
 	}
@@ -383,7 +383,7 @@ class Access {
 			return false;
 		}
 
-		return class_exists( '\Adminora\Modules\Admin_Look\Admin_Look' ) && \Adminora\Modules\Admin_Look\Admin_Look::active_for( $user );
+		return class_exists( '\LayoDT\Modules\Admin_Look\Admin_Look' ) && \LayoDT\Modules\Admin_Look\Admin_Look::active_for( $user );
 	}
 
 	/**
@@ -454,15 +454,15 @@ class Access {
 	 */
 	public static function toolbar_nodes() {
 		$defaults = array(
-			'wp-logo'     => __( 'WordPress logo menu', 'adminora' ),
-			'site-name'   => __( 'Site name', 'adminora' ),
-			'updates'     => __( 'Updates', 'adminora' ),
-			'comments'    => __( 'Comments', 'adminora' ),
-			'new-content' => __( '+ New', 'adminora' ),
-			'edit'        => __( 'Edit link', 'adminora' ),
-			'customize'   => __( 'Customize', 'adminora' ),
-			'search'      => __( 'Search', 'adminora' ),
-			'my-account'  => __( 'Account menu', 'adminora' ),
+			'wp-logo'     => __( 'WordPress logo menu', 'layo-dashboard-toolkit' ),
+			'site-name'   => __( 'Site name', 'layo-dashboard-toolkit' ),
+			'updates'     => __( 'Updates', 'layo-dashboard-toolkit' ),
+			'comments'    => __( 'Comments', 'layo-dashboard-toolkit' ),
+			'new-content' => __( '+ New', 'layo-dashboard-toolkit' ),
+			'edit'        => __( 'Edit link', 'layo-dashboard-toolkit' ),
+			'customize'   => __( 'Customize', 'layo-dashboard-toolkit' ),
+			'search'      => __( 'Search', 'layo-dashboard-toolkit' ),
+			'my-account'  => __( 'Account menu', 'layo-dashboard-toolkit' ),
 		);
 
 		$saved = get_option( self::NODES, array() );

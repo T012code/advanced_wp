@@ -6,10 +6,10 @@
  * "admin:edit.php", "page:12" or "url:https://…". Addresses saved by earlier
  * versions (a plain URL) still work.
  *
- * @package Adminora
+ * @package LayoDT
  */
 
-namespace Adminora\Modules\Roles;
+namespace LayoDT\Modules\Roles;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Redirects {
 
-	const META = 'adminora_login_redirect';
+	const META = 'layodt_login_redirect';
 
 	/**
 	 * Hooks for the per-person setting on the profile screen.
@@ -39,18 +39,18 @@ class Redirects {
 	 */
 	public static function choices() {
 		return array(
-			''                              => __( 'Default (the dashboard, or the page they asked for)', 'adminora' ),
-			'dashboard'                     => __( 'Dashboard home', 'adminora' ),
-			'profile'                       => __( 'Their profile', 'adminora' ),
-			'home'                          => __( 'Site home page', 'adminora' ),
-			'admin:edit.php'                => __( 'Posts', 'adminora' ),
-			'admin:post-new.php'            => __( 'Add a new post', 'adminora' ),
-			'admin:edit.php?post_type=page' => __( 'Pages', 'adminora' ),
-			'admin:upload.php'              => __( 'Media', 'adminora' ),
-			'admin:edit-comments.php'       => __( 'Comments', 'adminora' ),
-			'admin:users.php'               => __( 'Users', 'adminora' ),
-			'page'                          => __( 'A page on this site…', 'adminora' ),
-			'url'                           => __( 'Another address…', 'adminora' ),
+			''                              => __( 'Default (the dashboard, or the page they asked for)', 'layo-dashboard-toolkit' ),
+			'dashboard'                     => __( 'Dashboard home', 'layo-dashboard-toolkit' ),
+			'profile'                       => __( 'Their profile', 'layo-dashboard-toolkit' ),
+			'home'                          => __( 'Site home page', 'layo-dashboard-toolkit' ),
+			'admin:edit.php'                => __( 'Posts', 'layo-dashboard-toolkit' ),
+			'admin:post-new.php'            => __( 'Add a new post', 'layo-dashboard-toolkit' ),
+			'admin:edit.php?post_type=page' => __( 'Pages', 'layo-dashboard-toolkit' ),
+			'admin:upload.php'              => __( 'Media', 'layo-dashboard-toolkit' ),
+			'admin:edit-comments.php'       => __( 'Comments', 'layo-dashboard-toolkit' ),
+			'admin:users.php'               => __( 'Users', 'layo-dashboard-toolkit' ),
+			'page'                          => __( 'A page on this site…', 'layo-dashboard-toolkit' ),
+			'url'                           => __( 'Another address…', 'layo-dashboard-toolkit' ),
 		);
 	}
 
@@ -167,22 +167,22 @@ class Redirects {
 	 */
 	public static function field( $name, $token, $label ) {
 		$parts = self::parse( $token );
-		$id    = 'adminora-' . sanitize_html_class( str_replace( array( '[', ']' ), '-', $name ) );
+		$id    = 'layodt-' . sanitize_html_class( str_replace( array( '[', ']' ), '-', $name ) );
 
-		echo '<span class="adminora-destination">';
+		echo '<span class="layodt-destination">';
 		echo '<select id="' . esc_attr( $id ) . '" name="' . esc_attr( $name . '[type]' ) . '" aria-label="' . esc_attr( $label ) . '">';
 		foreach ( self::choices() as $value => $text ) {
 			echo '<option value="' . esc_attr( $value ) . '"' . selected( $parts['type'], $value, false ) . '>' . esc_html( $text ) . '</option>';
 		}
 		echo '</select>';
 
-		echo '<span data-adminora-show-if="' . esc_attr( $name . '[type]' ) . '" data-adminora-show-value="page"' . ( 'page' === $parts['type'] ? '' : ' hidden' ) . '>';
+		echo '<span data-layodt-show-if="' . esc_attr( $name . '[type]' ) . '" data-layodt-show-value="page"' . ( 'page' === $parts['type'] ? '' : ' hidden' ) . '>';
 		$pages = wp_dropdown_pages(
 			array(
 				'name'              => esc_attr( $name . '[page]' ),
 				'id'                => esc_attr( $id . '-page' ),
 				'selected'          => (int) $parts['page'],
-				'show_option_none'  => esc_html__( 'Choose a page', 'adminora' ),
+				'show_option_none'  => esc_html__( 'Choose a page', 'layo-dashboard-toolkit' ),
 				'option_none_value' => '0',
 				'echo'              => 0,
 			)
@@ -204,8 +204,8 @@ class Redirects {
 		);
 		echo '</span>';
 
-		echo '<span data-adminora-show-if="' . esc_attr( $name . '[type]' ) . '" data-adminora-show-value="url"' . ( 'url' === $parts['type'] ? '' : ' hidden' ) . '>';
-		echo '<input type="url" class="regular-text" name="' . esc_attr( $name . '[url]' ) . '" value="' . esc_attr( $parts['url'] ) . '" placeholder="https://" aria-label="' . esc_attr( $label . ': ' . __( 'Address', 'adminora' ) ) . '">';
+		echo '<span data-layodt-show-if="' . esc_attr( $name . '[type]' ) . '" data-layodt-show-value="url"' . ( 'url' === $parts['type'] ? '' : ' hidden' ) . '>';
+		echo '<input type="url" class="regular-text" name="' . esc_attr( $name . '[url]' ) . '" value="' . esc_attr( $parts['url'] ) . '" placeholder="https://" aria-label="' . esc_attr( $label . ': ' . __( 'Address', 'layo-dashboard-toolkit' ) ) . '">';
 		echo '</span></span>';
 	}
 
@@ -241,11 +241,11 @@ class Redirects {
 			return;
 		}
 
-		echo '<h2 id="adminora-login-redirect">' . esc_html__( 'After logging in', 'adminora' ) . '</h2>';
-		wp_nonce_field( 'adminora_redirect_' . $user->ID, '_adminora_redirect', false );
-		echo '<table class="form-table" role="presentation"><tr><th scope="row">' . esc_html__( 'Go to', 'adminora' ) . '</th><td>';
-		self::field( 'adminora_login_redirect', (string) get_user_meta( $user->ID, self::META, true ), __( 'After logging in, go to', 'adminora' ) );
-		echo '<p class="description">' . esc_html__( 'Overrides the destination set for their role under Settings → Adminora → Roles & permissions → Login and access. "Default" uses the role\'s setting.', 'adminora' ) . '</p>';
+		echo '<h2 id="layodt-login-redirect">' . esc_html__( 'After logging in', 'layo-dashboard-toolkit' ) . '</h2>';
+		wp_nonce_field( 'layodt_redirect_' . $user->ID, '_layodt_redirect', false );
+		echo '<table class="form-table" role="presentation"><tr><th scope="row">' . esc_html__( 'Go to', 'layo-dashboard-toolkit' ) . '</th><td>';
+		self::field( 'layodt_login_redirect', (string) get_user_meta( $user->ID, self::META, true ), __( 'After logging in, go to', 'layo-dashboard-toolkit' ) );
+		echo '<p class="description">' . esc_html__( 'Overrides the destination set for their role under Settings → Layò Dashboard Toolkit → Roles & permissions → Login and access. "Default" uses the role\'s setting.', 'layo-dashboard-toolkit' ) . '</p>';
 		echo '</td></tr></table>';
 	}
 
@@ -256,7 +256,7 @@ class Redirects {
 	 * @return void
 	 */
 	public static function save_profile( $user_id ) {
-		if ( ! isset( $_POST['_adminora_redirect'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_adminora_redirect'] ) ), 'adminora_redirect_' . $user_id ) ) {
+		if ( ! isset( $_POST['_layodt_redirect'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_layodt_redirect'] ) ), 'layodt_redirect_' . $user_id ) ) {
 			return;
 		}
 
@@ -265,7 +265,7 @@ class Redirects {
 		}
 
 		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Cleaned by clean().
-		$token = self::clean( isset( $_POST['adminora_login_redirect'] ) ? (array) wp_unslash( $_POST['adminora_login_redirect'] ) : array() );
+		$token = self::clean( isset( $_POST['layodt_login_redirect'] ) ? (array) wp_unslash( $_POST['layodt_login_redirect'] ) : array() );
 
 		if ( '' === $token ) {
 			delete_user_meta( $user_id, self::META );
