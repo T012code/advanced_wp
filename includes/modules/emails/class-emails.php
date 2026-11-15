@@ -162,7 +162,8 @@ class Emails {
 	 * @return string
 	 */
 	private static function find_rp_link( $message ) {
-		return preg_match( '#(https?://[^\s<>"]+action=rp[^\s<>"]*)#', (string) $message, $m ) ? $m[1] : wp_login_url();
+		// Core's link has action=rp; a theme or plugin with its own page still passes the key.
+		return preg_match( '#(https?://[^\s<>"]+(?:action=rp|[?&]key=)[^\s<>"]*)#', (string) $message, $m ) ? $m[1] : wp_login_url();
 	}
 
 	/**
@@ -211,6 +212,11 @@ class Emails {
 
 		if ( ! is_user_logged_in() ) {
 			$link .= '&wp_lang=' . get_user_locale( $user );
+		}
+
+		// A theme or plugin with its own reset page puts its link in the message; keep that one.
+		if ( preg_match( '#https?://[^\s<>"\']*' . preg_quote( $key, '#' ) . '[^\s<>"\']*#', (string) $email['message'], $m ) && false === strpos( $m[0], 'wp-login.php' ) ) {
+			$link = $m[0];
 		}
 
 		$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';

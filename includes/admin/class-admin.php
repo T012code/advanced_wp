@@ -10,6 +10,7 @@ namespace LayoDT\Admin;
 use LayoDT\Brand_Kit;
 use LayoDT\Plugin;
 use LayoDT\Importers\Importers;
+use LayoDT\Login_Pages;
 use LayoDT\Settings;
 use LayoDT\Modules\Emails\Emails;
 use LayoDT\Modules\Emails\Renderer;
@@ -282,6 +283,7 @@ class Admin {
 			'admin_slug_invalid'        => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'layo-dashboard-toolkit' ) ),
 			'admin_url_active'          => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'layo-dashboard-toolkit' ) ),
 			'admin_url_pending'         => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'layo-dashboard-toolkit' ) ),
+			'login_url_clash'           => array( 'warning', __( 'Settings saved, but the custom login URL was left off because another plugin or your theme already moves the login page. See the note on this tab.', 'layo-dashboard-toolkit' ) ),
 			'other_expired'             => array( 'error', __( 'The review screen expired. Open it again and import from there.', 'layo-dashboard-toolkit' ) ),
 			'other_nothing'             => array( 'error', __( 'Nothing was imported. Tick at least one setting.', 'layo-dashboard-toolkit' ) ),
 			'other_cancelled'           => array( 'success', __( 'Those imported settings will not be switched on.', 'layo-dashboard-toolkit' ) ),
@@ -435,6 +437,12 @@ class Admin {
 			if ( ! empty( $values['security.login_url'] ) && ! Login_Url::is_valid( $slug ) ) {
 				$values['security.login_url'] = false;
 				$notice                       = 'slug_invalid';
+			}
+
+			// Another plugin or the theme already moves the login page.
+			if ( ! empty( $values['security.login_url'] ) && empty( $_POST['layodt_clash_ok'] ) && Login_Pages::other_login() ) {
+				$values['security.login_url'] = false;
+				$notice                       = 'login_url_clash';
 			}
 
 			$admin_slug = isset( $values['security.admin_slug'] ) ? sanitize_title( $values['security.admin_slug'] ) : '';

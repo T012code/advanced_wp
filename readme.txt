@@ -87,6 +87,7 @@ It starts from your site. Brand colours come from your choice of source: your th
 * Custom dashboard address: move /wp-admin to an address such as /office. Set up automatically on Apache and LiteSpeed, with ready-to-paste rules for Nginx, and switched on only after a test proves it works.
 * Limit failed login attempts per IP, with an allow list and a lockout log.
 * Honeypot field against bots.
+* Finds login, lost password and registration pages set up by the theme or other plugins and shows where they come from. The custom login URL is the staff login; it stays off when another plugin already moves wp-login.php, while customer pages such as WooCommerce My Account are left to their plugin. Staff login pages stay open in coming soon mode, and emails keep custom reset links.
 * Two-factor authentication with authenticator apps, email codes and backup codes. Require it for chosen roles.
 
 = Sessions =

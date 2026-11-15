@@ -1562,3 +1562,8 @@ body.layodt-look .layodt-matrix > thead > tr > th {
 	flex-wrap: wrap;
 	gap: 8px;
 }
+
+/* Login pages set up elsewhere. */
+.layodt-login-pages + .description {
+	margin-top: 8px;
+}

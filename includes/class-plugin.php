@@ -70,6 +70,16 @@ class Plugin {
 		Customizer\Customizer::init();
 		Importers\Importers::init();
 
+		// Login pages set up elsewhere are looked up again when plugins or the theme change.
+		foreach ( array( 'activated_plugin', 'deactivated_plugin', 'switch_theme' ) as $hook ) {
+			add_action(
+				$hook,
+				static function () {
+					delete_transient( Login_Pages::CACHE );
+				}
+			);
+		}
+
 		if ( is_admin() ) {
 			Admin\Admin::init();
 		}

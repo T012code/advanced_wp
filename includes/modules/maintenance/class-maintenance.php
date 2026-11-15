@@ -102,7 +102,10 @@ class Maintenance {
 	private static function path_allowed( $path ) {
 		$path = '/' . ltrim( $path, '/' );
 
-		foreach ( preg_split( '/[\r\n]+/', (string) Settings::get( 'maintenance.allowed_paths' ) ) as $allowed ) {
+		// Login pages set up by the theme or other plugins stay open, so people can log in.
+		$open = array_merge( preg_split( '/[\r\n]+/', (string) Settings::get( 'maintenance.allowed_paths' ) ), \LayoDT\Login_Pages::paths() );
+
+		foreach ( $open as $allowed ) {
 			$allowed = trim( $allowed );
 
 			if ( '' !== $allowed && 0 === strpos( $path, '/' . ltrim( $allowed, '/' ) ) ) {

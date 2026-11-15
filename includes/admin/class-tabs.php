@@ -12,6 +12,7 @@ use LayoDT\Dropins;
 use LayoDT\Files;
 use LayoDT\Importers\Importers;
 use LayoDT\Importers\Sources;
+use LayoDT\Login_Pages;
 use LayoDT\Settings;
 use LayoDT\Modules\Emails\Templates;
 use LayoDT\Modules\Maintenance\Maintenance;
@@ -589,8 +590,45 @@ class Tabs {
 			echo '<div class="notice notice-info inline"><p>' . esc_html__( 'Your login page is at:', 'layo-dashboard-toolkit' ) . ' <a href="' . esc_url( Login_Url::url() ) . '"><strong>' . esc_html( Login_Url::url() ) . '</strong></a></p></div>';
 		}
 
+		$pages = Login_Pages::found( true );
+		$other = Login_Pages::other_login();
+
+		if ( $pages ) {
+			echo '<div class="layodt-callout"><p><strong>' . esc_html__( 'Login pages set up elsewhere on this site', 'layo-dashboard-toolkit' ) . '</strong></p>';
+			echo '<table class="widefat striped layodt-login-pages"><thead><tr><th scope="col">' . esc_html__( 'Page', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'For', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Address', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Set by', 'layo-dashboard-toolkit' ) . '</th></tr></thead><tbody>';
+			$kinds = Login_Pages::kinds();
+			foreach ( $pages as $page ) {
+				printf(
+					'<tr><td>%s</td><td>%s</td><td><a href="%s">%s</a></td><td>%s</td></tr>',
+					esc_html( $kinds[ $page['kind'] ] ),
+					'customer' === $page['audience'] ? esc_html__( 'Customers and members', 'layo-dashboard-toolkit' ) : esc_html__( 'Staff', 'layo-dashboard-toolkit' ),
+					esc_url( $page['url'] ),
+					esc_html( $page['url'] ),
+					esc_html( $page['source'] )
+				);
+			}
+			echo '</tbody></table>';
+			echo '<p class="description">' . esc_html__( 'The custom login URL on this tab is the staff login: administrators, editors, subscribers and everyone else with an account on the site. Customer and member pages are left to the plugin that made them; they never clash with it, and they close with the rest of the site in coming soon mode. Staff login pages stay open then, and links in emails use whichever page is in use.', 'layo-dashboard-toolkit' ) . '</p>';
+			if ( $other ) {
+				echo '<p>' . esc_html(
+					sprintf(
+						/* translators: 1: who set the login page, 2: its address. */
+						__( '%1$s already moves the login page to %2$s. Turning on a custom login URL here as well would make the two fight over it, so it stays off unless you tick "Use mine anyway" below.', 'layo-dashboard-toolkit' ),
+						$other['source'],
+						$other['url']
+					)
+				) . '</p>';
+			}
+			echo '</div>';
+		}
+
 		echo '<table class="form-table" role="presentation">';
 		Fields::checkbox( 'security.login_url', __( 'Custom login URL', 'layo-dashboard-toolkit' ), __( 'On', 'layo-dashboard-toolkit' ) );
+		if ( $other ) {
+			Fields::row_start( __( 'Another login page', 'layo-dashboard-toolkit' ), 'layodt-clash-ok' );
+			echo '<label><input type="checkbox" id="layodt-clash-ok" name="layodt_clash_ok" value="1"' . checked( (bool) Settings::get( 'security.login_url' ), true, false ) . '> ' . esc_html__( 'Use mine anyway', 'layo-dashboard-toolkit' ) . '</label>';
+			Fields::row_end( __( 'Only tick this if you are switching the other login page off.', 'layo-dashboard-toolkit' ) );
+		}
 		Fields::text(
 			'security.login_slug',
 			__( 'Login address', 'layo-dashboard-toolkit' ),
