@@ -336,6 +336,28 @@ class Widgets_Tab {
 			self::links_field( $widget['links'] );
 		}
 
+		if ( 'template' === $type ) {
+			Fields::row_start( __( 'Page or template', 'layo-dashboard-toolkit' ), 'layodt-widget-page' );
+			$choices = Widgets::template_choices( $widget['page'] );
+			if ( $choices ) {
+				echo '<select id="layodt-widget-page" name="data[page]"><option value="0">' . esc_html__( 'Choose one', 'layo-dashboard-toolkit' ) . '</option>';
+				foreach ( $choices as $group => $items ) {
+					echo '<optgroup label="' . esc_attr( $group ) . '">';
+					foreach ( $items as $id => $title ) {
+						echo '<option value="' . esc_attr( (string) $id ) . '"' . selected( $widget['page'], $id, false ) . '>' . esc_html( $title ) . '</option>';
+					}
+					echo '</optgroup>';
+				}
+				echo '</select>';
+				if ( $widget['page'] ) {
+					echo ' <a class="button" href="' . esc_url( \LayoDT\Modules\Maintenance\Maintenance::edit_url( $widget['page'] ) ) . '">' . esc_html__( 'Edit it', 'layo-dashboard-toolkit' ) . '</a>';
+				}
+			} else {
+				echo '<p>' . esc_html__( 'Create a page first. It can stay a draft: only the dashboard shows it.', 'layo-dashboard-toolkit' ) . '</p>';
+			}
+			Fields::row_end( __( 'Shown inside the widget as you designed it. Pages built with Elementor keep their Elementor styles. A draft or private page works, so it never has to be public.', 'layo-dashboard-toolkit' ) );
+		}
+
 		if ( 'posts' === $type ) {
 			Fields::row_start( __( 'Category', 'layo-dashboard-toolkit' ), 'layodt-widget-category' );
 			wp_dropdown_categories(

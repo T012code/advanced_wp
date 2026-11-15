@@ -10,6 +10,8 @@ namespace LayoDT\Admin;
 use LayoDT\Brand_Kit;
 use LayoDT\Dropins;
 use LayoDT\Files;
+use LayoDT\Importers\Importers;
+use LayoDT\Importers\Sources;
 use LayoDT\Settings;
 use LayoDT\Modules\Emails\Templates;
 use LayoDT\Modules\Maintenance\Maintenance;
@@ -921,6 +923,18 @@ class Tabs {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Navigation only.
+		$source = isset( $_GET['source'] ) ? sanitize_key( wp_unslash( $_GET['source'] ) ) : '';
+
+		if ( in_array( $step, array( 'other', 'other_done' ), true ) && array_key_exists( $source, Sources::all() ) ) {
+			if ( 'other' === $step ) {
+				Importers::review( $source );
+			} else {
+				Importers::result( $source );
+			}
+			return;
+		}
+
 		echo '<div class="layodt-cards">';
 
 		echo '<section class="layodt-card"><h2>' . esc_html__( 'Export', 'layo-dashboard-toolkit' ) . '</h2><p>' . esc_html__( 'Download Layò Dashboard Toolkit\'s settings as a JSON file to copy them to another site.', 'layo-dashboard-toolkit' ) . '</p>';
@@ -940,6 +954,8 @@ class Tabs {
 		echo '<p>';
 		submit_button( __( 'Upload and review', 'layo-dashboard-toolkit' ), 'secondary', 'submit', false );
 		echo '</p></form></section>';
+
+		Importers::card();
 
 		echo '<section class="layodt-card"><h2>' . esc_html__( 'Reset', 'layo-dashboard-toolkit' ) . '</h2><p>' . esc_html__( 'Put one section, or everything, back to its defaults.', 'layo-dashboard-toolkit' ) . '</p>';
 		echo '<form method="post" action="' . esc_url( $post ) . '" data-layodt-confirm><input type="hidden" name="action" value="layodt_reset">';

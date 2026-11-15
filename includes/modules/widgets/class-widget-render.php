@@ -180,6 +180,125 @@ class Widget_Render {
 	}
 
 	/**
+	 * Whether a page or template was built with Elementor.
+	 *
+	 * @param int $id Post ID.
+	 * @return bool
+	 */
+	public static function is_elementor( $id ) {
+		return did_action( 'elementor/loaded' ) && class_exists( '\Elementor\Plugin' ) && ( 'elementor_library' === get_post_type( $id ) || 'builder' === get_post_meta( $id, '_elementor_edit_mode', true ) );
+	}
+
+	/**
+	 * A page or Elementor template, as designed.
+	 *
+	 * @param array $widget Widget.
+	 * @return void
+	 */
+	private static function type_template( array $widget ) {
+		$post = $widget['page'] ? get_post( $widget['page'] ) : null;
+
+		if ( ! $post ) {
+			if ( current_user_can( 'manage_options' ) ) {
+				echo '<p>' . esc_html__( 'The page or template for this widget no longer exists. Choose another one in the widget settings.', 'layo-dashboard-toolkit' ) . '</p>';
+			}
+			return;
+		}
+
+		if ( self::is_elementor( $post->ID ) ) {
+			$html = \Elementor\Plugin::$instance->frontend->get_builder_content_for_display( $post->ID, false );
+		} else {
+			$html = apply_filters( 'the_content', $post->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Core hook.
+		}
+
+		echo '<div class="layodt-template">' . wp_kses( (string) $html, self::template_tags() ) . '</div>';
+	}
+
+	/**
+	 * Markup a designed page may use: everything allowed in posts, plus
+	 * icons, embeds and simple forms.
+	 *
+	 * @return array
+	 */
+	private static function template_tags() {
+		$tags   = wp_kses_allowed_html( 'post' );
+		$common = array(
+			'class'        => true,
+			'id'           => true,
+			'style'        => true,
+			'aria-hidden'  => true,
+			'aria-label'   => true,
+			'role'         => true,
+			'focusable'    => true,
+			'xmlns'        => true,
+			'viewbox'      => true,
+			'width'        => true,
+			'height'       => true,
+			'fill'         => true,
+			'stroke'       => true,
+			'stroke-width' => true,
+			'd'            => true,
+			'transform'    => true,
+		);
+
+		foreach ( array( 'svg', 'g', 'path', 'circle', 'rect', 'line', 'polyline', 'polygon', 'ellipse', 'use', 'symbol', 'defs', 'title' ) as $tag ) {
+			$tags[ $tag ] = $common + array(
+				'cx'         => true,
+				'cy'         => true,
+				'r'          => true,
+				'rx'         => true,
+				'ry'         => true,
+				'x'          => true,
+				'y'          => true,
+				'x1'         => true,
+				'x2'         => true,
+				'y1'         => true,
+				'y2'         => true,
+				'points'     => true,
+				'href'       => true,
+				'xlink:href' => true,
+			);
+		}
+
+		$tags['iframe'] = array(
+			'src'             => true,
+			'width'           => true,
+			'height'          => true,
+			'title'           => true,
+			'class'           => true,
+			'style'           => true,
+			'frameborder'     => true,
+			'allow'           => true,
+			'allowfullscreen' => true,
+			'loading'         => true,
+			'referrerpolicy'  => true,
+		);
+
+		foreach ( array( 'form', 'input', 'select', 'option', 'textarea', 'button', 'label' ) as $tag ) {
+			$tags[ $tag ] = array_merge(
+				isset( $tags[ $tag ] ) ? $tags[ $tag ] : array(),
+				array(
+					'class'       => true,
+					'id'          => true,
+					'name'        => true,
+					'type'        => true,
+					'value'       => true,
+					'placeholder' => true,
+					'for'         => true,
+					'action'      => true,
+					'method'      => true,
+					'selected'    => true,
+					'checked'     => true,
+					'required'    => true,
+					'aria-label'  => true,
+				)
+			);
+		}
+
+		return $tags;
+	}
+
+	/**
 	 * Latest posts from a category.
 	 *
 	 * @param array $widget Widget.

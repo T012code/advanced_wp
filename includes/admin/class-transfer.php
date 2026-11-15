@@ -191,6 +191,9 @@ class Transfer {
 				if ( 'posts' === $widget['type'] && $widget['category'] ) {
 					self::add_term_ref( $refs, $widget['category'] );
 				}
+				if ( 'template' === $widget['type'] && $widget['page'] ) {
+					self::add_post_ref( $refs, $widget['page'] );
+				}
 			}
 		}
 
@@ -407,6 +410,9 @@ class Transfer {
 				foreach ( $widgets['custom'] as $id => $widget ) {
 					if ( is_array( $widget ) && ! empty( $widget['category'] ) ) {
 						$widgets['custom'][ $id ]['category'] = self::map_term( (int) $widget['category'], $refs, $report );
+					}
+					if ( is_array( $widget ) && ! empty( $widget['page'] ) ) {
+						$widgets['custom'][ $id ]['page'] = self::map_post( (int) $widget['page'], $refs, $report );
 					}
 				}
 			}

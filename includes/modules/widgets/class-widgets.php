@@ -215,6 +215,7 @@ class Widgets {
 			'counts'   => array( __( 'Content counts', 'layo-dashboard-toolkit' ), __( 'How many posts, pages, products, comments and users there are.', 'layo-dashboard-toolkit' ), 'chart' ),
 			'comments' => array( __( 'Recent comments', 'layo-dashboard-toolkit' ), __( 'The latest comments, with links to moderate them.', 'layo-dashboard-toolkit' ), 'message' ),
 			'health'   => array( __( 'Site health summary', 'layo-dashboard-toolkit' ), __( 'The result of the last Site Health check.', 'layo-dashboard-toolkit' ), 'shield' ),
+			'template' => array( __( 'Page or template', 'layo-dashboard-toolkit' ), __( 'A page or Elementor template you designed, shown inside the dashboard.', 'layo-dashboard-toolkit' ), 'layers' ),
 		);
 	}
 
@@ -258,8 +259,60 @@ class Widgets {
 			'video'      => isset( $widget['video'] ) ? esc_url_raw( trim( (string) $widget['video'] ) ) : '',
 			'category'   => isset( $widget['category'] ) ? absint( $widget['category'] ) : 0,
 			'number'     => isset( $widget['number'] ) ? max( 1, min( 20, absint( $widget['number'] ) ) ) : 5,
+			'page'       => isset( $widget['page'] ) && self::is_template_choice( absint( $widget['page'] ) ) ? absint( $widget['page'] ) : 0,
 			'links'      => array_slice( $links, 0, 12 ),
 		);
+	}
+
+	/**
+	 * Pages and Elementor templates a "Page or template" widget can show,
+	 * grouped by type. Drafts and private pages are included, so the content
+	 * does not have to be public.
+	 *
+	 * @param int $current The chosen one, always listed.
+	 * @return array Type label => [ id => title ].
+	 */
+	public static function template_choices( $current = 0 ) {
+		$types = array( 'page' => __( 'Pages', 'layo-dashboard-toolkit' ) );
+
+		if ( post_type_exists( 'elementor_library' ) ) {
+			$types['elementor_library'] = __( 'Elementor templates', 'layo-dashboard-toolkit' );
+		}
+
+		$groups = array();
+
+		foreach ( $types as $type => $label ) {
+			$posts = get_posts(
+				array(
+					'post_type'      => $type,
+					'post_status'    => array( 'publish', 'private', 'draft', 'pending', 'future' ),
+					'posts_per_page' => 100,
+					'orderby'        => 'title',
+					'order'          => 'ASC',
+					'no_found_rows'  => true,
+				)
+			);
+
+			if ( $current && get_post_type( $current ) === $type && ! in_array( $current, wp_list_pluck( $posts, 'ID' ), true ) ) {
+				$posts[] = get_post( $current );
+			}
+
+			foreach ( $posts as $post ) {
+				$groups[ $label ][ $post->ID ] = '' !== $post->post_title ? $post->post_title : __( '(no title)', 'layo-dashboard-toolkit' );
+			}
+		}
+
+		return array_filter( $groups );
+	}
+
+	/**
+	 * Whether a post can be shown by a "Page or template" widget.
+	 *
+	 * @param int $id Post ID.
+	 * @return bool
+	 */
+	public static function is_template_choice( $id ) {
+		return $id && in_array( get_post_type( $id ), array( 'page', 'elementor_library' ), true );
 	}
 
 	/**
@@ -465,9 +518,49 @@ class Widgets {
 
 		wp_enqueue_style( 'layodt-widgets', LAYODT_URL . 'assets/css/widgets.css', array(), Plugin::asset_version( 'assets/css/widgets.css' ) );
 
+		self::enqueue_templates();
+
 		if ( self::locked() ) {
 			wp_add_inline_script( 'dashboard', 'jQuery(function($){document.body.classList.add("layodt-widgets-locked");$(window).on("load",function(){$("#dashboard-widgets .meta-box-sortables").each(function(){if($(this).sortable("instance")){$(this).sortable("disable");}});});});' );
 		}
+	}
+
+	/**
+	 * Loads Elementor's styles and scripts for "Page or template" widgets the
+	 * current user sees, so the design looks the same as on the site.
+	 *
+	 * @return void
+	 */
+	private static function enqueue_templates() {
+		if ( ! did_action( 'elementor/loaded' ) || ! class_exists( '\Elementor\Plugin' ) ) {
+			return;
+		}
+
+		$roles = (array) wp_get_current_user()->roles;
+		$ids   = array();
+
+		foreach ( self::config()['custom'] as $widget ) {
+			if ( 'template' === $widget['type'] && $widget['page'] && ( ! $widget['roles'] || array_intersect( $roles, $widget['roles'] ) ) && Widget_Render::is_elementor( $widget['page'] ) ) {
+				$ids[] = $widget['page'];
+			}
+		}
+
+		if ( ! $ids ) {
+			return;
+		}
+
+		$elementor = \Elementor\Plugin::$instance;
+		$elementor->frontend->register_styles();
+		$elementor->frontend->enqueue_styles();
+
+		foreach ( $ids as $id ) {
+			if ( class_exists( '\Elementor\Core\Files\CSS\Post' ) ) {
+				\Elementor\Core\Files\CSS\Post::create( $id )->enqueue();
+			}
+		}
+
+		$elementor->frontend->register_scripts();
+		$elementor->frontend->enqueue_scripts();
 	}
 
 	/**

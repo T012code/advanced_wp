@@ -221,3 +221,14 @@
 		transform: none;
 	}
 }
+
+/* Page or template widget. */
+.layodt-template {
+	max-width: 100%;
+	overflow-x: auto;
+}
+
+.layodt-template img {
+	max-width: 100%;
+	height: auto;
+}

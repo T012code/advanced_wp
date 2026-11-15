@@ -61,7 +61,7 @@ It starts from your site. Brand colours come from your choice of source: your th
 = Dashboard widgets =
 
 * Show or hide any dashboard widget per role, including widgets from other plugins such as WooCommerce and Elementor.
-* Add your own widgets: rich text, quick links with icons, a support card, a video, "What's new" from a category, recent sign-ups, content counts, recent comments and a Site Health summary. Each can be limited to chosen roles.
+* Add your own widgets: rich text, quick links with icons, a support card, a video, "What's new" from a category, recent sign-ups, content counts, recent comments, a Site Health summary, or a page or Elementor template you designed. Each can be limited to chosen roles.
 * Save your own dashboard arrangement as the default for everyone, and optionally stop people rearranging it.
 
 = Dashboard look =
@@ -106,6 +106,7 @@ It starts from your site. Brand colours come from your choice of source: your th
 = Tools =
 
 * Export and import settings as JSON, choosing the parts: settings and designs, dashboard look, dashboard widgets, menu and toolbar rules, roles, and personal settings. Pages and categories are matched by slug on the new site. A review screen lets you pick the roles to bring across, each with all its capabilities, and shows what would change; administrators keep every capability.
+* Import from other plugins: login and dashboard addresses and attempt limits from WPS Hide Login, Loginizer, All-In-One Security, Solid Security, WP Hide & Security Enhancer and Defender; menu, toolbar, login destination and dashboard widget rules from Adminimize, Admin Menu Editor (and Pro), User Role Editor Pro, Hide Admin Bar Based on User Roles and Admin and Site Enhancements; welcome templates from Dashboard Welcome for Elementor. A review screen shows each change first, and login protection waits until the other plugin is deactivated.
 * Reset any section to its defaults.
 * Status panel showing drop-in files, detected theme colours and overlapping plugins.
 

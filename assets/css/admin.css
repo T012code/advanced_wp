@@ -1472,3 +1472,93 @@ body.layodt-look .layodt-matrix > thead > tr > th {
 	display: inline-block;
 	margin: 0 4px 4px 0;
 }
+
+/* Import from another plugin. */
+.layodt-sources {
+	margin: 0 0 12px;
+}
+
+.layodt-sources li {
+	margin: 0 0 12px;
+}
+
+.layodt-sources .button {
+	margin-top: 6px;
+}
+
+.layodt-import-other .check-column {
+	width: 2.6em;
+	padding: 12px 0 0 12px;
+	vertical-align: top;
+}
+
+.layodt-import-other td,
+.layodt-import-other th {
+	vertical-align: top;
+}
+
+.layodt-import-other .layodt-badge {
+	margin: 4px 0 0;
+}
+
+.layodt-plain-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.layodt-plain-list li {
+	margin: 0 0 4px;
+}
+
+.layodt-result {
+	padding: 8px 12px;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	background: #fff;
+}
+
+.layodt-result--success {
+	border-color: #00a32a;
+	background: #edfaef;
+}
+
+.layodt-result--warning {
+	border-color: #dba617;
+	background: #fcf9e8;
+}
+
+.layodt-result--info {
+	border-color: #72aee6;
+	background: #f0f6fc;
+}
+
+.layodt-callout {
+	margin: 16px 0;
+	padding: 12px 16px;
+	border: 1px solid #c3c4c7;
+	border-radius: 8px;
+	background: #fff;
+}
+
+.layodt-callout p {
+	margin: 0 0 8px;
+}
+
+.layodt-row-actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 10px;
+}
+
+.layodt-row-actions .layodt-inline-form {
+	margin: 0;
+}
+
+.layodt-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}

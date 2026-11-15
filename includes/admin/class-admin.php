@@ -9,6 +9,7 @@ namespace LayoDT\Admin;
 
 use LayoDT\Brand_Kit;
 use LayoDT\Plugin;
+use LayoDT\Importers\Importers;
 use LayoDT\Settings;
 use LayoDT\Modules\Emails\Emails;
 use LayoDT\Modules\Emails\Renderer;
@@ -180,6 +181,7 @@ class Admin {
 				<?php esc_html_e( 'Layò Dashboard Toolkit', 'layo-dashboard-toolkit' ); ?>
 			</h1>
 			<?php self::notices(); ?>
+			<?php Importers::hints( $tab ); ?>
 			<nav class="nav-tab-wrapper" aria-label="<?php esc_attr_e( 'Layò Dashboard Toolkit sections', 'layo-dashboard-toolkit' ); ?>">
 				<?php foreach ( self::tabs() as $key => $label ) : ?>
 					<a href="<?php echo esc_url( self::url( $key ) ); ?>" class="nav-tab<?php echo $key === $tab ? ' nav-tab-active' : ''; ?>"<?php echo $key === $tab ? ' aria-current="page"' : ''; ?>><?php echo esc_html( $label ); ?></a>
@@ -252,35 +254,43 @@ class Admin {
 		$notice = isset( $_GET['layodt_notice'] ) ? sanitize_key( wp_unslash( $_GET['layodt_notice'] ) ) : '';
 
 		$messages = array(
-			'saved'                => array( 'success', __( 'Settings saved.', 'layo-dashboard-toolkit' ) ),
-			'imported'             => array( 'success', __( 'Settings imported.', 'layo-dashboard-toolkit' ) ),
-			'import_roles_failed'  => array( 'error', __( 'Nothing was imported. The roles in the file would have removed your own access.', 'layo-dashboard-toolkit' ) ),
-			'import_nothing'       => array( 'error', __( 'Nothing was imported. Tick at least one part or role.', 'layo-dashboard-toolkit' ) ),
-			'import_expired'       => array( 'error', __( 'The uploaded file is no longer waiting to be imported. Upload it again.', 'layo-dashboard-toolkit' ) ),
-			'import_cancelled'     => array( 'success', __( 'Import cancelled. Nothing was changed.', 'layo-dashboard-toolkit' ) ),
-			'import_failed'        => array( 'error', __( 'That file is not a valid Layò Dashboard Toolkit export.', 'layo-dashboard-toolkit' ) ),
-			'reset'                => array( 'success', __( 'Settings reset to their defaults.', 'layo-dashboard-toolkit' ) ),
-			'reset_confirm'        => array( 'error', __( 'Tick the confirmation box to reset settings.', 'layo-dashboard-toolkit' ) ),
-			'test_sent'            => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'layo-dashboard-toolkit' ) ),
-			'test_failed'          => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'layo-dashboard-toolkit' ) ),
-			'slug_invalid'         => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'layo-dashboard-toolkit' ) ),
-			'unlocked'             => array( 'success', __( 'Lockout lifted.', 'layo-dashboard-toolkit' ) ),
-			'log_cleared'          => array( 'success', __( 'Lockout log cleared.', 'layo-dashboard-toolkit' ) ),
-			'role_saved'           => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'layo-dashboard-toolkit' ) ),
-			'role_deleted'         => array( 'success', __( 'Role deleted and its users moved.', 'layo-dashboard-toolkit' ) ),
-			'roles_restored'       => array( 'success', __( 'Roles restored.', 'layo-dashboard-toolkit' ) ),
-			'look_stopped'         => array( 'success', __( 'Trial ended. Your dashboard is back to its usual template.', 'layo-dashboard-toolkit' ) ),
-			'session_ended'        => array( 'success', __( 'That device has been signed out.', 'layo-dashboard-toolkit' ) ),
-			'sessions_ended'       => array( 'success', __( 'Signed out everywhere.', 'layo-dashboard-toolkit' ) ),
-			'user_blocked'         => array( 'success', __( 'Account blocked and signed out everywhere.', 'layo-dashboard-toolkit' ) ),
-			'user_unblocked'       => array( 'success', __( 'Account unblocked. They can sign in again.', 'layo-dashboard-toolkit' ) ),
-			'user_not_found'       => array( 'error', __( 'No user found with that username or email address.', 'layo-dashboard-toolkit' ) ),
-			'widget_deleted'       => array( 'success', __( 'Widget deleted.', 'layo-dashboard-toolkit' ) ),
-			'history_cleared'      => array( 'success', __( 'Sign-in history cleared.', 'layo-dashboard-toolkit' ) ),
-			'admin_slug_invalid'   => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'layo-dashboard-toolkit' ) ),
-			'admin_url_active'     => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'layo-dashboard-toolkit' ) ),
-			'admin_url_pending'    => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'layo-dashboard-toolkit' ) ),
-			'admin_url_unwritable' => array( 'warning', __( 'Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click "Test again".', 'layo-dashboard-toolkit' ) ),
+			'saved'                     => array( 'success', __( 'Settings saved.', 'layo-dashboard-toolkit' ) ),
+			'imported'                  => array( 'success', __( 'Settings imported.', 'layo-dashboard-toolkit' ) ),
+			'import_roles_failed'       => array( 'error', __( 'Nothing was imported. The roles in the file would have removed your own access.', 'layo-dashboard-toolkit' ) ),
+			'import_nothing'            => array( 'error', __( 'Nothing was imported. Tick at least one part or role.', 'layo-dashboard-toolkit' ) ),
+			'import_expired'            => array( 'error', __( 'The uploaded file is no longer waiting to be imported. Upload it again.', 'layo-dashboard-toolkit' ) ),
+			'import_cancelled'          => array( 'success', __( 'Import cancelled. Nothing was changed.', 'layo-dashboard-toolkit' ) ),
+			'import_failed'             => array( 'error', __( 'That file is not a valid Layò Dashboard Toolkit export.', 'layo-dashboard-toolkit' ) ),
+			'reset'                     => array( 'success', __( 'Settings reset to their defaults.', 'layo-dashboard-toolkit' ) ),
+			'reset_confirm'             => array( 'error', __( 'Tick the confirmation box to reset settings.', 'layo-dashboard-toolkit' ) ),
+			'test_sent'                 => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'layo-dashboard-toolkit' ) ),
+			'test_failed'               => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'layo-dashboard-toolkit' ) ),
+			'slug_invalid'              => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'layo-dashboard-toolkit' ) ),
+			'unlocked'                  => array( 'success', __( 'Lockout lifted.', 'layo-dashboard-toolkit' ) ),
+			'log_cleared'               => array( 'success', __( 'Lockout log cleared.', 'layo-dashboard-toolkit' ) ),
+			'role_saved'                => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'layo-dashboard-toolkit' ) ),
+			'role_deleted'              => array( 'success', __( 'Role deleted and its users moved.', 'layo-dashboard-toolkit' ) ),
+			'roles_restored'            => array( 'success', __( 'Roles restored.', 'layo-dashboard-toolkit' ) ),
+			'look_stopped'              => array( 'success', __( 'Trial ended. Your dashboard is back to its usual template.', 'layo-dashboard-toolkit' ) ),
+			'session_ended'             => array( 'success', __( 'That device has been signed out.', 'layo-dashboard-toolkit' ) ),
+			'sessions_ended'            => array( 'success', __( 'Signed out everywhere.', 'layo-dashboard-toolkit' ) ),
+			'user_blocked'              => array( 'success', __( 'Account blocked and signed out everywhere.', 'layo-dashboard-toolkit' ) ),
+			'user_unblocked'            => array( 'success', __( 'Account unblocked. They can sign in again.', 'layo-dashboard-toolkit' ) ),
+			'user_not_found'            => array( 'error', __( 'No user found with that username or email address.', 'layo-dashboard-toolkit' ) ),
+			'widget_deleted'            => array( 'success', __( 'Widget deleted.', 'layo-dashboard-toolkit' ) ),
+			'history_cleared'           => array( 'success', __( 'Sign-in history cleared.', 'layo-dashboard-toolkit' ) ),
+			'admin_slug_invalid'        => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'layo-dashboard-toolkit' ) ),
+			'admin_url_active'          => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'layo-dashboard-toolkit' ) ),
+			'admin_url_pending'         => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'layo-dashboard-toolkit' ) ),
+			'other_expired'             => array( 'error', __( 'The review screen expired. Open it again and import from there.', 'layo-dashboard-toolkit' ) ),
+			'other_nothing'             => array( 'error', __( 'Nothing was imported. Tick at least one setting.', 'layo-dashboard-toolkit' ) ),
+			'other_cancelled'           => array( 'success', __( 'Those imported settings will not be switched on.', 'layo-dashboard-toolkit' ) ),
+			'other_deactivated'         => array( 'success', __( 'The other plugin was deactivated.', 'layo-dashboard-toolkit' ) ),
+			'other_switched_off'        => array( 'success', __( 'The other plugin was deactivated and your imported login protection settings are now on.', 'layo-dashboard-toolkit' ) ),
+			'other_switched_active'     => array( 'success', __( 'The other plugin was deactivated and your imported login protection settings are now on, including the new dashboard address.', 'layo-dashboard-toolkit' ) ),
+			'other_switched_pending'    => array( 'warning', __( 'The other plugin was deactivated and your imported login protection settings are now on. The new dashboard address needs server rules first, so the dashboard stays at /wp-admin. See Login protection.', 'layo-dashboard-toolkit' ) ),
+			'other_switched_unwritable' => array( 'warning', __( 'The other plugin was deactivated and your imported login protection settings are now on. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection.', 'layo-dashboard-toolkit' ) ),
+			'admin_url_unwritable'      => array( 'warning', __( 'Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click "Test again".', 'layo-dashboard-toolkit' ) ),
 		);
 
 		if ( isset( $messages[ $notice ] ) ) {
@@ -663,8 +673,8 @@ class Admin {
 				sprintf(
 					/* translators: %d: number of pages or categories. */
 					_n(
-						'%d page or category from the file does not exist on this site, so the setting that used it went back to its default: the Customizer design for coming soon, the next login destination rule, or all categories for a "What\'s new" widget. Create it with the same slug and import again, or choose another one.',
-						'%d pages or categories from the file do not exist on this site, so the settings that used them went back to their defaults: the Customizer design for coming soon, the next login destination rule, or all categories for a "What\'s new" widget. Create them with the same slugs and import again, or choose others.',
+						'%d page or category from the file does not exist on this site, so the setting that used it went back to its default: the Customizer design for coming soon, the next login destination rule, an empty "Page or template" widget, or all categories for a "What\'s new" widget. Create it with the same slug and import again, or choose another one.',
+						'%d pages or categories from the file do not exist on this site, so the settings that used them went back to their defaults: the Customizer design for coming soon, the next login destination rule, an empty "Page or template" widget, or all categories for a "What\'s new" widget. Create them with the same slugs and import again, or choose others.',
 						(int) $report['missing'],
 						'layo-dashboard-toolkit'
 					),

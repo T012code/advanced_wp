@@ -68,6 +68,7 @@ class Plugin {
 
 		Preview::init();
 		Customizer\Customizer::init();
+		Importers\Importers::init();
 
 		if ( is_admin() ) {
 			Admin\Admin::init();
