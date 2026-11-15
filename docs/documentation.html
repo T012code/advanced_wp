@@ -268,6 +268,17 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<figcaption>The "Comment awaiting moderation" email.</figcaption>
 	</figure>
 
+	<h3>Emails customised elsewhere</h3>
+	<p>Themes and plugins sometimes change WordPress's emails with a few lines of code, for example new wording for the password reset email in the theme's <code>functions.php</code>. The Emails tab finds these by itself and lists each email, what changed it (the plugin's name, or the theme and file) and, under the subject line, a preview of exactly what that code sends. The preview is written for a made-up person, so no real account is used. While a template here is on, it replaces their version.</p>
+	<p><strong>Copy into my template</strong> puts their subject and text into your template: names, email addresses, the site name and links become tags such as <code>{display_name}</code> and <code>{reset_link}</code>, so the template works for everyone, and plain text gets paragraphs and clickable links. When their text already includes the email's main link, the button is left out so the link is not there twice. Your colours, logo and layout stay. You can then switch the other code off. The comment and privacy emails are built from real comments and requests, so they are listed but not previewed.</p>
+	<h3>Another email design</h3>
+	<p>Some plugins wrap every email in their own design. When a WordPress email is sent and another plugin changes the branded email on its way out, the Emails tab shows the two side by side, names the plugin that made the change, and asks which design to keep:</p>
+	<ul>
+		<li><strong>Keep my design:</strong> WordPress emails go out in your design, and the other plugin's wrapper is taken off them. That plugin's own emails keep its design.</li>
+		<li><strong>Keep theirs:</strong> your templates still set the subject and wording, but are sent without your layout, so the other plugin's design wraps them once.</li>
+	</ul>
+	<p>Until you choose, both apply. Sending yourself a test email is enough for the check to run.</p>
+
 	<h2>7. Error and system pages</h2>
 	<table>
 		<tr><th>Page</th><th>When WordPress shows it</th><th>How Layò Dashboard Toolkit handles it</th></tr>
@@ -666,6 +677,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td><code>includes/class-defaults.php</code></td><td>Translatable default text</td></tr>
 		<tr><td><code>includes/class-brand-kit.php</code>, <code>class-color.php</code>, <code>class-fonts.php</code></td><td>Theme detection, colour maths, font hosting</td></tr>
 		<tr><td><code>includes/class-system-page.php</code>, <code>class-dropins.php</code></td><td>Standalone pages and drop-in files</td></tr>
+		<tr><td><code>includes/modules/emails/class-email-sources.php</code></td><td>Finds outside callbacks on each WordPress email's filters, runs only those on sample input for a made-up person to preview the result, and turns that result back into tags when it is copied into a template. The Emails class watches each priority on <code>wp_mail</code> and <code>phpmailer_init</code> while a branded email is sent, to name the code that wraps it, and applies the chosen design</td></tr>
 		<tr><td><code>includes/class-login-pages.php</code></td><td>Finds login, lost password and registration pages set up by the theme or other plugins: it reads the <code>login_url</code>, <code>lostpassword_url</code>, <code>register_url</code> and <code>site_url</code> filters with this plugin's own callbacks taken out, names the plugin or theme file behind each change, and reads the page settings of WooCommerce, Ultimate Member and Paid Memberships Pro</td></tr>
 		<tr><td><code>includes/class-preview.php</code>, <code>includes/customizer/</code></td><td>Customizer panel and preview routing</td></tr>
 		<tr><td><code>includes/admin/</code></td><td>Settings page, one class per larger tab (roles, look, widgets, sessions), field renderers, and <code>class-transfer.php</code> for export and import</td></tr>
@@ -705,6 +717,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Option</td><td><code>layodt_widgets</code>, <code>layodt_widgets_seen</code></td><td>Widget visibility per role, custom widgets and the default layout; the names of widgets other plugins add, so the settings page can list them</td></tr>
 		<tr><td>Transients</td><td><code>layodt_embed_*</code>, <code>layodt_import_file_*</code>, <code>layodt_import_*</code></td><td>Video widget embed code (a day); an uploaded settings file waiting on its review screen, per person (an hour, or until imported or cancelled); the result of an import, shown once to the person who ran it (ten minutes)</td></tr>
 		<tr><td>Option (not autoloaded)</td><td><code>layodt_other_waiting</code>, <code>layodt_other_done</code></td><td>Imported login protection settings waiting for the other plugin to be deactivated; a fingerprint of each setting imported from another plugin, so the review screen and hints know what was imported already</td></tr>
+		<tr><td>Option (not autoloaded)</td><td><code>layodt_email_copied</code>, <code>layodt_email_design</code>, <code>layodt_email_wrapped</code></td><td>Emails copied in from other code (with a fingerprint of what they sent); which design to keep when another plugin wraps emails; the last wrapped email and the code that wrapped it</td></tr>
 		<tr><td>Transient</td><td><code>layodt_login_pages</code></td><td>Login pages found elsewhere (an hour; cleared when a plugin is switched on or off or the theme changes)</td></tr>
 		<tr><td>User meta</td><td><code>layodt_other_dismissed</code></td><td>Import suggestions a person chose "Not now" for</td></tr>
 		<tr><td>Transients</td><td><code>layodt_other_scan_*</code>, <code>layodt_other_report_*</code>, <code>layodt_other_switched_*</code></td><td>What the review screen for another plugin showed, so the import applies exactly that (an hour); the result of that import (ten minutes); the outcome of switching settings on after a deactivation (a minute)</td></tr>

@@ -34,6 +34,9 @@ delete_option( 'layodt_reapply_admin_url' );
 delete_option( 'layodt_other_waiting' );
 delete_option( 'layodt_other_done' );
 delete_transient( 'layodt_login_pages' );
+delete_option( 'layodt_email_copied' );
+delete_option( 'layodt_email_design' );
+delete_option( 'layodt_email_wrapped' );
 
 foreach ( array( 'layodt_2fa_method', 'layodt_2fa_secret', 'layodt_2fa_pending', 'layodt_2fa_backup', 'layodt_2fa_last_slice', 'layodt_2fa_login', 'layodt_2fa_email_code', 'layodt_2fa_required_since', 'layodt_toolbar', 'layodt_look_admin', 'layodt_look_self', 'layodt_look_try', 'layodt_look_mode', 'layodt_blocked', 'layodt_login_redirect', 'layodt_other_dismissed' ) as $layodt_meta_key ) {
 	delete_metadata( 'user', 0, $layodt_meta_key, '', true );

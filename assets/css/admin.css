@@ -1567,3 +1567,43 @@ body.layodt-look .layodt-matrix > thead > tr > th {
 .layodt-login-pages + .description {
 	margin-top: 8px;
 }
+
+/* Emails customised elsewhere. */
+.layodt-email-sources td {
+	vertical-align: top;
+}
+
+.layodt-email-sources form {
+	margin-top: 8px;
+}
+
+.layodt-email-frame {
+	display: block;
+	width: 100%;
+	height: 420px;
+	margin-top: 8px;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	background: #fff;
+}
+
+.layodt-design-choice {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 16px;
+	margin: 0 0 12px;
+}
+
+.layodt-design-choice figure {
+	margin: 0;
+}
+
+.layodt-design-choice figcaption {
+	font-weight: 600;
+}
+
+@media (max-width: 782px) {
+	.layodt-design-choice {
+		grid-template-columns: 1fr;
+	}
+}

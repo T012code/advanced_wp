@@ -22,6 +22,31 @@ defined( 'ABSPATH' ) || exit;
  */
 class Emails {
 
+	const DESIGN  = 'layodt_email_design';
+	const WRAPPED = 'layodt_email_wrapped';
+
+	/**
+	 * The branded message being sent right now, as this plugin made it.
+	 *
+	 * @var string
+	 */
+	private static $current = '';
+
+	/**
+	 * The message as last seen while watching the wp_mail and
+	 * phpmailer_init hooks, and the code seen changing it.
+	 *
+	 * @var string
+	 */
+	private static $seen = '';
+
+	/**
+	 * Names of the code seen changing a branded email.
+	 *
+	 * @var string[]
+	 */
+	private static $changers = array();
+
 	/**
 	 * Rendered emails waiting to be sent, keyed by marker id.
 	 *
@@ -79,6 +104,70 @@ class Emails {
 
 		add_filter( 'wp_mail', array( __CLASS__, 'finalize' ), 1000 );
 		add_action( 'phpmailer_init', array( __CLASS__, 'alt_body' ) );
+		add_filter( 'wp_mail', array( __CLASS__, 'guard_message' ), PHP_INT_MAX );
+		add_action( 'phpmailer_init', array( __CLASS__, 'guard_body' ), PHP_INT_MAX );
+		add_action( 'wp_loaded', array( __CLASS__, 'watch' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * Adds a small watcher after each group of callbacks on the wp_mail and
+	 * phpmailer_init hooks, so the code that changes a branded email can be
+	 * named exactly. Runs once everything has added its own callbacks.
+	 *
+	 * @return void
+	 */
+	public static function watch() {
+		global $wp_filter;
+
+		foreach ( array( 'wp_mail', 'phpmailer_init' ) as $hook ) {
+			if ( ! isset( $wp_filter[ $hook ] ) || ! $wp_filter[ $hook ] instanceof \WP_Hook ) {
+				continue;
+			}
+
+			foreach ( array_keys( $wp_filter[ $hook ]->callbacks ) as $priority ) {
+				if ( PHP_INT_MAX === $priority ) {
+					continue;
+				}
+
+				$watcher = static function ( $value ) use ( $hook, $priority ) {
+					$message = 'wp_mail' === $hook ? ( isset( $value['message'] ) ? $value['message'] : '' ) : ( is_object( $value ) && isset( $value->Body ) ? $value->Body : '' ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+
+					if ( is_string( $message ) && false !== strpos( $message, '<!-- layodt-email:' ) ) {
+						if ( '' !== self::$seen && $message !== self::$seen ) {
+							self::$changers = array_merge( self::$changers, self::names_at( $hook, $priority ) );
+						}
+						self::$seen = $message;
+					}
+
+					return $value;
+				};
+
+				'wp_mail' === $hook ? add_filter( $hook, $watcher, $priority ) : add_action( $hook, $watcher, $priority );
+			}
+		}
+	}
+
+	/**
+	 * Names of the outside code on a hook at one priority.
+	 *
+	 * @param string $hook     Hook name.
+	 * @param int    $priority Priority.
+	 * @return string[]
+	 */
+	private static function names_at( $hook, $priority ) {
+		global $wp_filter;
+
+		$names = array();
+		$core  = wp_normalize_path( ABSPATH . WPINC );
+
+		foreach ( isset( $wp_filter[ $hook ]->callbacks[ $priority ] ) ? $wp_filter[ $hook ]->callbacks[ $priority ] : array() as $callback ) {
+			$file = wp_normalize_path( \LayoDT\Login_Pages::file_of( $callback['function'] ) );
+			if ( '' !== $file && ! \LayoDT\Login_Pages::is_ours( $file ) && 0 !== strpos( $file, $core ) ) {
+				$names[] = \LayoDT\Login_Pages::describe_file( $file );
+			}
+		}
+
+		return $names;
 	}
 
 	/**
@@ -92,9 +181,12 @@ class Emails {
 		$email = Renderer::render( $key, $context );
 		$id    = $key . '-' . count( self::$pending );
 
+		$email['html']        = str_replace( '<!-- layodt-email -->', '<!-- layodt-email:' . $id . ' -->', $email['html'] );
 		self::$pending[ $id ] = $email;
+		self::$seen           = $email['html'];
+		self::$changers       = array();
 
-		return str_replace( '<!-- layodt-email -->', '<!-- layodt-email:' . $id . ' -->', $email['html'] );
+		return $email['html'];
 	}
 
 	/**
@@ -115,9 +207,84 @@ class Emails {
 		$args['subject'] = $email['subject'];
 		$args['headers'] = self::html_headers( $args['headers'] );
 		self::$alt_body  = $email['text'];
+		self::$current   = $email['html'];
 
 		return $args;
 	}
+
+	/**
+	 * Notices when another plugin wraps a branded email in its own design
+	 * through the wp_mail filter, and keeps this plugin's design when the
+	 * owner chose it.
+	 *
+	 * @param array $args wp_mail() arguments.
+	 * @return array
+	 */
+	public static function guard_message( $args ) {
+		if ( '' === self::$current || ! is_string( $args['message'] ) || false === strpos( $args['message'], '<!-- layodt-email:' ) || $args['message'] === self::$current ) {
+			return $args;
+		}
+
+		self::record_wrapper( 'wp_mail', $args['message'] );
+
+		if ( 'mine' === get_option( self::DESIGN, '' ) ) {
+			$args['message'] = self::$current;
+		}
+
+		// What reaches the mailer next, so the body check only sees later changes.
+		self::$seen = $args['message'];
+
+		return $args;
+	}
+
+	/**
+	 * The same check for plugins that change the message body just before
+	 * it is sent.
+	 *
+	 * @param \PHPMailer\PHPMailer\PHPMailer $phpmailer Mailer.
+	 * @return void
+	 */
+	public static function guard_body( $phpmailer ) {
+		// phpcs:disable WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase -- PHPMailer property.
+		if ( '' === self::$current || ! is_string( $phpmailer->Body ) || false === strpos( $phpmailer->Body, '<!-- layodt-email:' ) ) {
+			self::$current = '';
+			return;
+		}
+
+		if ( $phpmailer->Body !== self::$current ) {
+			self::record_wrapper( 'phpmailer_init', $phpmailer->Body );
+
+			if ( 'mine' === get_option( self::DESIGN, '' ) ) {
+				$phpmailer->Body = self::$current;
+			}
+		}
+		// phpcs:enable
+
+		self::$current = '';
+	}
+
+	/**
+	 * Remembers which outside code wrapped an email, and how it looked, so
+	 * the Emails tab can offer the choice of design.
+	 *
+	 * @param string $hook    Hook the change was made on.
+	 * @param string $message The wrapped message.
+	 * @return void
+	 */
+	private static function record_wrapper( $hook, $message ) {
+		$names = array_values( array_unique( self::$changers ) );
+
+		update_option(
+			self::WRAPPED,
+			array(
+				'sources' => $names,
+				'html'    => substr( $message, 0, 200000 ),
+				'time'    => time(),
+			),
+			false
+		);
+	}
+
 
 	/**
 	 * Replaces any Content-Type header with text/html.

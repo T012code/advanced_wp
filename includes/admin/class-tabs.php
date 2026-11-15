@@ -13,6 +13,9 @@ use LayoDT\Files;
 use LayoDT\Importers\Importers;
 use LayoDT\Importers\Sources;
 use LayoDT\Login_Pages;
+use LayoDT\Modules\Emails\Email_Sources;
+use LayoDT\Modules\Emails\Emails;
+use LayoDT\Modules\Emails\Renderer;
 use LayoDT\Settings;
 use LayoDT\Modules\Emails\Templates;
 use LayoDT\Modules\Maintenance\Maintenance;
@@ -274,6 +277,8 @@ class Tabs {
 				self::customize_link( 'layodt_emails', __( 'Design emails', 'layo-dashboard-toolkit' ) )
 			)
 		) . '</p>';
+
+		self::email_sources();
 
 		echo '<div class="layodt-emails">';
 
@@ -942,6 +947,72 @@ class Tabs {
 		wp_nonce_field( 'layodt_import_cancel' );
 		submit_button( __( 'Cancel and discard the file', 'layo-dashboard-toolkit' ), 'secondary', 'cancel', false );
 		echo '</form>';
+	}
+
+	/**
+	 * Emails the theme or other plugins customise, and the choice of design
+	 * when another plugin wraps every email.
+	 *
+	 * @return void
+	 */
+	private static function email_sources() {
+		$post      = admin_url( 'admin-post.php' );
+		$templates = Templates::all();
+		$found     = Email_Sources::customised();
+		$wrapped   = get_option( Emails::WRAPPED );
+
+		if ( $found ) {
+			echo '<div class="layodt-callout"><p><strong>' . esc_html__( 'Emails customised elsewhere', 'layo-dashboard-toolkit' ) . '</strong></p>';
+			echo '<p>' . esc_html__( 'Your theme or another plugin already changes these emails. While a template here is on, it replaces their version. Preview what they send, and copy it into your template to keep their wording in your design.', 'layo-dashboard-toolkit' ) . '</p>';
+			echo '<table class="widefat striped layodt-email-sources"><thead><tr><th scope="col">' . esc_html__( 'Email', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Changed by', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'What it sends', 'layo-dashboard-toolkit' ) . '</th></tr></thead><tbody>';
+
+			foreach ( $found as $key => $info ) {
+				$sample = Email_Sources::sample( $key );
+				echo '<tr><td>' . esc_html( isset( $templates[ $key ] ) ? $templates[ $key ]['label'] : $key ) . '</td><td>' . esc_html( implode( ', ', $info['sources'] ) ) . '</td><td>';
+
+				if ( ! $sample ) {
+					echo esc_html__( 'This email is built from real comments or requests, so it cannot be previewed safely. Open its template here and compare it with the other code.', 'layo-dashboard-toolkit' );
+				} else {
+					$html = wp_strip_all_tags( $sample['message'] ) === $sample['message'] ? '<pre style="white-space:pre-wrap;font:14px/1.5 sans-serif">' . esc_html( $sample['message'] ) . '</pre>' : $sample['message'];
+					echo '<details class="layodt-diff"><summary>' . esc_html( $sample['subject'] ) . '</summary>';
+					echo '<iframe class="layodt-email-frame" sandbox="" title="' . esc_attr__( 'Email preview', 'layo-dashboard-toolkit' ) . '" srcdoc="' . esc_attr( $html ) . '"></iframe></details>';
+
+					if ( Email_Sources::is_copied( $key, $sample ) ) {
+						echo '<span class="layodt-badge">' . esc_html__( 'Copied into your template', 'layo-dashboard-toolkit' ) . '</span>';
+					} else {
+						echo '<form method="post" action="' . esc_url( $post ) . '" data-layodt-confirm><input type="hidden" name="action" value="layodt_email_copy"><input type="hidden" name="template" value="' . esc_attr( $key ) . '">';
+						wp_nonce_field( 'layodt_email_copy' );
+						submit_button( __( 'Copy into my template', 'layo-dashboard-toolkit' ), 'small', 'submit', false );
+						echo '</form>';
+					}
+				}
+
+				echo '</td></tr>';
+			}
+
+			echo '</tbody></table>';
+			echo '<p class="description">' . esc_html__( 'Copying replaces this template\'s subject and text with theirs, with names, addresses and links turned into tags so it works for everyone. Your colours, logo and layout stay.', 'layo-dashboard-toolkit' ) . '</p></div>';
+		}
+
+		if ( is_array( $wrapped ) && ! empty( $wrapped['html'] ) ) {
+			$choice = Email_Sources::design_choice();
+			$names  = ! empty( $wrapped['sources'] ) ? implode( ', ', $wrapped['sources'] ) : __( 'Another plugin', 'layo-dashboard-toolkit' );
+
+			echo '<div class="layodt-callout"><p><strong>' . esc_html__( 'Another email design was found', 'layo-dashboard-toolkit' ) . '</strong></p>';
+			/* translators: %s: plugin or theme names. */
+			echo '<p>' . esc_html( sprintf( __( '%s also wraps emails in its own design, so an email could arrive wrapped twice. Choose which design WordPress emails use. The other design keeps working for that plugin\'s own emails.', 'layo-dashboard-toolkit' ), $names ) ) . '</p>';
+			echo '<div class="layodt-design-choice"><figure><figcaption>' . esc_html__( 'Your design', 'layo-dashboard-toolkit' ) . '</figcaption><iframe class="layodt-email-frame" sandbox="" title="' . esc_attr__( 'Your design', 'layo-dashboard-toolkit' ) . '" srcdoc="' . esc_attr( Renderer::preview( 'welcome', true ) ) . '"></iframe></figure>';
+			/* translators: %s: plugin or theme names. */
+			echo '<figure><figcaption>' . esc_html( sprintf( __( 'As sent with %s', 'layo-dashboard-toolkit' ), $names ) ) . '</figcaption><iframe class="layodt-email-frame" sandbox="" title="' . esc_attr__( 'Their design', 'layo-dashboard-toolkit' ) . '" srcdoc="' . esc_attr( (string) $wrapped['html'] ) . '"></iframe></figure></div>';
+			echo '<form method="post" action="' . esc_url( $post ) . '"><input type="hidden" name="action" value="layodt_email_design">';
+			wp_nonce_field( 'layodt_email_design' );
+			echo '<fieldset><legend class="screen-reader-text">' . esc_html__( 'Email design', 'layo-dashboard-toolkit' ) . '</legend>';
+			echo '<label><input type="radio" name="layodt_design" value="mine"' . checked( $choice, 'mine', false ) . '> ' . esc_html__( 'Keep my design and remove theirs from WordPress emails', 'layo-dashboard-toolkit' ) . '</label><br>';
+			/* translators: %s: plugin or theme names. */
+			echo '<label><input type="radio" name="layodt_design" value="theirs"' . checked( $choice, 'theirs', false ) . '> ' . esc_html( sprintf( __( 'Keep the %s design; my templates only change the wording', 'layo-dashboard-toolkit' ), $names ) ) . '</label></fieldset>';
+			submit_button( __( 'Save choice', 'layo-dashboard-toolkit' ), 'secondary', 'submit', false );
+			echo '</form></div>';
+		}
 	}
 
 	/**

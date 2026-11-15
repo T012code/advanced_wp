@@ -41,6 +41,7 @@ class Admin {
 		add_action( 'admin_init', array( __CLASS__, 'store_brand_source' ) );
 		add_action( 'wp_ajax_layodt_brand_capture', array( __CLASS__, 'ajax_brand_capture' ) );
 		Roles_Tab::init();
+		\LayoDT\Modules\Emails\Email_Sources::init();
 		Look_Tab::init();
 		Sessions_Tab::init();
 		Widgets_Tab::init();
@@ -283,6 +284,8 @@ class Admin {
 			'admin_slug_invalid'        => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'layo-dashboard-toolkit' ) ),
 			'admin_url_active'          => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'layo-dashboard-toolkit' ) ),
 			'admin_url_pending'         => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'layo-dashboard-toolkit' ) ),
+			'email_copied'              => array( 'success', __( 'Copied into your template. Your design is now used for this email; you can switch the other code off.', 'layo-dashboard-toolkit' ) ),
+			'email_copy_failed'         => array( 'error', __( 'That email could not be copied. Edit the template by hand instead.', 'layo-dashboard-toolkit' ) ),
 			'login_url_clash'           => array( 'warning', __( 'Settings saved, but the custom login URL was left off because another plugin or your theme already moves the login page. See the note on this tab.', 'layo-dashboard-toolkit' ) ),
 			'other_expired'             => array( 'error', __( 'The review screen expired. Open it again and import from there.', 'layo-dashboard-toolkit' ) ),
 			'other_nothing'             => array( 'error', __( 'Nothing was imported. Tick at least one setting.', 'layo-dashboard-toolkit' ) ),

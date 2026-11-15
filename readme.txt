@@ -35,6 +35,8 @@ It starts from your site. Brand colours come from your choice of source: your th
 * Edit the subject, heading, body and button of each email in a visual or HTML editor, with tags such as {user_name}, {reset_link} and {site_name}.
 * A plain-text version is generated automatically.
 * Preview any email and send yourself a test.
+* Finds emails the theme or other plugins already customise, names the code behind each, previews what it sends and copies it into your template with one click, with names and links turned into tags.
+* When another plugin wraps every email in its own design, shows both side by side and lets you keep one, so emails are never wrapped twice.
 
 = Error and system pages =
 

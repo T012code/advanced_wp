@@ -211,7 +211,7 @@ class Login_Pages {
 	 * @param string $file File path.
 	 * @return bool
 	 */
-	private static function is_ours( $file ) {
+	public static function is_ours( $file ) {
 		return '' !== $file && 0 === strpos( wp_normalize_path( $file ), wp_normalize_path( LAYODT_DIR ) );
 	}
 
@@ -380,7 +380,7 @@ class Login_Pages {
 	 * @param mixed $callback Callback.
 	 * @return string
 	 */
-	private static function file_of( $callback ) {
+	public static function file_of( $callback ) {
 		try {
 			if ( is_string( $callback ) && false !== strpos( $callback, '::' ) ) {
 				$callback = explode( '::', $callback, 2 );
@@ -409,7 +409,7 @@ class Login_Pages {
 	 * @param string $file File path.
 	 * @return string
 	 */
-	private static function describe_file( $file ) {
+	public static function describe_file( $file ) {
 		$file    = wp_normalize_path( $file );
 		$plugins = wp_normalize_path( WP_PLUGIN_DIR ) . '/';
 		$mu      = wp_normalize_path( WPMU_PLUGIN_DIR ) . '/';

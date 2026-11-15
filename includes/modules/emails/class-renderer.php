@@ -69,11 +69,13 @@ class Renderer {
 	/**
 	 * Renders a template.
 	 *
-	 * @param string $key     Template key.
-	 * @param array  $context Tag => value.
+	 * @param string    $key     Template key.
+	 * @param array     $context Tag => value.
+	 * @param bool|null $layout  Whether to wrap the content in the branded
+	 *                           layout; null follows the owner's design choice.
 	 * @return array { subject, html, text }
 	 */
-	public static function render( $key, array $context ) {
+	public static function render( $key, array $context, $layout = null ) {
 		$template = Templates::get( $key );
 		$prefix   = 'emails.templates.' . $key . '.';
 		$context  = array_merge( self::common_context(), $context );
@@ -92,7 +94,16 @@ class Renderer {
 			$button = '';
 		}
 
-		$html = self::layout( $heading, $body, $button, $button_url, $context );
+		if ( null === $layout ) {
+			$layout = 'theirs' !== get_option( Emails::DESIGN, '' );
+		}
+
+		if ( ! $layout ) {
+			// Another plugin's design wraps every email: send only the content, so it is not wrapped twice.
+			$html = "<!-- layodt-email -->\n" . ( '' !== $heading ? '<h1>' . esc_html( $heading ) . '</h1>' : '' ) . $body . ( '' !== $button ? '<p><a href="' . esc_url( $button_url ) . '">' . esc_html( $button ) . '</a></p>' : '' );
+		} else {
+			$html = self::layout( $heading, $body, $button, $button_url, $context );
+		}
 
 		return array(
 			'subject' => wp_specialchars_decode( $subject, ENT_QUOTES ),
@@ -383,15 +394,16 @@ class Renderer {
 	/**
 	 * Full HTML of a template filled with sample data.
 	 *
-	 * @param string $key Template key.
+	 * @param string    $key    Template key.
+	 * @param bool|null $layout Whether to show the branded layout; null follows the design choice.
 	 * @return string
 	 */
-	public static function preview( $key ) {
+	public static function preview( $key, $layout = null ) {
 		if ( ! Templates::get( $key ) ) {
 			$key = 'welcome';
 		}
 
-		$email = self::render( $key, self::sample_context() );
+		$email = self::render( $key, self::sample_context(), $layout );
 
 		return $email['html'];
 	}
