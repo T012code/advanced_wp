@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Layò Dashboard Toolkit 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/layo-dashboard-toolkit\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/advanced_wp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-16T06:46:14+00:00\n"
+"POT-Creation-Date: 2026-11-16T07:16:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: layo-dashboard-toolkit\n"
@@ -142,7 +142,7 @@ msgid "Settings saved."
 msgstr ""
 
 #: includes/admin/class-admin.php:261
-#: includes/admin/class-admin.php:681
+#: includes/admin/class-admin.php:683
 msgid "Settings imported."
 msgstr ""
 
@@ -183,7 +183,7 @@ msgid "The test email could not be sent. Your server may not be set up to send m
 msgstr ""
 
 #: includes/admin/class-admin.php:271
-msgid "That login address cannot be used. Choose another one; the custom login URL has been left off."
+msgid "That login address cannot be used. Use letters, numbers and dashes, and not a WordPress folder such as wp-admin or wp-content; the custom login URL has been left off."
 msgstr ""
 
 #: includes/admin/class-admin.php:272
@@ -243,70 +243,74 @@ msgid "Sign-in history cleared."
 msgstr ""
 
 #: includes/admin/class-admin.php:285
-msgid "That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off."
+msgid "That dashboard address cannot be used. Use letters, numbers and dashes, and not a WordPress folder such as wp-admin or wp-content; the custom dashboard address has been left off."
 msgstr ""
 
 #: includes/admin/class-admin.php:286
-msgid "Settings saved. The dashboard has moved to its new address."
+msgid "The dashboard address is the same as the login address. Choose a different one; the custom dashboard address has been left off."
 msgstr ""
 
 #: includes/admin/class-admin.php:287
-msgid "Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click \"Test again\"."
+msgid "Settings saved. The dashboard has moved to its new address."
 msgstr ""
 
 #: includes/admin/class-admin.php:288
-msgid "Copied into your template. Your design is now used for this email; you can switch the other code off."
+msgid "Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click \"Test again\"."
 msgstr ""
 
 #: includes/admin/class-admin.php:289
-msgid "That email could not be copied. Edit the template by hand instead."
+msgid "Copied into your template. Your design is now used for this email; you can switch the other code off."
 msgstr ""
 
 #: includes/admin/class-admin.php:290
-msgid "Settings saved, but the custom login URL was left off because another plugin or your theme already moves the login page. See the note on this tab."
+msgid "That email could not be copied. Edit the template by hand instead."
 msgstr ""
 
 #: includes/admin/class-admin.php:291
-msgid "The review screen expired. Open it again and import from there."
+msgid "Settings saved, but the custom login URL was left off because another plugin or your theme already moves the login page. See the note on this tab."
 msgstr ""
 
 #: includes/admin/class-admin.php:292
-msgid "Nothing was imported. Tick at least one setting."
+msgid "The review screen expired. Open it again and import from there."
 msgstr ""
 
 #: includes/admin/class-admin.php:293
-msgid "Those imported settings will not be switched on."
+msgid "Nothing was imported. Tick at least one setting."
 msgstr ""
 
 #: includes/admin/class-admin.php:294
-msgid "The other plugin was deactivated."
+msgid "Those imported settings will not be switched on."
 msgstr ""
 
 #: includes/admin/class-admin.php:295
-msgid "The other plugin was deactivated and your imported login protection settings are now on."
+msgid "The other plugin was deactivated."
 msgstr ""
 
 #: includes/admin/class-admin.php:296
-msgid "The other plugin was deactivated and your imported login protection settings are now on, including the new dashboard address."
+msgid "The other plugin was deactivated and your imported login protection settings are now on."
 msgstr ""
 
 #: includes/admin/class-admin.php:297
-msgid "The other plugin was deactivated and your imported login protection settings are now on. The new dashboard address needs server rules first, so the dashboard stays at /wp-admin. See Login protection."
+msgid "The other plugin was deactivated and your imported login protection settings are now on, including the new dashboard address."
 msgstr ""
 
 #: includes/admin/class-admin.php:298
-msgid "The other plugin was deactivated and your imported login protection settings are now on. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection."
+msgid "The other plugin was deactivated and your imported login protection settings are now on. The new dashboard address needs server rules first, so the dashboard stays at /wp-admin. See Login protection."
 msgstr ""
 
 #: includes/admin/class-admin.php:299
+msgid "The other plugin was deactivated and your imported login protection settings are now on. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection."
+msgstr ""
+
+#: includes/admin/class-admin.php:300
 msgid "Settings saved. The .htaccess file could not be updated, so the dashboard stays at /wp-admin. Add the rules shown below to .htaccess, then click \"Test again\"."
 msgstr ""
 
-#: includes/admin/class-admin.php:317
+#: includes/admin/class-admin.php:318
 msgid "Your login page has moved. Bookmark the new address:"
 msgstr ""
 
-#: includes/admin/class-admin.php:329
+#: includes/admin/class-admin.php:330
 #: includes/admin/class-look-tab.php:77
 #: includes/admin/class-roles-tab.php:86
 #: includes/admin/class-sessions-tab.php:493
@@ -321,13 +325,13 @@ msgid "Sorry, you are not allowed to do that."
 msgstr ""
 
 #. translators: %s: list of role names.
-#: includes/admin/class-admin.php:685
+#: includes/admin/class-admin.php:687
 #, php-format
 msgid "Roles added: %s."
 msgstr ""
 
 #. translators: %d: number of capabilities.
-#: includes/admin/class-admin.php:693
+#: includes/admin/class-admin.php:695
 #, php-format
 msgid "The Administrator role was given %d capability from the imported roles, so administrators can still do everything."
 msgid_plural "The Administrator role was given %d capabilities from the imported roles, so administrators can still do everything."
@@ -335,66 +339,70 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: list of role names.
-#: includes/admin/class-admin.php:701
+#: includes/admin/class-admin.php:703
 #, php-format
 msgid "Roles given the capabilities from the file: %s. A backup of the previous roles is under Roles & permissions → Backups."
 msgstr ""
 
-#: includes/admin/class-admin.php:705
+#: includes/admin/class-admin.php:707
 msgid "The roles were not imported, because they would have removed your own access. Everything else was imported."
 msgstr ""
 
 #. translators: %s: list of role names.
-#: includes/admin/class-admin.php:713
+#: includes/admin/class-admin.php:715
 #, php-format
 msgid "This site does not have these roles, so the rules for them were skipped: %s. Import the file again and tick those roles, or create them under Roles & permissions first."
 msgstr ""
 
 #. translators: %d: number of pages or categories.
-#: includes/admin/class-admin.php:724
+#: includes/admin/class-admin.php:726
 #, php-format
 msgid "%d page or category from the file does not exist on this site, so the setting that used it went back to its default: the Customizer design for coming soon, the next login destination rule, an empty \"Page or template\" widget, or all categories for a \"What's new\" widget. Create it with the same slug and import again, or choose another one."
 msgid_plural "%d pages or categories from the file do not exist on this site, so the settings that used them went back to their defaults: the Customizer design for coming soon, the next login destination rule, an empty \"Page or template\" widget, or all categories for a \"What's new\" widget. Create them with the same slugs and import again, or choose others."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/admin/class-admin.php:736
+#: includes/admin/class-admin.php:738
 msgid "The login address in the file cannot be used here, so the custom login address was left off."
 msgstr ""
 
-#: includes/admin/class-admin.php:737
+#: includes/admin/class-admin.php:739
 msgid "The dashboard address in the file cannot be used here, so the custom dashboard address was left off."
 msgstr ""
 
-#: includes/admin/class-admin.php:738
+#: includes/admin/class-admin.php:740
+msgid "The dashboard address in the file is the same as the login address, so the custom dashboard address was left off."
+msgstr ""
+
+#: includes/admin/class-admin.php:741
 msgid "The custom dashboard address is not working on this server yet, so the dashboard stays at /wp-admin. See Login protection for the server rules to add."
 msgstr ""
 
-#: includes/admin/class-admin.php:739
+#: includes/admin/class-admin.php:742
 msgid "The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection for the rules to add."
 msgstr ""
 
-#: includes/admin/class-admin.php:931
+#: includes/admin/class-admin.php:934
 #: includes/importers/class-importers.php:321
 msgid "Active"
 msgstr ""
 
-#: includes/admin/class-admin.php:932
+#: includes/admin/class-admin.php:935
 msgid "Another plugin or your host already uses this file. Layò Dashboard Toolkit leaves it alone."
 msgstr ""
 
-#: includes/admin/class-admin.php:933
+#: includes/admin/class-admin.php:936
 #: includes/admin/class-tabs.php:244
 #: includes/admin/class-tabs.php:248
 #: includes/admin/class-tabs.php:303
 msgid "Off"
 msgstr ""
 
-#: includes/admin/class-admin.php:934
+#: includes/admin/class-admin.php:937
 msgid "Cannot write to wp-content. Ask your host to make it writable, or turn this page off."
 msgstr ""
 
-#: includes/admin/class-admin.php:935
+#: includes/admin/class-admin.php:938
 msgid "Not written yet. Save any setting to create it."
 msgstr ""
 
@@ -1870,7 +1878,7 @@ msgid "Dashboard address"
 msgstr ""
 
 #: includes/admin/class-tabs.php:534
-msgid "Letters, numbers and dashes, for example \"office\". Must differ from the login address."
+msgid "Letters, numbers and dashes, for example \"dashboard\" or \"office\". Must differ from the login address."
 msgstr ""
 
 #: includes/admin/class-tabs.php:543
@@ -1973,7 +1981,7 @@ msgid "Login address"
 msgstr ""
 
 #: includes/admin/class-tabs.php:641
-msgid "Letters, numbers and dashes. Not \"login\", \"admin\" or \"dashboard\"."
+msgid "Letters, numbers and dashes, for example \"login\" or \"team-login\". Must differ from the dashboard address."
 msgstr ""
 
 #: includes/admin/class-tabs.php:650
@@ -4302,7 +4310,7 @@ msgstr ""
 #. translators: 1: address, 2: setting name.
 #: includes/importers/class-importers.php:840
 #, php-format
-msgid "\"%1$s\" cannot be used as an address here, so the %2$s was not imported. Addresses are a single word with letters, numbers and dashes, and cannot be \"login\", \"admin\" or \"dashboard\"."
+msgid "\"%1$s\" cannot be used as an address here, so the %2$s was not imported. Addresses are a single word with letters, numbers and dashes, and cannot be a WordPress folder such as wp-admin or wp-content."
 msgstr ""
 
 #: includes/importers/class-importers.php:863

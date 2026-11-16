@@ -91,9 +91,22 @@ class Admin_Url {
 	 * @return bool
 	 */
 	public static function is_valid( $slug ) {
-		return '' !== $slug
-			&& ! in_array( $slug, Login_Url::RESERVED, true )
-			&& Settings::get( 'security.login_slug' ) !== $slug;
+		return '' === self::problem( (string) $slug, Settings::get( 'security.login_url' ) ? (string) Settings::get( 'security.login_slug' ) : '' );
+	}
+
+	/**
+	 * Why a slug cannot be used for the dashboard, if it cannot.
+	 *
+	 * @param string $slug       Dashboard slug.
+	 * @param string $login_slug Login slug in use, or '' when the custom login URL is off.
+	 * @return string 'admin_slug_invalid', 'admin_slug_same' or '' when it can be used.
+	 */
+	public static function problem( $slug, $login_slug ) {
+		if ( ! Login_Url::is_valid( $slug ) ) {
+			return 'admin_slug_invalid';
+		}
+
+		return '' !== $login_slug && $login_slug === $slug ? 'admin_slug_same' : '';
 	}
 
 	/**

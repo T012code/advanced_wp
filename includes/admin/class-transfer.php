@@ -769,9 +769,11 @@ class Transfer {
 
 		$admin_slug = (string) Settings::get( 'security.admin_slug' );
 
-		if ( Settings::get( 'security.admin_url' ) && ( '' === $admin_slug || in_array( $admin_slug, Login_Url::RESERVED, true ) || $admin_slug === $slug ) ) {
+		$problem = Admin_Url::problem( $admin_slug, Settings::get( 'security.login_url' ) && ! isset( $changes['security.login_url'] ) ? $slug : '' );
+
+		if ( Settings::get( 'security.admin_url' ) && '' !== $problem ) {
 			$changes['security.admin_url'] = false;
-			$notice                        = 'admin_slug_invalid';
+			$notice                        = $problem;
 		}
 
 		if ( $changes ) {

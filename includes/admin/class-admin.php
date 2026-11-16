@@ -268,7 +268,7 @@ class Admin {
 			'reset_confirm'             => array( 'error', __( 'Tick the confirmation box to reset settings.', 'layo-dashboard-toolkit' ) ),
 			'test_sent'                 => array( 'success', __( 'Test email sent. Check your inbox (and spam folder).', 'layo-dashboard-toolkit' ) ),
 			'test_failed'               => array( 'error', __( 'The test email could not be sent. Your server may not be set up to send mail; an SMTP plugin usually fixes this.', 'layo-dashboard-toolkit' ) ),
-			'slug_invalid'              => array( 'error', __( 'That login address cannot be used. Choose another one; the custom login URL has been left off.', 'layo-dashboard-toolkit' ) ),
+			'slug_invalid'              => array( 'error', __( 'That login address cannot be used. Use letters, numbers and dashes, and not a WordPress folder such as wp-admin or wp-content; the custom login URL has been left off.', 'layo-dashboard-toolkit' ) ),
 			'unlocked'                  => array( 'success', __( 'Lockout lifted.', 'layo-dashboard-toolkit' ) ),
 			'log_cleared'               => array( 'success', __( 'Lockout log cleared.', 'layo-dashboard-toolkit' ) ),
 			'role_saved'                => array( 'success', __( 'Role saved. A backup of the previous roles was kept.', 'layo-dashboard-toolkit' ) ),
@@ -282,7 +282,8 @@ class Admin {
 			'user_not_found'            => array( 'error', __( 'No user found with that username or email address.', 'layo-dashboard-toolkit' ) ),
 			'widget_deleted'            => array( 'success', __( 'Widget deleted.', 'layo-dashboard-toolkit' ) ),
 			'history_cleared'           => array( 'success', __( 'Sign-in history cleared.', 'layo-dashboard-toolkit' ) ),
-			'admin_slug_invalid'        => array( 'error', __( 'That dashboard address cannot be used. Choose another one that differs from the login address; the custom dashboard address has been left off.', 'layo-dashboard-toolkit' ) ),
+			'admin_slug_invalid'        => array( 'error', __( 'That dashboard address cannot be used. Use letters, numbers and dashes, and not a WordPress folder such as wp-admin or wp-content; the custom dashboard address has been left off.', 'layo-dashboard-toolkit' ) ),
+			'admin_slug_same'           => array( 'error', __( 'The dashboard address is the same as the login address. Choose a different one; the custom dashboard address has been left off.', 'layo-dashboard-toolkit' ) ),
 			'admin_url_active'          => array( 'success', __( 'Settings saved. The dashboard has moved to its new address.', 'layo-dashboard-toolkit' ) ),
 			'admin_url_pending'         => array( 'warning', __( 'Settings saved. The new dashboard address is not working yet, so the dashboard stays at /wp-admin. Add the server rules shown below, then click "Test again".', 'layo-dashboard-toolkit' ) ),
 			'email_copied'              => array( 'success', __( 'Copied into your template. Your design is now used for this email; you can switch the other code off.', 'layo-dashboard-toolkit' ) ),
@@ -450,10 +451,11 @@ class Admin {
 			}
 
 			$admin_slug = isset( $values['security.admin_slug'] ) ? sanitize_title( $values['security.admin_slug'] ) : '';
+			$problem    = Admin_Url::problem( $admin_slug, ! empty( $values['security.login_url'] ) ? $slug : '' );
 
-			if ( ! empty( $values['security.admin_url'] ) && ( '' === $admin_slug || in_array( $admin_slug, Login_Url::RESERVED, true ) || $admin_slug === $slug ) ) {
+			if ( ! empty( $values['security.admin_url'] ) && '' !== $problem ) {
 				$values['security.admin_url'] = false;
-				$notice                       = 'admin_slug_invalid';
+				$notice                       = $problem;
 			}
 
 			$values['modules.security'] = ! empty( $values['security.login_url'] ) || ! empty( $values['security.admin_url'] ) || ! empty( $values['security.limit'] ) || ! empty( $values['security.honeypot'] ) || ! empty( $values['security.twofa'] );
@@ -735,6 +737,7 @@ class Admin {
 		$security = array(
 			'slug_invalid'         => __( 'The login address in the file cannot be used here, so the custom login address was left off.', 'layo-dashboard-toolkit' ),
 			'admin_slug_invalid'   => __( 'The dashboard address in the file cannot be used here, so the custom dashboard address was left off.', 'layo-dashboard-toolkit' ),
+			'admin_slug_same'      => __( 'The dashboard address in the file is the same as the login address, so the custom dashboard address was left off.', 'layo-dashboard-toolkit' ),
 			'admin_url_pending'    => __( 'The custom dashboard address is not working on this server yet, so the dashboard stays at /wp-admin. See Login protection for the server rules to add.', 'layo-dashboard-toolkit' ),
 			'admin_url_unwritable' => __( 'The .htaccess file could not be updated, so the dashboard stays at /wp-admin. See Login protection for the rules to add.', 'layo-dashboard-toolkit' ),
 		);

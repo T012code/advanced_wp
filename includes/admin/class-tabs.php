@@ -531,7 +531,7 @@ class Tabs {
 		Fields::text(
 			'security.admin_slug',
 			__( 'Dashboard address', 'layo-dashboard-toolkit' ),
-			__( 'Letters, numbers and dashes, for example "office". Must differ from the login address.', 'layo-dashboard-toolkit' ),
+			__( 'Letters, numbers and dashes, for example "dashboard" or "office". Must differ from the login address.', 'layo-dashboard-toolkit' ),
 			array(
 				'prefix' => trailingslashit( site_url() ),
 				'class'  => 'regular-text layodt-slug',
@@ -638,7 +638,7 @@ class Tabs {
 		Fields::text(
 			'security.login_slug',
 			__( 'Login address', 'layo-dashboard-toolkit' ),
-			__( 'Letters, numbers and dashes. Not "login", "admin" or "dashboard".', 'layo-dashboard-toolkit' ),
+			__( 'Letters, numbers and dashes, for example "login" or "team-login". Must differ from the dashboard address.', 'layo-dashboard-toolkit' ),
 			array(
 				'prefix' => trailingslashit( home_url() ),
 				'class'  => 'regular-text layodt-slug',

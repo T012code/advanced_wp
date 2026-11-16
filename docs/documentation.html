@@ -479,7 +479,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h2>13. Login protection</h2>
 	<p>Switch on any of these features under Settings → Layò Dashboard Toolkit → Login protection: a custom login URL, limits on failed logins, a honeypot field, a custom dashboard address and two-factor authentication.</p>
 	<h3>Custom login URL</h3>
-	<p>Moves the login page to an address such as <code>/team-login</code>. Logged-out visitors who open <code>wp-login.php</code> or <code>/wp-admin</code> see a "page not found" page, are sent to the home page, or are sent to an address you choose. Every login, logout, registration and password link WordPress creates, including links in emails, uses the new address. The words "login", "admin", "dashboard" and WordPress folder names cannot be used.</p>
+	<p>Moves the login page to an address such as <code>/team-login</code>. Logged-out visitors who open <code>wp-login.php</code> or <code>/wp-admin</code> see a "page not found" page, are sent to the home page, or are sent to an address you choose. Every login, logout, registration and password link WordPress creates, including links in emails, uses the new address. Any single word with letters, numbers and dashes works, including "login", "admin" and "dashboard". Only WordPress folder names such as wp-admin and wp-content cannot be used, and the login address must differ from the dashboard address.</p>
 	<h3>Login pages set up elsewhere</h3>
 	<p>The custom login URL is the <strong>staff login</strong>: the login for administrators, editors, subscribers and everyone else with an account on the site. Customer and member logins, such as WooCommerce's My Account page or the login pages of Ultimate Member and Paid Memberships Pro, are a different thing and are left to the plugin that made them.</p>
 	<p>The plugin finds both kinds by itself and lists them at the top of Login protection, with who each page is for, its address and what set it up (the plugin's name, or the theme and file, such as functions.php). It looks again whenever a plugin is switched on or off or the theme changes. It then works with them:</p>
@@ -494,7 +494,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	<h3>Honeypot</h3>
 	<p>Adds a hidden field to the login, registration and lost password forms. People never see it; bots that fill in every field are rejected.</p>
 	<h3>Custom dashboard address</h3>
-	<p>Moves the dashboard from <code>/wp-admin</code> to an address you choose, such as <code>/office</code>. It is set separately from the login address, and the two must differ.</p>
+	<p>Moves the dashboard from <code>/wp-admin</code> to an address you choose, such as <code>/dashboard</code> or <code>/office</code>. It is set separately from the login address, and the two must differ.</p>
 	<ul>
 		<li>Logged-out visitors who open <code>/wp-admin</code> see a "page not found" page. When the custom login URL is also on, the new dashboard address shows "page not found" to logged-out visitors as well, so neither address gives away the other.</li>
 		<li>Logged-in users who open an old <code>/wp-admin</code> link, bookmark or plugin link are moved to the same screen at the new address. People already logged in when you switch move across without logging in again.</li>

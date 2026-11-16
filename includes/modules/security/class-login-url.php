@@ -23,11 +23,13 @@ defined( 'ABSPATH' ) || exit;
 class Login_Url {
 
 	/**
-	 * Slugs that would clash with WordPress or common pages.
+	 * Slugs WordPress itself needs, so they can never be moved over.
+	 * "login", "admin" and "dashboard" are allowed: WordPress only redirects
+	 * them when nothing else answers there.
 	 *
 	 * @var string[]
 	 */
-	const RESERVED = array( 'wp-admin', 'wp-login', 'wp-login-php', 'login', 'admin', 'dashboard', 'wp-content', 'wp-includes', 'wp-json', 'feed', 'xmlrpc', 'xmlrpc-php' );
+	const RESERVED = array( 'wp-admin', 'wp-login', 'wp-login-php', 'wp-content', 'wp-includes', 'wp-json', 'feed', 'xmlrpc', 'xmlrpc-php' );
 
 	/**
 	 * Whether this request is for the custom login address.

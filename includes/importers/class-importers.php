@@ -837,7 +837,7 @@ class Importers {
 				'warning',
 				sprintf(
 					/* translators: 1: address, 2: setting name. */
-					__( '"%1$s" cannot be used as an address here, so the %2$s was not imported. Addresses are a single word with letters, numbers and dashes, and cannot be "login", "admin" or "dashboard".', 'layo-dashboard-toolkit' ),
+					__( '"%1$s" cannot be used as an address here, so the %2$s was not imported. Addresses are a single word with letters, numbers and dashes, and cannot be a WordPress folder such as wp-admin or wp-content.', 'layo-dashboard-toolkit' ),
 					$raw,
 					strtolower( self::areas()[ $area ][0] )
 				),
