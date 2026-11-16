@@ -37,6 +37,12 @@ delete_transient( 'layodt_login_pages' );
 delete_option( 'layodt_email_copied' );
 delete_option( 'layodt_email_design' );
 delete_option( 'layodt_email_wrapped' );
+delete_option( 'layodt_social' );
+
+// Social sign-in links on people's profiles.
+foreach ( array( 'google', 'microsoft', 'github', 'facebook', 'linkedin', 'x', 'discord', 'twitch', 'wordpress' ) as $layodt_provider ) {
+	delete_metadata( 'user', 0, 'layodt_social_' . $layodt_provider, '', true );
+}
 
 foreach ( array( 'layodt_2fa_method', 'layodt_2fa_secret', 'layodt_2fa_pending', 'layodt_2fa_backup', 'layodt_2fa_last_slice', 'layodt_2fa_login', 'layodt_2fa_email_code', 'layodt_2fa_required_since', 'layodt_toolbar', 'layodt_look_admin', 'layodt_look_self', 'layodt_look_try', 'layodt_look_mode', 'layodt_blocked', 'layodt_login_redirect', 'layodt_other_dismissed' ) as $layodt_meta_key ) {
 	delete_metadata( 'user', 0, $layodt_meta_key, '', true );

@@ -1607,3 +1607,20 @@ body.layodt-look .layodt-matrix > thead > tr > th {
 		grid-template-columns: 1fr;
 	}
 }
+
+/* Social sign-in settings. */
+.layodt-social-providers th label {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-weight: 600;
+}
+
+.layodt-social-providers td,
+.layodt-social-providers th {
+	vertical-align: top;
+}
+
+.layodt-social-providers code {
+	word-break: break-all;
+}

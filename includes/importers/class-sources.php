@@ -10,6 +10,7 @@
  * - login         { slug, blocked_action, blocked_url }
  * - admin         { slug }
  * - limits        { max_attempts, window, lockout } in attempts and minutes
+ * - social        provider => { on, client_id, secret } for social sign-in
  * - menu          role => menu ids to hide ("slug" or "parent>slug")
  * - toolbar_items role => toolbar node ids to hide
  * - toolbar_front roles that do not see the toolbar on the site
@@ -125,6 +126,35 @@ class Sources {
 				'lockout'      => (int) ceil( ( empty( $options['lockout_time'] ) ? 900 : (int) $options['lockout_time'] ) / 60 ),
 				'window'       => (int) ceil( ( empty( $options['reset_retries'] ) ? 86400 : (int) $options['reset_retries'] ) / 60 ),
 			);
+		}
+
+		// Social sign-in apps. Loginizer signs in to X with the older OAuth 1.0a keys, which cannot be used here.
+		$social = self::option( 'loginizer_provider_settings' );
+		$names  = array(
+			'Google'         => 'google',
+			'MicrosoftGraph' => 'microsoft',
+			'GitHub'         => 'github',
+			'Facebook'       => 'facebook',
+			'LinkedInOpenID' => 'linkedin',
+			'Discord'        => 'discord',
+			'TwitchTV'       => 'twitch',
+			'WordPress'      => 'wordpress',
+		);
+
+		foreach ( is_array( $social ) ? $social : array() as $name => $keys ) {
+			if ( ! is_array( $keys ) || empty( $keys['client_id'] ) || empty( $keys['client_secret'] ) ) {
+				continue;
+			}
+
+			if ( isset( $names[ $name ] ) ) {
+				$data['social'][ $names[ $name ] ] = array(
+					'on'        => ! empty( $keys['enabled'] ),
+					'client_id' => (string) $keys['client_id'],
+					'secret'    => (string) $keys['client_secret'],
+				);
+			} elseif ( 'Twitter' === $name ) {
+				$data['notes'][] = __( 'Loginizer\'s X keys use the older OAuth 1.0a sign-in. Create an OAuth 2.0 app in the X developer portal and add its keys under Login protection → Social sign-in.', 'layo-dashboard-toolkit' );
+			}
 		}
 
 		return $data;

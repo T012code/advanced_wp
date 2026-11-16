@@ -91,6 +91,7 @@ It starts from your site. Brand colours come from your choice of source: your th
 * Honeypot field against bots.
 * Finds login, lost password and registration pages set up by the theme or other plugins and shows where they come from. The custom login URL is the staff login; it stays off when another plugin already moves wp-login.php, while customer pages such as WooCommerce My Account are left to their plugin. Staff login pages stay open in coming soon mode, and emails keep custom reset links.
 * Two-factor authentication with authenticator apps, email codes and backup codes. Require it for chosen roles.
+* Social sign-in with Google, Microsoft, GitHub, Facebook, LinkedIn, X, Discord, Twitch and WordPress.com, for people who already have an account. Nobody can create an account this way, and sign-ins still pass account blocks, session limits, attempt limits and two-factor.
 
 = Sessions =
 
@@ -177,9 +178,23 @@ The Video dashboard widget embeds a video from the site an administrator chooses
 * What is sent and when: when the widget is first shown, your server asks the video site for the embed code through WordPress's built-in oEmbed support, sending the video address. The answer is kept for a day. Each time someone who can see the widget opens the dashboard, their browser loads the player from the video site, which receives their IP address and browser details as with any embedded video.
 * Service providers: whichever site hosts the video. For YouTube: terms https://www.youtube.com/t/terms, privacy policy https://policies.google.com/privacy. For Vimeo: terms https://vimeo.com/terms, privacy policy https://vimeo.com/privacy.
 
+Social sign-in connects to the providers an administrator switches on under Settings → Layò Dashboard Toolkit → Login protection → Social sign-in, using app keys the administrator creates with each provider. Nothing is sent to a provider until someone clicks its "Continue with" button on the login screen, or "Connect" on their profile.
+
+* What is sent and when: the browser is sent to the provider's sign-in page with the site's app ID, the return address and a one-time code. After the person signs in there, your server sends the provider the code it received and the app keys to get an access token, then asks the provider for the person's account ID and, where the provider confirms it, their email address. These are used only to find the matching account on this site. The account ID is saved on that person's profile so they are recognised next time; nothing else from the provider is kept.
+* Google: terms https://policies.google.com/terms, privacy policy https://policies.google.com/privacy.
+* Microsoft: terms https://www.microsoft.com/servicesagreement, privacy policy https://privacy.microsoft.com/privacystatement.
+* GitHub: terms https://docs.github.com/site-policy/github-terms/github-terms-of-service, privacy policy https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement.
+* Facebook (Meta): terms https://www.facebook.com/terms.php, privacy policy https://www.facebook.com/privacy/policy/.
+* LinkedIn: terms https://www.linkedin.com/legal/user-agreement, privacy policy https://www.linkedin.com/legal/privacy-policy.
+* X: terms https://x.com/en/tos, privacy policy https://x.com/en/privacy.
+* Discord: terms https://discord.com/terms, privacy policy https://discord.com/privacy.
+* Twitch: terms https://www.twitch.tv/p/legal/terms-of-service/, privacy policy https://www.twitch.tv/p/legal/privacy-notice/.
+* WordPress.com (Automattic): terms https://wordpress.com/tos/, privacy policy https://automattic.com/privacy/.
+
 == Third-party libraries ==
 
 * Lucide icons, ISC licence. The dashboard look's outline icons are drawn in the style of, and partly based on, the Lucide icon set. Source: https://lucide.dev
+* Simple Icons, CC0 1.0 (public domain), version 16.37.0. The Google, GitHub, Facebook, X, Discord, Twitch and WordPress.com marks on the social sign-in buttons. Source: https://simpleicons.org
 * QR Code Generator for JavaScript by Kazuhiko Arase, version 1.4.4, MIT licence. Used to draw the QR code when a user sets up two-factor authentication. Source: https://github.com/kazuhikoarase/qrcode-generator
 
 == Changelog ==

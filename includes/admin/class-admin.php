@@ -18,6 +18,7 @@ use LayoDT\Modules\Emails\Templates;
 use LayoDT\Modules\Security\Admin_Url;
 use LayoDT\Modules\Security\Attempts;
 use LayoDT\Modules\Security\Login_Url;
+use LayoDT\Modules\Security\Social;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -46,7 +47,7 @@ class Admin {
 		Sessions_Tab::init();
 		Widgets_Tab::init();
 
-		$actions = array( 'save', 'export', 'import', 'import_apply', 'import_cancel', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
+		$actions = array( 'social_save', 'save', 'export', 'import', 'import_apply', 'import_cancel', 'reset', 'test_email', 'email_preview', 'reset_template', 'unlock', 'clear_log', 'admin_url_test', 'admin_url_force' );
 
 		foreach ( $actions as $action ) {
 			add_action( 'admin_post_layodt_' . $action, array( __CLASS__, 'handle_' . $action ) );
@@ -476,6 +477,43 @@ class Admin {
 		$args = 'sessions' === $tab ? array( 'section' => 'settings' ) : $args;
 
 		self::back( $tab, $notice, $args );
+	}
+
+	/**
+	 * Saves social sign-in settings. Secrets left empty keep their saved value.
+	 *
+	 * @return void
+	 */
+	public static function handle_social_save() {
+		check_admin_referer( 'layodt_social_save' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			self::deny();
+		}
+
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Each value is cleaned below.
+		$posted = isset( $_POST['layodt_social'] ) && is_array( $_POST['layodt_social'] ) ? wp_unslash( $_POST['layodt_social'] ) : array();
+		$old    = Social::settings();
+		$new    = array(
+			'on'        => ! empty( $posted['on'] ),
+			'place'     => isset( $posted['place'] ) && 'above' === $posted['place'] ? 'above' : 'below',
+			'providers' => array(),
+		);
+
+		foreach ( array_keys( Social::providers() ) as $id ) {
+			$one    = isset( $posted['providers'][ $id ] ) && is_array( $posted['providers'][ $id ] ) ? $posted['providers'][ $id ] : array();
+			$secret = isset( $one['secret'] ) ? trim( sanitize_text_field( (string) $one['secret'] ) ) : '';
+
+			$new['providers'][ $id ] = array(
+				'on'        => ! empty( $one['on'] ),
+				'client_id' => isset( $one['client_id'] ) ? trim( sanitize_text_field( (string) $one['client_id'] ) ) : '',
+				'secret'    => '' !== $secret ? $secret : $old['providers'][ $id ]['secret'],
+			);
+		}
+
+		update_option( Social::OPTION, $new, false );
+
+		self::back( 'security', 'saved' );
 	}
 
 	/**

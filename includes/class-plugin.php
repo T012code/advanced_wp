@@ -69,6 +69,7 @@ class Plugin {
 		Preview::init();
 		Customizer\Customizer::init();
 		Importers\Importers::init();
+		Modules\Security\Social::init();
 
 		// Login pages set up elsewhere are looked up again when plugins or the theme change.
 		foreach ( array( 'activated_plugin', 'deactivated_plugin', 'switch_theme' ) as $hook ) {

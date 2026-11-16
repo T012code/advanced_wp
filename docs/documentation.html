@@ -531,6 +531,22 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 	</figure>
 	<p>Administrators can require two-factor for chosen roles, with a grace period in days. Users in those roles see a reminder, and once the grace period ends they are sent to their profile until they set it up. Administrators can reset another user's two-factor from that user's profile.</p>
 
+	<h3>Social sign-in</h3>
+	<p>At the end of Login protection, <strong>Social sign-in</strong> lets people who already have an account sign in with Google, Microsoft, GitHub, Facebook, LinkedIn, X, Discord, Twitch or WordPress.com. <strong>Nobody can create an account this way.</strong></p>
+	<ol>
+		<li>For each provider you want, create an app in its developer console ("Open the developer console" links to it), and give it the return address shown in the table, such as <code>https://example.com/wp-json/layodt/v1/social/google</code>. That address stays the same when you change the login or dashboard address.</li>
+		<li>Tick the provider, paste the app's Client ID and Client Secret, tick "Show the sign-in buttons on the login screen" and save. Saved secrets are never shown again; leave the box empty to keep one.</li>
+		<li>Choose whether the buttons sit above or below the login form. They follow your login design and work without it too.</li>
+	</ol>
+	<p><strong>How people are found.</strong> Google, GitHub, Facebook, LinkedIn, Discord and WordPress.com confirm email addresses, so someone is found by the verified email on their account here, and the link is then remembered. Microsoft, X and Twitch do not reliably confirm email addresses, so people connect those accounts first: on their profile, under "Sign in with another account", they click "Connect" while logged in. Anyone can connect or disconnect providers there. When no account matches, the login screen says so and nobody is signed in.</p>
+	<p><strong>Same checks as a password login.</strong> A social sign-in goes through account blocks, session limits and login attempt limits, and when two-factor is on for the account, the code screen still comes next. Login destinations per role apply as usual.</p>
+	<p><strong>Safety.</strong> Each sign-in uses a one-time code tied to the browser that started it, valid for ten minutes, so a link made somewhere else cannot finish a sign-in. Google, Microsoft and X also use PKCE. Only the provider's account ID is saved, on the person's profile.</p>
+	<p>Keys saved in Loginizer can be brought across with Tools → Import from another plugin. Add this plugin's return address to each app, because Loginizer used a different one.</p>
+	<figure>
+		<img src="images/login-social.png" alt="Login screen with Continue with Google, GitHub and X buttons under the form">
+		<figcaption>Social sign-in buttons under the login form.</figcaption>
+	</figure>
+
 	<h2>14. Sessions</h2>
 	<p>Settings → Layò Dashboard Toolkit → <strong>Sessions</strong> shows who is signed in and where. Each browser or app someone signs in on is one session; Layò Dashboard Toolkit reads WordPress's own sessions, so ending one signs that device out on its next page load.</p>
 	<ul>
@@ -605,7 +621,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		</li>
 		<li><strong>Import from another plugin</strong> finds settings that other plugins saved on this site, whether that plugin is active or not, and brings them across. Each plugin is listed with what it has; "Review and import" shows exactly what would change, setting by setting, with what each one does here and when it takes effect. Tick what to bring across and click Import. The other plugin's own settings are never changed or deleted.
 			<ul>
-				<li><strong>Login protection plugins:</strong> WPS Hide Login, Loginizer (and Loginizer Security), All-In-One Security, Solid Security (also sold as Kadence or iThemes Security), WP Hide &amp; Security Enhancer and Defender: the custom login address, where wp-login.php and /wp-admin send visitors, the custom dashboard address and the login attempt limits.</li>
+				<li><strong>Login protection plugins:</strong> WPS Hide Login, Loginizer (and Loginizer Security), All-In-One Security, Solid Security (also sold as Kadence or iThemes Security), WP Hide &amp; Security Enhancer and Defender: the custom login address, where wp-login.php and /wp-admin send visitors, the custom dashboard address and the login attempt limits. From Loginizer, also the social sign-in app keys (not X, whose Loginizer keys are an older kind).</li>
 				<li><strong>Admin and Site Enhancements:</strong> the login address, attempt limits, login destinations per role, the toolbar per role and the toolbar items it removes. Its "Show all" menu toggle is not a permission, so it is not imported.</li>
 				<li><strong>Menu and toolbar plugins:</strong> Adminimize (hidden menus, submenus, toolbar items and dashboard widgets per role), Admin Menu Editor and Admin Menu Editor Pro (menu access per role, plus the Pro toolbar visibility, dashboard widget visibility, custom HTML widgets and login redirects per role), User Role Editor Pro (blocked admin menu items and dashboard widgets per role) and Hide Admin Bar Based on User Roles.</li>
 				<li><strong>Dashboard Welcome for Elementor:</strong> each role's welcome template becomes a "Page or template" dashboard widget for that role, and the standard welcome panel is hidden for them, as before.</li>
@@ -677,6 +693,7 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td><code>includes/class-defaults.php</code></td><td>Translatable default text</td></tr>
 		<tr><td><code>includes/class-brand-kit.php</code>, <code>class-color.php</code>, <code>class-fonts.php</code></td><td>Theme detection, colour maths, font hosting</td></tr>
 		<tr><td><code>includes/class-system-page.php</code>, <code>class-dropins.php</code></td><td>Standalone pages and drop-in files</td></tr>
+		<tr><td><code>includes/modules/security/class-social.php</code></td><td>Social sign-in: provider settings, the login screen buttons, the REST start and return routes, the OAuth 2.0 code exchange, finding the account, and the connect and disconnect buttons on the profile</td></tr>
 		<tr><td><code>includes/modules/emails/class-email-sources.php</code></td><td>Finds outside callbacks on each WordPress email's filters, runs only those on sample input for a made-up person to preview the result, and turns that result back into tags when it is copied into a template. The Emails class watches each priority on <code>wp_mail</code> and <code>phpmailer_init</code> while a branded email is sent, to name the code that wraps it, and applies the chosen design</td></tr>
 		<tr><td><code>includes/class-login-pages.php</code></td><td>Finds login, lost password and registration pages set up by the theme or other plugins: it reads the <code>login_url</code>, <code>lostpassword_url</code>, <code>register_url</code> and <code>site_url</code> filters with this plugin's own callbacks taken out, names the plugin or theme file behind each change, and reads the page settings of WooCommerce, Ultimate Member and Paid Memberships Pro</td></tr>
 		<tr><td><code>includes/class-preview.php</code>, <code>includes/customizer/</code></td><td>Customizer panel and preview routing</td></tr>
@@ -717,6 +734,9 @@ figcaption { color: var(--muted); font-size: 9pt; margin-top: var(--space-2); te
 		<tr><td>Option</td><td><code>layodt_widgets</code>, <code>layodt_widgets_seen</code></td><td>Widget visibility per role, custom widgets and the default layout; the names of widgets other plugins add, so the settings page can list them</td></tr>
 		<tr><td>Transients</td><td><code>layodt_embed_*</code>, <code>layodt_import_file_*</code>, <code>layodt_import_*</code></td><td>Video widget embed code (a day); an uploaded settings file waiting on its review screen, per person (an hour, or until imported or cancelled); the result of an import, shown once to the person who ran it (ten minutes)</td></tr>
 		<tr><td>Option (not autoloaded)</td><td><code>layodt_other_waiting</code>, <code>layodt_other_done</code></td><td>Imported login protection settings waiting for the other plugin to be deactivated; a fingerprint of each setting imported from another plugin, so the review screen and hints know what was imported already</td></tr>
+		<tr><td>Option (not autoloaded)</td><td><code>layodt_social</code></td><td>Social sign-in: on or off, button placement, and each provider's app keys</td></tr>
+		<tr><td>User meta</td><td><code>layodt_social_{provider}</code></td><td>The provider's account ID for someone who signed in with or connected that provider</td></tr>
+		<tr><td>Transient</td><td><code>layodt_sso_*</code></td><td>One-time sign-in state (ten minutes)</td></tr>
 		<tr><td>Option (not autoloaded)</td><td><code>layodt_email_copied</code>, <code>layodt_email_design</code>, <code>layodt_email_wrapped</code></td><td>Emails copied in from other code (with a fingerprint of what they sent); which design to keep when another plugin wraps emails; the last wrapped email and the code that wrapped it</td></tr>
 		<tr><td>Transient</td><td><code>layodt_login_pages</code></td><td>Login pages found elsewhere (an hour; cleared when a plugin is switched on or off or the theme changes)</td></tr>
 		<tr><td>User meta</td><td><code>layodt_other_dismissed</code></td><td>Import suggestions a person chose "Not now" for</td></tr>

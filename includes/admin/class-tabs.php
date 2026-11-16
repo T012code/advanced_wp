@@ -22,6 +22,7 @@ use LayoDT\Modules\Maintenance\Maintenance;
 use LayoDT\Modules\Security\Admin_Url;
 use LayoDT\Modules\Security\Attempts;
 use LayoDT\Modules\Security\Login_Url;
+use LayoDT\Modules\Security\Social;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -695,6 +696,7 @@ class Tabs {
 
 		self::form_end();
 		self::admin_url_forms();
+		self::social_form();
 
 		$log = Attempts::get_log();
 
@@ -946,6 +948,46 @@ class Tabs {
 		echo '<form method="post" action="' . esc_url( $post ) . '" class="layodt-inline-form"><input type="hidden" name="action" value="layodt_import_cancel">';
 		wp_nonce_field( 'layodt_import_cancel' );
 		submit_button( __( 'Cancel and discard the file', 'layo-dashboard-toolkit' ), 'secondary', 'cancel', false );
+		echo '</form>';
+	}
+
+	/**
+	 * Social sign-in settings: one row per provider, with its keys and the
+	 * address to register with it. Saved secrets are never printed.
+	 *
+	 * @return void
+	 */
+	private static function social_form() {
+		$settings  = Social::settings();
+		$providers = Social::providers();
+
+		self::section(
+			__( 'Social sign-in', 'layo-dashboard-toolkit' ),
+			__( 'Let people who already have an account sign in with Google, Microsoft, GitHub and others. Nobody can create an account this way. Each provider needs an app you create in its developer console; paste its Client ID and Client Secret here and give it the return address shown. Sign-ins go through the same checks as a password login, including two-factor.', 'layo-dashboard-toolkit' )
+		);
+
+		echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '"><input type="hidden" name="action" value="layodt_social_save">';
+		wp_nonce_field( 'layodt_social_save' );
+		echo '<table class="form-table" role="presentation"><tbody>';
+		echo '<tr><th scope="row">' . esc_html__( 'Social sign-in', 'layo-dashboard-toolkit' ) . '</th><td><label><input type="checkbox" name="layodt_social[on]" value="1"' . checked( $settings['on'], true, false ) . '> ' . esc_html__( 'Show the sign-in buttons on the login screen', 'layo-dashboard-toolkit' ) . '</label></td></tr>';
+		echo '<tr><th scope="row"><label for="layodt-social-place">' . esc_html__( 'Buttons', 'layo-dashboard-toolkit' ) . '</label></th><td><select id="layodt-social-place" name="layodt_social[place]"><option value="below"' . selected( $settings['place'], 'below', false ) . '>' . esc_html__( 'Below the login form', 'layo-dashboard-toolkit' ) . '</option><option value="above"' . selected( $settings['place'], 'above', false ) . '>' . esc_html__( 'Above the login form', 'layo-dashboard-toolkit' ) . '</option></select></td></tr>';
+		echo '</tbody></table>';
+
+		echo '<div class="layodt-table-scroll"><table class="widefat layodt-social-providers"><thead><tr><th scope="col">' . esc_html__( 'Provider', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Keys', 'layo-dashboard-toolkit' ) . '</th><th scope="col">' . esc_html__( 'Return address to give the provider', 'layo-dashboard-toolkit' ) . '</th></tr></thead><tbody>';
+
+		foreach ( $providers as $id => $provider ) {
+			$one = $settings['providers'][ $id ];
+			$pre = 'layodt-social-' . $id;
+
+			echo '<tr><th scope="row"><label><input type="checkbox" name="layodt_social[providers][' . esc_attr( $id ) . '][on]" value="1"' . checked( $one['on'], true, false ) . '> ' . wp_kses( Social::icon( $id ), Social::icon_tags() ) . ' ' . esc_html( $provider['name'] ) . '</label>';
+			echo '<br><span class="description">' . ( $provider['email'] ? esc_html__( 'Finds people by their verified email address, or a connected account.', 'layo-dashboard-toolkit' ) : esc_html__( 'People connect it on their profile first, because this provider does not confirm email addresses.', 'layo-dashboard-toolkit' ) ) . '</span></th>';
+			echo '<td><label for="' . esc_attr( $pre ) . '-id">' . esc_html__( 'Client ID', 'layo-dashboard-toolkit' ) . '</label><br><input type="text" class="regular-text" id="' . esc_attr( $pre ) . '-id" name="layodt_social[providers][' . esc_attr( $id ) . '][client_id]" value="' . esc_attr( $one['client_id'] ) . '" autocomplete="off">';
+			echo '<br><label for="' . esc_attr( $pre ) . '-secret">' . esc_html__( 'Client Secret', 'layo-dashboard-toolkit' ) . '</label><br><input type="password" class="regular-text" id="' . esc_attr( $pre ) . '-secret" name="layodt_social[providers][' . esc_attr( $id ) . '][secret]" value="" autocomplete="new-password" placeholder="' . esc_attr( '' !== $one['secret'] ? __( 'Saved. Leave empty to keep it.', 'layo-dashboard-toolkit' ) : '' ) . '"></td>';
+			echo '<td><code class="layodt-copy">' . esc_html( Social::callback_url( $id ) ) . '</code><br><a href="' . esc_url( $provider['console'] ) . '" target="_blank" rel="noopener">' . esc_html__( 'Open the developer console', 'layo-dashboard-toolkit' ) . '</a></td></tr>';
+		}
+
+		echo '</tbody></table></div>';
+		submit_button( __( 'Save social sign-in', 'layo-dashboard-toolkit' ) );
 		echo '</form>';
 	}
 

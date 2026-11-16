@@ -67,6 +67,7 @@ class Importers {
 			'login'    => array( __( 'Login address', 'layo-dashboard-toolkit' ), 'security', true ),
 			'admin'    => array( __( 'Dashboard address', 'layo-dashboard-toolkit' ), 'security', true ),
 			'limits'   => array( __( 'Login attempt limits', 'layo-dashboard-toolkit' ), 'security', true ),
+			'social'   => array( __( 'Social sign-in keys', 'layo-dashboard-toolkit' ), 'security', true ),
 			'menu'     => array( __( 'Menu access per role', 'layo-dashboard-toolkit' ), 'roles', false ),
 			'toolbar'  => array( __( 'Toolbar per role', 'layo-dashboard-toolkit' ), 'roles', false ),
 			'redirect' => array( __( 'Login destinations per role', 'layo-dashboard-toolkit' ), 'roles', false ),
@@ -86,6 +87,7 @@ class Importers {
 			'login'    => array( 'login' ),
 			'admin'    => array( 'admin' ),
 			'limits'   => array( 'limits' ),
+			'social'   => array( 'social' ),
 			'menu'     => array( 'menu' ),
 			'toolbar'  => array( 'toolbar_items', 'toolbar_front', 'toolbar_admin' ),
 			'redirect' => array( 'redirect' ),
@@ -210,6 +212,17 @@ class Importers {
 				} else {
 					$lines[] = __( 'Visitors who open wp-login.php or /wp-admin get a "page not found" page', 'layo-dashboard-toolkit' );
 				}
+				break;
+
+			case 'social':
+				$names = array();
+				foreach ( $data['social'] as $provider => $keys ) {
+					$all     = \LayoDT\Modules\Security\Social::providers();
+					$names[] = isset( $all[ $provider ] ) ? $all[ $provider ]['name'] : $provider;
+				}
+				/* translators: %s: provider names. */
+				$lines[] = sprintf( __( 'App keys for %s', 'layo-dashboard-toolkit' ), implode( ', ', $names ) );
+				$lines[] = __( 'Add this plugin\'s return address in each provider\'s developer console (shown under Login protection → Social sign-in), because the other plugin used a different one.', 'layo-dashboard-toolkit' );
 				break;
 
 			case 'admin':
@@ -799,6 +812,10 @@ class Importers {
 	 * @return array
 	 */
 	private static function security_values( $area, array $data, array $security, array &$lines ) {
+		if ( 'social' === $area ) {
+			return array( 'social' => $data['social'] );
+		}
+
 		if ( 'limits' === $area ) {
 			$limits = $data['limits'];
 			$values = array( 'security.limit' => true );
@@ -861,6 +878,23 @@ class Importers {
 	 */
 	private static function switch_values( array $security ) {
 		$values = array( 'modules.security' => true );
+
+		// Social sign-in keys live in their own option.
+		if ( isset( $security['social']['social'] ) ) {
+			$social = \LayoDT\Modules\Security\Social::settings();
+			foreach ( (array) $security['social']['social'] as $provider => $keys ) {
+				if ( isset( $social['providers'][ $provider ] ) ) {
+					$social['providers'][ $provider ] = array(
+						'on'        => ! empty( $keys['on'] ),
+						'client_id' => sanitize_text_field( (string) $keys['client_id'] ),
+						'secret'    => sanitize_text_field( (string) $keys['secret'] ),
+					);
+				}
+			}
+			$social['on'] = true;
+			update_option( \LayoDT\Modules\Security\Social::OPTION, $social, false );
+			unset( $security['social'] );
+		}
 
 		foreach ( $security as $area_values ) {
 			$values = array_merge( $values, (array) $area_values );
