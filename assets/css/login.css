@@ -38,6 +38,20 @@ body.login.layodt-layout-minimal #login {
 	max-width: calc(100% - 32px);
 }
 
+/*
+ * Minimal keeps WordPress's floated "Remember me" and button, so the card
+ * has to hold them: without this it ends above the button. Anything after
+ * them starts on its own line instead of squeezing in beside them.
+ */
+body.login.layodt-layout-minimal form {
+	display: flow-root;
+}
+
+body.login.layodt-layout-minimal form .layodt-links,
+body.login.layodt-layout-minimal form .layodt-social {
+	clear: both;
+}
+
 /* Logo. */
 body.login.layodt h1.wp-login-logo a {
 	background-image: var(--layodt-logo-url);
@@ -557,7 +571,41 @@ body.login.layodt.interim-login .layodt-bg-video {
 	display: none;
 }
 
-@media (max-width: 782px) {
+/*
+ * Tablets: the two halves stay as the background, and the login box sits
+ * centred across them as a card, so it stays readable over the image.
+ */
+@media (min-width: 601px) and (max-width: 1024px) {
+	body.login.layodt.layodt-layout-split,
+	body.login.layodt.layodt-layout-split.layodt-split-right {
+		padding: 32px 16px;
+	}
+
+	body.login.layodt.layodt-layout-split:not(.interim-login) #login {
+		max-width: calc(var(--layodt-form-width) + 2 * var(--layodt-form-padding));
+		padding: var(--layodt-form-padding);
+		box-sizing: border-box;
+		background: var(--layodt-surface);
+		border: 1px solid var(--layodt-border);
+		border-radius: var(--layodt-form-radius);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 16px 40px -12px rgba(0, 0, 0, 0.2);
+	}
+
+	body.login.layodt.layodt-layout-split.layodt-noshadow #login {
+		box-shadow: none;
+	}
+
+	body.login.layodt.layodt-layout-split .privacy-policy-page-link,
+	body.login.layodt.layodt-layout-split .language-switcher,
+	body.login.layodt.layodt-layout-split .layodt-footer {
+		padding: 6px 12px;
+		background: var(--layodt-surface);
+		border-radius: calc(var(--layodt-radius) * 0.75);
+	}
+}
+
+/* Phones: the image is left out and the form fills the screen. */
+@media (max-width: 600px) {
 	body.login.layodt.layodt-layout-split,
 	body.login.layodt.layodt-layout-split.layodt-split-right {
 		padding: 32px 16px;
