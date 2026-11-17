@@ -257,6 +257,40 @@ body.layodt-look #adminmenu .wp-submenu-head {
 	font-weight: 600;
 }
 
+/*
+ * Elementor's admin menu opens a further level (Editor > Quick Start and so
+ * on) with its own colour settings, dark grey by default and near-black on
+ * WordPress 7. Give it the same colours as the submenus above.
+ */
+body.layodt-look #adminmenu {
+	--editor-one-flyout-menu-bg: var(--as-surface);
+	--editor-one-flyout-menu-bg-level-4: var(--as-surface);
+	--editor-one-flyout-menu-bg-hover: var(--as-accent-soft);
+	--editor-one-flyout-menu-bg-hover-alt: var(--as-accent-soft);
+	--editor-one-flyout-menu-text: var(--as-text);
+	--editor-one-flyout-menu-text-hover: var(--as-text);
+	--editor-one-flyout-menu-border: var(--as-border);
+	--editor-one-flyout-menu-scrollbar-thumb-hover: var(--as-muted);
+	--editor-one-flyout-menu-box-shadow: var(--as-shadow);
+}
+
+body.layodt-look #adminmenu .wp-submenu .elementor-submenu-flyout {
+	padding: 6px;
+	border-radius: var(--as-radius-sm);
+}
+
+/* Stays readable when Elementor is the open section and its own items sit on the sidebar. */
+body.layodt-look #adminmenu .wp-submenu .elementor-submenu-flyout li a {
+	color: var(--as-text);
+	font-weight: 400;
+}
+
+body.layodt-look #adminmenu .wp-submenu .elementor-submenu-flyout li a:hover,
+body.layodt-look #adminmenu .wp-submenu .elementor-submenu-flyout li a:focus {
+	background: var(--as-accent-soft);
+	color: var(--as-text);
+}
+
 /* The open section's submenu sits inline under its item. */
 body.layodt-look #adminmenu .wp-has-current-submenu .wp-submenu,
 body.layodt-look #adminmenu .wp-has-current-submenu.opensub .wp-submenu {

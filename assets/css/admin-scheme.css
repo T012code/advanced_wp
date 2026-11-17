@@ -120,6 +120,17 @@ textarea:focus {
 	color: var(--layodt-admin-menu-muted);
 }
 
+/* Elementor's further submenu level uses its own colour settings; match the submenus. */
+body.wp-admin #adminmenu {
+	--editor-one-flyout-menu-bg: var(--layodt-admin-menu-sub-bg);
+	--editor-one-flyout-menu-bg-level-4: var(--layodt-admin-menu-sub-bg);
+	--editor-one-flyout-menu-bg-hover: var(--layodt-admin-menu-sub-bg);
+	--editor-one-flyout-menu-bg-hover-alt: var(--layodt-admin-menu-sub-bg);
+	--editor-one-flyout-menu-text: var(--layodt-admin-menu-muted);
+	--editor-one-flyout-menu-text-hover: var(--layodt-admin-menu-text);
+	--editor-one-flyout-menu-border: var(--layodt-admin-menu-hover);
+}
+
 #adminmenu .wp-submenu a:focus,
 #adminmenu .wp-submenu a:hover,
 #adminmenu .wp-submenu li.current a,
